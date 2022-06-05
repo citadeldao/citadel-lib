@@ -1,0 +1,75 @@
+{
+  "name": "@citadeldao/lib-citadel",
+  "version": "1.0.0",
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "webpack --config webpack.lib.config.js",
+    "semantic-release": "semantic-release"
+  },
+  "dependencies": {
+    "@iov/crypto": "^2.5.0",
+    "@ledgerhq/hw-app-btc": "5.23.1",
+    "@ledgerhq/hw-app-eth": "^6.23.0",
+    "@ledgerhq/hw-app-polkadot": "^6.27.1",
+    "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
+    "@ledgerhq/hw-transport-webhid": "^6.20.0",
+    "@lunie/cosmos-ledger": "^0.1.8",
+    "@metamask/eth-sig-util": "^4.0.1",
+    "@polkadot/api": "^8.4.2",
+    "@polkadot/util": "^9.2.1",
+    "@terra-money/ledger-terra-js": "^1.2.2",
+    "@terra-money/terra.js": "^3.0.11",
+    "assert": "^2.0.0",
+    "axios": "^0.27.2",
+    "bech32": "^2.0.0",
+    "bignumber.js": "^9.0.1",
+    "bip39": "^3.0.4",
+    "bitcoinjs-lib": "^5.2.0",
+    "bs58": "^4.0.1",
+    "bs58check": "^2.1.2",
+    "core-js": "^3.21.1",
+    "cosmos-lib": "^1.1.0",
+    "crypto-browserify": "^3.12.0",
+    "crypto-js": "^4.1.1",
+    "crypto-pouch": "^4.0.1",
+    "ed25519-hd-key": "^1.2.0",
+    "ethereumjs-util": "^7.1.0",
+    "hdkey": "^2.0.1",
+    "js-sha3": "^0.8.0",
+    "keccak256": "^1.0.6",
+    "libsodium-wrappers-sumo": "^0.7.9",
+    "lodash": "^4.17.21",
+    "long": "^4.0.0",
+    "path": "^0.12.7",
+    "pouchdb": "^7.2.2",
+    "pouchdb-find": "^7.2.2",
+    "secp256k1": "^4.0.2",
+    "secretjs": "^0.17.5",
+    "stream-browserify": "^3.0.0",
+    "trezor-connect": "^8.2.6"
+  },
+  "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/gitlab": "^9.3.0",
+    "@semantic-release/npm": "^9.0.1",
+    "semantic-release": "^19.0.2",
+    "semantic-release-telegram": "^1.5.2",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "description": "Citadel.one front-end library",
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/citadeldao/citadel-lib/issues"
+  },
+  "homepage": "https://github.com/citadeldao/citadel-lib#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}

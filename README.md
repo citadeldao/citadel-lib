@@ -25,4 +25,3 @@ npm run serve
     - not supported
     - walletListError
   ```
-

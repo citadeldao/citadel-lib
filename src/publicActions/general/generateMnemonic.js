@@ -1,8 +1,27 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
-import { generateMnemonic } from 'bip39'
+import { generateMnemonic as generateBip39Mnemonic } from 'bip39'
 import errors from '../../errors'
 
-export default (length = 12) => {
+/**
+ * Generates a random mnemonic phrase of given length
+ *
+ * @param length STRING (OPTIONAL) - the number of words in a phrase. 12 to 24, multiple of 3. Default is 12.
+ * @returns Returns STRING - mnemonic phrase.
+ * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
+ * @example
+ *
+ * const response = citadel.generateMnemonic(12)
+ *
+ * // =>
+ * {
+ *   result: "success",
+ *   data: "depth sure hawk cruise brand circle explain announce fuel celery elegant sock",
+ *   error: null
+ * }
+ */
+
+export const generateMnemonic = (length = 12) => {
+  // checks
   checkInitialization()
   checkTypes(['length', length, ['String', 'Number'], true])
 
@@ -12,6 +31,9 @@ export default (length = 12) => {
     })
   }
 
+  // phrase bit length (128-256)
   const entropy = (length * 32) / 3
-  return generateMnemonic(entropy)
+
+  // generate mnemonic by bit length
+  return generateBip39Mnemonic(entropy)
 }

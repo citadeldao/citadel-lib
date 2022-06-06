@@ -5,7 +5,8 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, options) => {
+export const prepareTransfer = async (walletId, options) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -13,5 +14,8 @@ export default async (walletId, options) => {
   )
   checkWalletId(walletId)
 
-  return await walletInstances.getWalletInstanceById(walletId).prepareTransfer(options)
+  // call wallet instance method
+  return await walletInstances
+    .getWalletInstanceById(walletId)
+    .prepareTransfer(options)
 }

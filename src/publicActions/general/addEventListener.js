@@ -1,24 +1,42 @@
 import errors from '../../errors'
 import { checkTypes } from '../../helpers/checkArguments'
-import { EVENT_NAMES } from '../../constants'
+import { LIB_EVENT_NAMES, LIB_EVENT_CALLBACK_NAMES } from '../../constants'
 import state from '../../state'
 
-export default (eventName, callback) => {
+/**
+ * Sets up a function that will be called whenever the specified event is dispatched from the library
+ * NOTE: Сan be used before initialization
+ * @param eventName STRING (REQUIRED) - lib event name. Possible values: 'walletListUpdated', 'socketEvent'
+ * @param callback FUNCTION (REQUIRED) - The function to be called on the event
+ * @returns Returns NULL.
+ * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
+ * @example
+ *
+ * const response = citadel.addEventListener('walletListUpdated', () => console.log('updated'))
+ *
+ * // =>
+ * {
+ *   result: "success",
+ *   data: null,
+ *   error: null
+ * }
+ */
+
+export const addEventListener = (eventName, callback) => {
+  // checks
   checkTypes(
     ['eventName', eventName, ['String'], true],
     ['callback', callback, ['Function'], true]
   )
 
-  if (!Object.values(EVENT_NAMES).includes(eventName)) {
+  if (!Object.values(LIB_EVENT_NAMES).includes(eventName)) {
     errors.throwError('WrongArguments', {
       message: `Event "${eventName}" not supported. Supported events: ${JSON.stringify(
-        Object.values(EVENT_NAMES)
+        Object.values(LIB_EVENT_NAMES)
       )}`,
     })
   }
 
-  if (eventName === 'walletListUpdated') {
-    state.setState('walletListUpdatedCallback', callback)
-    return
-  }
+  // set event callback to state by event name
+  state.setState(LIB_EVENT_CALLBACK_NAMES[eventName], callback)
 }

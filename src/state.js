@@ -1,3 +1,6 @@
+import { has } from 'lodash'
+import { LIB_EVENT_NAMES, LIB_EVENT_CALLBACK_NAMES } from './constants'
+
 // General state for all lib modules
 let state = {}
 
@@ -16,16 +19,39 @@ const defaultState = {
   supportedNetworkKeys: [],
   daoSupportedNetworks: [],
   supportedTokens: {},
-  // event callbacks
-  walletListUpdatedCallback: () => {},
+  stakeNodesUpdated: false,
+  // event callbacks. Computed property to prevent errors and for simple event handling
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.WALLET_LIST_UPDATED]]: () => {},
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.SOCKET_EVENT]]: () => {},
+}
+
+// check state property name to prevent error
+const checkStatePropertyName = (key) => {
+  if (!has(state, key)) {
+    console.warn(`State property "${key}" does not registered`)
+  }
 }
 
 // getter to get the current state (without losing the reference to the state object)
-const getState = (key) => state[key]
+const getState = (key) => {
+  // check state property name validity to prevent errors
+  checkStatePropertyName(key)
+
+  return state[key]
+}
+
 // setter (without touching the rest of the state)
-const setState = (key, value) => (state[key] = value)
-// for init and reset state object
+const setState = (key, value) => {
+  // check state property name validity to prevent errors
+  checkStatePropertyName(key)
+
+  state[key] = value
+}
+
+// for reset state object
 const setDefaultState = () => (state = { ...defaultState })
+
+setDefaultState()
 
 export default {
   getState,

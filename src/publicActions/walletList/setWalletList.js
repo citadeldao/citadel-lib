@@ -1,8 +1,11 @@
 import { checkTypes } from '../../helpers/checkArguments'
-import libCore from '../../libCore'
+import walletsManager from '../../walletsManager'
 import { checkInitialization } from '../../helpers/checkArguments'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (wallets, options) => {
+export const setWalletList = async (wallets, options) => {
+  // checks
   checkTypes(
     ['wallets', wallets, ['Array'], true],
     ['options', options, ['Object']],
@@ -10,6 +13,9 @@ export default async (wallets, options) => {
   )
   checkInitialization()
 
-  // filter not supported networks
-  await libCore.setWalletList(wallets, options)
+  // set wallets
+  await walletsManager.setWalletList(wallets, options)
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

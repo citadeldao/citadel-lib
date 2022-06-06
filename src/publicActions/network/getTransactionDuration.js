@@ -1,11 +1,12 @@
-import networks from '../../networks'
+import networkClasses from '../../networkClasses'
 import {
   checkTypes,
   checkNetwork,
   checkInitialization,
 } from '../../helpers/checkArguments'
 
-export default async (net, options = {}) => {
+export const getTransactionDuration = async (net, options = {}) => {
+  // checks
   checkInitialization()
   checkTypes(['net', net, ['String'], true], ['options', options, ['Object']])
   checkNetwork(net)
@@ -16,7 +17,8 @@ export default async (net, options = {}) => {
     ['fee', fee, ['String', 'Number'], true]
   )
 
-  return await networks
+  // call static network method
+  return await networkClasses
     .getNetworkClass(net)
     .getTransactionDuration({ type, fee })
 }

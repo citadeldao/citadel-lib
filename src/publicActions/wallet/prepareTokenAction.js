@@ -3,10 +3,13 @@ import {
   checkInitialization,
   checkWalletId,
   checkNetworkOrToken,
+  checkNetworkToken,
+  checkTokensSupport,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default (walletId, token, action, options) => {
+export const prepareTokenAction = (walletId, token, action, options) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -16,8 +19,10 @@ export default (walletId, token, action, options) => {
   )
   checkNetworkOrToken(token)
   checkWalletId(walletId)
+  const walletInstance = walletInstances.getWalletInstanceById(walletId)
+  checkTokensSupport(walletInstance.net)
+  checkNetworkToken(walletInstance.net, token)
 
-  return walletInstances
-    .getWalletInstanceById(walletId)
-    .prepareTokenAction(token, action, options)
+  // call walletInstance method
+  return walletInstance.prepareTokenAction(token, action, options)
 }

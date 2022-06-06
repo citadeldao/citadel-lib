@@ -10,7 +10,7 @@ import { getDaoAssignedAddresses } from './getDaoAssignedAddresses'
 import { getTotalClaimedRewardsXct } from './getTotalClaimedRewardsXct'
 import { getXctInflation } from './getXctInflation'
 
-export default {
+export const xct = {
   getXctStakeTransaction,
   getXctUnstakeTransaction,
   restakeAllRewards,

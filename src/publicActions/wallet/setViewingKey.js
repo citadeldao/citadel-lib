@@ -9,8 +9,16 @@ import {
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../constants'
 import walletInstances from '../../walletInstances'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (walletId, token, viewingKeyType, options) => {
+export const setViewingKey = async (
+  walletId,
+  token,
+  viewingKeyType,
+  options
+) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -38,5 +46,15 @@ export default async (walletId, token, viewingKeyType, options) => {
     checkTypes(['privateKey', privateKey, ['String'], true])
   }
 
-  return await walletInstance.setViewingKey(token, viewingKeyType, options)
+  // call wallet instance method
+  const data = await walletInstance.setViewingKey(
+    token,
+    viewingKeyType,
+    options
+  )
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+
+  return data
 }

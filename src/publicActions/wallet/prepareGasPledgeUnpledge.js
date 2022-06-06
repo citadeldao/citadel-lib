@@ -6,7 +6,8 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, type, amount) => {
+export const prepareGasPledgeUnpledge = async (walletId, type, amount) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -22,6 +23,7 @@ export default async (walletId, type, amount) => {
       message: `Invalid type. Expected "${types.join('", "')}", got "${type}"`,
     })
 
+  // call wallet instance method
   if (type === 'pledge') {
     return await walletInstances
       .getWalletInstanceById(walletId)

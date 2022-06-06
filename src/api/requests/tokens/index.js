@@ -1,7 +1,7 @@
-import xct from './xct'
+import { xct } from './xct'
 import { getAllTokenBalances } from './getAllTokenBalances'
 
-export default {
+export const tokens = {
   getAllTokenBalances,
   ...xct,
 }

@@ -3,17 +3,19 @@ import {
   checkInitialization,
   checkWalletId,
 } from '../../helpers/checkArguments'
-import api from '../../api'
-import storage from '../../storage'
+import walletsManager from '../../walletsManager'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (walletId) => {
+export const removeWalletById = async (walletId) => {
+  // checks
   checkInitialization()
   checkTypes(['walletId', walletId, ['String', 'Number'], true])
   checkWalletId(walletId)
-  try {
-    await api.requests.removeWallet(walletId)
-  } catch (error) {
-    console.error(error)
-  }
-  storage.wallets.removeWallet(walletId)
+
+  // remove wallet
+  await walletsManager.removeWallet(walletId)
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

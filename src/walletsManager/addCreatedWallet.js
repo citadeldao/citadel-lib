@@ -1,0 +1,127 @@
+import { retryRequestOnError } from '../helpers/retryRequestOnError.js'
+import api from '../api'
+import storage from '../storage'
+import { WALLET_TYPES } from '../constants'
+import { getWalletInfoByAddress } from './getWalletInfoByAddress'
+import { getWalletInfoById } from './getWalletInfoById'
+import { updateWallet } from './updateWallet'
+import walletInstances from '../walletInstances'
+
+// It is expected that the wallet was previously created by one of the 'create...' lib methods
+// This means that in addition to the address and network, сreated wallet should already contain network config fields: code, networkName etc
+export const addCreatedWallet = async ({
+  createdWallet,
+  title = '',
+  checkExistence = true,
+  // for add wallet from account list (info / detail), then createdWallet already has balance, title and id
+  addToAccount = true,
+  loadBalance = true,
+}) => {
+  // CHECK EXISTENCE
+  const existingWallet = getWalletInfoByAddress(
+    createdWallet.net,
+    createdWallet.address
+  )
+  if (checkExistence && existingWallet) {
+    // ORDER FOR "oneSeed"
+    if (createdWallet.type === WALLET_TYPES.ONE_SEED) {
+      // skip add for the same type
+      if (existingWallet.type === WALLET_TYPES.ONE_SEED) {
+        console.warn(
+          `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`
+        )
+        return
+      }
+      // rewrite any others types and return updated wallet
+      return updateWallet({
+        walletId: existingWallet.id,
+        newWalletInfo: createdWallet,
+      })
+    }
+
+    // ORDER FOR "privateKey"
+    if (createdWallet.type === WALLET_TYPES.PRIVATE_KEY) {
+      // rewrite any others types and return updated wallet
+      return updateWallet({
+        walletId: existingWallet.id,
+        newWalletInfo: createdWallet,
+      })
+    }
+
+    // ORDER FOR "hardware", "metamask" and "keplr" wallets
+    if (
+      [
+        WALLET_TYPES.LEDGER,
+        WALLET_TYPES.TREZOR,
+        WALLET_TYPES.KEPLR,
+        WALLET_TYPES.METAMASK,
+      ].includes(createdWallet.type)
+    ) {
+      if (existingWallet.type === WALLET_TYPES.PUBLIC_KEY) {
+        // rewrite any others types and return updated wallet
+        return updateWallet({
+          walletId: existingWallet.id,
+          newWalletInfo: createdWallet,
+        })
+      }
+      // skip any other wallets
+      console.warn(
+        `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`
+      )
+      return
+    }
+
+    // ORDER FOR publicKey
+    if (createdWallet.type === WALLET_TYPES.PUBLIC_KEY) {
+      // skip add for any types
+      console.warn(
+        `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`
+      )
+      return
+    }
+  }
+
+  // ADD WALLET TO ACCOUNT
+  if (addToAccount) {
+    const { data: id } = await retryRequestOnError(
+      () =>
+        api.requests.addWallet({
+          net: createdWallet.net,
+          address: createdWallet.address,
+          title,
+        }),
+      { retryDelay: 2000, retryCount: 1 }
+    )
+    // set walletId
+    createdWallet.id = id
+    // set title
+    createdWallet.title = title
+  }
+
+  // LOAD BALANCE
+  if (loadBalance) {
+    // load balance
+    const { data: balance } = await api.formattedApi.getDelegationBalance({
+      net: createdWallet.net,
+      address: createdWallet.address,
+    })
+    // set balance
+    createdWallet.balance = balance
+  }
+
+  // ADD TO STORAGE WALLET LIST
+  storage.wallets.putWallet(createdWallet)
+
+  // CREATE WALLET INSTANCE
+  walletInstances.createWalletInstance(createdWallet)
+
+  // SET SUBTOKEN LIST
+  await walletInstances
+    .getWalletInstanceById(createdWallet.id)
+    .updateSubtokensList()
+
+  // get wallet from storage (with subtokesList)
+  const newWallet = getWalletInfoById(createdWallet.id)
+
+  return newWallet
+}

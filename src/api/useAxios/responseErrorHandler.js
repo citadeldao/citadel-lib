@@ -1,8 +1,9 @@
 import errors from '../../errors'
 
-export default (error) => {
+export const responseErrorHandler = (error) => {
   const data = error.response?.data
   const status = error?.response?.status
+
   if (error?.message === 'Network Error') {
     errors.throwError('NetworkError', { details: error })
   } else if (status >= 500 && status <= 599) {

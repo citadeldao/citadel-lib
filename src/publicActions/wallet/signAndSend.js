@@ -9,7 +9,8 @@ import {
 } from '../../constants'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, rawTransaction, options = {}) => {
+export const signAndSend = async (walletId, rawTransaction, options = {}) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -33,6 +34,7 @@ export default async (walletId, rawTransaction, options = {}) => {
     }
   }
 
+  // call wallet instance method
   return await walletInstance.signAndSend(rawTransaction, {
     privateKey,
     derivationPath,

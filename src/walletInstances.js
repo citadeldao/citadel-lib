@@ -1,4 +1,4 @@
-import networks from './networks'
+import networkClasses from './networkClasses'
 import { WALLET_TYPES } from './constants'
 import { merge } from './helpers/merge'
 
@@ -11,35 +11,44 @@ const getWalletInstanceById = (walletId) => instanceCollection.get(walletId)
 const removeWalletInstanceById = (walletId) =>
   instanceCollection.delete(walletId)
 
-const setWalletInstanceById = (walletId, instance) =>
-  instanceCollection.set(walletId, instance)
-
-const updateWalletInstance = (newWalletInfo) => {
-  // wallet instances should reflect the current state of the wallet storage. Any change in the state of the wallet (list of wallets) - updated data from the server, e.g. - is first written to the storage, and then the callback from the storage updates the list of instances
-
-  const walletInstance = getWalletInstanceById(newWalletInfo.id)
-  // CASE 2: existing wallet instance needs an update
-  if (walletInstance) {
-    const initInstanceRequired =
-      walletInstance.type === WALLET_TYPES.PUBLIC_KEY &&
-      newWalletInfo.type !== WALLET_TYPES.PUBLIC_KEY
-    // для сохранения инстанса, т.к он может быть занят выполнением какой-либо функции
-    merge(walletInstance, newWalletInfo)
-    initInstanceRequired && walletInstance.init()
-    return
-  }
-
-  // CASE 3: wallet instance not exist
-  const newWalletInstance = networks.createWalletInstance(newWalletInfo)
-  setWalletInstanceById(newWalletInfo.id, newWalletInstance)
+const createWalletInstance = (walletInfo) => {
+  // create new instance
+  const newWalletInstance = networkClasses.createWalletInstance(walletInfo)
+  // set instance to collection
+  instanceCollection.set(walletInfo.id, newWalletInstance)
   // init instance (update secret viewingKey etc, without awaiting)
   newWalletInstance.init()
 }
 
+const updateWalletInstance = (newWalletInfo) => {
+  const walletInstance = getWalletInstanceById(newWalletInfo.id)
+
+  if (!walletInstance) {
+    console.warn(
+      `Wallet instance does not exist. Wallet keys "${Object.keys(
+        newWalletInfo
+      )}" have not been updated`
+    )
+    return
+  }
+
+  // to save the instance, because it may be busy performing some function
+  merge(walletInstance, newWalletInfo)
+
+  // init instance if wallet was public and now is private
+  if (
+    walletInstance.type === WALLET_TYPES.PUBLIC_KEY &&
+    newWalletInfo.type !== WALLET_TYPES.PUBLIC_KEY
+  ) {
+    walletInstance.init()
+  }
+  return
+}
+
 export default {
-  clearWalletInstances,
+  createWalletInstance,
   getWalletInstanceById,
-  removeWalletInstanceById,
-  setWalletInstanceById,
   updateWalletInstance,
+  removeWalletInstanceById,
+  clearWalletInstances,
 }

@@ -1,14 +1,16 @@
-import networks from '../../networks'
+import networkClasses from '../../networkClasses'
 import {
   checkTypes,
   checkNetwork,
   checkInitialization,
 } from '../../helpers/checkArguments'
 
-export default (net) => {
+export const getNetworkConfig = (net) => {
+  // checks
   checkInitialization()
   checkTypes(['net', net, ['String'], true])
   checkNetwork(net)
 
-  return networks.getNetworkClass(net).getNetworkConfig()
+  // call static network method
+  return networkClasses.getNetworkClass(net).getNetworkConfig()
 }

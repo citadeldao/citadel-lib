@@ -1,11 +1,12 @@
-import libCore from '../../libCore'
+import api from '../../api'
 import {
   checkTypes,
   checkInitialization,
   checkNetwork,
 } from '../../helpers/checkArguments'
 
-export default async (net, address) => {
+export const getBalanceByAddress = async (net, address) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['net', net, ['String'], true],
@@ -13,7 +14,8 @@ export default async (net, address) => {
   )
   checkNetwork(net)
 
-  const { data } = await libCore.formattedApi.getDelegationBalance({
+  // call api
+  const { data } = await api.formattedApi.getDelegationBalance({
     net,
     address,
   })

@@ -1,8 +1,11 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
 import errors from '../../errors'
-import addWalletByPrivateKey from './addWalletByPrivateKey'
+import { addWalletByPrivateKey } from './addWalletByPrivateKey'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (walletsOptions) => {
+export const addWalletCollectionByPrivateKey = async (walletsOptions) => {
+  // checks
   checkInitialization()
 
   checkTypes(['walletsOptions', walletsOptions, ['Array'], true])
@@ -10,12 +13,13 @@ export default async (walletsOptions) => {
     errors.throwError('WrongArguments', {
       message: 'walletsOptions array is empty ',
     })
-
+  // check title type
   walletsOptions.map(({ title }, index) => {
     checkTypes([`[walletIndex_${index}].title`, title, ['String']])
   })
 
-  const createdWallets = await Promise.all(
+  // loop with addWalletByPrivateKey
+  const addedWallets = await Promise.all(
     walletsOptions.map(async (walletOptions, walletIndex) => {
       try {
         return await addWalletByPrivateKey(walletOptions)
@@ -26,6 +30,10 @@ export default async (walletsOptions) => {
       }
     })
   )
-  // filter not added wallets
-  return createdWallets.filter((item) => item)
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+
+  // filter added wallets
+  return addedWallets
 }

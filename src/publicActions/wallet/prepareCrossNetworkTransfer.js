@@ -6,7 +6,12 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async function (walletId, token, options = {}) {
+export const prepareCrossNetworkTransfer = async function (
+  walletId,
+  token,
+  options = {}
+) {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -27,6 +32,7 @@ export default async function (walletId, token, options = {}) {
 
   checkNetworkOrToken(token)
 
+  // call wallet instance method
   return await walletInstances
     .getWalletInstanceById(walletId)
     .prepareCrossNetworkTransfer(token, options)

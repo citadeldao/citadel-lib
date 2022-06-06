@@ -6,7 +6,8 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, options = {}) => {
+export const getTransactionsById = async (walletId, options = {}) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -26,14 +27,14 @@ export default async (walletId, options = {}) => {
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
 
   if (!options.token || options.token === walletInstance.net) {
-    // native token balance
+    // for subtoken call token info
     return await walletInstance.getTransactions({
       page: options.page,
       pageSize: options.pageSize,
       kt,
     })
   } else {
-    // subtoken
+    // for native token call walletInstance method
     return await walletInstance.callTokenInfo(options.token, 'transactions', {
       page: options.page,
       pageSize: options.pageSize,

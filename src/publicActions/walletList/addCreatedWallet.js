@@ -1,10 +1,12 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
-import libCore from '../../libCore'
+import walletsManager from '../../walletsManager'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (wallet) => {
+export const addCreatedWallet = async (wallet) => {
   checkInitialization()
   checkTypes(['wallet', wallet, ['Object'], true])
-  // only significant fields
+  // get only important properties
   const {
     net,
     address,
@@ -35,6 +37,7 @@ export default async (wallet) => {
   )
 
   const createdWallet = {
+    // no private properties for save (remove privateKey and derivationPath)!
     net,
     address,
     title,
@@ -50,9 +53,16 @@ export default async (wallet) => {
   }
 
   // add new wallet
-  const newWallet = await libCore.addCreatedWallet({ createdWallet, title })
+  const newWallet = await walletsManager.addCreatedWallet({
+    createdWallet,
+    // TODO: refact "title" argument (why separate?)
+    title,
+  })
 
   if (newWallet) {
+    // EVENT: inform the client that it is time to update wallet list
+    dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+
     // return wallet with private key and derivation path
     return {
       ...newWallet,

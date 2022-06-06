@@ -3,15 +3,18 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
+  checkNetworkDaoSupport,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId) => {
+export const prepareAssignToDaoMessage = async (walletId) => {
+  // checks
   checkInitialization()
   checkTypes(['walletId', walletId, ['String', 'Number'], true])
   checkWalletId(walletId)
+  const walletInstance = walletInstances.getWalletInstanceById(walletId)
+  checkNetworkDaoSupport(walletInstance.net)
 
-  return await walletInstances
-    .getWalletInstanceById(walletId)
-    .prepareAssignToDaoMessage()
+  // call walletInstance method
+  return await walletInstance.prepareAssignToDaoMessage()
 }

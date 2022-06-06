@@ -9,7 +9,8 @@ import {
 } from '../../constants'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, options) => {
+export const convertScrtToSecretScrt = async (walletId, options) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -34,6 +35,7 @@ export default async (walletId, options) => {
     checkTypes(['privateKey', privateKey, ['String'], true])
   }
 
+  // call walletInstance method
   return await walletInstances
     .getWalletInstanceById(walletId)
     .convertScrtToSecretScrt({ amount, fee, privateKey, derivationPath })

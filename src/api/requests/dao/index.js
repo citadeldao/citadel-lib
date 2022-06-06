@@ -6,7 +6,7 @@ import { getDaoRewardsByRange } from './getDaoRewardsByRange'
 import { getDaoCalculatorData } from './getDaoCalculatorData'
 import { getAllDaoRewards } from './getAllDaoRewards'
 
-export default {
+export const dao = {
   prepareAssignToDaoMessage,
   sendAssignToDaoMessage,
   getDaoSupportedNetworks,

@@ -1,4 +1,4 @@
-export default async function (
+export const retryRequestOnError = async (
   requestFunction,
   {
     retryDelay = 3000,
@@ -7,7 +7,7 @@ export default async function (
     retryableErrorStatusTo = 599,
     throwError = true,
   }
-) {
+) => {
   let data = null
   let error = null
 

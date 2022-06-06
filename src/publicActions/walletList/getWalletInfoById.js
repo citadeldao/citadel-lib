@@ -1,13 +1,16 @@
-import storage from '../../storage'
+import walletsManager from '../../walletsManager'
 import {
   checkTypes,
   checkInitialization,
   checkWalletId,
 } from '../../helpers/checkArguments'
 
-export default async (walletId) => {
+export const getWalletInfoById = async (walletId) => {
+  // checks
   checkInitialization()
   checkTypes(['walletId', walletId, ['String', 'Number'], true])
   checkWalletId(walletId)
-  return storage.wallets.getWalletById()
+
+  // call api
+  return walletsManager.getWalletInfoById(walletId)
 }

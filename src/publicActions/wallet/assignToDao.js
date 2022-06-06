@@ -2,6 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
+  checkNetworkDaoSupport,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 import {
@@ -9,7 +10,8 @@ import {
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../constants'
 
-export default async (walletId, holderAddress, options) => {
+export const assignToDao = async (walletId, holderAddress, options) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -29,7 +31,9 @@ export default async (walletId, holderAddress, options) => {
   }
 
   checkWalletId(walletId)
-  return await walletInstances
-    .getWalletInstanceById(walletId)
-    .assignToDao(holderAddress, options)
+
+  checkNetworkDaoSupport(walletInstance.net)
+
+  // call wallet instance method
+  return await walletInstance.assignToDao(holderAddress, options)
 }

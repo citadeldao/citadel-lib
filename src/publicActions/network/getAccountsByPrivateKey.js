@@ -16,7 +16,7 @@ import {
  *
  * const response = await citadel.getAccountsByPrivateKey({
  *   net: 'iost',
- *   privateKey: '4pDvjaQxDkpyA9r5ZJWQ7Vk2Gciy6M9pwEj92nBJmkMo4EpwP9R4ygERZbmocJjrCn2LDYoFZzcwUNkfTpwrqyt2'
+ *   privateKey: '2kCbJCnqDRcCqzzWmSwt3k4NzPJCpUFd84ceLmmsKty8S9uAnXon1EZyEuE8TvL2jk946DszCkuo91Q7fbCPQsj1'
  * })
  *
  * // =>

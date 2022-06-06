@@ -26,7 +26,7 @@ export const addEventListener = (eventName, callback) => {
   // checks
   checkTypes(
     ['eventName', eventName, ['String'], true],
-    ['callback', callback, ['Function'], true]
+    ['callback', callback, ['Function', 'AsyncFunction'], true]
   )
 
   if (!Object.values(LIB_EVENT_NAMES).includes(eventName)) {

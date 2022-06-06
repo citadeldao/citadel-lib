@@ -83,7 +83,9 @@ export const checkNetworkDaoSupport = (net) => {
 
 // checking if the network has a token
 export const checkNetworkToken = (net, token) => {
-  if (!networkClasses.getNetworkClass(net).tokens.includes(token)) {
+  if (
+    !Object.keys(networkClasses.getNetworkClass(net).tokens).includes(token)
+  ) {
     errors.throwError('Wrong arguments', {
       message: `Network "${net}" does not support the token with the key "${token}"`,
     })

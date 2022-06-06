@@ -1,6 +1,6 @@
 # lib-citadel
 
-Crypto wallet management module for [Citadel.one](https://app.citadel.one/) client application.
+Crypto wallets management module for [Citadel.one](https://app.citadel.one/) client application.
 Provides a standardized interface for working with wallets of various crypto networks.
 
 ## Features

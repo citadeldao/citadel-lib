@@ -49,6 +49,7 @@
     "pouchdb-find": "^7.2.2",
     "secp256k1": "^4.0.2",
     "secretjs": "^0.17.5",
+    "socket.io-client": "^4.5.1",
     "stream-browserify": "^3.0.0",
     "trezor-connect": "^8.2.6"
   },

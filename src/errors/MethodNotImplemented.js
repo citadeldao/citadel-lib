@@ -1,6 +1,6 @@
-import LibraryError from './LibraryError'
+import { LibraryError } from './LibraryError'
 
-export default class MethodNotImplemented extends LibraryError {
+export class MethodNotImplemented extends LibraryError {
   constructor(options) {
     const defaultMessage = `The '${
       options.method

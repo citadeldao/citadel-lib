@@ -6,7 +6,8 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default (walletId, token) => {
+export const getFees = (walletId, token) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -14,5 +15,7 @@ export default (walletId, token) => {
   )
   token && checkNetworkOrToken(token)
   checkWalletId(walletId)
+
+  // call walletInstance method
   return walletInstances.getWalletInstanceById(walletId).getFees(token)
 }

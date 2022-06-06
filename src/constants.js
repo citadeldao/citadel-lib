@@ -1,8 +1,32 @@
 // secret node
 export const COSM_WASM_CLIENT_HTTP_URL = 'https://api-secret.citadel.one'
 
-export const EVENT_NAMES = {
-  walletListUpdated: 'walletListUpdated',
+export const SOCKET_EVENT_NAMES = {
+  TRANSACTION_EVENTS_CLIENT: 'transaction-events-client',
+  MESSAGE_FROM_APP: 'message-from-app',
+  ADDRESS_BALANCE_UPDATED_CLIENT: 'address-balance-updated-client',
+  MEMPOOL_ADD_TX_CLIENT: 'mempool-add-tx-client',
+  MEMPOOL_REMOVE_TX_CLIENT: 'mempool-remove-tx-client',
+}
+
+export const LIB_EVENT_NAMES = {
+  WALLET_LIST_UPDATED: 'walletListUpdated',
+  SOCKET_EVENT: 'socketEvent',
+}
+
+// computed properties to associate event with its callback in the state
+export const LIB_EVENT_CALLBACK_NAMES = {
+  [LIB_EVENT_NAMES.WALLET_LIST_UPDATED]: 'walletListUpdatedCallback',
+  [LIB_EVENT_NAMES.SOCKET_EVENT]: 'socketEventCallback',
+}
+
+export const CACHE_NAMES = {
+  SUPPORTED_NETWORK_KEYS: 'supportedNetworkKeys',
+  NETWORKS_CONFIG: 'networksConfig',
+  RATES: 'rates',
+  MARKETCAPS: 'marketcaps',
+  STAKE_NODES: 'stakeNodes',
+  DAO_SUPPORTED_NETWORKS: 'daoSupportedNetworks',
 }
 
 export const GET_WALLET_LIST_TYPES = {

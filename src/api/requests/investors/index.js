@@ -3,7 +3,7 @@ import { getPreparePrivateClaim } from './getPreparePrivateClaim'
 import { getBalanceFund } from './getBalanceFund'
 import { getPrepareTransferFund } from './getPrepareTransferFund'
 
-export default {
+export const investors = {
   getPrivateSale,
   getPreparePrivateClaim,
   getBalanceFund,

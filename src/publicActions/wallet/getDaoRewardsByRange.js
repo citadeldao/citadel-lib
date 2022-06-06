@@ -5,7 +5,8 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, dateFrom, dateTo) => {
+export const getDaoRewardsByRange = async (walletId, dateFrom, dateTo) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -14,6 +15,7 @@ export default async (walletId, dateFrom, dateTo) => {
   )
   checkWalletId(walletId)
 
+  // call walletInstance method
   return await walletInstances
     .getWalletInstanceById(walletId)
     .getDaoRewardsByRange(dateFrom, dateTo)

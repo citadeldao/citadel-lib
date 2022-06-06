@@ -1,7 +1,9 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
-import addWalletByPublicKey from './addWalletByPublicKey'
+import { addWalletByPublicKey } from './addWalletByPublicKey'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (walletsOptions) => {
+export const addWalletCollectionByPublicKey = async (walletsOptions) => {
   // сhecks
   checkInitialization()
   checkTypes(['walletsOptions', walletsOptions, ['Array'], true])
@@ -13,7 +15,7 @@ export default async (walletsOptions) => {
     )
   })
 
-  const createdWallets = await Promise.all(
+  const addedWallets = await Promise.all(
     walletsOptions.map(async (walletOptions, walletIndex) => {
       try {
         return await addWalletByPublicKey(walletOptions)
@@ -24,5 +26,10 @@ export default async (walletsOptions) => {
       }
     })
   )
-  return createdWallets.filter((item) => item)
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+
+  // filter added wallets
+  return addedWallets
 }

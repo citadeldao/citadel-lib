@@ -1,11 +1,14 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
-import libCore from '../../libCore'
+import socketManager from '../../socketManager'
 
-export default async (eventName, socketObject) => {
+export const parseSocketObject = async (eventName, socketObject) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['eventName', eventName, ['String'], true],
     ['socketObject', socketObject, ['Object'], true]
   )
-  return await libCore.parseSocketObject(eventName, socketObject)
+
+  // return socketManager (function already contains updateWalletList event inside)
+  return await socketManager.parseSocketObject(eventName, socketObject)
 }

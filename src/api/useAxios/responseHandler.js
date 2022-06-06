@@ -1,3 +1,3 @@
-export default (response) => {
+export const responseHandler = (response) => {
   return response.data
 }

@@ -3,7 +3,7 @@ import { editCustomWalletList } from './editCustomWalletList'
 import { createCustomWalletList } from './createCustomWalletList'
 import { deleteCustomWalletList } from './deleteCustomWalletList'
 
-export default {
+export const walletList = {
   getCustomWalletLists,
   editCustomWalletList,
   createCustomWalletList,

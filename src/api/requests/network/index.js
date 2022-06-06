@@ -4,7 +4,7 @@ import { getStakeNodes } from './getStakeNodes'
 import { getCurrencyHistoryByRange } from './getCurrencyHistoryByRange'
 import { getTransactionDuration } from './getTransactionDuration'
 
-export default {
+export const network = {
   getCurrency,
   getMarketcap,
   getStakeNodes,

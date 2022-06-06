@@ -5,7 +5,8 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default (walletId, options) => {
+export const getDelegationFee = (walletId, options) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -25,6 +26,7 @@ export default (walletId, options) => {
     ['isWithoutDelegation', isWithoutDelegation, ['Boolean']]
   )
 
+  // call walletInstance method
   return walletInstances
     .getWalletInstanceById(walletId)
     .getDelegationFee({ transactionType, nodeAddress, sourceNodeAddress, kt, isWithoutDelegation })

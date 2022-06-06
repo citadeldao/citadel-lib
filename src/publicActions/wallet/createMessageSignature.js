@@ -5,7 +5,12 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, message, { privateKey, derivationPath }) => {
+export const createMessageSignature = async (
+  walletId,
+  message,
+  { privateKey, derivationPath }
+) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -14,6 +19,7 @@ export default async (walletId, message, { privateKey, derivationPath }) => {
   )
   checkWalletId(walletId)
 
+  // call walletInstance method
   return await walletInstances
     .getWalletInstanceById(walletId)
     .createMessageSignature(message, {

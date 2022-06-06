@@ -1,8 +1,10 @@
-import networks from '../../networks'
+import networkClasses from '../../networkClasses'
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
-import libCore from '../../libCore'
+import walletsManager from '../../walletsManager'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (options) => {
+export const addWalletByPublicKey = async (options) => {
   checkInitialization()
   checkTypes(['options', options, ['Object'], true])
   const { net, address, title } = options
@@ -13,13 +15,20 @@ export default async (options) => {
   )
 
   // create public wallet
-  const createdWallet = networks
+  const createdWallet = networkClasses
     .getNetworkClass(net)
     .createPublicWallet({ net, address })
 
-  const newWallet = await libCore.addCreatedWallet({ createdWallet, title })
+  const newWallet = await walletsManager.addCreatedWallet({
+    createdWallet,
+    title,
+  })
+
   // return if the wallet has not been added
   if (!newWallet) return
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 
   return newWallet
 }

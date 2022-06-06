@@ -1,5 +1,6 @@
 import { mergeWith } from 'lodash'
 
+// deep clone with array replacement
 export const merge = (oldValue, newValue) => {
   const customizer = (objValue, srcValue) => {
     // replace arrays

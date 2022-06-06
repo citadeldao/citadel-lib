@@ -5,7 +5,7 @@ import { getWalletsDetail } from './getWalletsDetail'
 import { getActiveDaoHolders } from './getActiveDaoHolders'
 import { subscribeRewards } from './subscribeRewards'
 
-export default {
+export const common = {
   getInfo,
   getNetworksConfig,
   getWallets,

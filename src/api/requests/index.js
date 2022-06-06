@@ -1,13 +1,15 @@
-import common from './common'
-import network from './network'
-import wallet from './wallet'
-import charts from './charts'
-import walletList from './walletList'
-import tokens from './tokens'
-import dao from './dao'
-import rewards from './rewards'
-import investors from './investors'
+import { common } from './common'
+import { network } from './network'
+import { wallet } from './wallet'
+import { charts } from './charts'
+import { walletList } from './walletList'
+import { tokens } from './tokens'
+import { dao } from './dao'
+import { rewards } from './rewards'
+import { investors } from './investors'
+import { sockets } from './sockets'
 
+// all requests are put on the same level. Keep unique request names
 export const requests = {
   ...common,
   ...network,
@@ -18,4 +20,5 @@ export const requests = {
   ...walletList,
   ...charts,
   ...investors,
+  ...sockets,
 }

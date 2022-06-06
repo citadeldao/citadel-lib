@@ -1,6 +1,6 @@
-import LibraryError from './LibraryError'
+import { LibraryError } from './LibraryError'
 
-export default class ServerError extends LibraryError {
+export class ServerError extends LibraryError {
   constructor(options) {
     super({ message: options.message })
     this.name = 'ServerError'

@@ -28,7 +28,7 @@ import { prepareStakeWithoutDelegation } from './prepareStakeWithoutDelegation'
 import { prepareUnstakeWithoutDelegation } from './prepareUnstakeWithoutDelegation'
 
 
-export default {
+export const wallet = {
   addWallet,
   getDelegationBalance,
   getWalletTransactions,

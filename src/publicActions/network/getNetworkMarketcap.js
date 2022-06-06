@@ -1,4 +1,4 @@
-import networks from '../../networks'
+import networkClasses from '../../networkClasses'
 import {
   checkTypes,
   checkNetworkOrToken,
@@ -6,21 +6,24 @@ import {
 } from '../../helpers/checkArguments'
 import state from '../../state'
 import api from '../../api'
+import { CACHE_NAMES } from '../../constants'
 
-export default async (netOrToken) => {
+export const getNetworkMarketcap = async (netOrToken) => {
+  // checks
   checkInitialization()
   checkTypes(['netOrToken ', netOrToken, ['String'], true])
-  // net might be token
   checkNetworkOrToken(netOrToken)
 
-  // for network:
-  if (state.getState('supportedNetworkKeys').includes(netOrToken)) {
-    return await networks
+  // TODO: move if to static method
+
+  // for native token call static network method
+  if (state.getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS).includes(netOrToken)) {
+    return await networkClasses
       .getNetworkClass(netOrToken)
       .getNetworkMarketcap(netOrToken)
   }
 
-  // for some token
+  // for subtoken call api
   const { data } = await api.requests.getMarketcap({ net: netOrToken })
   return data
 }

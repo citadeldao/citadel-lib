@@ -3,10 +3,12 @@ import {
   checkInitialization,
   checkWalletId,
   checkNetworkOrToken,
+  checkTokensSupport,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default (walletId, token) => {
+export const getTokenActions = (walletId, token) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -14,11 +16,13 @@ export default (walletId, token) => {
   )
   checkNetworkOrToken(token)
   checkWalletId(walletId)
+  const walletInstance = walletInstances.getWalletInstanceById(walletId)
+  checkTokensSupport(walletInstance.net)
 
-  const actionsArray = walletInstances
-    .getWalletInstanceById(walletId)
-    .getTokenActions(token)
+  // call walletInstance method
+  const actionsArray = walletInstance.getTokenActions(token)
 
+  // return object from actionsArray: { actionName: true }
   return actionsArray.reduce((target, key) => {
     target[key] = true
     return target

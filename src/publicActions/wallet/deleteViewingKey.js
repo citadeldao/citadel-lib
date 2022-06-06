@@ -4,8 +4,11 @@ import {
   checkWalletId,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (walletId, token) => {
+export const deleteViewingKey = async (walletId, token) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -13,7 +16,9 @@ export default async (walletId, token) => {
   )
   checkWalletId(walletId)
 
-  return await walletInstances
-    .getWalletInstanceById(walletId)
-    .deleteViewingKey(token)
+  // call walletInstance method
+  await walletInstances.getWalletInstanceById(walletId).deleteViewingKey(token)
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

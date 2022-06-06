@@ -5,7 +5,8 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
-export default async (walletId, options) => {
+export const prepareDelegation = async (walletId, options) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
@@ -22,23 +23,23 @@ export default async (walletId, options) => {
     rewardsAddress,
     rewardsRestake,
     additionalFee,
-    isWithoutDelegation
+    isWithoutDelegation,
   } = options
   checkTypes(
-    // Array for polka
+    // nodeAddress - Array for polkadot
     ['nodeAddress', nodeAddress, ['String', 'Array']],
     ['amount', amount, ['String', 'Number']],
     ['type', type, ['String']],
-    // Array for polka
+    // Array for polkadot
     ['redelegateNodeAddress', redelegateNodeAddress, ['String', 'Array']],
     ['kt', kt, ['String']],
-    //for polka
     ['rewardsAddress', rewardsAddress, ['String']],
     ['rewardsRestake', rewardsRestake, ['Boolean']],
     ['additionalFee', additionalFee, ['String', 'Number']],
     ['isWithoutDelegation', isWithoutDelegation, ['Boolean']]
   )
 
+  // call wallet instance method
   return await walletInstances
     .getWalletInstanceById(walletId)
     .prepareDelegation({
@@ -47,9 +48,10 @@ export default async (walletId, options) => {
       type,
       redelegateNodeAddress,
       kt,
+      // for polkadot
       rewardsAddress,
       rewardsRestake,
       additionalFee,
-      isWithoutDelegation
+      isWithoutDelegation,
     })
 }

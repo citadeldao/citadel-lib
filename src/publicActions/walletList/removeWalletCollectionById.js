@@ -1,8 +1,10 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
-import storage from '../../storage'
-import api from '../../api'
+import walletsManager from '../../walletsManager'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
-export default async (walletsOptions) => {
+export const removeWalletCollectionById = async (walletsOptions) => {
+  // checks
   checkInitialization()
 
   checkTypes(['walletsOptions', walletsOptions, ['Array'], true])
@@ -14,12 +16,10 @@ export default async (walletsOptions) => {
   // fast parallel remove
   await Promise.all(
     walletsOptions.map(async ({ id }) => {
-      try {
-        await api.requests.removeWallet(id)
-      } catch (error) {
-        console.error(error)
-      }
-      storage.wallets.removeWallet(id)
+      await walletsManager.removeWallet(id)
     })
   )
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

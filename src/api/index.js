@@ -1,22 +1,25 @@
-import createApiRequests from './createApiRequests'
+import { createApiRequests } from './createApiRequests'
 import { requests } from './requests'
 import { externalRequests } from './externalRequests'
+import { formattedApi } from './formattedApi'
 
 const api = {
   requests: null,
   externalRequests: null,
+  formattedApi,
 }
 
 export default api
 
 export const initApi = (baseURL) => {
+  // citadel backend
   api.requests = createApiRequests({
     baseURL,
     withCredentials: true,
     requests,
     enableResponseHandler: true,
   })
-
+  // other servers
   api.externalRequests = createApiRequests({
     baseURL: false,
     withCredentials: false,

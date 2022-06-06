@@ -1,11 +1,12 @@
-import networks from '../../networks'
+import networkClasses from '../../networkClasses'
 import {
   checkTypes,
   checkNetwork,
   checkInitialization,
 } from '../../helpers/checkArguments'
 
-export default (net, address) => {
+export const validateAddress = (net, address) => {
+  // checks
   checkInitialization()
   checkTypes(
     ['net', net, ['String'], true],
@@ -13,5 +14,6 @@ export default (net, address) => {
   )
   checkNetwork(net)
 
-  return networks.getNetworkClass(net).validateAddress(address)
+  // call static network method
+  return networkClasses.getNetworkClass(net).validateAddress(address)
 }

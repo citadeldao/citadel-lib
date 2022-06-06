@@ -1,4 +1,4 @@
-import networks from '../../networks'
+import networkClasses from '../../networkClasses'
 import {
   checkTypes,
   checkNetworkOrToken,
@@ -6,8 +6,13 @@ import {
 } from '../../helpers/checkArguments'
 import state from '../../state'
 import api from '../../api'
+import { CACHE_NAMES } from '../../constants'
 
-export default async (netOrToken, transactionHash, text = '') => {
+export const postTransactionNote = async (
+  netOrToken,
+  transactionHash,
+  text = ''
+) => {
   checkInitialization()
   checkTypes(
     ['netOrToken', netOrToken, ['String'], true],
@@ -17,18 +22,21 @@ export default async (netOrToken, transactionHash, text = '') => {
 
   checkNetworkOrToken(netOrToken)
 
-  // for some net
-  if (state.getState('supportedNetworkKeys').includes(netOrToken)) {
-    return await networks
+  // TODO: move if to static method
+
+  // for native token call static network method
+  if (state.getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS).includes(netOrToken)) {
+    return await networkClasses
       .getNetworkClass(netOrToken)
       .postTransactionNote(transactionHash, text)
   }
 
-  // for some token
+  // for subtoken call api
   const { data } = await api.requests.postTransactionNote({
     net: netOrToken,
     transactionHash,
     text,
   })
+
   return data
 }

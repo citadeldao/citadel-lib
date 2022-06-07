@@ -2,7 +2,10 @@ import { VIEWING_KEYS_TYPES, WALLET_TYPES } from '../../../../constants'
 import walletInstances from '../../../../walletInstances'
 import snip20Manager from '../snip20Manager'
 import storage from '../../../../storage'
-import { CACHE_NAMES } from '../../../../constants'
+import {
+  CACHE_NAMES,
+  PRIVATE_KEY_SIGNER_WALLET_TYPES,
+} from '../../../../constants'
 
 // TODO: refact!
 export async function checkSavedAndSimpleVKValidity() {
@@ -11,7 +14,9 @@ export async function checkSavedAndSimpleVKValidity() {
     .secret.tokens
 
   // public wallet does not have viewing keys
-  if (this.type === WALLET_TYPES.PUBLIC_KEY) return
+  if (this.type === WALLET_TYPES.PUBLIC_KEY) {
+    return
+  }
 
   // collect changed tokens names (TODO: refact)
   const chagedViewingKeyTokens = []
@@ -49,6 +54,11 @@ export async function checkSavedAndSimpleVKValidity() {
   }
 
   // 2) check simpleViewingKey for favorite vallets
+  // return if wallet does not have privateKeyHash
+  if (!PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type)) {
+    return
+  }
+
   for (const token in tokensConfig) {
     // checking that the wallet was not deleted
 

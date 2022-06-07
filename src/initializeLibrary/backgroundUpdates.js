@@ -3,19 +3,15 @@ import walletsManager from '../walletsManager'
 import walletInstances from '../walletInstances'
 import { dispatchLibEvent } from '../dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../constants'
-import { initialCacheManager } from './initialCacheManager'
 import { configureModulesByCaches } from './configureModulesByCaches'
 
 // update wallets detail
-export const backgroundUpdates = async () => {
+export const backgroundUpdates = async (initialCacheManager) => {
   // update old initial caches
   await initialCacheManager.updateOldCache()
 
   // configure modules by updated cache and walletList from 'detail' request to fast init
-  await configureModulesByCaches(
-    initialCacheManager.getInitialCaches(),
-    detailedAccountwallets
-  )
+  await configureModulesByCaches(initialCacheManager.getInitialCaches())
 
   // get detailed wallet balances
   const { data: detailedAccountwallets } =

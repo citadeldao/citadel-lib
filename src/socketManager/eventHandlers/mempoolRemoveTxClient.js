@@ -6,12 +6,13 @@ import { dispatchLibEvent } from '../../dispatchLibEvent'
 import { LIB_EVENT_NAMES, CACHE_NAMES } from '../../constants'
 import state from '../../state'
 
-export const mempoolRemoveTxClient = async ({ from, net, to, type }) => {
+export const mempoolRemoveTxClient = async (data) => {
+  const { from, net, to, type } = data
   // get supportedTokens { token: nativeNet }
   const supportedTokens = state.getState('supportedTokens')
 
-  // for this types return flag for update subtokensList
-  const updateStakeListRequired = ['stake', 'unstake', 'restake'].includes(type)
+  // for this types add flag to data for update subtokensList
+  data.updateStakeListRequired = ['stake', 'unstake', 'restake'].includes(type)
   const isSubtoken = !state
     .getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS)
     .includes(net)
@@ -36,5 +37,4 @@ export const mempoolRemoveTxClient = async ({ from, net, to, type }) => {
 
   // EVENT: inform the client that it is time to update wallet list
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
-  return { updateStakeListRequired }
 }

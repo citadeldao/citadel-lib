@@ -11,7 +11,6 @@ import { addWalletCollectionByPrivateKey } from './addWalletCollectionByPrivateK
 import { addWalletCollectionByMnemonic } from './addWalletCollectionByMnemonic'
 import { setWalletList } from './setWalletList'
 import { addWalletByTrezor } from './addWalletByTrezor'
-import { parseSocketObject } from './parseSocketObject'
 import { getCustomWalletLists } from './getCustomWalletLists'
 import { createCustomWalletList } from './createCustomWalletList'
 import { deleteCustomWalletList } from './deleteCustomWalletList'
@@ -33,7 +32,6 @@ export const walletList = {
   addWalletCollectionByMnemonic,
   setWalletList,
   addWalletByTrezor,
-  parseSocketObject,
   getCustomWalletLists,
   createCustomWalletList,
   deleteCustomWalletList,

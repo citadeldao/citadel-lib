@@ -21,7 +21,7 @@ export function getFeeObject(fee) {
         },
       ],
       //By adjusting the proportion, you can change the speed of the transaction. But if you put too little, then the transactions will start to fail
-      gas: `${+fee * 2.5 * 10 ** 7}`,
+      gas: `${+fee * 5 * 10 ** 7}`,
     },
     send: {
       amount: [{ amount: '4000', denom: 'uscrt' }],

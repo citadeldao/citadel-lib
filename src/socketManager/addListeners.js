@@ -8,7 +8,7 @@ export const addListeners = (socket) => {
     Object.values(SOCKET_EVENT_NAMES).map((eventName) => {
       // add listener
       socket.on(eventName, async (data) => {
-        // run socket event handler if it exists
+        // run socket event handler if it exists (may change data object!)
         if (eventHandlers[eventName]) {
           await eventHandlers[eventName](data)
         }

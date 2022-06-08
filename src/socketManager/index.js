@@ -1,5 +1,4 @@
 import api from '../api'
-import { parseSocketObject } from './parseSocketObject'
 import { io } from 'socket.io-client'
 import { addListeners } from './addListeners'
 
@@ -36,7 +35,6 @@ const reset = async () => {
 }
 
 export default {
-  parseSocketObject,
   init,
   reset,
 }

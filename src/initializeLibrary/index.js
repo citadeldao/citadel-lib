@@ -7,9 +7,8 @@ import { CACHE_NAMES, LIB_EVENT_NAMES } from '../constants'
 import { initialCacheManager } from './initialCacheManager'
 import { configureModulesByCaches } from './configureModulesByCaches'
 import { backgroundUpdates } from './backgroundUpdates'
-// import socketManager from './socketManager'
+import socketManager from '../socketManager'
 
-// TODO: add caches, do not await subtokenLists. Initialization time should be shortened to 'info' request load time
 export const initializeLibrary = async ({
   backendUrl,
   debug,
@@ -64,8 +63,8 @@ export const initializeLibrary = async ({
   // update walletList
   await walletsManager.updateWalletList(info.wallets)
 
-  // // connect sockets
-  // await socketManager.init()
+  // connect sockets
+  await socketManager.init()
 
   // do not await background updates- 'walletListUpdated' event will be dispatched inside
   backgroundUpdates(initialCacheManager)

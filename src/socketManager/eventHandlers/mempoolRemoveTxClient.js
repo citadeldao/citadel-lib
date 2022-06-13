@@ -12,7 +12,7 @@ export const mempoolRemoveTxClient = async (data) => {
   const supportedTokens = state.getState('supportedTokens')
 
   // for this types add flag to data for update subtokensList
-  data.updateStakeListRequired = ['stake', 'unstake', 'restake'].includes(type)
+  data.updateStakeListRequired = ['stake', 'unstake', 'restake', 'redelegate'].includes(type)
   const isSubtoken = !state
     .getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS)
     .includes(net)

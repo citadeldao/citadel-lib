@@ -9,6 +9,8 @@ import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
+import { sleep } from '../../../../helpers/sleep'
+import { getTokenBalance } from './getTokenBalance'
 
 export async function setViewingKey(
   viewingKeyType,
@@ -22,6 +24,7 @@ export async function setViewingKey(
     derivationPath,
     viewingKey,
     fee,
+    decimals,
   } = {}
 ) {
   try {
@@ -32,6 +35,7 @@ export async function setViewingKey(
       type,
       publicKey,
     })
+
     const client = new SigningCosmWasmClient(
       COSM_WASM_CLIENT_HTTP_URL,
       address,
@@ -41,6 +45,7 @@ export async function setViewingKey(
       // do not wait for the transaction to be included in the block, return the hash (prevent timeout error)
       BroadcastMode.Async
     )
+
     let transactionHash = null
 
     switch (viewingKeyType) {
@@ -94,7 +99,31 @@ export async function setViewingKey(
         })
       }
     }
+
     if (transactionHash) {
+      // wait for the key to be installed before saving it to the instance
+      const PAUSE_BETWEEN_CHECKS = 2000
+      const MAX_NUMBER_OF_CHECKS = 30
+      let currentСheckТumber = 0
+      // let balance = { calculatedBalance: 0, mainBalance: 0 }
+      while (currentСheckТumber < MAX_NUMBER_OF_CHECKS) {
+        // try to get balance with settable key
+        const { error } = await getTokenBalance(
+          address,
+          contractAddress,
+          decimals,
+          viewingKey
+        )
+
+        // break on success
+        if (!error) {
+          break
+        }
+        // try again
+        await sleep(PAUSE_BETWEEN_CHECKS)
+        currentСheckТumber++
+      }
+
       return { transactionHash, viewingKey }
     }
     throw Error

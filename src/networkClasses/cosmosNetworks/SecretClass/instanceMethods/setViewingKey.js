@@ -1,7 +1,6 @@
 import { VIEWING_KEYS_TYPES } from '../../../../constants'
 import snip20Manager from '../snip20Manager'
 import networkClasses from '../../../'
-import { sleep } from '../../../../helpers/sleep'
 
 // TODO: refact!
 export async function setViewingKey(
@@ -22,29 +21,8 @@ export async function setViewingKey(
     derivationPath,
     viewingKey,
     fee,
+    decimals: networkClass.tokens[token].decimals,
   })
-
-  // wait for the key to be installed before saving it to the instance
-  const PAUSE_BETWEEN_CHECKS = 2000
-  const MAX_NUMBER_OF_CHECKS = 60
-  let currentСheckТumber = 0
-  // let balance = { calculatedBalance: 0, mainBalance: 0 }
-  while (currentСheckТumber < MAX_NUMBER_OF_CHECKS) {
-    // try to get balance with settable key
-    const { error } = await snip20Manager.getTokenBalance(
-      this.address,
-      networkClass.tokens[token].address,
-      networkClass.tokens[token].decimals,
-      viewingKey
-    )
-    // break on success
-    if (!error) {
-      break
-    }
-    // try again
-    await sleep(PAUSE_BETWEEN_CHECKS)
-    currentСheckТumber++
-  }
 
   // save VK to instance
   this._saveViewingKeyToInstance(

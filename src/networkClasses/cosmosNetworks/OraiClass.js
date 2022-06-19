@@ -7,7 +7,7 @@ export default class OraiNetwork extends BaseCosmosNetwork {
 
   // own explorer link
   getScannerLinkById() {
-    return `https://scan.orai.io/account${this.address}`
+    return `https://scan.orai.io/account/${this.address}`
   }
 
   // own explorer link

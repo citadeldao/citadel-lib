@@ -1,4 +1,4 @@
-import BaseCosmosNetwork from './_BaseCosmosClass'
+import { BaseCosmosNetwork } from './_BaseCosmosClass'
 import { createMessageSignatureByLedger_3, signTxByPrivateKey, signTxByLedger_2 } from './_BaseCosmosClass/signers'
 import { WALLET_TYPES } from '../../constants'
 

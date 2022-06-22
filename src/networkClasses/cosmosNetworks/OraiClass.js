@@ -1,4 +1,5 @@
 import {BaseCosmosNetwork} from './_BaseCosmosClass'
+import { WALLET_TYPES } from '../../constants'
 
 export class OraiNetwork extends BaseCosmosNetwork {
   constructor(walletInfo) {

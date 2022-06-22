@@ -25,7 +25,6 @@ export default class KichainNetwork extends BaseCosmosNetwork {
     if (this.type === WALLET_TYPES.LEDGER) {
       return createMessageSignatureByLedger_3(data, derivationPath)
     }
-
     return super.createMessageSignature(data, { privateKey })
   }
 

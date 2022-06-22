@@ -1,4 +1,4 @@
-import BaseCosmosNetwork from './_BaseCosmosClass'
+import {BaseCosmosNetwork} from './_BaseCosmosClass'
 
 export default class OraiNetwork extends BaseCosmosNetwork {
   constructor(walletInfo) {

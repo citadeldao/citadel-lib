@@ -37,6 +37,7 @@ import { EvmosNetwork } from './cosmosNetworks/cosmoEtheriumNetworks/EvmosClass'
 import { CrescentNetwork } from './cosmosNetworks/CrescentClass'
 import { AxelarNetwork } from './cosmosNetworks/AxelarClass'
 import { PolkadotNetwork } from './PolkadotClass'
+import { OraiNetwork } from './cosmosNetworks/OraiClass'
 
 export const networkClasses = {
   tez: TezosNetwork,
@@ -78,4 +79,5 @@ export const networkClasses = {
   crescent: CrescentNetwork,
   axelar: AxelarNetwork,
   polkadot: PolkadotNetwork,
+  orai: OraiNetwork
 }

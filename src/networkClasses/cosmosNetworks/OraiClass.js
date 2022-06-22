@@ -1,5 +1,9 @@
-import {BaseCosmosNetwork} from './_BaseCosmosClass'
+import { BaseCosmosNetwork } from './_BaseCosmosClass'
 import { WALLET_TYPES } from '../../constants'
+import {
+  signTxByPrivateKey,
+  signTxByLedger,
+} from './_BaseCosmosClass/oldSigners'
 
 export class OraiNetwork extends BaseCosmosNetwork {
   constructor(walletInfo) {

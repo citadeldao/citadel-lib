@@ -1,6 +1,6 @@
 import { networkClasses } from './networkClasses'
 import state from '../state'
-import { CACHE_NAMES } from '../constants'
+import { isNativeToken } from '../helpers/isNativeToken'
 
 // set static class fields from config
 const configure = (networkConfigs) => {
@@ -24,10 +24,7 @@ const getNetworkClass = (net) => {
 
 // get native net by token
 const getNativeNet = (netOrToken) => {
-  const isNativeToken = state
-    .getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS)
-    .includes(netOrToken)
-  if (isNativeToken) {
+  if (isNativeToken(netOrToken)) {
     return netOrToken
   }
   return state.getState('supportedTokens')[netOrToken]

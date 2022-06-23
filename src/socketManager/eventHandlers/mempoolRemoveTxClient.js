@@ -3,8 +3,9 @@ import networkClasses from '../../networkClasses'
 // TODO: refact publicActions.getBalanceById, move function to walletInstance method and use here
 import publicActions from '../../publicActions'
 import { dispatchLibEvent } from '../../dispatchLibEvent'
-import { LIB_EVENT_NAMES, CACHE_NAMES } from '../../constants'
+import { LIB_EVENT_NAMES } from '../../constants'
 import state from '../../state'
+import { isNativeToken } from '../../helpers/isNativeToken'
 
 export const mempoolRemoveTxClient = async (data) => {
   const { from, net, to, type } = data
@@ -12,10 +13,13 @@ export const mempoolRemoveTxClient = async (data) => {
   const supportedTokens = state.getState('supportedTokens')
 
   // for this types add flag to data for update subtokensList
-  data.updateStakeListRequired = ['stake', 'unstake', 'restake', 'redelegate'].includes(type)
-  const isSubtoken = !state
-    .getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS)
-    .includes(net)
+  data.updateStakeListRequired = [
+    'stake',
+    'unstake',
+    'restake',
+    'redelegate',
+  ].includes(type)
+  const isSubtoken = !isNativeToken(net)
   const nativeNet = networkClasses.getNativeNet(net)
 
   const fromWallet = walletsManager.getWalletInfoByAddress(nativeNet, from)

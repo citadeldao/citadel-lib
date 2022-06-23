@@ -1,16 +1,33 @@
 import api from '../api'
 import { io } from 'socket.io-client'
 import { addListeners } from './addListeners'
+import {
+  USERS_SOCKET_EVENT_NAMES,
+  MARKETCAPS_SOCKET_EVENT_NAMES,
+} from '../constants'
 
-let socket = null
+// get socket base url
+const baseWSURL = process.env.VUE_APP_BACKEND_WS_URL.split('/')
+  .slice(0, -1)
+  .join('/')
+
+let usersSocket = null
+let marketcapsSocket = null
 
 const connect = async () => {
   try {
     // get socket token
     const { data: token } = await api.requests.getSocketToken()
 
-    // init and set socket.io instance
-    socket = io(process.env.VUE_APP_BACKEND_WS_URL, {
+    // create socket.io instance for /users
+    usersSocket = io(`${baseWSURL}/users`, {
+      transports: ['websocket'],
+      upgrade: false,
+      query: { token },
+    })
+
+    // create socket.io instance for /marketcaps
+    marketcapsSocket = io(`${baseWSURL}/marketcaps`, {
       transports: ['websocket'],
       upgrade: false,
       query: { token },
@@ -23,15 +40,19 @@ const connect = async () => {
 const init = async () => {
   // connect socket.io
   await connect()
-  // add listneners
-  addListeners(socket)
+  // add listneners for /users events
+  addListeners(usersSocket, USERS_SOCKET_EVENT_NAMES)
+  // add listneners for /marketcaps events
+  addListeners(marketcapsSocket, MARKETCAPS_SOCKET_EVENT_NAMES)
 }
 
 const reset = async () => {
   // disconnect socket.io instance
-  await socket?.disconnect()
-  // delete socket.io instance
-  socket = null
+  await usersSocket?.disconnect()
+  await marketcapsSocket?.disconnect()
+  // delete socket.io instances
+  usersSocket = null
+  marketcapsSocket = null
 }
 
 export default {

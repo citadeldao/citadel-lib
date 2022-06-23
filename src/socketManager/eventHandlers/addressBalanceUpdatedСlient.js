@@ -41,6 +41,4 @@ export const addressBalanceUpdatedСlient = async ({
   if (tokenReloadRequired) {
     await walletInstances.getWalletInstanceById(wallet.id).updateSubtokensList()
   }
-
-  return {}
 }

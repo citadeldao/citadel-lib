@@ -1,7 +1,6 @@
 import networkClasses from '../../'
-import state from '../../../state'
 import { checkNetworkOrToken } from '../../../helpers/checkArguments'
-import { CACHE_NAMES } from '../../../constants'
+import netwrokClasses from '../../'
 
 export const getCrossNetworkRoutes = function (token) {
   // get routes from network config
@@ -10,7 +9,7 @@ export const getCrossNetworkRoutes = function (token) {
       ? // for native token
         this.methods?.bridge
       : // for subtoken
-      networkClasses.getNetworkClass(this.net).tokens[token].methods?.bridge
+        networkClasses.getNetworkClass(this.net).tokens[token].methods?.bridge
   return (
     tokenConfigRoutes
       // filter unsupported routes
@@ -18,12 +17,7 @@ export const getCrossNetworkRoutes = function (token) {
       // create objct with route info
       .map((targetToken, index) => {
         // get targetNet
-        const isNativeTargetToken = state
-          .getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS)
-          .includes(targetToken)
-        const targetNet = isNativeTargetToken
-          ? targetToken
-          : state.getState('supportedTokens')[targetToken]
+        const targetNet = netwrokClasses.getNativeNet(targetToken)
         return {
           id: index,
           key: targetNet,

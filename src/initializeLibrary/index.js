@@ -58,13 +58,13 @@ export const initializeLibrary = async ({
   await initialCacheManager.loadMissingCache()
 
   // configure modules by cache and walletList from 'info' to fast init
-  await configureModulesByCaches(initialCacheManager.getInitialCaches())
+  configureModulesByCaches(initialCacheManager.getInitialCaches())
 
   // update walletList
   await walletsManager.updateWalletList(info.wallets)
 
-  // connect sockets
-  await socketManager.init()
+  // connect sockets (do not await for fast load)
+  socketManager.init()
 
   // do not await background updates- 'walletListUpdated' event will be dispatched inside
   backgroundUpdates(initialCacheManager)

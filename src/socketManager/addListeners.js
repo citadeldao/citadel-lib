@@ -1,11 +1,11 @@
-import { LIB_EVENT_NAMES, SOCKET_EVENT_NAMES } from '../constants'
+import { LIB_EVENT_NAMES } from '../constants'
 import { eventHandlers } from './eventHandlers'
 import { dispatchLibEvent } from '../dispatchLibEvent'
 
-export const addListeners = (socket) => {
+export const addListeners = (socket, socketEventNames) => {
   try {
     // add listeners for all registered socket event names
-    Object.values(SOCKET_EVENT_NAMES).map((eventName) => {
+    Object.values(socketEventNames).map((eventName) => {
       // add listener
       socket.on(eventName, async (data) => {
         // run socket event handler if it exists (may change data object!)

@@ -41,7 +41,10 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       options
     )
     // but with modified address
-    wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
+    wallet.address = await getCosmosAddressFromEthAddress(
+      wallet.address,
+      specialKey
+    )
     // and privateKey without '0x'
     wallet.privateKey = wallet.privateKey.replace('0x', '')
     // and the public key is generated differently
@@ -59,7 +62,10 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       options
     )
     // but with modified address
-    wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
+    wallet.address = await getCosmosAddressFromEthAddress(
+      wallet.address,
+      specialKey
+    )
     // and privateKey without '0x'
     wallet.privateKey = wallet.privateKey.replace('0x', '')
     // and the public key is generated differently

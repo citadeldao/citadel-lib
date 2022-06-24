@@ -2,7 +2,6 @@ import api from '../../api'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import { derivePath } from 'ed25519-hd-key'
 import bs58 from 'bs58'
-import sodiumsumo from 'libsodium-wrappers-sumo'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
 import errors from '../../errors'
 import { BaseNetwork } from '../_BaseNetworkClass'
@@ -96,11 +95,11 @@ export class IostNetwork extends BaseNetwork {
     return data
   }
 
-  signTransaction(rawTransaction, { privateKey }) {
+  async signTransaction(rawTransaction, { privateKey }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     privateKey = bs58.decode(privateKey)
-    return signTxByPrivateKey(
+    return await signTxByPrivateKey(
       transaction,
       privateKey,
       Buffer.from(this.publicKey, 'hex'),
@@ -108,9 +107,9 @@ export class IostNetwork extends BaseNetwork {
     )
   }
 
-  createMessageSignature(data, { privateKey }) {
+  async createMessageSignature(data, { privateKey }) {
     const signer = new MessageSigner({ message: data })
-    signer.addPublishSign(
+    await signer.addPublishSign(
       this.address,
       'ed25519',
       Buffer.from(this.publicKey, 'hex'),
@@ -138,6 +137,8 @@ export class IostNetwork extends BaseNetwork {
   }
 
   static async getAccountsByPrivateKey(privateKey) {
+    // dynamic import of large module (for fast init)
+    const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
     await sodiumsumo.ready
     let keys
     try {
@@ -164,6 +165,8 @@ export class IostNetwork extends BaseNetwork {
     passphrase = '',
     account,
   }) {
+    // dynamic import of large module (for fast init)
+    const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
     // generate address, public and private keys
     await sodiumsumo.ready
     const seed = await mnemonicToSeed(mnemonic, passphrase)
@@ -191,6 +194,9 @@ export class IostNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey, account }) {
+    // dynamic import of large module (for fast init)
+    const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
+
     // generate address and public key
     await sodiumsumo.ready
     let keys

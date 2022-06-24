@@ -1,5 +1,4 @@
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import EthApp from '@ledgerhq/hw-app-eth'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { ethereumHardwareSigner } from './functions'
 // TODO: update Ledger signer with resolution!
@@ -11,6 +10,8 @@ hw-app-eth: signTransaction(path, rawTxHex, resolution): please provide the 'res
 export const signTxByLedger = async (rawTransaction, derivationPath, net) => {
   // add global ledger app to avoid ledger reconnect error
   if (!global[`ledger_${net}`]) {
+    // dynamic import of large module (for fast init)
+    const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
     const transport = (await WebHidTransport.isSupported())
       ? await WebHidTransport.create(10000)
       : await TransportWebUSB.create(10000)

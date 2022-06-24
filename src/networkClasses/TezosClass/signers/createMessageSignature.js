@@ -20,7 +20,7 @@ export const createMessageSignature = async (
     const watermark = Buffer.from([3])
     const bytes = Buffer.concat([watermark, Buffer.from(JSON.stringify(data))])
     const hash = blakejs.blake2b(bytes, undefined, 32)
-    return signMessageByEd25519(hash, privateKey)
+    return await signMessageByEd25519(hash, privateKey)
   }
 
   // ledger signer

@@ -12,7 +12,6 @@ import { bip32PublicToEthereumPublic } from '../../_functions/crypto'
 import TrezorConnect from 'trezor-connect'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import EthApp from '@ledgerhq/hw-app-eth'
 import { signTypedData } from '@metamask/eth-sig-util'
 
 export class BaseEthNetwork extends BaseNetwork {
@@ -39,6 +38,8 @@ export class BaseEthNetwork extends BaseNetwork {
     // add global ledger app to avoid ledger reconnect error
     if (this.type === WALLET_TYPES.LEDGER) {
       if (!global[`ledger_${this.net}`]) {
+        // dynamic import of large module (for fast init)
+        const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
         const transport = (await WebHidTransport.isSupported())
           ? await WebHidTransport.create(10000)
           : await TransportWebUSB.create(10000)

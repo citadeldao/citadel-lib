@@ -17,7 +17,7 @@ export class KichainNetwork extends BaseCosmosNetwork {
       return signTxByLedger_2(transaction, derivationPath, this.publicKey)
     }
     // old signer without publicKey
-    return signTxByPrivateKey(transaction, privateKey)
+    return signTxByPrivateKey(transaction, privateKey, this.publicKey)
   }
 
   async createMessageSignature(data, { privateKey, derivationPath }) {

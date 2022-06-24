@@ -2,7 +2,6 @@
 import { BaseNetwork } from '../../_BaseNetworkClass'
 import api from '../../../api'
 import { signTxByLedger, signTxByTrezor, signTxByPrivateKey } from './signers'
-import { pubToAddress, privateToPublic } from 'ethereumjs-util'
 import { mnemonicToSeed } from 'bip39'
 import hdkey from 'hdkey'
 import { WALLET_TYPES } from '../../../constants'
@@ -126,8 +125,12 @@ export class BaseEthNetwork extends BaseNetwork {
     const ethPublic = bip32PublicToEthereumPublic(
       Buffer.from(keyPair.publicKey)
     )
+    // dynamic import of large module (for fast init)
+    const { pubToAddress } = await import('ethereumjs-util')
     const address = '0x' + pubToAddress(ethPublic).toString('hex')
     const privateKey = keyPair.privateKey.toString('hex')
+    // dynamic import of large module (for fast init)
+    const { privateToPublic } = await import('ethereumjs-util')
     const publicKey = privateToPublic(Buffer.from(privateKey, 'hex')).toString(
       'hex'
     )
@@ -152,7 +155,11 @@ export class BaseEthNetwork extends BaseNetwork {
     // generate address and public key
     privateKey = privateKey.replace('0x', '')
     try {
+      // dynamic import of large module (for fast init)
+      const { privateToPublic } = await import('ethereumjs-util')
       const publicKey = privateToPublic(Buffer.from(privateKey, 'hex'))
+      // dynamic import of large module (for fast init)
+      const { pubToAddress } = await import('ethereumjs-util')
       const address = '0x' + pubToAddress(publicKey).toString('hex')
       const publicKeyHex = publicKey.toString('hex')
       return {

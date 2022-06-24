@@ -1,8 +1,12 @@
 import { sha3_256 as sha3256 } from 'js-sha3'
 import Long from 'long'
-const sodiumsumo = require('libsodium-wrappers-sumo')
 
-export const signTxByPrivateKey = (data, privateKey, publicKey, address) => {
+export const signTxByPrivateKey = async (
+  data,
+  privateKey,
+  publicKey,
+  address
+) => {
   const moreLimit =
     data.actions[0].actionName === 'voterWithdraw'
       ? data.gasLimit * 2
@@ -29,7 +33,7 @@ export const signTxByPrivateKey = (data, privateKey, publicKey, address) => {
 
   transformedData.publisher = address
   const info = publishHash(transformedData)
-  const sig = signData(info, privateKey)
+  const sig = await signData(info, privateKey)
 
   const publisherSigs = [].concat(transformedData.publisherSigs)
   publisherSigs.push({
@@ -41,7 +45,9 @@ export const signTxByPrivateKey = (data, privateKey, publicKey, address) => {
 
   return transformedData
 }
-const signMessageByEd25519 = (msg, privateKey) => {
+const signMessageByEd25519 = async (msg, privateKey) => {
+  // dynamic import of large module (for fast init)
+  const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
   return Buffer.from(
     sodiumsumo.crypto_sign_detached(msg, Buffer.from(privateKey))
   ).toString('hex')
@@ -114,7 +120,9 @@ class Signature {
   }
 }
 
-const signData = (publishHash, privateKey) => {
+const signData = async (publishHash, privateKey) => {
+  // dynamic import of large module (for fast init)
+  const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
   return sodiumsumo.crypto_sign_detached(
     Buffer.from(publishHash),
     Buffer.from(privateKey)
@@ -132,10 +140,10 @@ export class MessageSigner {
     return c.buf
   }
 
-  addPublishSign(publisher, algType, publicKey, privateKey) {
+  async addPublishSign(publisher, algType, publicKey, privateKey) {
     this.rawData.publisher = publisher
     const info = this.publishHash()
-    const sig = signMessageByEd25519(Buffer.from(info), privateKey)
+    const sig = await signMessageByEd25519(Buffer.from(info), privateKey)
     let publisherSigs = {}
     publisherSigs = new Signature(sig, algType, publicKey)
     this.rawData.publisherSigs = publisherSigs

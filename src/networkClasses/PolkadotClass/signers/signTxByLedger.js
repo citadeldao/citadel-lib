@@ -1,16 +1,19 @@
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import U2fTransport from '@ledgerhq/hw-transport-u2f'
-import { u8aToHex } from '@polkadot/util'
+
 import errors from '../../../errors'
-const { TypeRegistry } = require('@polkadot/types')
-const { Metadata } = require('@polkadot/types/metadata')
 
 export const signTxByLedger = async (
   rawTransaction,
   derivationPath,
   address
 ) => {
+  // dynamic import of large module (for fast init)
+  const { u8aToHex } = await import('@polkadot/util')
+  const { TypeRegistry } = await import('@polkadot/types')
+  const { Metadata } = await import('@polkadot/types/metadata')
+
   if (!global.ledger_polkadot) {
     const transport = (await WebHidTransport.isSupported())
       ? await WebHidTransport.create(10000)

@@ -1,12 +1,16 @@
 // secret node
 export const COSM_WASM_CLIENT_HTTP_URL = 'https://api-secret.citadel.one'
 
-export const SOCKET_EVENT_NAMES = {
+export const USERS_SOCKET_EVENT_NAMES = {
   TRANSACTION_EVENTS_CLIENT: 'transaction-events-client',
   MESSAGE_FROM_APP: 'message-from-app',
   ADDRESS_BALANCE_UPDATED_CLIENT: 'address-balance-updated-client',
   MEMPOOL_ADD_TX_CLIENT: 'mempool-add-tx-client',
   MEMPOOL_REMOVE_TX_CLIENT: 'mempool-remove-tx-client',
+}
+
+export const MARKETCAPS_SOCKET_EVENT_NAMES = {
+  MARKETCAP_UPDATE_CLIENT: 'marketCap-update-Client',
 }
 
 export const LIB_EVENT_NAMES = {

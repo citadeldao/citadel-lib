@@ -4,9 +4,8 @@ import {
   checkNetworkOrToken,
   checkInitialization,
 } from '../../helpers/checkArguments'
-import state from '../../state'
 import api from '../../api'
-import { CACHE_NAMES } from '../../constants'
+import { isNativeToken } from '../../helpers/isNativeToken'
 
 export const getNetworkMarketcap = async (netOrToken) => {
   // checks
@@ -17,7 +16,7 @@ export const getNetworkMarketcap = async (netOrToken) => {
   // TODO: move if to static method
 
   // for native token call static network method
-  if (state.getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS).includes(netOrToken)) {
+  if (isNativeToken(netOrToken)) {
     return await networkClasses
       .getNetworkClass(netOrToken)
       .getNetworkMarketcap(netOrToken)

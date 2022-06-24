@@ -74,7 +74,7 @@ export class TezosNetwork extends BaseNetwork {
       return await signTxByTrezor(transaction, derivationPath)
     }
     privateKey = TezosUtil.writeKeyWithHint(privateKey, 'edsk')
-    return signTxByPrivateKey(transaction, privateKey)
+    return await signTxByPrivateKey(transaction, privateKey)
   }
 
   createMessageSignature(data, { privateKey, derivationPath }) {

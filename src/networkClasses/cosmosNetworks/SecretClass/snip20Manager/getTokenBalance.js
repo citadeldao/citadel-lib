@@ -1,5 +1,4 @@
 import { COSM_WASM_CLIENT_HTTP_URL } from '../../../../constants'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 import { getFeeObject } from './getFeeObject'
 
 export async function getTokenBalance(
@@ -8,6 +7,10 @@ export async function getTokenBalance(
   decimals,
   viewingKey
 ) {
+  // dynamic import of large module (for fast init)
+  const { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } = await import(
+    'secretjs'
+  )
   const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
   const client = new SigningCosmWasmClient(
     COSM_WASM_CLIENT_HTTP_URL,

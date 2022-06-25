@@ -1,8 +1,4 @@
-import {
-  COSM_WASM_CLIENT_HTTP_URL,
-  CACHE_NAMES,
-} from '../../../../constants'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
+import { COSM_WASM_CLIENT_HTTP_URL, CACHE_NAMES } from '../../../../constants'
 import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
 import { SecretNetwork } from '../'
@@ -17,6 +13,10 @@ export async function convertScrtToSecretScrt({
   amount,
   fee,
 }) {
+  // dynamic import of large module (for fast init)
+  const { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } = await import(
+    'secretjs'
+  )
   const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
   const signer = await getSigner({
     privateKey,

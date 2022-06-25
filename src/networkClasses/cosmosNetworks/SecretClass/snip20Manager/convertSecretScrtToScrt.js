@@ -14,6 +14,10 @@ export async function convertSecretScrtToScrt({
   amount,
   fee,
 }) {
+  // dynamic import of large module (for fast init)
+  const { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } = await import(
+    'secretjs'
+  )
   const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
   const signer = await getSigner({
     privateKey,

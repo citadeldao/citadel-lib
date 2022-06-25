@@ -5,7 +5,6 @@ import {
 } from '../../../../constants'
 import { checkTypes } from '../../../../helpers/checkArguments'
 import crypto from 'crypto'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
@@ -27,6 +26,10 @@ export async function setViewingKey(
     decimals,
   } = {}
 ) {
+  // dynamic import of large module (for fast init)
+  const { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } = await import(
+    'secretjs'
+  )
   try {
     const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
     const signer = await getSigner({

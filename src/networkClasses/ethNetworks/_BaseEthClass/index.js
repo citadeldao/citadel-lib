@@ -11,7 +11,6 @@ import { bip32PublicToEthereumPublic } from '../../_functions/crypto'
 import TrezorConnect from 'trezor-connect'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import { signTypedData } from '@metamask/eth-sig-util'
 
 export class BaseEthNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -61,6 +60,8 @@ export class BaseEthNetwork extends BaseNetwork {
       }
     }
 
+    // dynamic import of large module (for fast init)
+    const { signTypedData } = await import('@metamask/eth-sig-util')
     return signTypedData({
       privateKey: Buffer.from(privateKey.replace('0x', ''), 'hex'),
       data: message,

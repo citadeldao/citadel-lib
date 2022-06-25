@@ -1,5 +1,4 @@
 import { COSM_WASM_CLIENT_HTTP_URL } from '../../../../constants'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 import { getFeeObject } from './getFeeObject'
 import { getSigner } from './getSigner'
 

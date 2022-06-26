@@ -2,7 +2,6 @@
 import { BaseNetwork } from '../../_BaseNetworkClass'
 import api from '../../../api'
 import { signTxByLedger, signTxByTrezor, signTxByPrivateKey } from './signers'
-import { mnemonicToSeed } from 'bip39'
 import hdkey from 'hdkey'
 import { WALLET_TYPES } from '../../../constants'
 import errors from '../../../errors'
@@ -119,8 +118,10 @@ export class BaseEthNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
   }) {
+    // dynamic import of large module (for fast init)
+    const { default: bip39 } = await import('bip39')
     // generate address, public and private keys
-    const seed = await mnemonicToSeed(mnemonic, passphrase)
+    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
     const master = hdkey.fromMasterSeed(seed)
     const keyPair = master.derive(derivationPath)
     const ethPublic = bip32PublicToEthereumPublic(

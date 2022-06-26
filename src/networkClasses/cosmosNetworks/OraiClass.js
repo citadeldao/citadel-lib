@@ -20,7 +20,7 @@ export class OraiNetwork extends BaseCosmosNetwork {
       return await signTxByLedger(transaction, derivationPath, this.publicKey)
     }
     // old signer without publicKey
-    return signTxByPrivateKey(transaction, privateKey)
+    return await signTxByPrivateKey(transaction, privateKey)
   }
 
   // own explorer link

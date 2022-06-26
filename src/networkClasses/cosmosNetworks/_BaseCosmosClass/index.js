@@ -1,9 +1,7 @@
 import api from '../../../api'
 import cosmos from 'cosmos-lib'
 import { checkDelegationTypes } from '../../../helpers/checkArguments'
-import { mnemonicToSeed } from 'bip39'
 import { BaseNetwork } from '../../_BaseNetworkClass'
-import { ECPair, bip32 } from 'bitcoinjs-lib'
 import {
   signTxByPrivateKey,
   createMessageSignatureByPrivateKey,
@@ -143,8 +141,11 @@ export class BaseCosmosNetwork extends BaseNetwork {
     { mnemonic, derivationPath, passphrase = '' },
     specialAddressPrefix
   ) {
+    // dynamic import of large module (for fast init)
+    const { default: bip39 } = await import('bip39')
+    const { bip32 } = await import('bitcoinjs-lib')
     // generate address, public and private keys
-    const seed = await mnemonicToSeed(mnemonic, passphrase)
+    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
     const master = bip32.fromSeed(seed)
     const keyPair = master.derivePath(derivationPath)
     const address = cosmos.address.getAddress(
@@ -174,6 +175,8 @@ export class BaseCosmosNetwork extends BaseNetwork {
 
   static async createWalletByPrivateKey({ privateKey }, specialAddressPrefix) {
     try {
+      // dynamic import of large module (for fast init)
+      const { ECPair } = await import('bitcoinjs-lib')
       // generate address and public key
       privateKey = privateKey.replace('0x', '')
       const keyPair = ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'))

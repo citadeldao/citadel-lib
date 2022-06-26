@@ -5,6 +5,7 @@ import {
 import { getHdDerivationPath } from '../../../_functions/ledger'
 import { getLedgerApp } from '../../_BaseCosmosClass/signers/getLedgerApp'
 const secp256k1 = require('secp256k1')
+import { Secp256k1Pen } from 'secretjs'
 
 export async function getSigner({
   privateKey,
@@ -12,8 +13,6 @@ export async function getSigner({
   type,
   publicKey,
 }) {
-  // dynamic import of large module (for fast init)
-  const { Secp256k1Pen } = await import('secretjs')
   const { default: crypto_1 } = await import('@iov/crypto/')
 
   let signer

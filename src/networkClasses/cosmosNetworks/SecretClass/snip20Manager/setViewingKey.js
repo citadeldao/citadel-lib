@@ -10,6 +10,7 @@ import { getFeeObject } from './getFeeObject'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
 import { sleep } from '../../../../helpers/sleep'
 import { getTokenBalance } from './getTokenBalance'
+import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 
 export async function setViewingKey(
   viewingKeyType,
@@ -26,10 +27,6 @@ export async function setViewingKey(
     decimals,
   } = {}
 ) {
-  // dynamic import of large module (for fast init)
-  const { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } = await import(
-    'secretjs'
-  )
   try {
     const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
     const signer = await getSigner({

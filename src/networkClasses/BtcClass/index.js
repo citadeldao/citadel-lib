@@ -4,8 +4,6 @@ import { WALLET_TYPES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger, signTxByTrezor } from './signers'
 import { prepareTrezorConnection } from '../_functions/trezor'
 import { bip32PublicToEthereumPublic } from '../_functions/crypto'
-import { mnemonicToSeed } from 'bip39'
-import { ECPair, payments, bip32, networks } from 'bitcoinjs-lib'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import BtcApp from '@ledgerhq/hw-app-btc'
@@ -36,7 +34,7 @@ export class BtcNetwork extends BaseNetwork {
       return await signTxByTrezor(transaction, derivationPath)
     }
     // privateKey signer
-    return signTxByPrivateKey(transaction, privateKey)
+    return await signTxByPrivateKey(transaction, privateKey)
   }
 
   // btc not support stake
@@ -72,8 +70,11 @@ export class BtcNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
   }) {
+    // dynamic import of large module (for fast init)
+    const { payments, bip32, networks } = await import('bitcoinjs-lib')
+    const { default: bip39 } = await import('bip39')
     // generate address, public and private keys
-    const seed = await mnemonicToSeed(mnemonic, passphrase)
+    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
     const hdMaster = bip32.fromSeed(seed, networks.bitcoin)
     const keyPair = hdMaster.derivePath(derivationPath)
     const { address } = payments.p2pkh({ pubkey: keyPair.publicKey })
@@ -97,6 +98,9 @@ export class BtcNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey }) {
+    // dynamic import of large module (for fast init)
+    const { ECPair, payments } = await import('bitcoinjs-lib')
+
     try {
       // generate address and public key
       const keyPair = ECPair.fromWIF(privateKey)
@@ -200,7 +204,9 @@ export class BtcNetwork extends BaseNetwork {
     ).toString()
   }
 
-  static encodePrivateKeyByPassword(privateKey, password) {
+  static async encodePrivateKeyByPassword(privateKey, password) {
+    // dynamic import of large module (for fast init)
+    const { ECPair } = await import('bitcoinjs-lib')
     // do not change format for backwards compatibility
     const keyPair = ECPair.fromWIF(privateKey)
     const wif = keyPair.toWIF()

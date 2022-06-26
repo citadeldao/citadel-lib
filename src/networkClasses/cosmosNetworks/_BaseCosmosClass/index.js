@@ -141,11 +141,11 @@ export class BaseCosmosNetwork extends BaseNetwork {
     specialAddressPrefix
   ) {
     // dynamic import of large module (for fast init)
-    const { default: bip39 } = await import('bip39')
+    const { mnemonicToSeed } = await import('bip39')
     const { bip32 } = await import('bitcoinjs-lib')
     const { default: cosmos } = await import('cosmos-lib')
     // generate address, public and private keys
-    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
+    const seed = await mnemonicToSeed(mnemonic, passphrase)
     const master = bip32.fromSeed(seed)
     const keyPair = master.derivePath(derivationPath)
     const address = cosmos.address.getAddress(

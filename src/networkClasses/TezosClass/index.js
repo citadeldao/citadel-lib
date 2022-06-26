@@ -107,8 +107,8 @@ export class TezosNetwork extends BaseNetwork {
     passphrase = '',
   }) {
     // dynamic import of large module (for fast init)
-    const { default: bip39 } = await import('bip39')
-    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
+    const { mnemonicToSeed } = await import('bip39')
+    const seed = await mnemonicToSeed(mnemonic, passphrase)
     const keyPair = await TezosOneseed.keys(seed, passphrase, derivationPath)
     keyPair.publicExtendedKey = TezosUtil.readKeyWithHint(
       keyPair.publicKey,

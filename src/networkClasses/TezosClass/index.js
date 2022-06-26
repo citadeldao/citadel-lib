@@ -15,8 +15,6 @@ import * as TezosUtil from './functions/utils'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { TezApp } from './ledgerApp'
-import { prepareTrezorConnection } from '../_functions/trezor'
-import TrezorConnect from 'trezor-connect'
 import BigNumber from 'bignumber.js'
 import { getType } from '../../helpers/checkArguments'
 
@@ -211,6 +209,8 @@ export class TezosNetwork extends BaseNetwork {
   }
 
   static async createWalletByTrezor({ derivationPath }) {
+    // dynamic import of large module (for fast init)
+    const { defautl: TrezorConnect } = await import('trezor-connect')
     await prepareTrezorConnection()
     const publicData = await TrezorConnect.tezosGetPublicKey({
       path: derivationPath,

@@ -166,10 +166,10 @@ export class IostNetwork extends BaseNetwork {
   }) {
     // dynamic import of large module (for fast init)
     const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
-    const { default: bip39 } = await import('bip39')
+    const { mnemonicToSeed } = await import('bip39')
     // generate address, public and private keys
     await sodiumsumo.ready
-    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
+    const seed = await mnemonicToSeed(mnemonic, passphrase)
     const keys = derivePath(derivationPath, seed).key.slice(0, 32)
     const keyPair = sodiumsumo.crypto_sign_seed_keypair(keys)
     const address = await genAddress(keyPair.publicKey)

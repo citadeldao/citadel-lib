@@ -21,7 +21,7 @@ import errors from '../../errors'
 
 export const generateMnemonic = async (length = 12) => {
   // dynamic import of large module (for fast init)
-  const { default: bip39 } = await import('bip39')
+  const { generateMnemonic } = await import('bip39')
   // checks
   checkInitialization()
   checkTypes(['length', length, ['String', 'Number'], true])
@@ -36,5 +36,5 @@ export const generateMnemonic = async (length = 12) => {
   const entropy = (length * 32) / 3
 
   // generate mnemonic by bit length
-  return bip39.generateMnemonic(entropy)
+  return generateMnemonic(entropy)
 }

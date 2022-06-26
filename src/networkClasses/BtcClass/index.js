@@ -71,9 +71,9 @@ export class BtcNetwork extends BaseNetwork {
   }) {
     // dynamic import of large module (for fast init)
     const { payments, bip32, networks } = await import('bitcoinjs-lib')
-    const { default: bip39 } = await import('bip39')
+    const { mnemonicToSeed } = await import('bip39')
     // generate address, public and private keys
-    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
+    const seed = await mnemonicToSeed(mnemonic, passphrase)
     const hdMaster = bip32.fromSeed(seed, networks.bitcoin)
     const keyPair = hdMaster.derivePath(derivationPath)
     const { address } = payments.p2pkh({ pubkey: keyPair.publicKey })

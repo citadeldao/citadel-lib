@@ -170,7 +170,7 @@ export class BtcNetwork extends BaseNetwork {
         message: publicData?.payload?.error,
       })
     const pub = publicData.payload.publicKey
-    const buf = bip32PublicToEthereumPublic(Buffer.from(pub, 'hex'))
+    const buf = await bip32PublicToEthereumPublic(Buffer.from(pub, 'hex'))
     const publicKey = buf.toString('hex')
 
     const data = await TrezorConnect.getAddress({

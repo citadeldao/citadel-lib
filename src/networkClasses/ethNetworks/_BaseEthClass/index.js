@@ -124,7 +124,7 @@ export class BaseEthNetwork extends BaseNetwork {
     const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
     const master = hdkey.fromMasterSeed(seed)
     const keyPair = master.derive(derivationPath)
-    const ethPublic = bip32PublicToEthereumPublic(
+    const ethPublic = await bip32PublicToEthereumPublic(
       Buffer.from(keyPair.publicKey)
     )
     // dynamic import of large module (for fast init)

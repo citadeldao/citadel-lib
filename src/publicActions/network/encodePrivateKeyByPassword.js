@@ -29,7 +29,7 @@ import {
  *}
  */
 
-export const encodePrivateKeyByPassword = (
+export const encodePrivateKeyByPassword = async (
   netOrToken,
   privateKey,
   password
@@ -47,7 +47,7 @@ export const encodePrivateKeyByPassword = (
   const nativeNet = networkClasses.getNativeNet(netOrToken)
 
   // call static native network method
-  return networkClasses
+  return await networkClasses
     .getNetworkClass(nativeNet)
     .encodePrivateKeyByPassword(privateKey, password)
 }

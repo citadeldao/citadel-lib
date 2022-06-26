@@ -1,6 +1,7 @@
 import { COSM_WASM_CLIENT_HTTP_URL } from '../../../../constants'
 import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
+import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 
 export async function doCrossNetworkTransfer({
   address,
@@ -15,10 +16,6 @@ export async function doCrossNetworkTransfer({
   amount,
   fee,
 }) {
-    // dynamic import of large module (for fast init)
-    const { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } = await import(
-      'secretjs'
-    )
   const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
   const signer = await getSigner({
     privateKey,

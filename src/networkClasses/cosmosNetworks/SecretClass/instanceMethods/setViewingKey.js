@@ -1,5 +1,4 @@
 import { VIEWING_KEYS_TYPES } from '../../../../constants'
-import snip20Manager from '../snip20Manager'
 import networkClasses from '../../../'
 
 // TODO: refact!
@@ -8,6 +7,8 @@ export async function setViewingKey(
   viewingKeyType,
   { privateKey, derivationPath, viewingKey, fee } = {}
 ) {
+  // dynamic import module with huge npm package
+  const { default: snip20Manager } = await import('../snip20Manager')
   const networkClass = networkClasses.getNetworkClass(this.net)
 
   // set vievingKey

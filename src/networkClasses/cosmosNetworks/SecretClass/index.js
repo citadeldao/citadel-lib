@@ -1,7 +1,7 @@
 import { BaseCosmosNetwork } from '../_BaseCosmosClass'
 import instanceMethods from './instanceMethods'
 import crypto from 'crypto'
-import snip20Manager from './snip20Manager'
+
 export class SecretNetwork extends BaseCosmosNetwork {
   constructor(walletInfo) {
     super(walletInfo)
@@ -9,7 +9,9 @@ export class SecretNetwork extends BaseCosmosNetwork {
     this.savedViewingKeys = walletInfo.savedViewingKeys || {}
   }
 
-  static getSnip20Manager() {
+  static async getSnip20Manager() {
+    // dynamic import module with huge npm package
+    const { default: snip20Manager } = await import('./snip20Manager')
     return snip20Manager
   }
 

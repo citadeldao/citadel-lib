@@ -3,7 +3,6 @@ import base58check from 'bs58check'
 import { WALLET_TYPES } from '../../constants'
 import errors from '../../errors'
 import { BaseNetwork } from '../_BaseNetworkClass'
-import { mnemonicToSeed } from 'bip39'
 import {
   signTxByPrivateKey,
   createMessageSignature,
@@ -108,7 +107,9 @@ export class TezosNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
   }) {
-    const seed = await mnemonicToSeed(mnemonic, passphrase)
+    // dynamic import of large module (for fast init)
+    const { default: bip39 } = await import('bip39')
+    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
     const keyPair = await TezosOneseed.keys(seed, passphrase, derivationPath)
     keyPair.publicExtendedKey = TezosUtil.readKeyWithHint(
       keyPair.publicKey,

@@ -1,7 +1,6 @@
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import hdkey from 'hdkey'
 import { sha3_256 } from 'js-sha3'
-import { mnemonicToSeed } from 'bip39'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import BigNumber from 'bignumber.js'
@@ -160,8 +159,10 @@ export class IconNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
   }) {
+    // dynamic import of large module (for fast init)
+    const { default: bip39 } = await import('bip39')
     // generate address, public and private keys
-    const seed = await mnemonicToSeed(mnemonic, passphrase)
+    const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
     const master = hdkey.fromMasterSeed(seed)
     const keyPair = master.derive(derivationPath)
     const privateKey = Buffer.from(keyPair.privateKey)

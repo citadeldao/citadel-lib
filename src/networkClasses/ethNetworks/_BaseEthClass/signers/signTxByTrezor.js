@@ -1,4 +1,3 @@
-import TrezorConnect from 'trezor-connect'
 import { prepareTrezorConnection } from '../../../_functions/trezor'
 import { toHexNumber } from '../../../_functions/crypto'
 import { ethereumHardwareSigner } from './functions'
@@ -7,6 +6,8 @@ export const signTxByTrezor = async (rawTransaction, derivationPath) => {
   await prepareTrezorConnection()
   const signFunction = async () => {
     try {
+      // dynamic import of large module (for fast init)
+      const { defautl: TrezorConnect } = await import('trezor-connect')
       const signed = await TrezorConnect.ethereumSignTransaction({
         path: derivationPath,
         // @ts-ignore

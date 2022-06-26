@@ -7,7 +7,6 @@ import { bip32PublicToEthereumPublic } from '../_functions/crypto'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import BtcApp from '@ledgerhq/hw-app-btc'
-import TrezorConnect from 'trezor-connect'
 
 export class BtcNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -158,6 +157,8 @@ export class BtcNetwork extends BaseNetwork {
   }
 
   static async createWalletByTrezor({ derivationPath }) {
+    // dynamic import of large module (for fast init)
+    const { defautl: TrezorConnect } = await import('trezor-connect')
     // prepare Trezor
     await prepareTrezorConnection()
     // generate address and public key

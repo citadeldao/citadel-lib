@@ -7,7 +7,6 @@ import { WALLET_TYPES } from '../../../constants'
 import errors from '../../../errors'
 import { prepareTrezorConnection } from '../../_functions/trezor'
 import { bip32PublicToEthereumPublic } from '../../_functions/crypto'
-import TrezorConnect from 'trezor-connect'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 
@@ -186,6 +185,8 @@ export class BaseEthNetwork extends BaseNetwork {
   }
 
   static async createWalletByTrezor({ derivationPath }) {
+    // dynamic import of large module (for fast init)
+    const { defautl: TrezorConnect } = await import('trezor-connect')
     // prepare Trezor
     await prepareTrezorConnection()
     // generate address and public key

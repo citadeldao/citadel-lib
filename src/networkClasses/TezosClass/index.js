@@ -17,6 +17,7 @@ import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { TezApp } from './ledgerApp'
 import BigNumber from 'bignumber.js'
 import { getType } from '../../helpers/checkArguments'
+import { prepareTrezorConnection } from '../_functions/trezor'
 
 export class TezosNetwork extends BaseNetwork {
   constructor(walletInfo) {

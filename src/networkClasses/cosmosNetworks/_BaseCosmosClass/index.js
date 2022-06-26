@@ -1,5 +1,4 @@
 import api from '../../../api'
-import cosmos from 'cosmos-lib'
 import { checkDelegationTypes } from '../../../helpers/checkArguments'
 import { BaseNetwork } from '../../_BaseNetworkClass'
 import {
@@ -144,6 +143,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     // dynamic import of large module (for fast init)
     const { default: bip39 } = await import('bip39')
     const { bip32 } = await import('bitcoinjs-lib')
+    const { default: cosmos } = await import('cosmos-lib')
     // generate address, public and private keys
     const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
     const master = bip32.fromSeed(seed)
@@ -177,6 +177,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     try {
       // dynamic import of large module (for fast init)
       const { ECPair } = await import('bitcoinjs-lib')
+      const { default: cosmos } = await import('cosmos-lib')
       // generate address and public key
       privateKey = privateKey.replace('0x', '')
       const keyPair = ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'))

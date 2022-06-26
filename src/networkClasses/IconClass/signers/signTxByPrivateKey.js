@@ -1,13 +1,14 @@
 import { toRawTransaction, generateHashKey } from './functions'
 import { sha3_256 as sha3256 } from 'js-sha3'
-const secp256k1 = require('secp256k1')
 
 function serialize(trasaction) {
   const phraseToSign = generateHashKey(trasaction)
   return sha3256.update(phraseToSign).hex()
 }
 
-export function signTxByPrivateKey(transaction, privateKey) {
+export async function signTxByPrivateKey(transaction, privateKey) {
+  // dynamic import for guge module
+  const { default: secp256k1 } = await import('secp256k1')
   privateKey = Buffer.from(privateKey, 'hex')
   const rawTransaction = toRawTransaction(transaction)
   const result = secp256k1.ecdsaSign(

@@ -166,7 +166,7 @@ export class IconNetwork extends BaseNetwork {
     const master = hdkey.fromMasterSeed(seed)
     const keyPair = master.derive(derivationPath)
     const privateKey = Buffer.from(keyPair.privateKey)
-    const { pubKey } = fromPrivateKey(privateKey.toString('hex'))
+    const { pubKey } = await fromPrivateKey(privateKey.toString('hex'))
     const address = 'hx' + sha3_256(pubKey.slice(1)).slice(-40)
     const publicKeyHex = Buffer.from(pubKey).toString('hex')
     return {
@@ -189,7 +189,7 @@ export class IconNetwork extends BaseNetwork {
   static async createWalletByPrivateKey({ privateKey }) {
     // generate address and public key
     try {
-      const pubKey = fromPrivateKey(privateKey).pubKey
+      const pubKey = await fromPrivateKey(privateKey).pubKey
       const address = 'hx' + sha3_256(pubKey.slice(1)).slice(-40)
       const publicKey = Buffer.from(pubKey).toString('hex')
 

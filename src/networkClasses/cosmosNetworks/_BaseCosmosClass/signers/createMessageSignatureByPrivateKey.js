@@ -1,10 +1,6 @@
-const cosmos_lib = require('cosmos-lib')
-
-export const createMessageSignatureByPrivateKey = (data, privateKey) => {
+export const createMessageSignatureByPrivateKey = async (data, privateKey) => {
+  const { default: cosmos } = await import('cosmos-lib')
   privateKey = privateKey.replace('0x', '')
-  const signature = cosmos_lib.crypto.signJson(
-    data,
-    Buffer.from(privateKey, 'hex')
-  )
+  const signature = cosmos.crypto.signJson(data, Buffer.from(privateKey, 'hex'))
   return signature.toString('hex')
 }

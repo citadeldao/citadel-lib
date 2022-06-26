@@ -1,5 +1,4 @@
 /* eslint-disable */
-const secp256k1 = require('secp256k1')
 const crypto = require('crypto')
 
 // ecpariPriv: Buffer(32)
@@ -13,6 +12,8 @@ export const signTxByPrivateKey = async (stdSignMsg, privateKey, publicKey) => {
     .createHash('sha256')
     .update(Buffer.from(stdSignMsg.bytes))
     .digest('hex')
+  // dynamic import for guge module
+  const { default: secp256k1 } = await import('secp256k1')
   const { signature } = secp256k1.ecdsaSign(
     Buffer.from(hash, 'hex'),
     keyPair.privateKey

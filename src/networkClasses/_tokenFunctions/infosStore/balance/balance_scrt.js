@@ -35,7 +35,7 @@ export async function balance_scrt({ token }) {
     })
   }
 
-  const snip20Manager = await networkClass.getSnip20Manager()
+  const snip20Manager = networkClass.getSnip20Manager()
 
   // check saved viewingKey
   // get viewing key

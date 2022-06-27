@@ -1,3 +1,4 @@
+import TrezorConnect from 'trezor-connect'
 import { prepareTrezorConnection } from '../../_functions/trezor'
 import { base58CheckDecode } from '../../_functions/crypto'
 
@@ -5,8 +6,6 @@ export const signTxByTrezor = async (
   { opbytes, opOb, derrivePath },
   derivationPath
 ) => {
-  // dynamic import of large module (for fast init)
-  const { defautl: TrezorConnect } = await import('trezor-connect')
   await prepareTrezorConnection()
   const reveal = opOb.contents.find((item) => item.kind === 'reveal')
   if (reveal) {

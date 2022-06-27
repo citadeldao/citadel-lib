@@ -1,6 +1,7 @@
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import hdkey from 'hdkey'
 import { sha3_256 } from 'js-sha3'
+import { mnemonicToSeed } from 'bip39'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import BigNumber from 'bignumber.js'
@@ -159,14 +160,12 @@ export class IconNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
   }) {
-    // dynamic import of large module (for fast init)
-    const { mnemonicToSeed } = await import('bip39')
     // generate address, public and private keys
     const seed = await mnemonicToSeed(mnemonic, passphrase)
     const master = hdkey.fromMasterSeed(seed)
     const keyPair = master.derive(derivationPath)
     const privateKey = Buffer.from(keyPair.privateKey)
-    const { pubKey } = await fromPrivateKey(privateKey.toString('hex'))
+    const { pubKey } = fromPrivateKey(privateKey.toString('hex'))
     const address = 'hx' + sha3_256(pubKey.slice(1)).slice(-40)
     const publicKeyHex = Buffer.from(pubKey).toString('hex')
     return {
@@ -189,7 +188,7 @@ export class IconNetwork extends BaseNetwork {
   static async createWalletByPrivateKey({ privateKey }) {
     // generate address and public key
     try {
-      const pubKey = await fromPrivateKey(privateKey).pubKey
+      const pubKey = fromPrivateKey(privateKey).pubKey
       const address = 'hx' + sha3_256(pubKey.slice(1)).slice(-40)
       const publicKey = Buffer.from(pubKey).toString('hex')
 

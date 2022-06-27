@@ -1,6 +1,6 @@
 import { COSM_WASM_CLIENT_HTTP_URL } from '../../../../constants'
-import { getFeeObject } from './getFeeObject'
 import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
+import { getFeeObject } from './getFeeObject'
 
 export async function getTokenTransactions({
   address,

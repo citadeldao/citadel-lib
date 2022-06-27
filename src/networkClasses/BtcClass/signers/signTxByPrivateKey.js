@@ -1,7 +1,6 @@
-export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
-  // dynamic import of large module (for fast init)
-  const { ECPair, Psbt } = await import('bitcoinjs-lib')
+import { ECPair, Psbt } from 'bitcoinjs-lib'
 
+export const signTxByPrivateKey = (rawTransaction, privateKey) => {
   const keyPair = ECPair.fromWIF(privateKey)
   const psbt = Psbt.fromBase64(rawTransaction)
 

@@ -19,6 +19,6 @@ export class EmoneyNetwork extends BaseCosmosNetwork {
       return await signTxByLedger(transaction, derivationPath, this.publicKey)
     }
     // privateKey signer
-    return await signTxByPrivateKey(transaction, privateKey)
+    return signTxByPrivateKey(transaction, privateKey)
   }
 }

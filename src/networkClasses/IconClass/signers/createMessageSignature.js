@@ -6,6 +6,7 @@ import {
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { IconApp } from '../ledgerApp'
+const secp256k1 = require('secp256k1')
 
 export async function createMessageSignature(
   message,
@@ -13,8 +14,6 @@ export async function createMessageSignature(
 ) {
   // privateKey signers
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
-    // dynamic import for guge module
-    const { default: secp256k1 } = await import('secp256k1')
     const result = secp256k1.ecdsaSign(
       Buffer.from(sha3256.update(message).hex(), 'hex'),
       Buffer.from(privateKey, 'hex')

@@ -1,3 +1,4 @@
+import { ec as EC } from 'elliptic'
 import {
   modifiedKeccak,
   trimLeadingZero,
@@ -14,7 +15,6 @@ import {
   RLPDecode,
   RLPEncode,
 } from './functions'
-import { ec as EC } from 'elliptic'
 
 export const signTxByPrivateKey = (data, privateKey) => {
   privateKey = privateKey.replace('0x', '')
@@ -40,7 +40,7 @@ const signMessageBySecp256k1 = (msg, privateKey) => {
   }
 }
 
-const ethereumSigner = async (tx, privateKey, applyKeccak = true) => {
+const ethereumSigner = (tx, privateKey, applyKeccak = true) => {
   if (!tx.gas) {
     throw new Error('ETH: "gas" is missing')
   }

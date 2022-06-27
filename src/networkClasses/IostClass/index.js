@@ -5,6 +5,7 @@ import bs58 from 'bs58'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
 import errors from '../../errors'
 import { BaseNetwork } from '../_BaseNetworkClass'
+import { mnemonicToSeed } from 'bip39'
 import { signTxByPrivateKey, MessageSigner } from './signers'
 import { registerAccount } from './functions/registerAccount'
 import { genAddress } from './functions/genAddress'
@@ -166,7 +167,6 @@ export class IostNetwork extends BaseNetwork {
   }) {
     // dynamic import of large module (for fast init)
     const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
-    const { mnemonicToSeed } = await import('bip39')
     // generate address, public and private keys
     await sodiumsumo.ready
     const seed = await mnemonicToSeed(mnemonic, passphrase)

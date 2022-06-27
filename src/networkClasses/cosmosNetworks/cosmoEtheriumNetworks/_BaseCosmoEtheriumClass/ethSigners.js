@@ -1,3 +1,4 @@
+const secp256k1 = require('secp256k1')
 const keccak256 = require('keccak256')
 
 import { getHdDerivationPath } from '../../../_functions/ledger'
@@ -20,8 +21,7 @@ export const signTxByLedger = async (
       code: response.return_code,
     })
   }
-  // dynamic import for guge module
-  const { default: secp256k1 } = await import('secp256k1')
+
   const parsedSignature = secp256k1.signatureImport(response.signature)
 
   let signMessage = new Object()
@@ -49,14 +49,8 @@ export const signTxByLedger = async (
   return signedTx
 }
 
-export const signTxByPrivateKey = async (
-  stdSignMsg,
-  publicKeyHex,
-  privateKeyHex
-) => {
+export const signTxByPrivateKey = (stdSignMsg, publicKeyHex, privateKeyHex) => {
   const msgHash = keccak256(stdSignMsg.bytes)
-  // dynamic import for guge module
-  const { default: secp256k1 } = await import('secp256k1')
   const { signature } = secp256k1.ecdsaSign(
     msgHash,
     Buffer.from(privateKeyHex, 'hex')
@@ -69,10 +63,8 @@ export const signTxByPrivateKey = async (
   }
 }
 
-export const createMessageSignature = async (message, privateKeyHex) => {
+export const createMessageSignature = (message, privateKeyHex) => {
   const msgHash = keccak256(JSON.stringify(message))
-  // dynamic import for guge module
-  const { default: secp256k1 } = await import('secp256k1')
   const { signature } = secp256k1.ecdsaSign(
     msgHash,
     Buffer.from(privateKeyHex, 'hex')

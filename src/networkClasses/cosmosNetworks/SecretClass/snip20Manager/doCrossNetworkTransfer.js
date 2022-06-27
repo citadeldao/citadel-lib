@@ -1,7 +1,7 @@
 import { COSM_WASM_CLIENT_HTTP_URL } from '../../../../constants'
+import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 
 export async function doCrossNetworkTransfer({
   address,

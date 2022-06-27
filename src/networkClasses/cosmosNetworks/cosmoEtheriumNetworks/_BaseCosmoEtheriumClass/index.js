@@ -6,6 +6,7 @@ import {
 } from './ethSigners'
 import { BaseEthNetwork } from '../../../ethNetworks/_BaseEthClass'
 import { getCosmosAddressFromEthAddress } from './functions'
+import { ECPair } from 'bitcoinjs-lib'
 import { WALLET_TYPES } from '../../../../constants'
 
 export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
@@ -33,8 +34,6 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   }
 
   static async createWalletByMnemonic(options, specialKey) {
-    // dynamic import of large module (for fast init)
-    const { ECPair } = await import('bitcoinjs-lib')
     // wallet creation function like etherium
     const wallet = await BaseEthNetwork.createWalletByMnemonic.call(
       // bind the context to create a ninstance of the current net
@@ -42,10 +41,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       options
     )
     // but with modified address
-    wallet.address = await getCosmosAddressFromEthAddress(
-      wallet.address,
-      specialKey
-    )
+    wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
     // and privateKey without '0x'
     wallet.privateKey = wallet.privateKey.replace('0x', '')
     // and the public key is generated differently
@@ -56,8 +52,6 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   }
 
   static async createWalletByPrivateKey(options, specialKey) {
-    // dynamic import of large module (for fast init)
-    const { ECPair } = await import('bitcoinjs-lib')
     // wallet creation function like etherium
     const wallet = await BaseEthNetwork.createWalletByPrivateKey.call(
       // bind the context to create a ninstance of the current net
@@ -65,10 +59,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       options
     )
     // but with modified address
-    wallet.address = await getCosmosAddressFromEthAddress(
-      wallet.address,
-      specialKey
-    )
+    wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
     // and privateKey without '0x'
     wallet.privateKey = wallet.privateKey.replace('0x', '')
     // and the public key is generated differently

@@ -31,6 +31,8 @@ export function splitPath(path) {
   return result
 }
 
+const ec = require('elliptic').ec('secp256k1')
+
 function _padTo32(msg) {
   while (msg.length < 32) {
     msg = Buffer.concat([new Buffer([0]), msg])
@@ -41,10 +43,7 @@ function _padTo32(msg) {
   return msg
 }
 
-export const bip32PublicToEthereumPublic = async (pubKey) => {
-  const { default: elliptic } = await import('elliptic')
-  const ec = elliptic.ec('secp256k1')
-
+export const bip32PublicToEthereumPublic = (pubKey) => {
   const key = ec.keyFromPublic(pubKey).getPublic().toJSON()
   return Buffer.concat([
     _padTo32(Buffer.from(key[0].toArray())),

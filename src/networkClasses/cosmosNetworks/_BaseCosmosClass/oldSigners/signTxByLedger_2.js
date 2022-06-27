@@ -1,5 +1,6 @@
 import CosmosApp from 'ledger-cosmos-js'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+const secp256k1 = require('secp256k1')
 import { getHdDerivationPath } from '../../../_functions/ledger'
 
 // ledger signer (alternative version for some cosmos neworks)
@@ -21,8 +22,6 @@ export const signTxByLedger_2 = async (
     throw error
   }
   await transport.close()
-  // dynamic import for guge module
-  const { default: secp256k1} = await import('secp256k1')
   const parsedSignature = secp256k1.signatureImport(response.signature)
   const signatureBase64 = Buffer.from(parsedSignature, 'binary').toString(
     'base64'

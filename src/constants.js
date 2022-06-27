@@ -1,4 +1,3 @@
-// secret node
 export const COSM_WASM_CLIENT_HTTP_URL = 'https://api-secret.citadel.one'
 
 export const USERS_SOCKET_EVENT_NAMES = {

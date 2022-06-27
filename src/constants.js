@@ -9,7 +9,7 @@ export const USERS_SOCKET_EVENT_NAMES = {
 }
 
 export const MARKETCAPS_SOCKET_EVENT_NAMES = {
-  MARKETCAP_UPDATE_CLIENT: 'marketCap-update-Client',
+  MARKETCAP_UPDATE_CLIENT: 'marketCap-update-client',
 }
 
 export const LIB_EVENT_NAMES = {

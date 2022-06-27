@@ -1,8 +1,7 @@
+import secp256k1 from 'secp256k1'
 import { sha3_256 } from 'js-sha3'
 
-const isPrivateKey = async (privKey) => {
-  // dynamic import for guge module
-  const { default: secp256k1 } = await import('secp256k1')
+const isPrivateKey = (privKey) => {
   if (!privKey) {
     return false
   }
@@ -12,15 +11,12 @@ const isPrivateKey = async (privKey) => {
   return secp256k1.privateKeyVerify(Buffer.from(privKey, 'hex'))
 }
 
-export const fromPrivateKey = async (prvKey) => {
+export const fromPrivateKey = (prvKey) => {
   const prefix = 'hx'
-  const isPrivateKeyRes = await isPrivateKey(prvKey)
-  if (!isPrivateKeyRes)
+  if (!isPrivateKey(prvKey))
     throw new Error(`[${prvKey}] is not a valid private key.`)
 
   const pkBuffer = Buffer.from(prvKey, 'hex')
-  // dynamic import for guge module
-  const { default: secp256k1 } = await import('secp256k1')
   const pubKey = secp256k1.publicKeyCreate(pkBuffer, false)
   const address = prefix + sha3_256(pubKey.slice(1)).slice(-40)
 

@@ -1,4 +1,4 @@
-import has from 'lodash/has'
+import { has } from 'lodash'
 import { LIB_EVENT_NAMES, LIB_EVENT_CALLBACK_NAMES } from './constants'
 
 // General state for all lib modules

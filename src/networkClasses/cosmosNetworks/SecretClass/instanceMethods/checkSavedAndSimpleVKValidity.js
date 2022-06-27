@@ -1,5 +1,6 @@
 import { VIEWING_KEYS_TYPES, WALLET_TYPES } from '../../../../constants'
 import walletInstances from '../../../../walletInstances'
+import snip20Manager from '../snip20Manager'
 import storage from '../../../../storage'
 import {
   CACHE_NAMES,
@@ -8,8 +9,6 @@ import {
 
 // TODO: refact!
 export async function checkSavedAndSimpleVKValidity() {
-  // dynamic import module with huge npm package
-  const { default: snip20Manager } = await import('../snip20Manager')
   // get secret tokens config
   const tokensConfig = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)
     .secret.tokens

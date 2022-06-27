@@ -5,12 +5,12 @@ import {
 } from '../../../../constants'
 import { checkTypes } from '../../../../helpers/checkArguments'
 import crypto from 'crypto'
+import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
 import { sleep } from '../../../../helpers/sleep'
 import { getTokenBalance } from './getTokenBalance'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 
 export async function setViewingKey(
   viewingKeyType,

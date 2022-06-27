@@ -3,6 +3,7 @@ import base58check from 'bs58check'
 import { WALLET_TYPES } from '../../constants'
 import errors from '../../errors'
 import { BaseNetwork } from '../_BaseNetworkClass'
+import { mnemonicToSeed } from 'bip39'
 import {
   signTxByPrivateKey,
   createMessageSignature,
@@ -15,9 +16,10 @@ import * as TezosUtil from './functions/utils'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { TezApp } from './ledgerApp'
+import { prepareTrezorConnection } from '../_functions/trezor'
+import TrezorConnect from 'trezor-connect'
 import BigNumber from 'bignumber.js'
 import { getType } from '../../helpers/checkArguments'
-import { prepareTrezorConnection } from '../_functions/trezor'
 
 export class TezosNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -106,8 +108,6 @@ export class TezosNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
   }) {
-    // dynamic import of large module (for fast init)
-    const { mnemonicToSeed } = await import('bip39')
     const seed = await mnemonicToSeed(mnemonic, passphrase)
     const keyPair = await TezosOneseed.keys(seed, passphrase, derivationPath)
     keyPair.publicExtendedKey = TezosUtil.readKeyWithHint(
@@ -210,8 +210,6 @@ export class TezosNetwork extends BaseNetwork {
   }
 
   static async createWalletByTrezor({ derivationPath }) {
-    // dynamic import of large module (for fast init)
-    const { defautl: TrezorConnect } = await import('trezor-connect')
     await prepareTrezorConnection()
     const publicData = await TrezorConnect.tezosGetPublicKey({
       path: derivationPath,

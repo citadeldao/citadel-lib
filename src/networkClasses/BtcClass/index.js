@@ -4,9 +4,12 @@ import { WALLET_TYPES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger, signTxByTrezor } from './signers'
 import { prepareTrezorConnection } from '../_functions/trezor'
 import { bip32PublicToEthereumPublic } from '../_functions/crypto'
+import { mnemonicToSeed } from 'bip39'
+import { ECPair, payments, bip32, networks } from 'bitcoinjs-lib'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import BtcApp from '@ledgerhq/hw-app-btc'
+import TrezorConnect from 'trezor-connect'
 
 export class BtcNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -33,7 +36,7 @@ export class BtcNetwork extends BaseNetwork {
       return await signTxByTrezor(transaction, derivationPath)
     }
     // privateKey signer
-    return await signTxByPrivateKey(transaction, privateKey)
+    return signTxByPrivateKey(transaction, privateKey)
   }
 
   // btc not support stake
@@ -69,9 +72,6 @@ export class BtcNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
   }) {
-    // dynamic import of large module (for fast init)
-    const { payments, bip32, networks } = await import('bitcoinjs-lib')
-    const { mnemonicToSeed } = await import('bip39')
     // generate address, public and private keys
     const seed = await mnemonicToSeed(mnemonic, passphrase)
     const hdMaster = bip32.fromSeed(seed, networks.bitcoin)
@@ -97,9 +97,6 @@ export class BtcNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey }) {
-    // dynamic import of large module (for fast init)
-    const { ECPair, payments } = await import('bitcoinjs-lib')
-
     try {
       // generate address and public key
       const keyPair = ECPair.fromWIF(privateKey)
@@ -157,8 +154,6 @@ export class BtcNetwork extends BaseNetwork {
   }
 
   static async createWalletByTrezor({ derivationPath }) {
-    // dynamic import of large module (for fast init)
-    const { defautl: TrezorConnect } = await import('trezor-connect')
     // prepare Trezor
     await prepareTrezorConnection()
     // generate address and public key
@@ -171,7 +166,7 @@ export class BtcNetwork extends BaseNetwork {
         message: publicData?.payload?.error,
       })
     const pub = publicData.payload.publicKey
-    const buf = await bip32PublicToEthereumPublic(Buffer.from(pub, 'hex'))
+    const buf = bip32PublicToEthereumPublic(Buffer.from(pub, 'hex'))
     const publicKey = buf.toString('hex')
 
     const data = await TrezorConnect.getAddress({
@@ -205,9 +200,7 @@ export class BtcNetwork extends BaseNetwork {
     ).toString()
   }
 
-  static async encodePrivateKeyByPassword(privateKey, password) {
-    // dynamic import of large module (for fast init)
-    const { ECPair } = await import('bitcoinjs-lib')
+  static encodePrivateKeyByPassword(privateKey, password) {
     // do not change format for backwards compatibility
     const keyPair = ECPair.fromWIF(privateKey)
     const wif = keyPair.toWIF()

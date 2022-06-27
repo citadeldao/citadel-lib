@@ -4,8 +4,9 @@ import {
 } from '../../../../constants'
 import { getHdDerivationPath } from '../../../_functions/ledger'
 import { getLedgerApp } from '../../_BaseCosmosClass/signers/getLedgerApp'
+const { Secp256k1Pen } = require('secretjs')
+const crypto_1 = require('@iov/crypto')
 const secp256k1 = require('secp256k1')
-import { Secp256k1Pen } from 'secretjs'
 
 export async function getSigner({
   privateKey,
@@ -13,15 +14,12 @@ export async function getSigner({
   type,
   publicKey,
 }) {
-  const { default: crypto_1 } = await import('@iov/crypto/')
-
   let signer
 
   // privateKey signer
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
     privateKey = privateKey.replace('0x', '')
     const privateKeyBuffer = Buffer.from(privateKey, 'hex')
-
     const uncompressedPk = (
       await crypto_1.Secp256k1.makeKeypair(privateKeyBuffer)
     ).pubkey

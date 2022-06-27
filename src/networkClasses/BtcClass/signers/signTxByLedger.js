@@ -1,3 +1,4 @@
+import { Psbt } from 'bitcoinjs-lib'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import BtcApp from '@ledgerhq/hw-app-btc'
@@ -10,8 +11,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath) => {
       : await TransportWebUSB.create(10000)
     global.ledger_btc = new BtcApp(transport)
   }
-  // dynamic import of large module (for fast init)
-  const { Psbt } = await import('bitcoinjs-lib')
+
   // sign transaction
   const psbt = Psbt.fromBase64(rawTransaction)
   const tx_data = {

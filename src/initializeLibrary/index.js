@@ -11,10 +11,14 @@ import socketManager from '../socketManager'
 
 export const initializeLibrary = async ({
   backendUrl,
+  socketURL,
   debug,
   stringifyLogs,
   stringifyResponse,
 }) => {
+  // set socket URL
+  state.setState('socketURL', socketURL)
+
   // set debug mode
   state.setState('debug', debug)
 

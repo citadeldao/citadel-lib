@@ -9,9 +9,10 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  *
  * @param options OBJECT (REQUIRED) - init options object
  * @param options.backendUrl STRING (REQUIRED) - REST-api URL, etc 'https://app.citadel.one/api'
+ * @param options.socketURL STRING (OPTIONAL) - REST-api URL, etc 'https://api-websockets-user.apps.citadel.okd.3ahtim54r.ru/users'
  * @param options.debug BOOLEAN (OPTIONAL) - 'false' by default. if 'true', the arguments and return values of the called functions are printed to the console.
- * 
- * @param options.stringifyLogs BOOLEAN (OPTIONAL) - 'false' by default. If true, all consoles in debug mode are output in JSON format 
+ *
+ * @param options.stringifyLogs BOOLEAN (OPTIONAL) - 'false' by default. If true, all consoles in debug mode are output in JSON format
  * @param options.stringifyResponse BOOLEAN (OPTIONAL) - 'false' by default. If true, all library methods return a string in JSON format
  * @returns Returns OBJECT with user info (id, email and subscribe_rewards flag)
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
@@ -42,12 +43,14 @@ export const init = async (options = {}) => {
   checkTypes(['options', options, ['Object'], true])
   const {
     backendUrl,
+    socketURL,
     debug = false,
     stringifyLogs = false,
     stringifyResponse = false,
   } = options
   checkTypes(
     ['backendUrl', backendUrl, ['String'], true],
+    ['socketURL', backendUrl, ['String']],
     ['debug', debug, ['Boolean']],
     ['stringifyLogs', stringifyLogs, ['Boolean']],
     ['stringifyResponse', stringifyResponse, ['Boolean']]
@@ -61,6 +64,7 @@ export const init = async (options = {}) => {
   // init lib (function already contains updateWalletList event inside)
   await initializeLibrary({
     backendUrl,
+    socketURL,
     debug,
     stringifyLogs,
     stringifyResponse,

@@ -14,6 +14,7 @@ const defaultState = {
   },
   debug: false,
   backendUrl: '',
+  socketURL: null,
   stringifyResponse: false,
   stringifyLogs: false,
   supportedNetworkKeys: [],

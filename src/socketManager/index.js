@@ -5,17 +5,21 @@ import {
   USERS_SOCKET_EVENT_NAMES,
   MARKETCAPS_SOCKET_EVENT_NAMES,
 } from '../constants'
-
-// get socket base url
-const baseWSURL = process.env.VUE_APP_BACKEND_WS_URL.split('/')
-  .slice(0, -1)
-  .join('/')
+import state from '../state'
 
 let usersSocket = null
 let marketcapsSocket = null
 
 const connect = async () => {
   try {
+    // get socket base url
+    const baseWSURL = (
+      state.getState('socketURL') || process.env.VUE_APP_BACKEND_WS_URL
+    )
+      .split('/')
+      .slice(0, -1)
+      .join('/')
+
     // get socket token
     const { data: token } = await api.requests.getSocketToken()
 

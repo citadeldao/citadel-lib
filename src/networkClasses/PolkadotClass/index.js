@@ -4,10 +4,14 @@ import { signTxByLedger } from './signers/signTxByLedger'
 import { signTxByPrivateKeyOrMnemonic } from './signers/signTxByPrivateKeyOrMnemonic'
 import api from '../../api'
 import errors from '../../errors'
+import { Keyring } from '@polkadot/api'
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import U2fTransport from '@ledgerhq/hw-transport-u2f'
 import { DELEGATION_TYPES, WALLET_TYPES } from '../../constants'
+import { cryptoWaitReady } from '@polkadot/util-crypto'
+// init polkadot
+cryptoWaitReady()
 
 export class PolkadotNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -45,10 +49,7 @@ export class PolkadotNetwork extends BaseNetwork {
       return await signTxByLedger(transaction, derivationPath, this.address)
     }
     // mnemonic / privateKey signer (mnemonic can be used as private key fot sign)
-    return await signTxByPrivateKeyOrMnemonic(
-      transaction,
-      privateKey || mnemonic
-    )
+    return signTxByPrivateKeyOrMnemonic(transaction, privateKey || mnemonic)
   }
 
   async prepareDelegation({
@@ -147,18 +148,9 @@ export class PolkadotNetwork extends BaseNetwork {
   }
 
   static async createWalletByMnemonic({ mnemonic, derivationPath }) {
-    // dynamic import of large module (for fast init)
-    const { Keyring } = await import('@polkadot/api')
-    // init polkadot once
-    if (!this.polkadotInited) {
-      const { cryptoWaitReady } = await import('@polkadot/util-crypto')
-      await cryptoWaitReady()
-      this.polkadotInited = true
-    }
-
     // generate address and publicKey
     const keyring = new Keyring({ type: 'sr25519', ss58Format: 0 })
-    const { address, publicKey } = keyring.addFromUri(
+    const { address, publicKey } = await keyring.addFromUri(
       mnemonic + derivationPath || ''
     )
     // account = await keyring.addFromMnemonic((mnemonic + derivationPath) || '');
@@ -182,15 +174,6 @@ export class PolkadotNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey }) {
-    // dynamic import of large module (for fast init)
-    const { Keyring } = await import('@polkadot/api')
-    // init polkadot once
-    if (!this.polkadotInited) {
-      const { cryptoWaitReady } = await import('@polkadot/util-crypto')
-      await cryptoWaitReady()
-      this.polkadotInited = true
-    }
-
     // generate address and publicKey
     const keyring = new Keyring({ type: 'sr25519', ss58Format: 0 })
     const { address, publicKey } = keyring.addFromUri(privateKey)

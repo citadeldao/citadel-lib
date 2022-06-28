@@ -1,5 +1,5 @@
 import { BaseCosmosNetwork } from './_BaseCosmosClass'
-import { createMessageSignatureByLedger_3, signTxByPrivateKey, signTxByLedger_2 } from './_BaseCosmosClass/signers'
+import { createMessageSignatureByLedger_2, signTxByPrivateKey, signTxByLedger_2 } from './_BaseCosmosClass/signers'
 import { WALLET_TYPES } from '../../constants'
 
 export class KichainNetwork extends BaseCosmosNetwork {
@@ -12,7 +12,7 @@ export class KichainNetwork extends BaseCosmosNetwork {
       rawTransaction.transaction.transaction ||
       rawTransaction.transaction ||
       rawTransaction
-    // альтернативный метод для леджера
+    // alternative method for ledger
     if (this.type === WALLET_TYPES.LEDGER) {
       return signTxByLedger_2(transaction, derivationPath, this.publicKey)
     }
@@ -21,9 +21,9 @@ export class KichainNetwork extends BaseCosmosNetwork {
   }
 
   async createMessageSignature(data, { privateKey, derivationPath }) {
-    // альтернативный метод для леджера
+    // alternative method for ledger
     if (this.type === WALLET_TYPES.LEDGER) {
-      return createMessageSignatureByLedger_3(data, derivationPath)
+      return createMessageSignatureByLedger_2(data, derivationPath, true)
     }
     return super.createMessageSignature(data, { privateKey })
   }

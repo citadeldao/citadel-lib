@@ -36,21 +36,21 @@ export async function setViewingKey(
       publicKey,
     })
 
-    const client = new SigningCosmWasmClient(
-      COSM_WASM_CLIENT_HTTP_URL,
-      address,
-      signer,
-      txEncryptionSeed,
-      getFeeObject(fee),
-      // do not wait for the transaction to be included in the block, return the hash (prevent timeout error)
-      BroadcastMode.Async
-    )
-
     let transactionHash = null
 
     switch (viewingKeyType) {
       // set simple viewing key
       case VIEWING_KEYS_TYPES.SIMPLE: {
+        const client = new SigningCosmWasmClient(
+          COSM_WASM_CLIENT_HTTP_URL,
+          address,
+          signer,
+          txEncryptionSeed,
+          getFeeObject(fee),
+          // do not wait for the transaction to be included in the block, return the hash (prevent timeout error)
+          BroadcastMode.Async
+        )
+
         const simpleViewingKey = generateSimpleViewingKey(
           contractAddress,
           privateKeyHash
@@ -67,6 +67,15 @@ export async function setViewingKey(
       // set custom viewing key
       case VIEWING_KEYS_TYPES.CUSTOM: {
         checkTypes(['viewingKey', viewingKey, ['String'], true])
+        const client = new SigningCosmWasmClient(
+          COSM_WASM_CLIENT_HTTP_URL,
+          address,
+          signer,
+          txEncryptionSeed,
+          getFeeObject(fee),
+          // do not wait for the transaction to be included in the block, return the hash (prevent timeout error)
+          BroadcastMode.Async
+        )
         const response = await client.execute(contractAddress, {
           set_viewing_key: {
             key: viewingKey,
@@ -77,6 +86,14 @@ export async function setViewingKey(
       }
       // set random viewing key
       case VIEWING_KEYS_TYPES.RANDOM: {
+        const client = new SigningCosmWasmClient(
+          COSM_WASM_CLIENT_HTTP_URL,
+          address,
+          signer,
+          txEncryptionSeed,
+          getFeeObject(fee)
+          // wait tranaction to get generated key
+        )
         // const entropy = cryptoRandomString({ length: 64, type: 'base64' })
         const entropy = crypto.randomBytes(64).toString('base64')
         const response = await client.execute(contractAddress, {
@@ -99,8 +116,8 @@ export async function setViewingKey(
         })
       }
     }
-
-    if (transactionHash) {
+    // do not check random key - its method is already waiting for the transaction to pass
+    if (transactionHash && viewingKeyType !== VIEWING_KEYS_TYPES.RANDOM) {
       // wait for the key to be installed before saving it to the instance
       const PAUSE_BETWEEN_CHECKS = 2000
       const MAX_NUMBER_OF_CHECKS = 30
@@ -123,10 +140,8 @@ export async function setViewingKey(
         await sleep(PAUSE_BETWEEN_CHECKS)
         currentСheckТumber++
       }
-
-      return { transactionHash, viewingKey }
     }
-    throw Error
+    return { transactionHash, viewingKey }
   } catch (error) {
     console.error(error)
     if (error.name === 'WrongArguments') {

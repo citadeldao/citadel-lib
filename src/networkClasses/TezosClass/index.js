@@ -39,9 +39,10 @@ export class TezosNetwork extends BaseNetwork {
     const addresses = await api.externalRequests.getKTAccounts({
       address: this.address,
     })
+
     // return formatted array with balances
     return addresses.map((item) => {
-      const mainBalance = item.balance / 10 ** this.decimals
+      const mainBalance = item.balance / 10 ** TezosNetwork.decimals
       const stake = item.delegate?.active ? mainBalance : 0
       const frozenBalance = 0
       item.balance = {

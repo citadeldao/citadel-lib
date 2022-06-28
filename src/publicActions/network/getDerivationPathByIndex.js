@@ -9,18 +9,14 @@ import {
  * Returns a string with derivationPath by index number
  *
  * @param net STRING (REQUIRED) - network key
- * @param options OBJECT (REQUIRED)
- * @param options.type OBJECT (REQUIRED) - 
-template type ('seed', 'ledger', 'trezor')
+ * @param options.type STRING (REQUIRED) - template type ('seed', 'ledger', 'trezor')
+ * @param options.index STRING, NUMBER (REQUIRED) - derivation path index
  * 
  * @returns Returns STRING with derivation path.
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
  *
- * const response = await citadel.getDerivationPathByIndex('secret', {
- *   type: 'seed',
- *   index: 5
- * })
+ * const response = await citadel.getDerivationPathByIndex('secret', 'seed', 5)
  *
  * // =>
  * {

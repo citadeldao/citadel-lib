@@ -2,6 +2,8 @@ import { createApiRequests } from './createApiRequests'
 import { requests } from './requests'
 import { externalRequests } from './externalRequests'
 import { formattedApi } from './formattedApi'
+import { getRequestFunctionsForExtension } from './requestFunctionsForExtension'
+import state from '../state'
 
 const api = {
   requests: null,
@@ -19,6 +21,7 @@ export const initApi = (baseURL) => {
     requests,
     enableResponseHandler: true,
   })
+
   // other servers
   api.externalRequests = createApiRequests({
     baseURL: false,
@@ -26,6 +29,14 @@ export const initApi = (baseURL) => {
     requests: externalRequests,
     enableResponseHandler: false,
   })
+
+  // for the extension, replace some requests with local mocks and requests without authorization
+  if (state.getState('isExtension')) {
+    api.requests = {
+      ...api.requests,
+      ...getRequestFunctionsForExtension(baseURL),
+    }
+  }
 }
 
 export const resetApi = () => {

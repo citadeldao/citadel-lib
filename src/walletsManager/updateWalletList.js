@@ -39,7 +39,7 @@ export const updateWalletList = async (accountWallets) => {
     )
     if (!accountWallet) {
       // remove missing wallets from storage
-      storage.wallets.removeWallet(storageWallet)
+      storage.wallets.removeWallet(storageWallet.id)
       return
     } else {
       // update existing wallets in storage

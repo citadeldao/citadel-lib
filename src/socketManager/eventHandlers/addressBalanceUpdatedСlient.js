@@ -2,6 +2,8 @@ import walletsManager from '../../walletsManager'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
 import { isNativeToken } from '../../helpers/isNativeToken'
+import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 
 export const addressBalanceUpdatedСlient = async ({
   address,
@@ -41,4 +43,7 @@ export const addressBalanceUpdatedСlient = async ({
   if (tokenReloadRequired) {
     await walletInstances.getWalletInstanceById(wallet.id).updateSubtokensList()
   }
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

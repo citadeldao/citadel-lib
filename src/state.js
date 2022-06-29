@@ -15,6 +15,7 @@ const defaultState = {
   debug: false,
   backendUrl: '',
   socketURL: null,
+  isExtension: false,
   stringifyResponse: false,
   stringifyLogs: false,
   supportedNetworkKeys: [],

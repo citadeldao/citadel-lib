@@ -4,6 +4,8 @@ import { getWallets } from './getWallets'
 import { getWalletsDetail } from './getWalletsDetail'
 import { getActiveDaoHolders } from './getActiveDaoHolders'
 import { subscribeRewards } from './subscribeRewards'
+import { getAllCurrencies } from './getAllCurrencies'
+import { getAllMarketcaps } from './getAllMarketcaps'
 
 export const common = {
   getInfo,
@@ -12,4 +14,6 @@ export const common = {
   getWalletsDetail,
   getActiveDaoHolders,
   subscribeRewards,
+  getAllCurrencies,
+  getAllMarketcaps,
 }

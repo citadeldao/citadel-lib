@@ -1,1 +1,3 @@
-export const localRequestFunctions = {}
+import { getInfo } from './getInfo'
+
+export const localRequestFunctions = { getInfo }

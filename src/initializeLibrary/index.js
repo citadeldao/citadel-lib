@@ -13,6 +13,7 @@ export const initializeLibrary = async ({
   backendUrl,
   socketURL,
   debug,
+  isExtension,
   stringifyLogs,
   stringifyResponse,
 }) => {
@@ -21,6 +22,9 @@ export const initializeLibrary = async ({
 
   // set debug mode
   state.setState('debug', debug)
+
+  // set isExtension flag
+  state.setState('isExtension', isExtension)
 
   // set stringify debugConsoleLog
   state.setState('stringifyLogs', stringifyLogs)

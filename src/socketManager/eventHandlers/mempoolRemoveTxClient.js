@@ -1,7 +1,6 @@
 import walletsManager from '../../walletsManager'
 import networkClasses from '../../networkClasses'
-// TODO: refact publicActions.getBalanceById, move function to walletInstance method and use here
-import publicActions from '../../publicActions'
+import walletInstances from '../../walletInstances'
 import { dispatchLibEvent } from '../../dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 import state from '../../state'
@@ -26,19 +25,30 @@ export const mempoolRemoveTxClient = async (data) => {
 
   const toWallet = walletsManager.getWalletInfoByAddress(nativeNet, to)
   // update nativeNet or token balance
-  fromWallet && (await publicActions.getBalanceById(fromWallet.id, net))
+  fromWallet && (await getBalanceById(fromWallet.id, net))
   toWallet &&
     toWallet.address !== fromWallet?.address &&
-    (await publicActions.getBalanceById(toWallet.id, net))
+    (await getBalanceById(toWallet.id, net))
   // update native token for subtoken
   isSubtoken &&
     fromWallet &&
-    (await publicActions.getBalanceById(fromWallet.id, supportedTokens[net]))
+    (await getBalanceById(fromWallet.id, supportedTokens[net]))
   isSubtoken &&
     toWallet &&
     toWallet.address !== fromWallet?.address &&
-    (await publicActions.getBalanceById(toWallet.id, supportedTokens[net]))
+    (await getBalanceById(toWallet.id, supportedTokens[net]))
 
   // EVENT: inform the client that it is time to update wallet list
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+}
+
+const getBalanceById = async (walletId, token) => {
+  const walletInstance = walletInstances.getWalletInstanceById(walletId)
+  if (!token || token === walletInstance.net) {
+    // for subtoken call token info
+    return await walletInstance.getDelegationBalance()
+  } else {
+    // for native token call walletInstance method
+    return await walletInstance.callTokenInfo(token, 'balance')
+  }
 }

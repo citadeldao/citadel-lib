@@ -17,6 +17,9 @@ export const initializeLibrary = async ({
   stringifyLogs,
   stringifyResponse,
 }) => {
+  // set backend URL
+  state.setState('backendUrl', backendUrl)
+
   // set socket URL
   state.setState('socketURL', socketURL)
 
@@ -33,10 +36,10 @@ export const initializeLibrary = async ({
   state.setState('stringifyResponse', stringifyResponse)
 
   // create api object
-  initApi(backendUrl)
+  initApi()
 
   // load account info
-  const { data: info } = await api.formattedApi.getInfo()
+  const { data: info } = await api.requests.getInfo()
 
   // set user data to state:
   state.setState('user', {
@@ -67,7 +70,6 @@ export const initializeLibrary = async ({
 
   // configure modules by cache and walletList from 'info' to fast init
   configureModulesByCaches(initialCacheManager.getInitialCaches())
-
   // update walletList
   await walletsManager.updateWalletList(info.wallets)
 

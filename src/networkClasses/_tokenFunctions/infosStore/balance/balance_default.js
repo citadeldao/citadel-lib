@@ -7,7 +7,7 @@ import { LIB_EVENT_NAMES } from '../../../../constants'
 
 export async function balance_default({ token }) {
   // get token balance
-  const { data: tokenBalance } = await api.formattedApi.getDelegationBalance({
+  const { data: tokenBalance } = await api.requests.getDelegationBalance({
     net: token,
     address: this.address,
   })

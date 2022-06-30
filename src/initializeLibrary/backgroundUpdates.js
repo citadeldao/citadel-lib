@@ -11,11 +11,11 @@ export const backgroundUpdates = async (initialCacheManager) => {
   await initialCacheManager.updateOldCache()
 
   // configure modules by updated cache and walletList from 'detail' request to fast init
-  await configureModulesByCaches(initialCacheManager.getInitialCaches())
+  configureModulesByCaches(initialCacheManager.getInitialCaches())
 
   // get detailed wallet balances
   const { data: detailedAccountwallets } =
-    await api.formattedApi.getWalletsDetail()
+    await api.requests.getWalletsDetail()
 
   // update walletList detail
   await walletsManager.updateWalletList(detailedAccountwallets)

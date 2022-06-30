@@ -4,7 +4,7 @@ import { getInfo } from './getInfo'
 import { getDelegationBalance } from './getDelegationBalance'
 import { getWalletsDetail } from './getWalletsDetail'
 
-export const formattedApi = {
+export const formattedRequestFunctions = {
   getNetworksConfig,
   getWallets,
   getInfo,

@@ -1,10 +1,22 @@
-import api from '../../api'
 import networkClasses from '../../networkClasses'
+import { requests } from '../requests'
+import { createApiRequests } from '../createApiRequests'
+import state from '../../state'
 
-// will be moved to the backend
-export const getWalletsDetail = async () => {
+// modify the backend response (will move to the backend in the future)
+export const getWallets = async () => {
+  const backendUrl = state.getState('backendUrl')
+
+  // create original axios function
+  const originalRequest = createApiRequests({
+    baseURL: backendUrl,
+    withCredentials: true,
+    singleRequest: requests.getWallets,
+    enableResponseHandler: true,
+  })
+
   // get original response
-  const { data } = await api.requests.getWalletsDetail()
+  const { data } = await originalRequest()
   return {
     data: data.map(
       ({
@@ -17,10 +29,10 @@ export const getWalletsDetail = async () => {
         net,
         ...wallet,
         claimedRewards,
+        // calc balance
         balance: {
           ...balance,
           claimableRewards,
-          // calc balance
           calculatedBalance: networkClasses
             .getNetworkClass(net)
             ?.calculateBalance(balance),

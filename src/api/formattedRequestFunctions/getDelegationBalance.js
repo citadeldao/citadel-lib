@@ -1,10 +1,23 @@
-import api from '../../api'
 import networkClasses from '../../networkClasses'
 import BigNumber from 'bignumber.js'
+import { requests } from '../requests'
+import { createApiRequests } from '../createApiRequests'
+import state from '../../state'
 // modify the backend response (will move to the backend in the future)
 export const getDelegationBalance = async (options) => {
+  const backendUrl = state.getState('backendUrl')
+
+  // create original axios function
+  const originalRequest = createApiRequests({
+    baseURL: backendUrl,
+    withCredentials: true,
+    singleRequest: requests.getDelegationBalance,
+    enableResponseHandler: true,
+  })
+
   // get original response
-  const { data } = await api.requests.getDelegationBalance(options)
+  const { data } = await originalRequest(options)
+
   // rename "rewards" field
   data.claimableRewards = data?.rewards
   delete data.rewards

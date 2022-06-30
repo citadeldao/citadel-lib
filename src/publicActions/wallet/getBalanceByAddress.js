@@ -15,7 +15,7 @@ export const getBalanceByAddress = async (net, address) => {
   checkNetwork(net)
 
   // call api
-  const { data } = await api.formattedApi.getDelegationBalance({
+  const { data } = await api.requests.getDelegationBalance({
     net,
     address,
   })

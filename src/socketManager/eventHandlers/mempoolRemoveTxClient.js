@@ -16,7 +16,7 @@ export const mempoolRemoveTxClient = async (data) => {
     'stake',
     'unstake',
     'restake',
-    'redelegate',
+    'redelegation',
   ].includes(type)
   const isSubtoken = !isNativeToken(net)
   const nativeNet = networkClasses.getNativeNet(net)

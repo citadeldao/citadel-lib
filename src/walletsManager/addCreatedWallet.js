@@ -101,7 +101,7 @@ export const addCreatedWallet = async ({
   // LOAD BALANCE
   if (loadBalance) {
     // load balance
-    const { data: balance } = await api.formattedApi.getDelegationBalance({
+    const { data: balance } = await api.requests.getDelegationBalance({
       net: createdWallet.net,
       address: createdWallet.address,
     })

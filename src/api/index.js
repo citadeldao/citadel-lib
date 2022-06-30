@@ -1,22 +1,24 @@
 import { createApiRequests } from './createApiRequests'
 import { requests } from './requests'
 import { externalRequests } from './externalRequests'
-import { formattedApi } from './formattedApi'
-import { getRequestFunctionsForExtension } from './requestFunctionsForExtension'
+import { formattedRequestFunctions } from './formattedRequestFunctions'
+import { requestFunctionsForExtension } from './requestFunctionsForExtension'
 import state from '../state'
 
 const api = {
   requests: null,
   externalRequests: null,
-  formattedApi,
 }
 
 export default api
 
-export const initApi = (baseURL) => {
+export const initApi = () => {
+  // get backend URL
+  const backendUrl = state.getState('backendUrl')
+
   // citadel backend
   api.requests = createApiRequests({
-    baseURL,
+    baseURL: backendUrl,
     withCredentials: true,
     requests,
     enableResponseHandler: true,
@@ -30,11 +32,17 @@ export const initApi = (baseURL) => {
     enableResponseHandler: false,
   })
 
+  // replace some requests with functions with changes that will go to the backend
+  api.requests = {
+    ...api.requests,
+    ...formattedRequestFunctions,
+  }
+
   // for the extension, replace some requests with local mocks and requests without authorization
   if (state.getState('isExtension')) {
     api.requests = {
       ...api.requests,
-      ...getRequestFunctionsForExtension(baseURL),
+      ...requestFunctionsForExtension,
     }
   }
 }

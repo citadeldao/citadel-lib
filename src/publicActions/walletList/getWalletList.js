@@ -21,14 +21,14 @@ export const getWalletList = async (type = GET_WALLET_LIST_TYPES.CACHE) => {
   // update walletList by wallets request
   if (type === GET_WALLET_LIST_TYPES.WALLETS) {
     // get account wallets
-    const { data: wallets } = await api.formattedApi.getWallets()
+    const { data: wallets } = await api.requests.getWallets()
     // update lib wallets
     await walletsManager.updateWalletList(wallets)
   }
   // update walletList by detail request
   if (type === GET_WALLET_LIST_TYPES.DETAIL) {
     // get detailed account wallets
-    const { data: wallets } = await api.formattedApi.getWalletsDetail()
+    const { data: wallets } = await api.requests.getWalletsDetail()
     // update lib wallets
     await walletsManager.updateWalletList(wallets)
   }

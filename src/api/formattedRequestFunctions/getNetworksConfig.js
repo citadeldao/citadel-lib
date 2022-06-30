@@ -1,11 +1,23 @@
-import api from '../../api'
 import { additionalConfig } from './_hardCode'
 import { merge } from '../../helpers/merge'
+import { requests } from '../requests'
+import { createApiRequests } from '../createApiRequests'
+import state from '../../state'
 
 // modify the backend response (will move to the backend in the future)
 export const getNetworksConfig = async () => {
+  const backendUrl = state.getState('backendUrl')
+
+  // create original axios function
+  const originalRequest = createApiRequests({
+    baseURL: backendUrl,
+    withCredentials: true,
+    singleRequest: requests.getNetworksConfig,
+    enableResponseHandler: true,
+  })
+
   // get original response
-  const networksConfig = await api.requests.getNetworksConfig()
+  const networksConfig = await originalRequest()
 
   // add hardcode configs
   additionalConfig.map(({ net, config }) => {

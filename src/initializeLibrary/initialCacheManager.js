@@ -14,7 +14,7 @@ export const initialCacheManager = {
     wasCached: null,
     // loading function
     async updateCache() {
-      this.cache = await api.formattedApi.getNetworksConfig()
+      this.cache = await api.requests.getNetworksConfig()
       // put cache to storage
       storage.caches.setCache(CACHE_NAMES.NETWORKS_CONFIG, this.cache)
     },

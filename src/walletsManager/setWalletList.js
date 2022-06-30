@@ -33,7 +33,7 @@ export const setWalletList = async (
 
   // UPDATE STORAGE WALLETS
   // get existing storage wallets
-  let storageWalletList = getWalletList()
+  const storageWalletList = getWalletList()
   storageWalletList.map((storageWallet) => {
     // find storageWalletList in initialWallets array
     const existingInitialWallet = initialWallets.find(

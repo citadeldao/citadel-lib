@@ -5,8 +5,6 @@ export const getInfo = async () => {
   const { data: marketcap } = await api.requests.getAllMarketcaps()
   // читать из localstorage
   const wallets = []
-  console.log('currency', currency)
-  console.log('marketcap', marketcap)
   return {
     id: 'extension',
     marketcap,

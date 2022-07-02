@@ -1,16 +1,23 @@
-import api from '../..'
+import api from '../'
+import { prepareAccountWallets } from './_prepareAccountWallets'
 
+// if there is no authorization, collect the request for info in parts
 export const getInfo = async () => {
+  // get currencies
   const { data: currency } = await api.requests.getAllCurrencies()
+  // get marketcaps
   const { data: marketcap } = await api.requests.getAllMarketcaps()
-  // читать из localstorage
-  const wallets = []
+  // read wallets from extension localStorage
+  const wallets = await prepareAccountWallets()
   return {
-    id: 'extension',
-    marketcap,
-    currency,
-    wallets,
-    login: 'unauthorised',
-    subscribe_rewards: false,
+    data: {
+      marketcap,
+      currency,
+      wallets,
+      // hardcode account info (id used for cache name)
+      id: 'extension',
+      login: 'unauthorised',
+      subscribe_rewards: false,
+    },
   }
 }

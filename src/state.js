@@ -14,6 +14,7 @@ const defaultState = {
   },
   debug: false,
   backendUrl: '',
+  publicBackendUrl: null,
   socketURL: null,
   isExtension: false,
   stringifyResponse: false,

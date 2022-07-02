@@ -1,5 +1,11 @@
 import errors from '../../errors'
 
+/**
+ * RESPONSE ERROR HANDLER
+ *
+ * Handles request errors
+ */
+
 export const responseErrorHandler = (error) => {
   const data = error.response?.data
   const status = error?.response?.status

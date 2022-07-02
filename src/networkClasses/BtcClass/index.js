@@ -93,6 +93,8 @@ export class BtcNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      // ...
     }
   }
 

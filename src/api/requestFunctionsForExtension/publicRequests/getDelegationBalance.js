@@ -1,8 +1,8 @@
 // function returns request parameters for the axios instance.
-export const getDelegationBalance = ({ address, net }) => {
+export const getDelegationBalance = (data) => {
   return {
     // backend domain is in the axios instance
-    url: `/transactions/${net}/${address}/delegation-balance-info`,
+    url: `/blockchain/${data.net}/${data.address}/balance`,
     method: 'get',
   }
 }

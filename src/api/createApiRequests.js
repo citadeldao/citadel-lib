@@ -1,10 +1,19 @@
 import { useAxios } from './useAxios'
 
+/**
+ * CREATE API REQUEST
+ *
+ * Creates an object with request methods. Each method is a configured axios instance by parameters from requests/ singleRequest object.
+ *
+ */
 export const createApiRequests = ({
+  // base axios URL
   baseURL,
+  // object with request params functions
   requests,
   withCredentials,
   enableResponseHandler,
+  // single request params function
   singleRequest,
 }) => {
   // create axios instace (for each request in this case, but this is not required)

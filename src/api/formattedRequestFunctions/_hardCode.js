@@ -1,4 +1,4 @@
-// static parameters of networks that will be transferred to the backend
+// Additional options that merged into networks.json (in the future they will go to the backend)
 export const additionalConfig = [
   {
     net: 'polkadot',

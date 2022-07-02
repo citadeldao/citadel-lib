@@ -27,7 +27,6 @@ import { polkadotPrepareRedelegation } from './polkadotPrepareRedelegation'
 import { prepareStakeWithoutDelegation } from './prepareStakeWithoutDelegation'
 import { prepareUnstakeWithoutDelegation } from './prepareUnstakeWithoutDelegation'
 
-
 export const wallet = {
   addWallet,
   getDelegationBalance,
@@ -56,5 +55,5 @@ export const wallet = {
   polkadotSignAndSend,
   polkadotPrepareRedelegation,
   prepareStakeWithoutDelegation,
-  prepareUnstakeWithoutDelegation
+  prepareUnstakeWithoutDelegation,
 }

@@ -1,3 +1,4 @@
+// function returns request parameters for the axios instance.
 export const getDelegationFee = ({
   net,
   address,
@@ -9,7 +10,8 @@ export const getDelegationFee = ({
   isWithoutDelegation
 }) => {
   return {
-    url: `transactions/${net}/${address}/fee-info/${transactionType}`,
+    // backend domain is in the axios instance
+  url: `transactions/${net}/${address}/fee-info/${transactionType}`,
     method: 'get',
     data: {
       params: {

@@ -1,10 +1,13 @@
+// function returns request parameters for the axios instance.
 export const sendAssignToDaoMessage = ({
   holderAddress,
   messageId,
   messageSignature,
 }) => {
   return {
-    url: `/dao/holder/${holderAddress}/wallets`,
+    // backend domain is in the axios instance
+    // backend domain is in the axios instance
+  url: `/dao/holder/${holderAddress}/wallets`,
     method: 'put',
     data: {
       sign: {

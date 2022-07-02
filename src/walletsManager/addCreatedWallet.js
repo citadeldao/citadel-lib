@@ -8,7 +8,7 @@ import { updateWallet } from './updateWallet'
 import walletInstances from '../walletInstances'
 
 // It is expected that the wallet was previously created by one of the 'create...' lib methods
-// This means that in addition to the address and network, сreated wallet should already contain network config fields: code, networkName etc
+// network config fields already added in create method: code, networkName etc
 export const addCreatedWallet = async ({
   createdWallet,
   title = '',

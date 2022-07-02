@@ -1,6 +1,8 @@
+// function returns request parameters for the axios instance.
 export const removeWallet = (walletId) => {
   return {
-    url: `/wallets/${walletId}`,
+    // backend domain is in the axios instance
+  url: `/wallets/${walletId}`,
     method: 'delete',
   }
 }

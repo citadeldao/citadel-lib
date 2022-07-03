@@ -1,23 +1,10 @@
 import networkClasses from '../../networkClasses'
 import BigNumber from 'bignumber.js'
-import { publicRequests } from './publicRequests'
-import { createApiRequests } from '../createApiRequests'
-import state from '../../state'
+import api from '..'
 // modify the backend response (will move to the backend in the future)
 export const getDelegationBalance = async (options) => {
-  const publicBackendUrl = state.getState('publicBackendUrl')
-
-  // create axios function
-  const publicRequest = createApiRequests({
-    // remove '/api' substring
-    baseURL: publicBackendUrl,
-    withCredentials: true,
-    singleRequest: publicRequests.getDelegationBalance,
-    enableResponseHandler: true,
-  })
-
   // get original response
-  const { data } = await publicRequest(options)
+  const { data } = await api.publicRequests.getDelegationBalance(options)
 
   // calc balance
   if (options.net === 'bsc_xct') {

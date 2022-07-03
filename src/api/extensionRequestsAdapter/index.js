@@ -8,7 +8,7 @@ import { getAllTokenBalances } from './getAllTokenBalances'
  *
  * Replace original request functions in API object (to work without authorization)
  */
-export const requestFunctionsForExtension = {
+export const extensionRequestsAdapter = {
   getInfo,
   getDaoSupportedNetworks,
   getWalletsDetail,

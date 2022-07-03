@@ -1,13 +1,15 @@
 import { createApiRequests } from './createApiRequests'
 import { requests } from './requests'
 import { externalRequests } from './externalRequests'
-import { formattedRequestFunctions } from './formattedRequestFunctions'
-import { requestFunctionsForExtension } from './requestFunctionsForExtension'
+import { publicRequests } from './publicRequests'
+import { formattedRequestsAdapter } from './formattedRequestsAdapter'
+import { extensionRequestsAdapter } from './extensionRequestsAdapter'
 import state from '../state'
 
 const api = {
   requests: null,
   externalRequests: null,
+  publicRequests: null,
 }
 
 export default api
@@ -35,14 +37,24 @@ export const initApi = () => {
   // replace some requests with functions with changes that will go to the backend
   api.requests = {
     ...api.requests,
-    ...formattedRequestFunctions,
+    ...formattedRequestsAdapter,
   }
 
-  // for the extension, replace some requests with local mocks and requests without authorization
+  // for the extension,
   if (state.getState('isExtension')) {
+    const publicBackendUrl = state.getState('publicBackendUrl')
+    // create public api
+    api.publicRequests = createApiRequests({
+      baseURL: publicBackendUrl,
+      withCredentials: true,
+      requests: publicRequests,
+      enableResponseHandler: true,
+    })
+
+    // replace some requests with local mocks and requests without authorization
     api.requests = {
       ...api.requests,
-      ...requestFunctionsForExtension,
+      ...extensionRequestsAdapter,
     }
   }
 }
@@ -50,4 +62,5 @@ export const initApi = () => {
 export const resetApi = () => {
   api.requests = null
   api.externalRequests = null
+  api.publicRequests = null
 }

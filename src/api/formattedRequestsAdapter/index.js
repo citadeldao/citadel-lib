@@ -9,7 +9,7 @@ import { getWalletsDetail } from './getWalletsDetail'
  * Wrappers over the backend api with changes that will be transferred to the backend in the future.
  * Replace original request functions in API object
  */
-export const formattedRequestFunctions = {
+export const formattedRequestsAdapter = {
   getNetworksConfig,
   getWallets,
   getInfo,

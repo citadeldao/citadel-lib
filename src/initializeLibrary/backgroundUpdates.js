@@ -1,9 +1,11 @@
 import api from '../api'
+import state from '../state'
 import walletsManager from '../walletsManager'
 import walletInstances from '../walletInstances'
 import { dispatchLibEvent } from '../dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../constants'
 import { configureModulesByCaches } from './configureModulesByCaches'
+import { getExstensionLocalWallets } from '../api/extensionRequestsAdapter/_getExstensionLocalWallets'
 
 // update wallets detail
 export const backgroundUpdates = async (initialCacheManager) => {
@@ -14,8 +16,7 @@ export const backgroundUpdates = async (initialCacheManager) => {
   configureModulesByCaches(initialCacheManager.getInitialCaches())
 
   // get detailed wallet balances
-  const { data: detailedAccountwallets } =
-    await api.requests.getWalletsDetail()
+  const { data: detailedAccountwallets } = await api.requests.getWalletsDetail()
 
   // update walletList detail
   await walletsManager.updateWalletList(detailedAccountwallets)
@@ -32,6 +33,14 @@ export const backgroundUpdates = async (initialCacheManager) => {
         .updateSubtokensList()
     })
   )
+
+  // if isExtension
+  if (state.getState('isExtension')) {
+    // get local wallets from extension store
+    const localWallets = await getExstensionLocalWallets()
+    // set local wallets with types to lib
+    await walletsManager.setWalletList(localWallets)
+  }
 
   // EVENT: inform the client that it is time to update wallet list
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)

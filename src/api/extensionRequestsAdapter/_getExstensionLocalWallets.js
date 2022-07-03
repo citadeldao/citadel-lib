@@ -1,27 +1,28 @@
 import { getType } from '../../helpers/checkArguments'
 
-export const prepareAccountWallets = async () => {
+export const getExstensionLocalWallets = async () => {
   // eslint-disable-next-line
   let chromeStorage = chrome?.storage?.local
 
   // mock chromeStorage for manual testing on web test UI
   if (!chromeStorage) {
     chromeStorage = {
-      get() {
-        return { allWallets: localStorage.getItem('allWallets') }
+      get([key]) {
+        return {
+          allWallets: JSON.parse(JSON.parse(localStorage.getItem(key))),
+        }
       },
     }
   }
 
-  const { allWallets } = await chromeStorage.get(['allWallets'])
-
-  // parse JSON
-  const rawWallets = JSON.parse(JSON.parse(allWallets)) || []
+  const { allWallets: rawWallets = [] } = await chromeStorage.get([
+    'allWallets',
+  ])
 
   const wallets = []
 
   // format wallet keys
-  rawWallets.map(({ wallets: walletsGroup }) => {
+  rawWallets.map(({ hashedMnemonic, wallets: walletsGroup }) => {
     walletsGroup.map(
       ({
         address,
@@ -30,6 +31,8 @@ export const prepareAccountWallets = async () => {
         id = null,
         net,
         balance = 0,
+        publicKey,
+        type,
       }) => {
         // balance was originally a number
         if (getType(balance) === 'Number') {
@@ -46,6 +49,10 @@ export const prepareAccountWallets = async () => {
           id,
           net,
           balance,
+          // local wallet data
+          hashedMnemonic,
+          publicKey,
+          type,
         })
       }
     )

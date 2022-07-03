@@ -1,10 +1,10 @@
 // if there is no authorizationб , return extension storage wallet
-import { prepareAccountWallets } from './_prepareAccountWallets'
+import { getExstensionLocalWallets } from './_getExstensionLocalWallets'
 import api from '..'
 
 export const getWalletsDetail = async () => {
   // get wallets from storage
-  const wallets = await prepareAccountWallets()
+  const wallets = await getExstensionLocalWallets()
   // update balances for each wallet
   await Promise.all(
     wallets.map(async (wallet) => {
@@ -22,6 +22,13 @@ export const getWalletsDetail = async () => {
   )
 
   return {
-    data: wallets,
+    data: wallets.map((wallet) => {
+      // remove keys with local wallet data
+      delete wallet.hashedMnemonic
+      delete wallet.publicKey
+      delete wallet.type
+      // return the cleared wallet
+      return wallet
+    }),
   }
 }

@@ -1,3 +1,4 @@
+import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { BaseEthNetwork } from './_BaseEthClass'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
@@ -165,6 +166,10 @@ export class BscNetwork extends BaseEthNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 }

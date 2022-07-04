@@ -1,4 +1,6 @@
 import api from '../../api'
+import state from '../../state'
+import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import { derivePath } from 'ed25519-hd-key'
 import bs58 from 'bs58'
@@ -187,6 +189,10 @@ export class IostNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(mnemonic),
+      }),
     }
   }
 
@@ -222,6 +228,10 @@ export class IostNetwork extends BaseNetwork {
       // add optional properties from networks.json
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 

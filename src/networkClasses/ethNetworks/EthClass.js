@@ -3,6 +3,8 @@ import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import EthApp from '@ledgerhq/hw-app-eth'
 import { WALLET_TYPES } from '../../constants'
+import state from '../../state'
+import { hashMnemonic } from '../../helpers/hashMnemonic'
 
 export class EthNetwork extends BaseEthNetwork {
   constructor(walletInfo) {
@@ -44,6 +46,10 @@ export class EthNetwork extends BaseEthNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 }

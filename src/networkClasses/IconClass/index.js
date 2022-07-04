@@ -1,3 +1,5 @@
+import state from '../../state'
+import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import hdkey from 'hdkey'
 import { sha3_256 } from 'js-sha3'
@@ -182,6 +184,10 @@ export class IconNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(mnemonic),
+      }),
     }
   }
 
@@ -206,6 +212,10 @@ export class IconNetwork extends BaseNetwork {
         // add optional properties from networks.json
         ...(this.fee_key && { fee_key: this.fee_key }),
         ...(this.bridges && { bridges: this.bridges }),
+        // additional fields for chrome extension
+        ...(state.getState('isExtension') && {
+          hashedMnemonic: hashMnemonic(),
+        }),
       }
     } catch (error) {
       console.error(error)
@@ -240,6 +250,10 @@ export class IconNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 }

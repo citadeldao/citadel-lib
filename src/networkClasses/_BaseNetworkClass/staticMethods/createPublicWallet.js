@@ -1,3 +1,5 @@
+import state from '../../../state'
+import { hashMnemonic } from '../../../helpers/hashMnemonic'
 import { WALLET_TYPES } from '../../../constants'
 
 export const createPublicWallet = function (walletInfo) {
@@ -14,5 +16,9 @@ export const createPublicWallet = function (walletInfo) {
     networkName: this.networkName,
     ...(this.fee_key && { fee_key: this.fee_key }),
     ...(this.bridges && { bridges: this.bridges }),
+    // additional fields for chrome extension
+    ...(state.getState('isExtension') && {
+      hashedMnemonic: hashMnemonic(),
+    }),
   }
 }

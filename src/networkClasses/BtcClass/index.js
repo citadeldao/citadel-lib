@@ -1,4 +1,6 @@
 import errors from '../../errors'
+import state from '../../state'
+import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import { WALLET_TYPES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger, signTxByTrezor } from './signers'
@@ -94,7 +96,9 @@ export class BtcNetwork extends BaseNetwork {
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
       // additional fields for chrome extension
-      // ...
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(mnemonic),
+      }),
     }
   }
 
@@ -119,6 +123,10 @@ export class BtcNetwork extends BaseNetwork {
         // add optional properties from networks.json
         ...(this.fee_key && { fee_key: this.fee_key }),
         ...(this.bridges && { bridges: this.bridges }),
+        // additional fields for chrome extension
+        ...(state.getState('isExtension') && {
+          hashedMnemonic: hashMnemonic(),
+        }),
       }
     } catch (error) {
       // error means invalid private key
@@ -152,6 +160,10 @@ export class BtcNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 
@@ -192,6 +204,10 @@ export class BtcNetwork extends BaseNetwork {
       // add optional properties from networks.json
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 

@@ -1,3 +1,4 @@
+// function returns request parameters for the axios instance.
 export const polkadotPrepareStakeAndNominate = ({
   address,
   delegations,
@@ -7,7 +8,8 @@ export const polkadotPrepareStakeAndNominate = ({
   rewardsRestake,
 }) => {
   return {
-    url: `/transactions/polkadot/${address}/prepareStakeAndNominate`,
+    // backend domain is in the axios instance
+  url: `/transactions/polkadot/${address}/prepareStakeAndNominate`,
     method: 'get',
     data: {
       params: {

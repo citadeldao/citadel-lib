@@ -1,3 +1,4 @@
+// function returns request parameters for the axios instance.
 export const sendSignedTransaction = ({
   net,
   from,
@@ -7,7 +8,8 @@ export const sendSignedTransaction = ({
   proxy = false,
 }) => {
   return {
-    url: `/transactions/${net}/${from}/send`,
+    // backend domain is in the axios instance
+  url: `/transactions/${net}/${from}/send`,
     method: 'post',
     data: {
       signedTransaction,

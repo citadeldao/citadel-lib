@@ -41,7 +41,6 @@ export const setWalletList = async (
         initialWallet.net === storageWallet.net &&
         initialWallet.address === storageWallet.address
     )
-
     // if storageWallet found in initialWallets
     if (existingInitialWallet) {
       // update storageWallet by existingInitialWallet
@@ -61,6 +60,10 @@ export const setWalletList = async (
           // add savedViewingKeys if it exist
           ...(existingInitialWallet.savedViewingKeys && {
             savedViewingKeys: existingInitialWallet.savedViewingKeys,
+          }),
+          // add hashedMnemonic if it exist (for extension)
+          ...(existingInitialWallet.hashedMnemonic && {
+            hashedMnemonic: existingInitialWallet.hashedMnemonic,
           }),
         },
       })

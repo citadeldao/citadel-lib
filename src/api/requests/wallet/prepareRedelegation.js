@@ -1,3 +1,4 @@
+// function returns request parameters for the axios instance.
 export const prepareRedelegation = ({
   net,
   address,
@@ -7,7 +8,8 @@ export const prepareRedelegation = ({
   publicKey,
 }) => {
   return {
-    url: `transactions/${net}/${address}/prepare-redelegation?version=1.0.5`,
+    // backend domain is in the axios instance
+  url: `transactions/${net}/${address}/prepare-redelegation?version=1.0.5`,
     method: 'post',
     data: {
       validator_src_address: from,

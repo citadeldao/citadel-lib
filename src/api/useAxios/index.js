@@ -2,6 +2,11 @@ import axios from 'axios'
 import { responseErrorHandler } from './responseErrorHandler'
 import { responseHandler } from './responseHandler'
 
+/**
+ * USE AXIOS
+ *
+ * Returns an axios instance with interceptors, base url and credentials (optional)
+ */
 export const useAxios = ({
   baseURL,
   withCredentials,

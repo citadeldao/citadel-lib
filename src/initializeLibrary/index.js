@@ -11,6 +11,7 @@ import socketManager from '../socketManager'
 
 export const initializeLibrary = async ({
   backendUrl,
+  publicBackendUrl,
   socketURL,
   debug,
   isExtension,
@@ -19,6 +20,9 @@ export const initializeLibrary = async ({
 }) => {
   // set backend URL
   state.setState('backendUrl', backendUrl)
+
+  // set backend URL
+  state.setState('publicBackendUrl', publicBackendUrl)
 
   // set socket URL
   state.setState('socketURL', socketURL)
@@ -73,8 +77,8 @@ export const initializeLibrary = async ({
   // update walletList
   await walletsManager.updateWalletList(info.wallets)
 
-  // connect sockets (do not await for fast load)
-  socketManager.init()
+  // if is not extension, connect sockets (do not await for fast load)
+  !isExtension && socketManager.init()
 
   // do not await background updates- 'walletListUpdated' event will be dispatched inside
   backgroundUpdates(initialCacheManager)

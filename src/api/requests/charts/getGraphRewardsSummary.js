@@ -1,5 +1,7 @@
+// function returns request parameters for the axios instance.
 export const getGraphRewardsSummary = ({ dateFrom, dateTo, listId }) => {
   return {
+    // backend domain is in the axios instance
     url: `/transactions${
       listId ? `/list/${listId}` : ''
     }/graph-rewards-summary`,

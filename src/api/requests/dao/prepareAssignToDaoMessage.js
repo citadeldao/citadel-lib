@@ -1,6 +1,9 @@
+// function returns request parameters for the axios instance.
 export const prepareAssignToDaoMessage = ({ net, address, publicKey }) => {
   return {
-    url: `/dao/ask-verify-msg`,
+    // backend domain is in the axios instance
+    // backend domain is in the axios instance
+  url: `/dao/ask-verify-msg`,
     method: 'get',
     data: {
       params: {

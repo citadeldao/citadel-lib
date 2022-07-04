@@ -1,3 +1,4 @@
+// function returns request parameters for the axios instance.
 export const prepareGasPledge = ({
   net,
   address,
@@ -6,7 +7,8 @@ export const prepareGasPledge = ({
   amount,
 }) => {
   return {
-    url: `/transactions/${net}/${address}/prepare-pledge`,
+    // backend domain is in the axios instance
+  url: `/transactions/${net}/${address}/prepare-pledge`,
     method: 'post',
     data: {
       publicKey,

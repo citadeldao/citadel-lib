@@ -9,7 +9,13 @@ import { rewards } from './rewards'
 import { investors } from './investors'
 import { sockets } from './sockets'
 
-// all requests are put on the same level. Keep unique request names
+/**
+ * REQUESTS:
+ *
+ * Functions that return an object with request parameters for axios-instance.
+ * The URL with the backend domain is in the axios instance
+ */
+
 export const requests = {
   ...common,
   ...network,

@@ -8,6 +8,7 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  *
  * @param options OBJECT (REQUIRED) - init options object
  * @param options.backendUrl STRING (REQUIRED) - REST-api URL, etc 'https://app.citadel.one/api'
+ * @param options.publicBackendUrl STRING (OPTIONAL) - public REST-api URL for extension, etc 'https://app.citadel.one/api'
  * @param options.socketURL STRING (OPTIONAL) - REST-api URL, etc 'https://api-websockets-user.apps.citadel.okd.3ahtim54r.ru/users'
  * @param options.debug BOOLEAN (OPTIONAL) - 'false' by default. if 'true', the arguments and return values of the called functions are printed to the console.
  * @param options.isExtension BOOLEAN (OPTIONAL) - 'false' by default. if 'true', wallets are read from localStorage, and extension methods work without authorization
@@ -42,6 +43,7 @@ export const init = async (options = {}) => {
   checkTypes(['options', options, ['Object'], true])
   const {
     backendUrl,
+    publicBackendUrl,
     socketURL,
     debug = false,
     isExtension,
@@ -50,6 +52,7 @@ export const init = async (options = {}) => {
   } = options
   checkTypes(
     ['backendUrl', backendUrl, ['String'], true],
+    ['publicBackendUrl', publicBackendUrl, ['String']],
     ['socketURL', backendUrl, ['String']],
     ['debug', debug, ['Boolean']],
     ['isExtension', isExtension, ['Boolean']],
@@ -65,6 +68,7 @@ export const init = async (options = {}) => {
   // init lib (function already contains updateWalletList event inside)
   await initializeLibrary({
     backendUrl,
+    publicBackendUrl,
     socketURL,
     debug,
     isExtension,

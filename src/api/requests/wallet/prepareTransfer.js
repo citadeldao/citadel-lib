@@ -1,6 +1,8 @@
+// function returns request parameters for the axios instance.
 export const prepareTransfer = ({ net, from, ...options }) => {
   return {
-    url: `/transactions/${net}/${from}/prepare-transfer?version=1.0.5`,
+    // backend domain is in the axios instance
+  url: `/transactions/${net}/${from}/prepare-transfer?version=1.0.5`,
     method: 'post',
     data: {
       ...options,

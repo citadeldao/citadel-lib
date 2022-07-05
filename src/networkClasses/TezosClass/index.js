@@ -1,3 +1,5 @@
+import state from '../../state'
+import { hashMnemonic } from '../../helpers/hashMnemonic'
 import api from '../../api'
 import base58check from 'bs58check'
 import { WALLET_TYPES } from '../../constants'
@@ -139,6 +141,10 @@ export class TezosNetwork extends BaseNetwork {
       networkName: this.networkName,
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(mnemonic),
+      }),
     }
   }
 
@@ -180,6 +186,10 @@ export class TezosNetwork extends BaseNetwork {
       networkName: this.networkName,
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 
@@ -207,6 +217,10 @@ export class TezosNetwork extends BaseNetwork {
       networkName: this.networkName,
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 
@@ -245,6 +259,10 @@ export class TezosNetwork extends BaseNetwork {
       networkName: this.networkName,
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 

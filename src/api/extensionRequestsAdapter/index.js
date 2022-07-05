@@ -3,6 +3,10 @@ import { getDaoSupportedNetworks } from './getDaoSupportedNetworks'
 import { getWalletsDetail } from './getWalletsDetail'
 import { getDelegationBalance } from './getDelegationBalance'
 import { getAllTokenBalances } from './getAllTokenBalances'
+import { addWallet } from './addWallet'
+import { removeWallet } from './removeWallet'
+import { faucetSignUp } from './faucetSignUp'
+import { checkTransaction } from './checkTransaction'
 /**
  * REQUEST FUNCTIONS FOR EXTENSION:
  *
@@ -14,4 +18,8 @@ export const extensionRequestsAdapter = {
   getWalletsDetail,
   getDelegationBalance,
   getAllTokenBalances,
+  addWallet,
+  removeWallet,
+  faucetSignUp,
+  checkTransaction,
 }

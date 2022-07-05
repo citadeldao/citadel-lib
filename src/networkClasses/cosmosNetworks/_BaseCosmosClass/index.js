@@ -1,4 +1,6 @@
 import api from '../../../api'
+import state from '../../../state'
+import { hashMnemonic } from '../../../helpers/hashMnemonic'
 import cosmos from 'cosmos-lib'
 import { checkDelegationTypes } from '../../../helpers/checkArguments'
 import { mnemonicToSeed } from 'bip39'
@@ -169,6 +171,10 @@ export class BaseCosmosNetwork extends BaseNetwork {
       // add optional properties from networks.json
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(mnemonic),
+      }),
     }
   }
 
@@ -199,6 +205,10 @@ export class BaseCosmosNetwork extends BaseNetwork {
         // add optional properties from networks.json
         ...(this.fee_key && { fee_key: this.fee_key }),
         ...(this.bridges && { bridges: this.bridges }),
+        // additional fields for chrome extension
+        ...(state.getState('isExtension') && {
+          hashedMnemonic: hashMnemonic(),
+        }),
       }
     } catch (error) {
       // error means invalid private key
@@ -238,6 +248,10 @@ export class BaseCosmosNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 
@@ -277,6 +291,10 @@ export class BaseCosmosNetwork extends BaseNetwork {
       // add optional properties from networks.json
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 }

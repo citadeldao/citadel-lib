@@ -1,3 +1,5 @@
+import state from '../../state'
+import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import { signTxByLedger } from './signers/signTxByLedger'
@@ -170,6 +172,10 @@ export class PolkadotNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(mnemonic),
+      }),
     }
   }
 
@@ -191,6 +197,10 @@ export class PolkadotNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 
@@ -220,6 +230,10 @@ export class PolkadotNetwork extends BaseNetwork {
       // add optional properties
       ...(this.fee_key && { fee_key: this.fee_key }),
       ...(this.bridges && { bridges: this.bridges }),
+      // additional fields for chrome extension
+      ...(state.getState('isExtension') && {
+        hashedMnemonic: hashMnemonic(),
+      }),
     }
   }
 }

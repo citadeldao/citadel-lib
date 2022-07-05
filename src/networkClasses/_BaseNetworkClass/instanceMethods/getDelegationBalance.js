@@ -13,6 +13,8 @@ export const getDelegationBalance = async function (withCacheUpdate = true) {
     walletsManager.updateWallet({
       walletId: this.id,
       newWalletInfo: { balance },
+      // to save 'price' fireld
+      method: 'deep-merge',
     })
 
   return balance

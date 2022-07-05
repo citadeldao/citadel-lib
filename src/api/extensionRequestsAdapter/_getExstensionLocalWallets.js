@@ -62,9 +62,9 @@ export const getExstensionLocalWallets = async () => {
   const generateWalletId = () => {
     const idsArray = wallets.map(({ id }) => +id).filter((id) => id)
     if (!idsArray.length) {
-      return 1
+      return '1'
     }
-    return Math.max(...idsArray) + 1
+    return `${Math.max(...idsArray) + 1}`
   }
 
   wallets.map((wallet) => {

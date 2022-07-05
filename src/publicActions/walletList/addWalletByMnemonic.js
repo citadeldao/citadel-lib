@@ -22,7 +22,7 @@ export const addWalletByMnemonic = async (options) => {
   // save privateKey, derivation and mnemonic path for return
   const createdPrivateKey = createdWallet.privateKey
   const createdDerivationPath = createdWallet.derivationPath
-  const createdMnemonic = createdWallet.mnemonic
+
   // do not save it to storage
   delete createdWallet.privateKey
   delete createdWallet.derivationPath
@@ -45,6 +45,6 @@ export const addWalletByMnemonic = async (options) => {
     ...newWallet,
     privateKey: createdPrivateKey,
     derivationPath: createdDerivationPath,
-    mnemonic: createdMnemonic,
+    // mnemonic,
   }
 }

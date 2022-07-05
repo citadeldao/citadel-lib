@@ -1,4 +1,4 @@
-// if there is no authorizationб , return extension storage wallet
+// if there is no authorization , return extension storage wallet
 import { getExstensionLocalWallets } from './_getExstensionLocalWallets'
 import api from '..'
 

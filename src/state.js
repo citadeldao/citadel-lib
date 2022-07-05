@@ -17,6 +17,7 @@ const defaultState = {
   publicBackendUrl: null,
   socketURL: null,
   isExtension: false,
+  maxExtesionCreatedId: 0,
   stringifyResponse: false,
   stringifyLogs: false,
   supportedNetworkKeys: [],

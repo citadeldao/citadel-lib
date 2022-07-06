@@ -7,6 +7,7 @@ import { addWallet } from './addWallet'
 import { removeWallet } from './removeWallet'
 import { faucetSignUp } from './faucetSignUp'
 import { checkTransaction } from './checkTransaction'
+import { getStakeList } from './getStakeList'
 /**
  * REQUEST FUNCTIONS FOR EXTENSION:
  *
@@ -22,4 +23,5 @@ export const extensionRequestsAdapter = {
   removeWallet,
   faucetSignUp,
   checkTransaction,
+  getStakeList
 }

@@ -136,7 +136,7 @@ export class IostNetwork extends BaseNetwork {
       }
       status = data.status
     }
-    return hash
+    return [hash]
   }
 
   static async getAccountsByPrivateKey(privateKey) {

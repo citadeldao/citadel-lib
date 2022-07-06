@@ -1,5 +1,6 @@
 import { getAllTokenBalances } from './getAllTokenBalances'
 import { getDelegationBalance } from './getDelegationBalance'
+import { getStakeList } from './getStakeList'
 
 /**
  * PUBLIC REQUEST PARAMS
@@ -10,4 +11,5 @@ import { getDelegationBalance } from './getDelegationBalance'
 export const publicRequests = {
   getAllTokenBalances,
   getDelegationBalance,
+  getStakeList,
 }

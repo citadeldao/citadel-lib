@@ -41,7 +41,7 @@ export async function doTokenTransfer({
       },
     })
 
-    return transactionHash
+    return [transactionHash]
   } catch (error) {
     if (
       error.message.includes(

@@ -41,5 +41,5 @@ export async function doCrossNetworkTransfer({
     },
   })
 
-  return transactionHash
+  return [transactionHash]
 }

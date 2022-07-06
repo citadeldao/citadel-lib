@@ -1,7 +1,4 @@
-import {
-  COSM_WASM_CLIENT_HTTP_URL,
-  CACHE_NAMES,
-} from '../../../../constants'
+import { COSM_WASM_CLIENT_HTTP_URL, CACHE_NAMES } from '../../../../constants'
 import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
@@ -52,5 +49,5 @@ export async function convertScrtToSecretScrt({
       },
     ]
   )
-  return transactionHash
+  return [transactionHash]
 }

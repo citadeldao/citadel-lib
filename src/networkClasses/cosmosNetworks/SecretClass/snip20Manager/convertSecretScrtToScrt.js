@@ -39,5 +39,5 @@ export async function convertSecretScrtToScrt({
     },
   })
 
-  return transactionHash
+  return [transactionHash]
 }

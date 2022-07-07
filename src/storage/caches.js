@@ -1,5 +1,6 @@
 import state from '../state'
 import { CACHE_NAMES } from '../constants'
+import { debugConsoleLog } from '../helpers/debugConsoleLog'
 
 const MULTIUSER_CACHE_NAMES = [
   CACHE_NAMES.SUPPORTED_NETWORK_KEYS,
@@ -15,10 +16,23 @@ const getSingleuserStorageKey = (name) =>
   `lib-cache-${state.getState('user').id}-${name}`
 
 const getStorageKey = (name) => {
+  debugConsoleLog('**getStorageKey name', name)
+  debugConsoleLog(
+    '**getStorageKey MULTIUSER_CACHE_NAMES.includes',
+    MULTIUSER_CACHE_NAMES.includes(name)
+  )
   // if the cache is the same for all users
   if (MULTIUSER_CACHE_NAMES.includes(name)) {
+    debugConsoleLog(
+      '**getStorageKey if .. getMultiuserStorageKey',
+      getMultiuserStorageKey(name)
+    )
     return getMultiuserStorageKey(name)
   }
+  debugConsoleLog(
+    '**getStorageKey bofore return getSingleuserStorageKey(name) ',
+    getSingleuserStorageKey(name)
+  )
   // if each user has their own cache
   return getSingleuserStorageKey(name)
 }
@@ -26,7 +40,11 @@ const getStorageKey = (name) => {
 const getCache = (name) => JSON.parse(localStorage.getItem(getStorageKey(name)))
 
 const setCache = (name, data) => {
+  debugConsoleLog('**setCache name', name)
+  debugConsoleLog('**setCache data', data)
+  debugConsoleLog('**setCache getStorageKey(name)', getStorageKey(name))
   localStorage.setItem(getStorageKey(name), JSON.stringify(data))
+  debugConsoleLog('**setCache after setItem')
 }
 
 const removeCache = (name) => {

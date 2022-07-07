@@ -9,6 +9,7 @@ import { faucetSignUp } from './faucetSignUp'
 import { checkTransaction } from './checkTransaction'
 import { getStakeList } from './getStakeList'
 import { prepareClaim } from './prepareClaim'
+import { prepareTransfer } from './prepareTransfer'
 /**
  * REQUEST FUNCTIONS FOR EXTENSION:
  *
@@ -25,5 +26,6 @@ export const extensionRequestsAdapter = {
   faucetSignUp,
   checkTransaction,
   getStakeList,
-  prepareClaim
+  prepareClaim,
+  prepareTransfer
 }

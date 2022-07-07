@@ -4,6 +4,7 @@ import { getStakeList } from './getStakeList'
 import { prepareClaim } from './prepareClaim'
 import { faucetSignUp } from './faucetSignUp'
 import { prepareTransfer } from './prepareTransfer'
+import { sendSignedTransaction } from './sendSignedTransaction'
 
 /**
  * PUBLIC REQUEST PARAMS
@@ -18,4 +19,5 @@ export const publicRequests = {
   prepareClaim,
   faucetSignUp,
   prepareTransfer,
+  sendSignedTransaction,
 }

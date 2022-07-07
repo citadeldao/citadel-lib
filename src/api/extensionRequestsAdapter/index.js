@@ -10,6 +10,7 @@ import { checkTransaction } from './checkTransaction'
 import { getStakeList } from './getStakeList'
 import { prepareClaim } from './prepareClaim'
 import { prepareTransfer } from './prepareTransfer'
+import { sendSignedTransaction } from './sendSignedTransaction'
 /**
  * REQUEST FUNCTIONS FOR EXTENSION:
  *
@@ -27,5 +28,6 @@ export const extensionRequestsAdapter = {
   checkTransaction,
   getStakeList,
   prepareClaim,
-  prepareTransfer
+  prepareTransfer,
+  sendSignedTransaction,
 }

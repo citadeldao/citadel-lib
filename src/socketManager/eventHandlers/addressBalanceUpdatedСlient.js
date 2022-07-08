@@ -2,7 +2,7 @@ import walletsManager from '../../walletsManager'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
 import { isNativeToken } from '../../helpers/isNativeToken'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const addressBalanceUpdatedСlient = async ({

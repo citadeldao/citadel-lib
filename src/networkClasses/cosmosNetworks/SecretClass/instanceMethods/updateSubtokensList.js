@@ -1,7 +1,7 @@
 import walletsManager from '../../../../walletsManager'
 import { calculateSubtokenBalanceUSD } from '../../../_functions/balances'
 import networkClasses from '../../../../networkClasses'
-import { dispatchLibEvent } from '../../../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 
 // TODO: refact!

@@ -5,7 +5,7 @@ import {
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 import walletsManager from '../../walletsManager'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const renameWalletTitleById = async (walletId, title) => {

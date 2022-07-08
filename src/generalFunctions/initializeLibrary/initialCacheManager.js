@@ -1,6 +1,6 @@
-import storage from '../storage'
-import { CACHE_NAMES } from '../constants'
-import api from '../api'
+import storage from '../../storage'
+import { CACHE_NAMES } from '../../constants'
+import api from '../../api'
 
 // for loading missing caches, fast initialization with cached data and updating old caches after initialization
 // NOTE: do not use before 'info' request (storage keys not available)

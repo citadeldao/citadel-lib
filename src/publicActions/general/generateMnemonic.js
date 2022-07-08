@@ -1,7 +1,5 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
-import { generateMnemonic as generateBip39Mnemonic } from 'bip39'
-import errors from '../../errors'
-
+import { generateBip39Mnemonic } from '../../generalFunctions/generateBip39Mnemonic'
 /**
  * Generates a random mnemonic phrase of given length
  *
@@ -25,15 +23,6 @@ export const generateMnemonic = (length = 12) => {
   checkInitialization()
   checkTypes(['length', length, ['String', 'Number'], true])
 
-  if (length % 3 !== 0 || length < 12 || length > 24) {
-    errors.throwError('WrongArguments', {
-      message: `Length must be between 12 and 24, a multiple of 3. Got '${length}'`,
-    })
-  }
-
-  // phrase bit length (128-256)
-  const entropy = (length * 32) / 3
-
   // generate mnemonic by bit length
-  return generateBip39Mnemonic(entropy)
+  return generateBip39Mnemonic(length)
 }

@@ -1,7 +1,7 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
 import { addWalletByMnemonic } from './addWalletByMnemonic'
 import errors from '../../errors'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const addWalletCollectionByMnemonic = async (walletsOptions) => {

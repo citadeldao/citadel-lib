@@ -4,7 +4,7 @@ import {
   checkWalletId,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const checkSavedAndSimpleVKValidity = async (walletId) => {

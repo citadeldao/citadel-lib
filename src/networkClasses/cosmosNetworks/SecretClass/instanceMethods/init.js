@@ -1,4 +1,4 @@
-import { dispatchLibEvent } from '../../../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 
 export async function init() {

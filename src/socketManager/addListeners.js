@@ -1,6 +1,6 @@
 import { LIB_EVENT_NAMES } from '../constants'
 import { eventHandlers } from './eventHandlers'
-import { dispatchLibEvent } from '../dispatchLibEvent'
+import { dispatchLibEvent } from '../generalFunctions/dispatchLibEvent'
 
 export const addListeners = (socket, socketEventNames) => {
   try {

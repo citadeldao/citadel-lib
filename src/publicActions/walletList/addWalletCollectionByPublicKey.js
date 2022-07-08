@@ -1,6 +1,6 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
 import { addWalletByPublicKey } from './addWalletByPublicKey'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const addWalletCollectionByPublicKey = async (walletsOptions) => {

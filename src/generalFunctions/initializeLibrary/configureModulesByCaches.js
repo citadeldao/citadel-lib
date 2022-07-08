@@ -1,6 +1,6 @@
-import state from '../state'
-import { CACHE_NAMES } from '../constants'
-import networkClasses from '../networkClasses'
+import state from '../../state'
+import { CACHE_NAMES } from '../../constants'
+import networkClasses from '../../networkClasses'
 
 export const configureModulesByCaches = ({
   networksConfig,

@@ -2,7 +2,7 @@ import api from '../../../../api'
 import walletsManager from '../../../../walletsManager'
 import { calculateSubtokenBalanceUSD } from '../../../_functions/balances'
 import { merge } from '../../../../helpers/merge'
-import { dispatchLibEvent } from '../../../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 
 export async function balance_default({ token }) {

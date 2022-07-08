@@ -1,13 +1,13 @@
-import state from '../state'
-import { initApi, default as api } from '../api'
-import storage from '../storage'
-import walletsManager from '../walletsManager'
+import state from '../../state'
+import { initApi, default as api } from '../../api'
+import storage from '../../storage'
+import walletsManager from '../../walletsManager'
 import { dispatchLibEvent } from '../dispatchLibEvent'
-import { CACHE_NAMES, LIB_EVENT_NAMES } from '../constants'
+import { CACHE_NAMES, LIB_EVENT_NAMES } from '../../constants'
 import { initialCacheManager } from './initialCacheManager'
 import { configureModulesByCaches } from './configureModulesByCaches'
 import { backgroundUpdates } from './backgroundUpdates'
-import socketManager from '../socketManager'
+import socketManager from '../../socketManager'
 
 export const initializeLibrary = async ({
   backendUrl,

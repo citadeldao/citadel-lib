@@ -1,6 +1,6 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
 import walletsManager from '../../walletsManager'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const removeWalletCollectionById = async (walletsOptions) => {

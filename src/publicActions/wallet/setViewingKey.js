@@ -9,7 +9,7 @@ import {
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../constants'
 import walletInstances from '../../walletInstances'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES, VIEWING_KEYS_TYPES } from '../../constants'
 import errors from '../../errors'
 

@@ -28,7 +28,6 @@ export const CACHE_NAMES = {
   NETWORKS_CONFIG: 'networksConfig',
   RATES: 'rates',
   MARKETCAPS: 'marketcaps',
-  STAKE_NODES: 'stakeNodes',
   DAO_SUPPORTED_NETWORKS: 'daoSupportedNetworks',
 }
 

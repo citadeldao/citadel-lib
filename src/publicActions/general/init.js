@@ -1,7 +1,7 @@
 import { checkTypes } from '../../helpers/checkArguments'
 import state from '../../state'
 import errors from '../../errors'
-import { initializeLibrary } from '../../initializeLibrary'
+import { initializeLibrary } from '../../generalFunctions/initializeLibrary'
 import { debugConsoleLog } from '../../helpers/debugConsoleLog'
 /**
  * Loads a user's balance history

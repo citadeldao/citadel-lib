@@ -1,4 +1,4 @@
-import { resetLibrary } from '../../resetLibrary'
+import { resetLibrary } from '../../generalFunctions/resetLibrary'
 import { checkTypes } from '../../helpers/checkArguments'
 
 /**

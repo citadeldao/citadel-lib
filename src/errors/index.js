@@ -9,6 +9,18 @@ import { WalletListError } from './WalletListError'
 import { TrezorError } from './TrezorError'
 import { LedgerError } from './LedgerError'
 import { ViewingKeyError } from './ViewingKeyError'
+import { StorageError } from './StorageError'
+
+/**
+ * ERROR MODULE
+ *
+ * Exports by default an object with a method to throw the error of the specific class
+ *
+ * How to use
+ * // throw some 'Mrthod not supported'error
+ * errors.throwError('MethodNotSupported', { message: ' method X not supported for Y'})
+ *
+ */
 
 const errors = {
   MethodNotSupported,
@@ -22,10 +34,12 @@ const errors = {
   TrezorError,
   LedgerError,
   ViewingKeyError,
+  StorageError
 }
 
 const getErrorClass = (errorName) => errors[errorName]
 
+// erroName - error class name, options contain 'message' key
 const throwError = (errorName, options) => {
   throw new errors[errorName](options)
 }

@@ -5,7 +5,7 @@ import {
 } from '../../helpers/checkArguments'
 import walletsManager from '../../walletsManager'
 import { network as networkPublicActions } from '../network'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const addWalletByTrezor = async (options) => {

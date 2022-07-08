@@ -1,11 +1,11 @@
-import api from '../api'
-import state from '../state'
-import walletsManager from '../walletsManager'
-import walletInstances from '../walletInstances'
-import { dispatchLibEvent } from '../dispatchLibEvent'
-import { LIB_EVENT_NAMES } from '../constants'
+import api from '../../api'
+import state from '../../state'
+import walletsManager from '../../walletsManager'
+import walletInstances from '../../walletInstances'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../constants'
 import { configureModulesByCaches } from './configureModulesByCaches'
-import { getExstensionLocalWallets } from '../api/extensionRequestsAdapter/_getExstensionLocalWallets'
+import { getExstensionLocalWallets } from '../../api/extensionRequestsAdapter/_getExstensionLocalWallets'
 
 // update wallets detail
 export const backgroundUpdates = async (initialCacheManager) => {

@@ -1,7 +1,7 @@
 import { checkTypes, checkInitialization } from '../../helpers/checkArguments'
 import errors from '../../errors'
 import { addWalletByPrivateKey } from './addWalletByPrivateKey'
-import { dispatchLibEvent } from '../../dispatchLibEvent'
+import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 
 export const addWalletCollectionByPrivateKey = async (walletsOptions) => {

@@ -1,9 +1,9 @@
-import state from './state'
-import { resetApi } from './api'
-import walletInstances from './walletInstances'
-import networkClasses from './networkClasses'
-import socketManager from './socketManager'
-import storage from './storage'
+import state from '../state'
+import { resetApi } from '../api'
+import walletInstances from '../walletInstances'
+import networkClasses from '../networkClasses'
+import socketManager from '../socketManager'
+import storage from '../storage'
 
 export const resetLibrary = async (clearCache) => {
   // disconnect sockets

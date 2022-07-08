@@ -5,10 +5,27 @@ import { publicRequests } from './publicRequests'
 import { formattedRequestsAdapter } from './formattedRequestsAdapter'
 import { extensionRequestsAdapter } from './extensionRequestsAdapter'
 import state from '../state'
+/**
+ * API MODULE
+ *
+ * Exports by default an object with methods for accessing the server (using axios instances)
+ *
+ * Static request parameters (URL, type) and the name of requests are described in the directories 'publicRequests', 'requests', 'externalRequests'
+ *
+ * HOW TO USE
+ *
+ * // get fee for network
+ * const { data } = await api.requests.getFees({net})
+ *
+ * NOTE: Don't use axios directly inside components to keep code clean
+ */
 
 const api = {
+  // requests to the authorized api of the citadel
   requests: null,
+  // requests to non-citadel api
   externalRequests: null,
+  // requests to the public api of the citadel
   publicRequests: null,
 }
 

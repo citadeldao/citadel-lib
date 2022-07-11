@@ -67,7 +67,8 @@ export async function balance_scrt({ token }) {
 
   // check simple viewingKey
   const simpleViewingKey = snip20Manager.generateSimpleViewingKey(
-    networkClass.tokens[token].address
+    networkClass.tokens[token].address,
+    this.privateKeyHash
   )
   const { amount, error } = await snip20Manager.getTokenBalance(
     this.address,

@@ -7,6 +7,7 @@ import { deleteViewingKey } from './deleteViewingKey'
 import { signAndSend } from './signAndSend'
 import { updateSubtokensList } from './updateSubtokensList'
 import { updateSnip20SubtokensList } from './updateSnip20SubtokensList'
+import { prepareCrossNetworkTransfer } from './prepareCrossNetworkTransfer'
 
 export default {
   useSnip20Manager,
@@ -18,4 +19,5 @@ export default {
   signAndSend,
   updateSubtokensList,
   updateSnip20SubtokensList,
+  prepareCrossNetworkTransfer,
 }

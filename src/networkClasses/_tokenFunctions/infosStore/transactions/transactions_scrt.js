@@ -39,7 +39,8 @@ export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
   if (!rawTransactionsList) {
     // try simple viewingKey
     const simpleViewingKey = snip20Manager.generateSimpleViewingKey(
-      networkClass.tokens[token].address
+      networkClass.tokens[token].address,
+      this.privateKeyHash
     )
     const { error, list } = await snip20Manager.getTokenTransactions({
       address: this.address,

@@ -57,3 +57,7 @@ const response = citadel.generateMnemonic(24)
   error: "WrongArguments: Invalid type of argument 'net'. Expected 'String', got 'Number'"
 }
 ```
+
+## Structure
+
+![Library structure](https://gitlab.com/citadel1/citadel-lib/-/raw/dev/structure.png)

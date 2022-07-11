@@ -10,7 +10,7 @@ export async function prepareCrossNetworkTransfer(
   // return instructions for signing and sending a transaction on the client
   return {
     executeOnClient: {
-      instanceMethod: '_useSnip20Manager',
+      instanceMethod: 'useSnip20Manager',
       methodArguments: {
         method: 'doCrossNetworkTransfer',
         address: this.address,

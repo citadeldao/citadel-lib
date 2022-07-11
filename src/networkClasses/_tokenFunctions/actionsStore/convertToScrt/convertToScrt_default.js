@@ -21,7 +21,7 @@ export async function convertToScrt_default({
   return {
     executeOnClient: {
       // wallet onstance method
-      instanceMethod: '_useSnip20Manager',
+      instanceMethod: 'useSnip20Manager',
       // arguments
       methodArguments: {
         method: 'convertScrtToSecretScrt',

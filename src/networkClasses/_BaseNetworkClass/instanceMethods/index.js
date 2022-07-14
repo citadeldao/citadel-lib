@@ -10,11 +10,9 @@ import { getTokenActions } from './getTokenActions'
 import { prepareTokenAction } from './prepareTokenAction'
 import { getTokenInfos } from './getTokenInfos'
 import { callTokenInfo } from './callTokenInfo'
-import { getSubtokensList } from './getSubtokensList'
 import { createMessageSignature } from './createMessageSignature'
 import { assignToDao } from './assignToDao'
 import { setViewingKey } from './setViewingKey'
-import { init } from './init'
 import { importViewingKey } from './importViewingKey'
 import { getSavedViewingKeys } from './getSavedViewingKeys'
 import { checkSavedAndSimpleVKValidity } from './checkSavedAndSimpleVKValidity'
@@ -55,11 +53,9 @@ export const instanceMethods = {
   prepareTokenAction,
   getTokenInfos,
   callTokenInfo,
-  getSubtokensList,
   createMessageSignature,
   assignToDao,
   setViewingKey,
-  init,
   importViewingKey,
   getSavedViewingKeys,
   checkSavedAndSimpleVKValidity,

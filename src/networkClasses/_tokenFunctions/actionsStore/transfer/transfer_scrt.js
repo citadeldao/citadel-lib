@@ -15,7 +15,7 @@ export async function transfer_scrt({ token, toAddress, amount, fee }) {
   // preparation of instructions for signing on the client (so as not to break the flow citadel.prepare -> citadel.signAndSend
   return {
     executeOnClient: {
-      instanceMethod: '_useSnip20Manager',
+      instanceMethod: 'useSnip20Manager',
       methodArguments: {
         method: 'doTokenTransfer',
         address: this.address,

@@ -11,6 +11,9 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@cosmjs/crypto": "^0.28.11",
+    "@cosmjs/ledger-amino": "^0.28.11",
+    "@cosmjs/proto-signing": "^0.28.11",
     "@iov/crypto": "^2.5.0",
     "@ledgerhq/hw-app-btc": "5.23.1",
     "@ledgerhq/hw-app-eth": "^6.23.0",

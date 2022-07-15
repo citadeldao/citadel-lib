@@ -18,7 +18,7 @@ import { getLedgerApp } from '../../_BaseCosmosClass/signers/getLedgerApp'
 
 import { getHdDerivationPath } from '../../../_functions/ledger'
 import errors from '../../../../errors'
-const secp256k1 = require('secp256k1')
+// const secp256k1 = require('secp256k1')
 
 // ledger signer get from
 // https://github.com/cosmos/cosmjs/blob/main/packages/ledger-amino/src/ledgersigner.ts
@@ -88,13 +88,15 @@ export async function getSignerWallet({
         })
       }
       console.log('response', response)
-      const parsedSignature = secp256k1.signatureImport(response.signature)
+      const parsedSignature = encodeSecp256k1Signature(
+        Buffer.from(publicKey, 'hex'),
+        response.signature
+      )
+
+      console.log('parsedSignature', parsedSignature)
       return {
         signed: signDoc,
-        signature: {
-          pub_key: encodeSecp256k1Pubkey(Buffer.from(publicKey, 'hex')),
-          signature: toBase64(signature),
-        }
+        signature: parsedSignature,
       }
     },
   }
@@ -130,4 +132,18 @@ const toUtf8 = (str) => {
 
 const serializeSignDoc = (signDoc) => {
   return toUtf8(sortedJsonStringify(signDoc))
+}
+
+const encodeSecp256k1Signature = (pubkey, signature) => {
+  return {
+    pub_key: encodeSecp256k1Pubkey(pubkey),
+    signature: signature.toString('base64'),
+  }
+}
+
+const encodeSecp256k1Pubkey = (pubkey) => {
+  return {
+    type: 'tendermint/PubKeySecp256k1',
+    value: pubkey.toString('base64'),
+  }
 }

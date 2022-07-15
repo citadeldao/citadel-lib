@@ -1,6 +1,6 @@
 import { getTokenTransactions } from './getTokenTransactions'
 import { getTokenBalance } from './getTokenBalance'
-import { getSigner } from './getSignerOld'
+import { getSigner } from './getSigner'
 import { getFeeObject } from './getFeeObject'
 import { doTokenTransfer } from './doTokenTransfer'
 import { convertSecretScrtToScrt } from './convertSecretScrtToScrt'

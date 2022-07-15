@@ -22,7 +22,7 @@ export const getExstensionLocalWallets = async () => {
   const wallets = []
 
   // format wallet keys
-  rawWallets.map(({ hashedMnemonic, wallets: walletsGroup }) => {
+  JSON.parse(rawWallets).map(({ hashedMnemonic, wallets: walletsGroup }) => {
     walletsGroup.map(
       ({
         address,

@@ -11,9 +11,7 @@ export class OraiNetwork extends BaseCosmosNetwork {
   }
 
   async signTransaction(rawTransaction, { privateKey, derivationPath }) {
-    // TODO: Удалить rawTransaction.transaction.transaction после фикса бэка
     const transaction =
-      rawTransaction.transaction.transaction ||
       rawTransaction.transaction ||
       rawTransaction
     if (this.type === WALLET_TYPES.LEDGER) {

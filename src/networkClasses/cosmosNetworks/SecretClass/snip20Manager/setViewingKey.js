@@ -11,12 +11,12 @@
 // import { generateSimpleViewingKey } from './generateSimpleViewingKey'
 // import { sleep } from '../../../../helpers/sleep'
 // import { getTokenBalance } from './getTokenBalance'
-import { GRPC_WEB_URL } from '../../../../constants'
-import {
-  SecretNetworkClient,
-  Wallet
-} from 'secretjs'
-import { getSignerWallet } from './getSignerWallet'
+// import { GRPC_WEB_URL } from '../../../../constants'
+// import {
+//   SecretNetworkClient,
+//   Wallet
+// } from 'secretjs'
+// import { getSignerWallet } from './functions/getSignerWallet'
 // const crypto_1 = require('@iov/crypto')
 
 export async function setViewingKey(
@@ -48,51 +48,48 @@ export async function setViewingKey(
   })
 
   try {
-    const signerWallet = await getSignerWallet({
-      privateKey,
-      derivationPath,
-      type,
-      publicKey,
-      address,
-    })
+    // const signerWallet = await getSignerWallet({
+    //   privateKey,
+    //   derivationPath,
+    //   type,
+    //   publicKey,
+    //   address,
+    // })
 
-      const wallet = new Wallet()
-    console.log('wallet_2', wallet)
+    // // prepare secret client
+    // const secretjs = await SecretNetworkClient.create({
+    //   grpcWebUrl: GRPC_WEB_URL,
+    //   chainId: 'secret-4',
+    //   // wallet: signerWallet,
+    //   wallet: signerWallet,
+    //   walletAddress: address,
+    // })
 
-    // prepare secret client
-    const secretjs = await SecretNetworkClient.create({
-      grpcWebUrl: GRPC_WEB_URL,
-      chainId: 'secret-4',
-      // wallet: signerWallet,
-      wallet: signerWallet,
-      walletAddress: address,
-    })
+    // // get contract codeHash
+    // const codeHash = await secretjs.query.compute.contractCodeHash(
+    //   contractAddress
+    // )
 
-    // get contract codeHash
-    const codeHash = await secretjs.query.compute.contractCodeHash(
-      contractAddress
-    )
+    // // execute contract
+    // const tx = await secretjs.tx.compute.executeContract(
+    //   {
+    //     sender: address,
+    //     contractAddress,
+    //     codeHash: codeHash, // optional but way faster
+    //     msg: {
+    //       transfer: {
+    //         recipient: address,
+    //         amount: '1',
+    //       },
+    //     },
+    //     sentFunds: [], // optional
+    //   },
+    //   {
+    //     gasLimit: 100_000,
+    //   }
+    // )
 
-    // execute contract
-    const tx = await secretjs.tx.compute.executeContract(
-      {
-        sender: address,
-        contractAddress,
-        codeHash: codeHash, // optional but way faster
-        msg: {
-          transfer: {
-            recipient: address,
-            amount: '1',
-          },
-        },
-        sentFunds: [], // optional
-      },
-      {
-        gasLimit: 100_000,
-      }
-    )
-
-    console.log('tx', tx)
+    // console.log('tx', tx)
     // const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
     // const signer = await getSigner({
     //   privateKey,

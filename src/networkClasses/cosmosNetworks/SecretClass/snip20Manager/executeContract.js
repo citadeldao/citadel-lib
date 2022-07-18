@@ -1,10 +1,63 @@
-// import { Secp256k1Pen } from 'secretjs'
+import { getSignerWallet } from './functions/getSignerWallet'
+import { SecretNetworkClient } from 'secretjs'
+import { GRPC_WEB_URL } from '../../../../constants'
 
+export const executeContract = async ({
+  address,
+  contractAddress,
+  message,
+  sentFunds = [],
+  gasLimit,
+  privateKey,
+  derivationPath,
+  type,
+  publicKey,
+  simulate = false,
+}) => {
+  const signerWallet = await getSignerWallet({
+    privateKey,
+    derivationPath,
+    type,
+    publicKey,
+    address,
+  })
 
-// export const executeContract = async (address, contractAddress, msg) => {
+  // prepare secret client
+  const secretjs = await SecretNetworkClient.create({
+    grpcWebUrl: GRPC_WEB_URL,
+    chainId: 'secret-4',
+    // wallet: signerWallet,
+    wallet: signerWallet,
+    walletAddress: address,
+  })
 
+  // get contract codeHash
+  const codeHash = await secretjs.query.compute.contractCodeHash(
+    contractAddress
+  )
 
-
-
-
-// }
+  // simulate to estimate gas
+  if (simulate) {
+    const transaction = await secretjs.tx.compute.executeContract.simulate({
+      sender: address,
+      contractAddress,
+      codeHash, // optional but way faster
+      msg: message,
+      sentFunds, // optional
+    })
+    // return required gas
+    return transaction.gasInfo.gasUsed * 1.1
+  }
+  // execute contract
+  const transaction = await secretjs.tx.compute.executeContract(
+    {
+      sender: address,
+      contractAddress,
+      codeHash, // optional but way faster
+      msg: message,
+      sentFunds, // optional
+    },
+    gasLimit
+  )
+  return transaction.transactionHash
+}

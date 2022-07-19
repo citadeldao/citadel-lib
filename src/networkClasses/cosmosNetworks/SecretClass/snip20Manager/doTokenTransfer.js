@@ -1,4 +1,5 @@
 import { executeContract } from './executeContract'
+import { SecretNetwork } from '../'
 
 export async function doTokenTransfer({
   address,
@@ -12,10 +13,10 @@ export async function doTokenTransfer({
   amount,
   fee,
 }) {
-  // constant?
-  const gasPriceInFeeDenom = 0.04
-  const gasLimit = Math.ceil((fee / gasPriceInFeeDenom) * 10 ** decimals)
-  // try {
+  // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
+  const gasLimit = 40_000
+  // native secret decimals for fee
+  const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
   const transactionHash = await executeContract({
     address,
     contractAddress,
@@ -25,7 +26,6 @@ export async function doTokenTransfer({
         amount: `${+amount * 10 ** decimals}`,
       },
     },
-    // sentFunds,
     gasLimit: {
       gasLimit,
       gasPriceInFeeDenom,

@@ -33,7 +33,6 @@ export const signAndSend = async (walletId, rawTransaction, options = {}) => {
       checkTypes(['privateKey', privateKey, ['String'], true])
     }
   }
-console.log('walletInstance', walletInstance)
   // call wallet instance method
   return await walletInstance.signAndSend(rawTransaction, {
     privateKey,

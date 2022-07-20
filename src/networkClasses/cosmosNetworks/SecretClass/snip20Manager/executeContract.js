@@ -38,18 +38,16 @@ export const executeContract = async ({
 
   // simulate to estimate gas
   if (simulate) {
-    const transaction = await secretjs.tx.compute.executeContract.simulate({
+    return await secretjs.tx.compute.executeContract.simulate({
       sender: address,
       contractAddress,
       codeHash, // optional but way faster
       msg: message,
       sentFunds, // optional
     })
-    // return required gas
-    return transaction.gasInfo.gasUsed * 1.1
   }
   // execute contract
-  const transaction = await secretjs.tx.compute.executeContract(
+  return await secretjs.tx.compute.executeContract(
     {
       sender: address,
       contractAddress,
@@ -59,5 +57,4 @@ export const executeContract = async ({
     },
     gasLimit
   )
-  return transaction.transactionHash
 }

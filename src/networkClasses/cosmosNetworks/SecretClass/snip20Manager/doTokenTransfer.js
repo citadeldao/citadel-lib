@@ -17,7 +17,7 @@ export async function doTokenTransfer({
   const gasLimit = 40_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
-  const transactionHash = await executeContract({
+  const response = await executeContract({
     address,
     contractAddress,
     message: {
@@ -35,5 +35,5 @@ export async function doTokenTransfer({
     type,
     publicKey,
   })
-  return [transactionHash]
+  return [response.transactionHash]
 }

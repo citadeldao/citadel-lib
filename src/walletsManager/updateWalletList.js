@@ -8,7 +8,7 @@ import { CACHE_NAMES } from '../constants'
 import walletInstances from '../walletInstances'
 
 // update wallet list by account wallets (used inside the library with 'info', 'wallets', 'walletsDetail' requests)
-export const updateWalletList = async (accountWallets) => {
+export const updateWalletList = async (accountWallets, updateSubtokensList = true) => {
   const supportedAccountWallets = accountWallets
     // filter unsupported network
     .filter((wallet) =>
@@ -92,6 +92,7 @@ export const updateWalletList = async (accountWallets) => {
           checkExistence: false,
           addToAccount: false,
           loadBalance: false,
+          updateSubtokensList
         })
       }
     })

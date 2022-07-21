@@ -75,7 +75,7 @@ export const initializeLibrary = async ({
   // configure modules by cache and walletList from 'info' to fast init
   configureModulesByCaches(initialCacheManager.getInitialCaches())
   // update walletList
-  await walletsManager.updateWalletList(info.wallets)
+  await walletsManager.updateWalletList(info.wallets, false)
 
   // if is not extension, connect sockets (do not await for fast load)
   !isExtension && socketManager.init()

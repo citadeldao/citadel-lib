@@ -16,6 +16,7 @@ export const addCreatedWallet = async ({
   // for add wallet from account list (info / detail), then createdWallet already has balance, title and id
   addToAccount = true,
   loadBalance = true,
+  updateSubtokensList = true,
 }) => {
   // CHECK EXISTENCE
   const existingWallet = getWalletInfoByAddress(
@@ -116,9 +117,11 @@ export const addCreatedWallet = async ({
   walletInstances.createWalletInstance(createdWallet)
 
   // SET SUBTOKEN LIST
-  await walletInstances
-    .getWalletInstanceById(createdWallet.id)
-    .updateSubtokensList()
+  if (updateSubtokensList) {
+    await walletInstances
+      .getWalletInstanceById(createdWallet.id)
+      .updateSubtokensList()
+  }
 
   // get wallet from storage (with subtokesList)
   const newWallet = getWalletInfoById(createdWallet.id)

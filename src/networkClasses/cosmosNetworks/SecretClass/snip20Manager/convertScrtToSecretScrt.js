@@ -1,9 +1,7 @@
-import { COSM_WASM_CLIENT_HTTP_URL, CACHE_NAMES } from '../../../../constants'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
-import { getSigner } from './getSigner'
-import { getFeeObject } from './getFeeObject'
+import { CACHE_NAMES } from '../../../../constants'
 import { SecretNetwork } from '../'
 import storage from '../../../../storage'
+import { executeContract } from './executeContract'
 
 export async function convertScrtToSecretScrt({
   address,
@@ -12,42 +10,37 @@ export async function convertScrtToSecretScrt({
   privateKey,
   derivationPath,
   amount,
-  fee,
+  fee = 0.002,
 }) {
-  const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
-  const signer = await getSigner({
-    privateKey,
-    derivationPath,
-    type,
-    publicKey,
-  })
-  const client = new SigningCosmWasmClient(
-    COSM_WASM_CLIENT_HTTP_URL,
+  // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
+  const gasLimit = 35_000
+  // native secret decimals for fee
+  const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
+  const response = await executeContract({
     address,
-    signer,
-    txEncryptionSeed,
-    getFeeObject(fee),
-    // do not wait for the transaction to be included in the block, return the hash (prevent timeout error)
-    BroadcastMode.Async
-  )
-
-  const { transactionHash } = await client.execute(
-    storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG).secret.tokens
-      .secret_scrt.address,
-    {
+    contractAddress: storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG).secret
+      .tokens.secret_scrt.address,
+    message: {
       // DATA
       deposit: {
         padding: '6355a6f36bf44cc7',
       },
     },
-    '', // memo
-    [
+    gasLimit: {
+      gasLimit,
+      gasPriceInFeeDenom,
+    },
+    privateKey,
+    derivationPath,
+    type,
+    publicKey,
+    sentFunds: [
       // sent_funds
       {
         denom: 'uscrt',
         amount: `${+amount * 10 ** SecretNetwork.decimals}`,
       },
-    ]
-  )
-  return [transactionHash]
+    ],
+  })
+  return [response.transactionHash]
 }

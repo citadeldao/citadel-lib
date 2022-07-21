@@ -1,6 +1,5 @@
-import { COSM_WASM_CLIENT_HTTP_URL } from '../../../../constants'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
-import { getFeeObject } from './getFeeObject'
+import { SecretNetworkClient } from 'secretjs'
+import { GRPC_WEB_URL } from '../../../../constants'
 
 export async function getTokenBalance(
   address,
@@ -8,21 +7,27 @@ export async function getTokenBalance(
   decimals,
   viewingKey
 ) {
-  const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
-  const client = new SigningCosmWasmClient(
-    COSM_WASM_CLIENT_HTTP_URL,
-    address,
-    () => {},
-    txEncryptionSeed,
-    getFeeObject(),
-    // do not wait for the transaction to be included in the block, return the hash (prevent timeout error)
-    BroadcastMode.Async
+  // prepare readOnly secret client
+  const secretjs = await SecretNetworkClient.create({
+    grpcWebUrl: GRPC_WEB_URL,
+    chainId: 'secret-4',
+  })
+
+  // get contract codeHash
+  const codeHash = await secretjs.query.compute.contractCodeHash(
+    contractAddress
   )
+
   try {
-    const resp = await client.queryContractSmart(contractAddress, {
-      balance: {
+    // get snip20 balance
+    const resp = await secretjs.query.snip20.getBalance({
+      address,
+      contract: {
+        address: contractAddress,
+        codeHash,
+      },
+      auth: {
         key: viewingKey,
-        address,
       },
     })
 
@@ -32,7 +37,7 @@ export async function getTokenBalance(
         amount: resp.balance.amount / 10 ** decimals,
       }
 
-    throw new Error(resp?.viewing_key_error?.msg)
+    throw new Error(resp?.viewing_key_error?.msg || 'Unknow VK Error')
   } catch (err) {
     return { error: err, amount: null }
   }

@@ -1,7 +1,5 @@
-import { COSM_WASM_CLIENT_HTTP_URL } from '../../../../constants'
-import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
-import { getSigner } from './getSigner'
-import { getFeeObject } from './getFeeObject'
+import { executeContract } from './executeContract'
+import { SecretNetwork } from '../'
 
 export async function doTokenTransfer({
   address,
@@ -15,43 +13,27 @@ export async function doTokenTransfer({
   amount,
   fee,
 }) {
-  const txEncryptionSeed = EnigmaUtils.GenerateNewSeed()
-  const signer = await getSigner({
+  // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
+  const gasLimit = 40_000
+  // native secret decimals for fee
+  const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
+  const response = await executeContract({
+    address,
+    contractAddress,
+    message: {
+      transfer: {
+        recipient: toAddress,
+        amount: `${+amount * 10 ** decimals}`,
+      },
+    },
+    gasLimit: {
+      gasLimit,
+      gasPriceInFeeDenom,
+    },
     privateKey,
     derivationPath,
     type,
     publicKey,
   })
-
-  const client = new SigningCosmWasmClient(
-    COSM_WASM_CLIENT_HTTP_URL,
-    address,
-    signer,
-    txEncryptionSeed,
-    getFeeObject(fee),
-    // do not wait for the transaction to be included in the block, return the hash (prevent timeout error)
-    BroadcastMode.Async
-  )
-  try {
-    const { transactionHash } = await client.execute(contractAddress, {
-      transfer: {
-        owner: address,
-        amount: `${+amount * 10 ** decimals}`,
-        recipient: toAddress,
-      },
-    })
-
-    return [transactionHash]
-  } catch (error) {
-    if (
-      error.message.includes(
-        'timed out waiting for tx to be included in a block'
-      )
-    ) {
-      // the transaction was most likely successful
-      console.warn(error)
-      return null
-    }
-    throw error
-  }
+  return [response.transactionHash]
 }

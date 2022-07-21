@@ -2,25 +2,37 @@
 // import { EnigmaUtils, SigningCosmWasmClient, BroadcastMode } from 'secretjs'
 // import { getSigner } from './getSigner'
 // import { getFeeObject } from './getFeeObject'
+import { SecretNetwork } from '../'
 import { executeContract } from './executeContract'
 
 export async function doCrossNetworkTransfer({
-  address,
+  // address,
   type,
-  publicKey,
-  bridgeContract,
-  contractAddress,
-  decimals,
+  // publicKey,
+  // bridgeContract,
+  // contractAddress,
+  // decimals,
   privateKey,
   derivationPath,
-  toAddress,
-  amount,
-  fee,
+  // toAddress,
+  // amount,
+  // fee,
 }) {
-  // // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  // const gasLimit = 40_000
-  // // native secret decimals for fee
-  // const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
+  const address = 'secret1ytpnwlvz69z7u8rd4yqa8dxr33ygl7n28t2kpq'
+  const amount = 0.001
+  // SCRT_SWAP_CONTRACT
+  const bridgeContract = 'secret1sferux27lpr3lm52c8sq2dd7m54xhm28thnj5y'
+  const contractAddress = 'secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw'
+  const decimals = 18
+  const fee = 0.02
+  const publicKey =
+    '03f13d0d0d67b34b2a624f042820cef795f997c9afe29a4b8c7a55cd9bed01a487'
+  const toAddress = '0x4dd28bee5135fc5dbb358a68ba941a5bf8e7aab2'
+  // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
+  const gasLimit = 40_000
+  // native secret decimals for fee
+  const gasPriceInFeeDenom = (+fee * 10 ** SecretNetwork.decimals) / gasLimit
+
   const response = await executeContract({
     address,
     contractAddress,
@@ -31,10 +43,10 @@ export async function doCrossNetworkTransfer({
         msg: Buffer.from(toAddress).toString('base64'),
       },
     },
-    // gasLimit: {
-    //   gasLimit,
-    //   gasPriceInFeeDenom,
-    // },
+    gasLimit: {
+      gasLimit,
+      gasPriceInFeeDenom,
+    },
     privateKey,
     derivationPath,
     type,

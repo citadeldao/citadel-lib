@@ -25,7 +25,6 @@ export async function setViewingKey(
     derivationPath,
     viewingKey,
     fee,
-    decimals: networkClass.tokens[token].decimals,
   })
 
   // save VK to instance

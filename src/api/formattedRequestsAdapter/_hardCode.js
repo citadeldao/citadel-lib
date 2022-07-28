@@ -502,6 +502,7 @@ export const additionalConfig = [
             totalClaimedRewards: 'total_claimed_rewards_xct',
             marketcap: 'marketcap_default',
             inflation: 'inflation_xct',
+            xctRewards: 'rewards_xct'
           },
         },
       },

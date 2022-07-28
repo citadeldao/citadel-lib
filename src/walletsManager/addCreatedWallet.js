@@ -6,6 +6,7 @@ import { getWalletInfoByAddress } from './getWalletInfoByAddress'
 import { getWalletInfoById } from './getWalletInfoById'
 import { updateWallet } from './updateWallet'
 import walletInstances from '../walletInstances'
+import state from '../state.js'
 
 // It is expected that the wallet was previously created by one of the 'create...' lib methods
 // network config fields already added in create method: code, networkName etc
@@ -99,8 +100,8 @@ export const addCreatedWallet = async ({
     createdWallet.title = title
   }
 
-  // LOAD BALANCE
-  if (loadBalance) {
+  // LOAD BALANCE (not for extension)
+  if (!state.getState('isExtension') && loadBalance) {
     // load balance
     const { data: balance } = await api.requests.getDelegationBalance({
       net: createdWallet.net,
@@ -117,7 +118,7 @@ export const addCreatedWallet = async ({
   walletInstances.createWalletInstance(createdWallet)
 
   // SET SUBTOKEN LIST
-  if (updateSubtokensList) {
+  if (!state.getState('isExtension') && updateSubtokensList) {
     await walletInstances
       .getWalletInstanceById(createdWallet.id)
       .updateSubtokensList()

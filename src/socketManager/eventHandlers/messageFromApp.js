@@ -1,6 +1,7 @@
 import api from '../../api'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
+import state from '../../state'
 
 const TYPES = {
   SECRET_QUERY: 'scrt-query',
@@ -10,6 +11,8 @@ const TYPES = {
 const VK_TEXT_VARIABLE = '%viewing_key%'
 
 const SECRET_NET_KEY = 'secret'
+
+const GAS_PRICE = 0.0125
 
 export const messageFromApp = async ({
   from: token,
@@ -32,57 +35,113 @@ export const messageFromApp = async ({
   )
 
   if (type === TYPES.SECRET_QUERY) {
-    // replace %viewing_key% in msg if it exist
-    const msgString = JSON.stringify(msg)
-    if (msgString.includes(VK_TEXT_VARIABLE)) {
-      // get savedVK
-      const savedVK =
-        walletInstance?.savedViewingKeys &&
-        Object.values(walletInstance.savedViewingKeys).find(
-          ({ contractAddress }) => contractAddress === contract
-        )?.viewingKey
+    try {
+      // replace %viewing_key% in msg if it exist
+      const msgString = JSON.stringify(msg)
+      if (msgString.includes(VK_TEXT_VARIABLE)) {
+        // get savedVK
+        const savedVK =
+          walletInstance?.savedViewingKeys &&
+          Object.values(walletInstance.savedViewingKeys).find(
+            ({ contractAddress }) => contractAddress === contract
+          )?.viewingKey
 
-      if (!savedVK) {
-        // if no saved VK send error message
-        await api.externalRequests.sendCustomMessage({
-          token,
-          message: {
-            parse_err: {
-              msg: 'No saved VK',
+        if (!savedVK) {
+          // if no saved VK send error message
+          await api.externalRequests.sendCustomMessage({
+            token,
+            message: {
+              parse_err: {
+                msg: 'No saved VK',
+              },
             },
-          },
-          type,
-        })
+            type,
+          })
 
-        return
+          return
+        }
+
+        // replace msg with VK
+        msg = JSON.parse(msgString.replace(VK_TEXT_VARIABLE, savedVK))
       }
 
-      // replace msg with VK
-      msg = JSON.parse(msgString.replace(VK_TEXT_VARIABLE, savedVK))
+      // msg contract
+      const response = await snip20Manager.queryContract({
+        contractAddress: contract,
+        query: msg,
+      })
+
+      // send result to app
+      await api.externalRequests.sendCustomMessage({
+        token,
+        message: response,
+        type,
+      })
+    } catch (error) {
+      // send error to app
+      await api.externalRequests.sendCustomMessage({
+        token,
+        message: { error },
+        type,
+      })
     }
-
-    // msg contract
-    const response = await snip20Manager.queryContract({
-      contractAddress: contract,
-      query: msg,
-    })
-
-    // send result to app
-    await api.externalRequests.sendCustomMessage({
-      token,
-      message: { type: response.parse_err ? 'failed' : 'success', response },
-      type,
-    })
   }
 
   if (type === TYPES.SECRET_EXECUTE) {
-    console.log({
-      token,
-      type,
-      contract,
-      sender,
-      gas,
-      msg,
-    })
+    try {
+      // get privateKey and derivationPath from client
+      const { privateKey, derivationPath } =
+        (await state.getState('getPrivateWalletInfoCallback')(
+          walletInstance.id
+        )) || {}
+
+      if (!gas) {
+        // estimate gas
+        const response = await snip20Manager.executeContract({
+          address: sender,
+          contractAddress: contract,
+          message: msg,
+          privateKey,
+          derivationPath,
+          type: walletInstance.type,
+          publicKey: walletInstance.publicKey,
+          simulate: true,
+        })
+
+        // set estimated gas
+        if (response?.gasInfo?.gasUsed) {
+          gas = response?.gasInfo?.gasUsed * 1.1
+        }
+      }
+
+      // execute contract
+      const response = await snip20Manager.executeContract({
+        address: sender,
+        contractAddress: contract,
+        message: msg,
+        gasLimit: {
+          gasLimit: gas,
+          gasPriceInFeeDenom: GAS_PRICE,
+        },
+        privateKey,
+        derivationPath,
+        type: walletInstance.type,
+        publicKey: walletInstance.publicKey,
+      })
+
+      // send result to app
+      await api.externalRequests.sendCustomMessage({
+        token,
+        message: response,
+        type,
+      })
+    } catch (error) {
+      // send error to app
+      await api.externalRequests.sendCustomMessage({
+        token,
+        message: { error },
+        type,
+      })
+    }
   }
 }

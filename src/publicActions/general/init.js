@@ -14,6 +14,7 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  * @param options.isExtension BOOLEAN (OPTIONAL) - 'false' by default. if 'true', wallets are read from localStorage, and extension methods work without authorization
  * @param options.stringifyLogs BOOLEAN (OPTIONAL) - 'false' by default. If true, all consoles in debug mode are output in JSON format
  * @param options.stringifyResponse BOOLEAN (OPTIONAL) - 'false' by default. If true, all library methods return a string in JSON format
+ * getPrivateWalletInfoCallback
  * @returns Returns OBJECT with user info (id, email and subscribe_rewards flag)
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
@@ -49,6 +50,7 @@ export const init = async (options = {}) => {
     isExtension,
     stringifyLogs = false,
     stringifyResponse = false,
+    getPrivateWalletInfoCallback = () => {},
   } = options
   checkTypes(
     ['backendUrl', backendUrl, ['String'], true],
@@ -57,7 +59,12 @@ export const init = async (options = {}) => {
     ['debug', debug, ['Boolean']],
     ['isExtension', isExtension, ['Boolean']],
     ['stringifyLogs', stringifyLogs, ['Boolean']],
-    ['stringifyResponse', stringifyResponse, ['Boolean']]
+    ['stringifyResponse', stringifyResponse, ['Boolean']],
+    [
+      'getPrivateWalletInfoCallback',
+      getPrivateWalletInfoCallback,
+      ['Function', 'AsyncFunction'],
+    ]
   )
   // reinitialization check
   state.getState('isInitialized') &&
@@ -74,6 +81,7 @@ export const init = async (options = {}) => {
     isExtension,
     stringifyLogs,
     stringifyResponse,
+    getPrivateWalletInfoCallback,
   })
 
   debugConsoleLog('Initialization completed')

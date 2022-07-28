@@ -1,5 +1,4 @@
-import { SecretNetworkClient } from 'secretjs'
-import { GRPC_WEB_URL } from '../../../../constants'
+import { queryContract } from './queryContract'
 
 export async function getTokenBalance(
   address,
@@ -7,27 +6,14 @@ export async function getTokenBalance(
   decimals,
   viewingKey
 ) {
-  // prepare readOnly secret client
-  const secretjs = await SecretNetworkClient.create({
-    grpcWebUrl: GRPC_WEB_URL,
-    chainId: 'secret-4',
-  })
-
-  // get contract codeHash
-  const codeHash = await secretjs.query.compute.contractCodeHash(
-    contractAddress
-  )
-
   try {
-    // get snip20 balance
-    const resp = await secretjs.query.snip20.getBalance({
-      address,
-      contract: {
-        address: contractAddress,
-        codeHash,
-      },
-      auth: {
-        key: viewingKey,
+    const resp = await queryContract({
+      contractAddress,
+      query: {
+        balance: {
+          address,
+          key: viewingKey,
+        },
       },
     })
 

@@ -1,5 +1,4 @@
-import { SecretNetworkClient } from 'secretjs'
-import { GRPC_WEB_URL } from '../../../../constants'
+import { queryContract } from './queryContract'
 
 export async function getTokenTransactions({
   address,
@@ -8,30 +7,18 @@ export async function getTokenTransactions({
   page,
   pageSize,
 }) {
-  // prepare readOnly secret client
-  const secretjs = await SecretNetworkClient.create({
-    grpcWebUrl: GRPC_WEB_URL,
-    chainId: 'secret-4',
-  })
-
-  // get contract codeHash
-  const codeHash = await secretjs.query.compute.contractCodeHash(
-    contractAddress
-  )
-
   try {
     // get token transfer history
-    const resp = await secretjs.query.snip20.getTransferHistory({
-      address,
-      contract: {
-        address: contractAddress,
-        codeHash,
+    const resp = await queryContract({
+      contractAddress,
+      query: {
+        transfer_history: {
+          address,
+          key: viewingKey,
+          page,
+          page_size: pageSize,
+        },
       },
-      auth: {
-        key: viewingKey,
-      },
-      page_size: +pageSize,
-      page: +page,
     })
 
     if (resp?.transfer_history?.txs) {

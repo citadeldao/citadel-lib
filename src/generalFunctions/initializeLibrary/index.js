@@ -13,6 +13,7 @@ export const initializeLibrary = async ({
   backendUrl,
   publicBackendUrl,
   socketURL,
+  appURL = 'https://api-extensions-service.apps.citadel.okd.3ahtim54r.ru',
   debug,
   isExtension,
   stringifyLogs,
@@ -21,11 +22,14 @@ export const initializeLibrary = async ({
   // set backend URL
   state.setState('backendUrl', backendUrl)
 
-  // set backend URL
+  // set public backend URL
   state.setState('publicBackendUrl', publicBackendUrl)
 
   // set socket URL
   state.setState('socketURL', socketURL)
+
+  // set socket URL
+  state.setState('appURL', appURL)
 
   // set debug mode
   state.setState('debug', debug)

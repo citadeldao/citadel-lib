@@ -16,6 +16,7 @@ const defaultState = {
   backendUrl: '',
   publicBackendUrl: null,
   socketURL: null,
+  appURL: null,
   isExtension: false,
   maxExtesionCreatedId: 0,
   stringifyResponse: false,

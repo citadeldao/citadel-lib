@@ -70,7 +70,7 @@ export const messageFromApp = async ({
     // send result to app
     await api.externalRequests.sendCustomMessage({
       token,
-      message: { type: response.parse_err ? 'success' : 'failed', response },
+      message: { type: response.parse_err ? 'failed' : 'success', response },
       type,
     })
   }

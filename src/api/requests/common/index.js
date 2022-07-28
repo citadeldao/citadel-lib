@@ -6,8 +6,6 @@ import { getActiveDaoHolders } from './getActiveDaoHolders'
 import { subscribeRewards } from './subscribeRewards'
 import { getAllCurrencies } from './getAllCurrencies'
 import { getAllMarketcaps } from './getAllMarketcaps'
-import { getSubscriptions } from './getSubscriptions'
-import { manageSubscriptions } from './manageSubscriptions'
 
 export const common = {
   getInfo,
@@ -18,6 +16,4 @@ export const common = {
   subscribeRewards,
   getAllCurrencies,
   getAllMarketcaps,
-  getSubscriptions,
-  manageSubscriptions
 }

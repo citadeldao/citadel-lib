@@ -9,7 +9,6 @@ import { claimDaoRewards } from './claimDaoRewards'
 import { getDaoAssignedAddresses } from './getDaoAssignedAddresses'
 import { getTotalClaimedRewardsXct } from './getTotalClaimedRewardsXct'
 import { getXctInflation } from './getXctInflation'
-import { getXctRewards } from './getXctRewards'
 
 export const xct = {
   getXctStakeTransaction,
@@ -23,5 +22,4 @@ export const xct = {
   getDaoAssignedAddresses,
   getTotalClaimedRewardsXct,
   getXctInflation,
-  getXctRewards
 }

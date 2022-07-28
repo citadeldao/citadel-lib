@@ -7,6 +7,14 @@ const clearWalletInstances = () => instanceCollection.clear()
 
 const getWalletInstanceById = (walletId) => instanceCollection.get(walletId)
 
+const getWalletInstanceByAddress = (net, address) => {
+  for (const wallet of instanceCollection) {
+    if (wallet[1].net === net && wallet[1].address === address) {
+      return wallet[1]
+    }
+  }
+}
+
 const removeWalletInstanceById = (walletId) =>
   instanceCollection.delete(walletId)
 
@@ -36,6 +44,7 @@ const updateWalletInstance = (newWalletInfo) => {
 export default {
   createWalletInstance,
   getWalletInstanceById,
+  getWalletInstanceByAddress,
   updateWalletInstance,
   removeWalletInstanceById,
   clearWalletInstances,

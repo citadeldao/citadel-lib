@@ -6,6 +6,8 @@ import { convertScrtToSecretScrt } from './convertScrtToSecretScrt'
 import { doCrossNetworkTransfer } from './doCrossNetworkTransfer'
 import { setViewingKey } from './setViewingKey'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
+import { queryContract } from './queryContract'
+import { executeContract } from './executeContract'
 
 export default {
   getTokenTransactions,
@@ -16,4 +18,6 @@ export default {
   doCrossNetworkTransfer,
   setViewingKey,
   generateSimpleViewingKey,
+  queryContract,
+  executeContract,
 }

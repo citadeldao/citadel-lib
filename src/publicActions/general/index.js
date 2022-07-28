@@ -17,6 +17,8 @@ import { getPreparePrivateClaim } from './getPreparePrivateClaim'
 import { getPrepareTransferFund } from './getPrepareTransferFund'
 import { getPrivateSale } from './getPrivateSale'
 import { addEventListener } from './addEventListener'
+import { getSubscriptions } from './getSubscriptions'
+import { manageSubscriptions } from './manageSubscriptions'
 // Relevant until the Kepler signature is integrated into the library. After using the 'Assign To Dao' method
 import { sendAssignToDaoMessage } from './sendAssignToDaoMessage'
 
@@ -41,4 +43,6 @@ export const general = {
   getPrivateSale,
   sendAssignToDaoMessage,
   addEventListener,
+  getSubscriptions,
+  manageSubscriptions
 }

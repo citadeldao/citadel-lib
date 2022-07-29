@@ -103,12 +103,20 @@ export const addCreatedWallet = async ({
   // LOAD BALANCE (not for extension)
   if (!state.getState('isExtension') && loadBalance) {
     // load balance
-    const { data: balance } = await api.requests.getDelegationBalance({
-      net: createdWallet.net,
-      address: createdWallet.address,
-    })
-    // set balance
-    createdWallet.balance = balance
+    try {
+      const { data: balance } = await api.requests.getDelegationBalance({
+        net: createdWallet.net,
+        address: createdWallet.address,
+      })
+      // set balance
+      createdWallet.balance = balance
+    } catch {
+      // set balance to 0
+      createdWallet.balance = {
+        mainBalance: 0,
+        calculatedBalance: 0,
+      }
+    }
   }
 
   // ADD TO STORAGE WALLET LIST

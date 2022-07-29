@@ -12,7 +12,7 @@ export async function doCrossNetworkTransfer({
   derivationPath,
   toAddress,
   amount,
-  fee,
+  fee = 0.002,
 }) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
   const gasLimit = 40_000

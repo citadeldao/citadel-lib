@@ -46,9 +46,17 @@ const getBalanceById = async (walletId, token) => {
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
   if (!token || token === walletInstance.net) {
     // for subtoken call token info
-    return await walletInstance.getDelegationBalance()
+    try {
+      return await walletInstance.getDelegationBalance()
+    } catch (error) {
+      console.error(error)
+    }
   } else {
     // for native token call walletInstance method
-    return await walletInstance.callTokenInfo(token, 'balance')
+    try {
+      return await walletInstance.callTokenInfo(token, 'balance')
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

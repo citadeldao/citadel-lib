@@ -11,6 +11,8 @@ import {
   VIEWING_KEYS_TYPES,
   WALLET_TYPES,
 } from '../../../../constants'
+import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../../../constants'
 
 // TODO: split function
 export async function updateSnip20SubtokensList() {
@@ -131,4 +133,7 @@ export async function updateSnip20SubtokensList() {
       savedViewingKeys: this.savedViewingKeys,
     },
   })
+
+  // EVENT: inform the client that it is time to update wallet list
+  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

@@ -7,6 +7,7 @@ import { getWalletInfoById } from './getWalletInfoById'
 import { updateWallet } from './updateWallet'
 import walletInstances from '../walletInstances'
 import state from '../state.js'
+import errors from '../errors/index.js'
 
 // It is expected that the wallet was previously created by one of the 'create...' lib methods
 // network config fields already added in create method: code, networkName etc
@@ -29,10 +30,11 @@ export const addCreatedWallet = async ({
     if (createdWallet.type === WALLET_TYPES.ONE_SEED) {
       // skip add for the same type
       if (existingWallet.type === WALLET_TYPES.ONE_SEED) {
-        console.warn(
-          `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`
-        )
-        return
+        // throw error for any other wallets
+        errors.throwError('WalletListError', {
+          message: `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`,
+          code: 0,
+        })
       }
       // rewrite any others types and return updated wallet
       return updateWallet({
@@ -66,20 +68,20 @@ export const addCreatedWallet = async ({
           newWalletInfo: createdWallet,
         })
       }
-      // skip any other wallets
-      console.warn(
-        `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`
-      )
-      return
+      // throw error for any other wallets
+      errors.throwError('WalletListError', {
+        message: `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`,
+        code: 0,
+      })
     }
 
     // ORDER FOR publicKey
     if (createdWallet.type === WALLET_TYPES.PUBLIC_KEY) {
-      // skip add for any types
-      console.warn(
-        `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`
-      )
-      return
+      // throw error for any other wallets
+      errors.throwError('WalletListError', {
+        message: `Wallet with net: "${createdWallet.net}" and address: "${createdWallet.address}" is already exist. Adding wallet skipped.`,
+        code: 0,
+      })
     }
   }
 

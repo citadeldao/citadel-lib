@@ -4,5 +4,6 @@ export class WalletListError extends LibraryError {
   constructor(options) {
     super({ message: options.message })
     this.name = 'WalletListError'
+    this.code = options.code
   }
 }

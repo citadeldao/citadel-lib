@@ -26,7 +26,7 @@ export const addWalletCollectionByPrivateKey = async (walletsOptions) => {
       } catch (error) {
         error.message = `For wallet with net "${walletOptions.net}" and index "${walletIndex}". ${error.message}`
         // if error - return object with error instead wallet
-        return { error: error.toString() }
+        return { error: error.toString(), code: error.code }
       }
     })
   )

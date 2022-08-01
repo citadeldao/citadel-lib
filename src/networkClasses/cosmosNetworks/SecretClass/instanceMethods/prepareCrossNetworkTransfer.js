@@ -1,4 +1,5 @@
 import networkClasses from '../../../'
+import errors from '../../../../errors'
 import { BaseCosmosNetwork } from '../../_BaseCosmosClass'
 
 export async function prepareCrossNetworkTransfer(
@@ -9,6 +10,13 @@ export async function prepareCrossNetworkTransfer(
 
   // For SNIP-20
   if (token !== this.net && networkClass.tokens[token].standard === 'snip20') {
+    const contractAddress = networkClass.tokens[token].address
+    // check min amount for secret_eth
+    contractAddress === 'secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw' &&
+      amount < 0.1 &&
+      errors.throwError('RequestError', {
+        message: 'Minimum amount is 0.1 sETH',
+      })
     // return instructions for signing and sending a transaction on the client
     return {
       executeOnClient: {
@@ -19,7 +27,7 @@ export async function prepareCrossNetworkTransfer(
           type: this.type,
           publicKey: this.publicKey,
           bridgeContract: this.bridges[toNetwork],
-          contractAddress: networkClass.tokens[token].address,
+          contractAddress,
           decimals: networkClass.tokens[token].decimals,
           toAddress,
           amount,

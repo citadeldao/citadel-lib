@@ -11,11 +11,12 @@ export async function doCrossNetworkTransfer({
   privateKey,
   derivationPath,
   toAddress,
+  // for secret_eth - 0.1 minimum
   amount,
   fee = 0.002,
 }) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  const gasLimit = 40_000
+  const gasLimit = 55_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (+fee * 10 ** SecretNetwork.decimals) / gasLimit
 

@@ -5,7 +5,9 @@ import { retryRequestOnError } from '../../../helpers/retryRequestOnError'
 import { calculateSubtokenBalanceUSD } from '../../_functions/balances'
 
 // private method
-export const updateSubtokensList = async function () {
+export const updateSubtokensList = async function (
+  tokensToAddAfterUpdate = []
+) {
   const networkClass = networkClasses.getNetworkClass(this.net)
 
   // return empty object if net does not have tokens
@@ -74,15 +76,20 @@ export const updateSubtokensList = async function () {
       })
   )
 
+  // filter out tokens with a zero balance (the exception is bsc_xct, it is always in the list). Add additional tokens
+  const resultSubtokensList = [
+    ...tokensToAddAfterUpdate,
+    ...subtokensList.filter(
+      ({ tokenBalance, net }) =>
+        tokenBalance.calculatedBalance !== 0 || net === 'bsc_xct'
+    ),
+  ]
+
   walletsManager.updateWallet({
     walletId: this.id,
     newWalletInfo: {
-      // filter out tokens with a zero balance (the exception is bsc_xct, it is always in the list
-      subtokensList: subtokensList.filter(
-        ({ tokenBalance, net }) =>
-          tokenBalance.calculatedBalance !== 0 || net === 'bsc_xct'
-      ),
-      subtokenBalanceUSD: calculateSubtokenBalanceUSD(subtokensList),
+      subtokensList: resultSubtokensList,
+      subtokenBalanceUSD: calculateSubtokenBalanceUSD(resultSubtokensList),
     },
   })
 }

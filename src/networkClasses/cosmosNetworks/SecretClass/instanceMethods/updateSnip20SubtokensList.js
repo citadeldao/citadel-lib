@@ -26,7 +26,6 @@ export async function updateSnip20SubtokensList() {
     .secret.tokens
 
   const snip20SubtokensList = []
-
   // 1) check and get balances for saved ViewingKey
   for (const token in this.savedViewingKeys) {
     // skip
@@ -51,7 +50,7 @@ export async function updateSnip20SubtokensList() {
     )
 
     if (error) {
-      // delet token VK from instance
+      // delete token VK from instance
       delete this.savedViewingKeys[token]
       // and skip add token to subtokenList
       continue
@@ -112,7 +111,6 @@ export async function updateSnip20SubtokensList() {
       }
     }
   }
-
   // get subtokesList without snip20 tokens
   const filteredList = this.subtokensList.filter(
     ({ standard }) => standard !== 'snip20'
@@ -133,7 +131,6 @@ export async function updateSnip20SubtokensList() {
       savedViewingKeys: this.savedViewingKeys,
     },
   })
-
   // EVENT: inform the client that it is time to update wallet list
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

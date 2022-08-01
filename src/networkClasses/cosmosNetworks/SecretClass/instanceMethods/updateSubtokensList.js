@@ -1,14 +1,15 @@
 import { updateSubtokensList as baseUpdateSubtokensList } from '../../../_BaseNetworkClass/instanceMethods/updateSubtokensList'
-import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
-import { LIB_EVENT_NAMES } from '../../../../constants'
 
 export async function updateSubtokensList() {
+  // save snip20 tokens before update ICS20
+  const savedSnip20List = this.subtokensList.filter(
+    ({ standard }) => standard === 'snip20'
+  )
+
   // ICS20 update
   // instead "super"
-  await baseUpdateSubtokensList.call(this)
+  await baseUpdateSubtokensList.call(this, savedSnip20List)
 
   // SNIP20 update (do not await by default), but dispatch event walletListUpdated
   this.updateSnip20SubtokensList()
-  // EVENT: inform the client that it is time to update wallet list
-  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

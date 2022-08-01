@@ -122,21 +122,21 @@ export class IostNetwork extends BaseNetwork {
   }
 
   async signAndSend(...args) {
-    const hash = await super.signAndSend(...args)
+    const hashArray = await super.signAndSend(...args)
     // check transatcion status after send
     let status = null
     while (status !== 'ok') {
       const { data } = await api.requests.checkTransaction({
         net: this.net,
         address: this.address,
-        hash,
+        hash: hashArray[0],
       })
       if (status === 'failed') {
         errors.throwError('RequestError', { message: data.reason })
       }
       status = data.status
     }
-    return [hash]
+    return hashArray
   }
 
   static async getAccountsByPrivateKey(privateKey) {

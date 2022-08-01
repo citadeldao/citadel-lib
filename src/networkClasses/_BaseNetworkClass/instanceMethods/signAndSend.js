@@ -30,6 +30,8 @@ export const signAndSend = async function (
     proxy,
   })
 
+  const hash = data.hash || data.txhash || data
+
   // return Array with hash
-  return [data.hash || data.txhash || data]
+  return Array.isArray(hash) ? hash : [hash]
 }

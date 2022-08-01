@@ -1,6 +1,6 @@
 {
   "name": "@citadeldao/lib-citadel",
-  "version": "1.13.3",
+  "version": "1.13.4",
   "files": [
     "src/",
     "README.md"

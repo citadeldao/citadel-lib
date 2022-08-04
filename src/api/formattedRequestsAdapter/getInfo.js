@@ -2,11 +2,13 @@ import networkClasses from '../../networkClasses'
 import { requests } from '../requests'
 import { createApiRequests } from '../createApiRequests'
 import state from '../../state'
+import { getAuthToken } from '../getAuthToken'
 
 // modify the backend response (will move to the backend in the future)
 export const getInfo = async () => {
   const backendUrl = state.getState('backendUrl')
-  const accessToken = state.getState('accessToken')
+  // get access token
+  const accessToken = await getAuthToken()
   // create original axios function
   const originalRequest = createApiRequests({
     baseURL: backendUrl,

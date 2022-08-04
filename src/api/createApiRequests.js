@@ -1,4 +1,5 @@
 import { useAxios } from './useAxios'
+import { getAuthToken } from './getAuthToken'
 
 /**
  * CREATE API REQUEST
@@ -15,19 +16,18 @@ export const createApiRequests = ({
   enableResponseHandler,
   // single request params function
   singleRequest,
-  accessToken
 }) => {
-  // create axios instace (for each request in this case, but this is not required)
-  const axiosInstance = useAxios({
-    baseURL,
-    withCredentials,
-    enableResponseHandler,
-    accessToken
-  })
-
   // for single request
   if (singleRequest) {
-    return (data) => {
+    return async (data) => {
+      const accessToken = await getAuthToken()
+      // create axios instace
+      const axiosInstance = useAxios({
+        baseURL,
+        withCredentials,
+        enableResponseHandler,
+        accessToken,
+      })
       // get request params from function
       const request = singleRequest(data)
       // return axios function with request params
@@ -41,7 +41,15 @@ export const createApiRequests = ({
   let apiRequests = {}
 
   Object.keys(requests).map((requestName) => {
-    apiRequests[requestName] = (data) => {
+    apiRequests[requestName] = async (data) => {
+      const accessToken = await getAuthToken()
+      // create axios instace
+      const axiosInstance = useAxios({
+        baseURL,
+        withCredentials,
+        enableResponseHandler,
+        accessToken,
+      })
       // get request params from function
       const request = requests[requestName](data)
       // return axios function with request params

@@ -34,15 +34,13 @@ export default api
 export const initApi = () => {
   // get backend URL
   const backendUrl = state.getState('backendUrl')
-  const accessToken = state.getState('accessToken')
+
   // citadel backend
   api.requests = createApiRequests({
     baseURL: backendUrl,
-    withCredentials: accessToken ? false : true,
+    withCredentials: true,
     requests,
     enableResponseHandler: true,
-    // token for auth
-    accessToken,
   })
 
   // other servers

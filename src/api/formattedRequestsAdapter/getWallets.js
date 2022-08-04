@@ -6,13 +6,14 @@ import state from '../../state'
 // modify the backend response (will move to the backend in the future)
 export const getWallets = async () => {
   const backendUrl = state.getState('backendUrl')
-
+  const accessToken = state.getState('accessToken')
   // create original axios function
   const originalRequest = createApiRequests({
     baseURL: backendUrl,
     withCredentials: true,
     singleRequest: requests.getWallets,
     enableResponseHandler: true,
+    accessToken,
   })
 
   // get original response

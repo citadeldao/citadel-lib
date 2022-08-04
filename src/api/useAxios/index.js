@@ -11,12 +11,18 @@ export const useAxios = ({
   baseURL,
   withCredentials,
   enableResponseHandler,
+  accessToken,
 }) => {
   // create axios instance
   const axiosInstance = axios.create({
     baseURL,
     withCredentials,
+    // add header with accesToken if it exist
+    ...(accessToken && {
+      headers: { common: { Authorization: `Bearer ${accessToken}` } },
+    }),
   })
+
   // add response handler
   axiosInstance.interceptors.response.use(
     responseHandler,

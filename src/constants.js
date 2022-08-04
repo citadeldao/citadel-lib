@@ -15,12 +15,14 @@ export const MARKETCAPS_SOCKET_EVENT_NAMES = {
 export const LIB_EVENT_NAMES = {
   WALLET_LIST_UPDATED: 'walletListUpdated',
   SOCKET_EVENT: 'socketEvent',
+  TOKEN_REFRESHED: 'tokenRefreshed',
 }
 
 // computed properties to associate event with its callback in the state
 export const LIB_EVENT_CALLBACK_NAMES = {
   [LIB_EVENT_NAMES.WALLET_LIST_UPDATED]: 'walletListUpdatedCallback',
   [LIB_EVENT_NAMES.SOCKET_EVENT]: 'socketEventCallback',
+  [LIB_EVENT_NAMES.TOKEN_REFRESHED]: 'tokenRefreshedCallback',
 }
 
 export const CACHE_NAMES = {

@@ -8,6 +8,7 @@ import { getAllCurrencies } from './getAllCurrencies'
 import { getAllMarketcaps } from './getAllMarketcaps'
 import { getSubscriptions } from './getSubscriptions'
 import { manageSubscriptions } from './manageSubscriptions'
+import { refreshAuthToken } from './refreshAuthToken'
 
 export const common = {
   getInfo,
@@ -19,5 +20,6 @@ export const common = {
   getAllCurrencies,
   getAllMarketcaps,
   getSubscriptions,
-  manageSubscriptions
+  manageSubscriptions,
+  refreshAuthToken,
 }

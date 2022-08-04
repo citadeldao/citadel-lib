@@ -7,5 +7,6 @@ export class RequestError extends LibraryError {
     this.status = options.status
     this.url = options.url
     this.method = options.method
+    this.code = options.code
   }
 }

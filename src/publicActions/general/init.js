@@ -14,7 +14,9 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  * @param options.isExtension BOOLEAN (OPTIONAL) - 'false' by default. if 'true', wallets are read from localStorage, and extension methods work without authorization
  * @param options.stringifyLogs BOOLEAN (OPTIONAL) - 'false' by default. If true, all consoles in debug mode are output in JSON format
  * @param options.stringifyResponse BOOLEAN (OPTIONAL) - 'false' by default. If true, all library methods return a string in JSON format
- * getPrivateWalletInfoCallback
+ * @param getPrivateWalletInfoCallback FUNCTION, ASYNC FUNCTION (OPTIONAL) - callback for receiving private wallet data from the client. It is used in apps
+ * @param accessToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
+ * @param refreshToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
  * @returns Returns OBJECT with user info (id, email and subscribe_rewards flag)
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
@@ -51,6 +53,8 @@ export const init = async (options = {}) => {
     stringifyLogs = false,
     stringifyResponse = false,
     getPrivateWalletInfoCallback = () => {},
+    accessToken,
+    refreshToken,
   } = options
   checkTypes(
     ['backendUrl', backendUrl, ['String'], true],
@@ -64,7 +68,9 @@ export const init = async (options = {}) => {
       'getPrivateWalletInfoCallback',
       getPrivateWalletInfoCallback,
       ['Function', 'AsyncFunction'],
-    ]
+    ],
+    ['accessToken', accessToken, ['String']],
+    ['refreshToken', refreshToken, ['String']]
   )
   // reinitialization check
   state.getState('isInitialized') &&
@@ -82,6 +88,8 @@ export const init = async (options = {}) => {
     stringifyLogs,
     stringifyResponse,
     getPrivateWalletInfoCallback,
+    accessToken,
+    refreshToken,
   })
 
   debugConsoleLog('Initialization completed')

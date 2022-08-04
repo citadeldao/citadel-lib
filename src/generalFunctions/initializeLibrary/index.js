@@ -19,6 +19,8 @@ export const initializeLibrary = async ({
   stringifyLogs,
   stringifyResponse,
   getPrivateWalletInfoCallback,
+  accessToken,
+  refreshToken,
 }) => {
   // set backend URL
   state.setState('backendUrl', backendUrl)
@@ -46,6 +48,12 @@ export const initializeLibrary = async ({
 
   // set getPrivateWalletInfoCallback
   state.setState('getPrivateWalletInfoCallback', getPrivateWalletInfoCallback)
+
+  // set accessToken
+  state.setState('accessToken', accessToken)
+
+  // set refreshToken
+  state.setState('refreshToken', refreshToken)
 
   // create api object
   initApi()

@@ -15,12 +15,14 @@ export const createApiRequests = ({
   enableResponseHandler,
   // single request params function
   singleRequest,
+  accessToken
 }) => {
   // create axios instace (for each request in this case, but this is not required)
   const axiosInstance = useAxios({
     baseURL,
     withCredentials,
     enableResponseHandler,
+    accessToken
   })
 
   // for single request

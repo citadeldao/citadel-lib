@@ -7,13 +7,14 @@ import state from '../../state'
 // modify the backend response (will move to the backend in the future)
 export const getNetworksConfig = async () => {
   const backendUrl = state.getState('backendUrl')
-
+  const accessToken = state.getState('accessToken')
   // create original axios function
   const originalRequest = createApiRequests({
     baseURL: backendUrl,
     withCredentials: true,
     singleRequest: requests.getNetworksConfig,
     enableResponseHandler: true,
+    accessToken
   })
 
   // get original response

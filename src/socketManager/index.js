@@ -13,9 +13,8 @@ let marketcapsSocket = null
 const connect = async () => {
   try {
     // get socket base url
-    const baseWSURL = (
-      state.getState('socketURL') || process.env.VUE_APP_BACKEND_WS_URL
-    )
+    const baseWSURL = state
+      .getState('socketURL')
       .split('/')
       .slice(0, -1)
       .join('/')

@@ -1,4 +1,3 @@
-import errors from '../errors'
 import state from '../state'
 import { useAxios } from './useAxios'
 import { requests } from './requests'

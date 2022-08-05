@@ -14,6 +14,10 @@ const connect = async () => {
   try {
     // get socket base url
     const baseWSURL = state.getState('socketURL')
+      // remove 'user'
+      .split('/')
+      .slice(0, -1)
+      .join('/')
 
     // get socket token
     const { data: token } = await api.requests.getSocketToken()

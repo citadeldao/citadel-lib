@@ -46,21 +46,6 @@ export const messageFromApp = async ({
             ({ contractAddress }) => contractAddress === contract
           )?.viewingKey
 
-        if (!savedVK) {
-          // if no saved VK send error message
-          await api.externalRequests.sendCustomMessage({
-            token,
-            message: {
-              parse_err: {
-                msg: 'No saved VK',
-              },
-            },
-            type,
-          })
-
-          return
-        }
-
         // replace msg with VK
         msg = JSON.parse(msgString.replace(VK_TEXT_VARIABLE, savedVK))
       }

@@ -13,11 +13,7 @@ let marketcapsSocket = null
 const connect = async () => {
   try {
     // get socket base url
-    const baseWSURL = state
-      .getState('socketURL')
-      .split('/')
-      .slice(0, -1)
-      .join('/')
+    const baseWSURL = state.getState('socketURL')
 
     // get socket token
     const { data: token } = await api.requests.getSocketToken()

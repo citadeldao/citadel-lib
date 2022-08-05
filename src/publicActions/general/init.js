@@ -14,9 +14,10 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  * @param options.isExtension BOOLEAN (OPTIONAL) - 'false' by default. if 'true', wallets are read from localStorage, and extension methods work without authorization
  * @param options.stringifyLogs BOOLEAN (OPTIONAL) - 'false' by default. If true, all consoles in debug mode are output in JSON format
  * @param options.stringifyResponse BOOLEAN (OPTIONAL) - 'false' by default. If true, all library methods return a string in JSON format
- * @param getPrivateWalletInfoCallback FUNCTION, ASYNC FUNCTION (OPTIONAL) - callback for receiving private wallet data from the client. It is used in apps
- * @param accessToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
- * @param refreshToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
+ * @param options.getPrivateWalletInfoCallback FUNCTION, ASYNC FUNCTION (OPTIONAL) - callback for receiving private wallet data from the client. It is used in apps
+ * @param options.accessToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
+ * @param options.refreshToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
+ * @param options.appURL STRING (OPTIONAL) - URL for request to apps
  * @returns Returns OBJECT with user info (id, email and subscribe_rewards flag)
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
@@ -48,11 +49,12 @@ export const init = async (options = {}) => {
     backendUrl,
     publicBackendUrl,
     socketURL,
+    appURL,
     debug = false,
     isExtension,
     stringifyLogs = false,
     stringifyResponse = false,
-    getPrivateWalletInfoCallback = () => {},
+    getPrivateWalletInfoCallback = () => { },
     accessToken,
     refreshToken,
   } = options
@@ -83,6 +85,7 @@ export const init = async (options = {}) => {
     backendUrl,
     publicBackendUrl,
     socketURL,
+    appURL,
     debug,
     isExtension,
     stringifyLogs,

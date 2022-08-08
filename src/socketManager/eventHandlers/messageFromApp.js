@@ -75,10 +75,11 @@ export const messageFromApp = async ({
   if (type === TYPES.SECRET_EXECUTE) {
     try {
       // get privateKey and derivationPath from client
-      const { privateKey, derivationPath } =
-        (await state.getState('getPrivateWalletInfoCallback')(
-          walletInstance.id
-        )) || {}
+      const { privateKey, derivationPath, onEndCallback } =
+        (await state.getState('getPrivateWalletInfoCallback')({
+          walletId: walletInstance.id,
+          message: msg,
+        })) || {}
 
       if (!gas) {
         // estimate gas
@@ -120,6 +121,8 @@ export const messageFromApp = async ({
         message: response,
         type,
       })
+      // call onend function (close some modal etc)
+      onEndCallback && onEndCallback()
     } catch (error) {
       // send error to app
       await api.externalRequests.sendCustomMessage({

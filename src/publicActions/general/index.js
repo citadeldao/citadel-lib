@@ -21,6 +21,7 @@ import { getSubscriptions } from './getSubscriptions'
 import { manageSubscriptions } from './manageSubscriptions'
 // Relevant until the Kepler signature is integrated into the library. After using the 'Assign To Dao' method
 import { sendAssignToDaoMessage } from './sendAssignToDaoMessage'
+import { prettyNumber } from './prettyNumber'
 
 export const general = {
   generateMnemonic,
@@ -44,5 +45,6 @@ export const general = {
   sendAssignToDaoMessage,
   addEventListener,
   getSubscriptions,
-  manageSubscriptions
+  manageSubscriptions,
+  prettyNumber,
 }

@@ -4,6 +4,7 @@ import { WALLET_TYPES, CACHE_NAMES } from '../constants'
 import { addCreatedWallet } from './addCreatedWallet'
 import { getWalletList } from './getWalletList'
 import { updateWallet } from './updateWallet'
+import { checkWalletPK } from'../helpers/checkWalletPK'
 
 // used to set walletList by the client
 export const setWalletList = async (
@@ -30,6 +31,11 @@ export const setWalletList = async (
         .getNetworkClass(initialWallet.net)
         .formatPublicKeyFromBuffer(initialWallet.publicKey),
     }))
+    // for security
+    .map((initialWallet) => {
+      checkWalletPK(initialWallet)
+      return initialWallet
+    })
 
   // UPDATE STORAGE WALLETS
   // get existing storage wallets

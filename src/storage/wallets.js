@@ -1,4 +1,5 @@
 import state from '../state'
+import { checkWalletPK } from '../helpers/checkWalletPK'
 
 const getStorageKey = () => `lib-wallets-${state.getState('user').id}`
 
@@ -15,6 +16,8 @@ const putWallet = (wallet) => {
     return
   }
   const walletListObject = getWalletListObject()
+  // for security
+  checkWalletPK(wallet)
   // add wallet to bject
   walletListObject[wallet.id] = wallet
   // set wallet list

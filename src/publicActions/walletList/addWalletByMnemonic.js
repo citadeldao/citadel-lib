@@ -3,13 +3,21 @@ import walletsManager from '../../walletsManager'
 import { network as networkPublicActions } from '../network'
 import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
+import errors from '../../errors'
 
 export const addWalletByMnemonic = async (options) => {
   // checks
   checkInitialization()
   checkTypes(['options', options, ['Object'], true])
   const { net, mnemonic, derivationPath, title, passphrase, account } = options
-  checkTypes(['title', title, ['String']])
+  checkTypes(
+    ['title', title, ['String']],
+    ['mnemonic', mnemonic, ['String'], true]
+  )
+
+  if (mnemonic.trim() === '') {
+    errors.throwError('WrongArguments', { message: 'Mnemonic is empty' })
+  }
 
   // generate wallet by privateKey
   const createdWallet = await networkPublicActions.createWalletByMnemonic({

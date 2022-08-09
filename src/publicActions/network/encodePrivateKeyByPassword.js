@@ -4,6 +4,7 @@ import {
   checkNetworkOrToken,
   checkInitialization,
 } from '../../helpers/checkArguments'
+import errors from '../../errors'
 
 /**
  * Encrypts a string with a private key (AES-128, AES-192, AES-256 depending on the length of password).
@@ -43,11 +44,21 @@ export const encodePrivateKeyByPassword = (
   )
   checkNetworkOrToken(netOrToken)
 
+  if (password === '') {
+    errors.throwError('WrongArguments', { message: 'Empty password' })
+  }
+
   // get native net
   const nativeNet = networkClasses.getNativeNet(netOrToken)
 
   // call static native network method
-  return networkClasses
+  const privateKeyEncoded = networkClasses
     .getNetworkClass(nativeNet)
     .encodePrivateKeyByPassword(privateKey, password)
+
+  if (privateKey.includes(privateKeyEncoded)) {
+    errors.throwError('LibraryError', { message: 'Encoder is broken' })
+  }
+
+  return privateKeyEncoded
 }

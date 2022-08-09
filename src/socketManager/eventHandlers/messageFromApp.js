@@ -127,7 +127,7 @@ export const messageFromApp = async ({
       // send error to app
       await api.externalRequests.sendCustomMessage({
         token,
-        message: { error },
+        message: { error: error.message },
         type,
       })
     }

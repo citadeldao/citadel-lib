@@ -39,6 +39,7 @@ import { prepareAssignToDaoMessage } from './prepareAssignToDaoMessage'
 import { updateSubtokensList } from './updateSubtokensList'
 import { signMessage } from './signMessage'
 import { polkadotPrepareClaimUnstaked } from './polkadotPrepareClaimUnstaked'
+import { executeContract } from './executeContract'
 
 export const instanceMethods = {
   renameTitle,
@@ -81,4 +82,5 @@ export const instanceMethods = {
   updateSubtokensList,
   signMessage,
   polkadotPrepareClaimUnstaked,
+  executeContract,
 }

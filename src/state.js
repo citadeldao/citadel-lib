@@ -25,13 +25,13 @@ const defaultState = {
   daoSupportedNetworks: [],
   supportedTokens: {},
   stakeList: false,
-  getPrivateWalletInfoCallback: () => {},
   accessToken: null,
   refreshToken: null,
   // event callbacks. Computed property to prevent errors and for simple event handling
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.WALLET_LIST_UPDATED]]: () => {},
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.SOCKET_EVENT]]: () => {},
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.TOKEN_REFRESHED]]: () => {},
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]]: () => {},
 }
 
 // check state property name to prevent error

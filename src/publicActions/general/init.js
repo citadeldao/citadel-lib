@@ -14,7 +14,6 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  * @param options.isExtension BOOLEAN (OPTIONAL) - 'false' by default. if 'true', wallets are read from localStorage, and extension methods work without authorization
  * @param options.stringifyLogs BOOLEAN (OPTIONAL) - 'false' by default. If true, all consoles in debug mode are output in JSON format
  * @param options.stringifyResponse BOOLEAN (OPTIONAL) - 'false' by default. If true, all library methods return a string in JSON format
- * @param options.getPrivateWalletInfoCallback FUNCTION, ASYNC FUNCTION (OPTIONAL) - callback for receiving private wallet data from the client. It is used in apps
  * @param options.accessToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
  * @param options.refreshToken STRING (OPTIONAL) - used for authorization through a token (сookies are used by default)
  * @param options.appURL STRING (OPTIONAL) - URL for request to apps

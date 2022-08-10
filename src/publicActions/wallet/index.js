@@ -39,6 +39,7 @@ import { getAllDaoRewards } from './getAllDaoRewards'
 import { prepareAssignToDaoMessage } from './prepareAssignToDaoMessage'
 import { prepareClaimUnstaked } from './prepareClaimUnstaked'
 import { signMessage } from './signMessage'
+import { executeContract } from './executeContract'
 
 export const wallet = {
   renameWalletTitleById,
@@ -81,4 +82,5 @@ export const wallet = {
   prepareAssignToDaoMessage,
   signMessage,
   prepareClaimUnstaked,
+  executeContract,
 }

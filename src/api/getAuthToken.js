@@ -3,6 +3,7 @@ import { useAxios } from './useAxios'
 import { requests } from './requests'
 import { LIB_EVENT_NAMES } from '../constants'
 import { dispatchLibEvent } from '../generalFunctions/dispatchLibEvent'
+import jwt_decode from 'jwt-decode'
 
 export const getAuthToken = async () => {
   // get backend URL
@@ -17,25 +18,16 @@ export const getAuthToken = async () => {
   }
 
   // check refresh token expiration date
-  const refreshTokenExpirationDate =
-    JSON.parse(Buffer.from(refreshToken.split('.')[1], 'base64').toString())
-      ?.exp * 1000
+  const refreshTokenExpirationDate = jwt_decode(refreshToken)?.exp * 1000
 
   // throw error if the token has expired
   if (refreshTokenExpirationDate < Date.now()) {
     // send error to client
-    dispatchLibEvent(LIB_EVENT_NAMES.TOKEN_REFRESHED, {
-      error: {
-        message: 'Refresh token has expired. Please, log in again',
-        code: 1,
-      },
-    })
+    dispatchLibEvent(LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED)
   }
 
   // get expirationDate from token
-  const acccessTokenExpirationDate =
-    JSON.parse(Buffer.from(accessToken.split('.')[1], 'base64').toString())
-      ?.exp * 1000
+  const acccessTokenExpirationDate = jwt_decode(accessToken)?.exp * 1000
 
   // validate date
   if (acccessTokenExpirationDate > Date.now()) {

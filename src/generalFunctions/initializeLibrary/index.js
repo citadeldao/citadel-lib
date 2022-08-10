@@ -28,11 +28,23 @@ export const initializeLibrary = async ({
   // set public backend URL
   state.setState('publicBackendUrl', publicBackendUrl)
 
-  // set socket URL
-  state.setState('socketURL', socketURL)
+  if (socketURL) {
+    // set socket URL
+    state.setState('socketURL', socketURL)
+  } else {
+    debug &&
+      console.warn(
+        'Socket URL was not passed in arguments. Socket updates not available'
+      )
+  }
 
-  // set socket URL
-  state.setState('appURL', appURL)
+  if (appURL) {
+    // set socket URL
+    state.setState('appURL', appURL)
+  } else {
+    debug &&
+      console.warn('App URL was not passed in arguments. Apps may not work')
+  }
 
   // set debug mode
   state.setState('debug', debug)
@@ -94,7 +106,7 @@ export const initializeLibrary = async ({
   await walletsManager.updateWalletList(info.wallets, false)
 
   // if is not extension, connect sockets (do not await for fast load)
-  !isExtension && socketManager.init()
+  !isExtension && socketURL && socketManager.init()
 
   // do not await background updates- 'walletListUpdated' event will be dispatched inside
   backgroundUpdates(initialCacheManager)

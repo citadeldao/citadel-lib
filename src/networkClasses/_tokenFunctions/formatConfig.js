@@ -28,6 +28,15 @@ export const formatConfig = {
       transactions: 'transactions_default',
     },
   },
+  cw20: {
+    actions: {
+      transfer: 'transfer_default',
+    },
+    infos: {
+      balance: 'balance_default',
+      transactions: 'transactions_default',
+    },
+  },
   snip20: {
     actions: {
       transfer: 'transfer_scrt',

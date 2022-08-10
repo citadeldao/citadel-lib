@@ -33,7 +33,7 @@ await citadel.init({
 const { data: wallets } = await getWalletList()
 
 // Call the required method
-const response = citadel.generateMnemonic(24)
+const response = citadel.generateMnemonic(12)
 ```
 
 ## Return value format

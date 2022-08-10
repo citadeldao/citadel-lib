@@ -1,23 +1,24 @@
 import api from '../../api'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
-import state from '../../state'
 
 const TYPES = {
   SECRET_QUERY: 'scrt-query',
-  SECRET_EXECUTE: 'scrt-execute',
 }
 
 const VK_TEXT_VARIABLE = '%viewing_key%'
 
 const SECRET_NET_KEY = 'secret'
 
-const GAS_PRICE = 0.0125
-
 export const messageFromApp = async ({
   from: token,
   type,
-  message: { contract, sender, gas, msg } = {},
+  message: {
+    contract,
+    sender,
+    //  gas,
+    msg,
+  } = {},
 }) => {
   if (!Object.values(TYPES).includes(type)) {
     return
@@ -67,67 +68,6 @@ export const messageFromApp = async ({
       await api.externalRequests.sendCustomMessage({
         token,
         message: { error },
-        type,
-      })
-    }
-  }
-
-  if (type === TYPES.SECRET_EXECUTE) {
-    try {
-      // get privateKey and derivationPath from client
-      const { privateKey, derivationPath, onEndCallback } =
-        (await state.getState('getPrivateWalletInfoCallback')({
-          walletId: walletInstance.id,
-          message: msg,
-        })) || {}
-
-      if (!gas) {
-        // estimate gas
-        const response = await snip20Manager.executeContract({
-          address: sender,
-          contractAddress: contract,
-          message: msg,
-          privateKey,
-          derivationPath,
-          type: walletInstance.type,
-          publicKey: walletInstance.publicKey,
-          simulate: true,
-        })
-
-        // set estimated gas
-        if (response?.gasInfo?.gasUsed) {
-          gas = response?.gasInfo?.gasUsed * 1.1
-        }
-      }
-
-      // execute contract
-      const response = await snip20Manager.executeContract({
-        address: sender,
-        contractAddress: contract,
-        message: msg,
-        gasLimit: {
-          gasLimit: gas,
-          gasPriceInFeeDenom: GAS_PRICE,
-        },
-        privateKey,
-        derivationPath,
-        type: walletInstance.type,
-        publicKey: walletInstance.publicKey,
-      })
-
-      // send result to app
-      await api.externalRequests.sendCustomMessage({
-        token,
-        message: response,
-        type,
-      })
-      // call onend function (close some modal etc)
-      onEndCallback && onEndCallback()
-    } catch (error) {
-      // send error to app
-      await api.externalRequests.sendCustomMessage({
-        token,
-        message: { error: error.message },
         type,
       })
     }

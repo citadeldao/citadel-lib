@@ -18,7 +18,6 @@ export const initializeLibrary = async ({
   isExtension,
   stringifyLogs,
   stringifyResponse,
-  getPrivateWalletInfoCallback,
   accessToken,
   refreshToken,
 }) => {
@@ -57,9 +56,6 @@ export const initializeLibrary = async ({
 
   // set stringifyResponse
   state.setState('stringifyResponse', stringifyResponse)
-
-  // set getPrivateWalletInfoCallback
-  state.setState('getPrivateWalletInfoCallback', getPrivateWalletInfoCallback)
 
   // set accessToken
   state.setState('accessToken', accessToken)

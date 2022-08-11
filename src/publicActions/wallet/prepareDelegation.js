@@ -27,7 +27,7 @@ export const prepareDelegation = async (walletId, options) => {
   } = options
   checkTypes(
     // nodeAddress - Array for polkadot
-    ['nodeAddress', nodeAddresses, ['Array']],
+    ['nodeAddresses', nodeAddresses, ['Array']],
     ['amount', amount, ['String', 'Number']],
     ['type', type, ['String']],
     // Array for polkadot

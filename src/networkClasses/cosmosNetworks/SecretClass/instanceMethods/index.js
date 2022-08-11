@@ -8,6 +8,7 @@ import { signAndSend } from './signAndSend'
 import { updateSubtokensList } from './updateSubtokensList'
 import { updateSnip20SubtokensList } from './updateSnip20SubtokensList'
 import { prepareCrossNetworkTransfer } from './prepareCrossNetworkTransfer'
+import { executeContract } from './executeContract'
 
 export default {
   useSnip20Manager,
@@ -20,4 +21,5 @@ export default {
   updateSubtokensList,
   updateSnip20SubtokensList,
   prepareCrossNetworkTransfer,
+  executeContract,
 }

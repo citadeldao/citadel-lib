@@ -55,7 +55,7 @@ export class PolkadotNetwork extends BaseNetwork {
   }
 
   async prepareDelegation({
-    nodeAddress,
+    nodeAddresses,
     amount,
     type = DELEGATION_TYPES.STAKE,
     redelegateNodeAddress,
@@ -68,7 +68,7 @@ export class PolkadotNetwork extends BaseNetwork {
     if (type === DELEGATION_TYPES.STAKE) {
       const { data } = await api.requests.polkadotPrepareStakeAndNominate({
         address: this.address,
-        delegations: nodeAddress.map(({ address }) => address),
+        delegations: nodeAddresses,
         // amount: >= 120
         amount,
         tip: additionalFee,

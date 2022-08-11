@@ -1,3 +1,4 @@
+import errors from '../../../../errors'
 import snip20Manager from '../snip20Manager'
 
 export async function executeContract({
@@ -43,5 +44,13 @@ export async function executeContract({
     publicKey: this.publicKey,
   })
 
-  return response
+  // check error (not sure if this is a reliable way)
+  if (response.data?.length === 0) {
+    // throw error if data array is empty
+    errors.throwError('RequestError', {
+      message: response.rawLog,
+    })
+  }
+
+  return [response.transactionHash]
 }

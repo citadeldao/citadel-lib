@@ -60,7 +60,7 @@ export const init = async (options = {}) => {
   checkTypes(
     ['backendUrl', backendUrl, ['String'], true],
     ['publicBackendUrl', publicBackendUrl, ['String']],
-    ['socketURL', backendUrl, ['String']],
+    ['socketURL', socketURL, ['String']],
     ['debug', debug, ['Boolean']],
     ['isExtension', isExtension, ['Boolean']],
     ['stringifyLogs', stringifyLogs, ['Boolean']],

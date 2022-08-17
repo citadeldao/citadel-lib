@@ -5,6 +5,9 @@ import networkClasses from '../networkClasses'
 import socketManager from '../socketManager'
 import storage from '../storage'
 
+/********************** RESET LIBRARY ***********************
+ * Returns the library to its original state
+ **********************************************************/
 export const resetLibrary = async (clearCache) => {
   // disconnect sockets
   await socketManager.reset()

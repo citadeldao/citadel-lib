@@ -9,6 +9,10 @@ import { generateSimpleViewingKey } from './generateSimpleViewingKey'
 import { queryContract } from './queryContract'
 import { executeContract } from './executeContract'
 
+/******************** SNIP-20 MANAGER **********************
+ * Secretjs library logic.
+ **********************************************************/
+
 export default {
   getTokenTransactions,
   getTokenBalance,

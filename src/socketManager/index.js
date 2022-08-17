@@ -7,13 +7,25 @@ import {
 } from '../constants'
 import state from '../state'
 
+/********************* SOCKET MANAGER *********************
+ * Listens for socket events, handles them as needed, and passes them to the client
+ *
+ * ADDING A SOCKET EVENT:
+ * 1. Add socket event name to MARKETCAPS or USERS SOCKET_EVENT_NAMES constant
+ * 2. Add callback to LIB_EVENT_CALLBACK_NAMES and state
+ * 3. Add handler to './eventHandlers' if the event changes the state of the library
+ **********************************************************/
+
+// TODO: make a config file (instead 'constsnts') with settings for each event: 1) event name 2) socket url 3) handler 4) client callback name
+
 let usersSocket = null
 let marketcapsSocket = null
 
 const connect = async () => {
   try {
     // get socket base url
-    const baseWSURL = state.getState('socketURL')
+    const baseWSURL = state
+      .getState('socketURL')
       // remove 'user'
       .split('/')
       .slice(0, -1)

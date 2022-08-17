@@ -1,6 +1,10 @@
 import { generateMnemonic } from 'bip39'
 import errors from '../errors'
 
+/************* GENERATE BIP39 MNEMONIC PHRASE *************
+ * Generates a mnemonic phrase of the given length.
+ **********************************************************/
+
 export const generateBip39Mnemonic = (length) => {
   if (length % 3 !== 0 || length < 12 || length > 24) {
     errors.throwError('WrongArguments', {

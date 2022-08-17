@@ -11,6 +11,7 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  * @param options.publicBackendUrl STRING (OPTIONAL) - public REST-api URL for extension, etc 'https://app.citadel.one/api'
  * @param options.socketURL STRING (OPTIONAL) - REST-api URL, etc 'https://api-websockets-user.apps.citadel.okd.3ahtim54r.ru/users'
  * @param options.debug BOOLEAN (OPTIONAL) - 'false' by default. if 'true', the arguments and return values of the called functions are printed to the console.
+ * @param options.debugEvents STRING (OPTIONAL) - show event logs if 'true' and debug flag is 'true'
  * @param options.isExtension BOOLEAN (OPTIONAL) - 'false' by default. if 'true', wallets are read from localStorage, and extension methods work without authorization
  * @param options.stringifyLogs BOOLEAN (OPTIONAL) - 'false' by default. If true, all consoles in debug mode are output in JSON format
  * @param options.stringifyResponse BOOLEAN (OPTIONAL) - 'false' by default. If true, all library methods return a string in JSON format
@@ -50,10 +51,11 @@ export const init = async (options = {}) => {
     socketURL,
     appURL,
     debug = false,
+    debugEvents = false,
     isExtension,
     stringifyLogs = false,
     stringifyResponse = false,
-    getPrivateWalletInfoCallback = () => { },
+    getPrivateWalletInfoCallback = () => {},
     accessToken,
     refreshToken,
   } = options
@@ -62,6 +64,7 @@ export const init = async (options = {}) => {
     ['publicBackendUrl', publicBackendUrl, ['String']],
     ['socketURL', socketURL, ['String']],
     ['debug', debug, ['Boolean']],
+    ['debugEvents', debugEvents, ['Boolean']],
     ['isExtension', isExtension, ['Boolean']],
     ['stringifyLogs', stringifyLogs, ['Boolean']],
     ['stringifyResponse', stringifyResponse, ['Boolean']],
@@ -86,6 +89,7 @@ export const init = async (options = {}) => {
     socketURL,
     appURL,
     debug,
+    debugEvents,
     isExtension,
     stringifyLogs,
     stringifyResponse,

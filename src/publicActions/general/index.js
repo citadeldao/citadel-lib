@@ -23,6 +23,7 @@ import { manageSubscriptions } from './manageSubscriptions'
 import { sendAssignToDaoMessage } from './sendAssignToDaoMessage'
 import { prettyNumber } from './prettyNumber'
 
+// 'init', 'reset' and other methods that are not included in other groups
 export const general = {
   generateMnemonic,
   getSupportedNetworkKeys,

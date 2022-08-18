@@ -5,6 +5,36 @@ import {
   checkInitialization,
 } from '../../helpers/checkArguments'
 
+/**
+ * Returns expected transaction time
+ *
+ * @param net STRING (REQUIRED) - net key
+ * @param options OBJECT (REQUIRED)
+ * @param options.type STRING (REQUIRED) - type of transaction ('tranfer' etc )\
+ * @param options.fee STRING (REQUIRED) - fee
+ * 
+ * @returns Returns an object with the maximum and minimum transaction execution time
+ * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
+ * @example
+ *
+  const response = await citadel.getTransactionDuration('secret', {
+    type: 'transfer',
+    fee: 0.000197
+  })
+
+  // =>
+  {
+    result: 'success',
+    data: {
+      min: 625,
+      max: 169859,
+      net: 'secret',
+      type: 'transfer',
+    },
+    error: null,
+  }
+ */
+
 export const getTransactionDuration = async (net, options = {}) => {
   // checks
   checkInitialization()

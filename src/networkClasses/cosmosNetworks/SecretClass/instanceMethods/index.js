@@ -9,6 +9,7 @@ import { updateSubtokensList } from './updateSubtokensList'
 import { updateSnip20SubtokensList } from './updateSnip20SubtokensList'
 import { prepareCrossNetworkTransfer } from './prepareCrossNetworkTransfer'
 import { executeContract } from './executeContract'
+import { getFees } from './getFees'
 
 export default {
   useSnip20Manager,
@@ -22,4 +23,5 @@ export default {
   updateSnip20SubtokensList,
   prepareCrossNetworkTransfer,
   executeContract,
+  getFees,
 }

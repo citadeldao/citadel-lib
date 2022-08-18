@@ -16,7 +16,7 @@ export async function doCrossNetworkTransfer({
   fee = 0.002,
 }) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  const gasLimit = 55_000
+  const gasLimit = 75_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (+fee * 10 ** SecretNetwork.decimals) / gasLimit
 

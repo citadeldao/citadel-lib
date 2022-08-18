@@ -9,12 +9,14 @@ import { configureModulesByCaches } from './configureModulesByCaches'
 import { backgroundUpdates } from './backgroundUpdates'
 import socketManager from '../../socketManager'
 
+/****************** INITIALIZE LIBRARY ********************/
 export const initializeLibrary = async ({
   backendUrl,
   publicBackendUrl,
   socketURL,
   appURL,
   debug,
+  debugEvents,
   isExtension,
   stringifyLogs,
   stringifyResponse,
@@ -47,6 +49,9 @@ export const initializeLibrary = async ({
 
   // set debug mode
   state.setState('debug', debug)
+
+  // set debugEvents flag
+  state.setState('debugEvents', debugEvents)
 
   // set isExtension flag
   state.setState('isExtension', isExtension)

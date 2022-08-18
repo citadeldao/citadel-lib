@@ -1,6 +1,15 @@
 import networkClasses from './networkClasses'
 import { merge } from './helpers/merge'
 
+/******************** WALLET INSTANCES MODULE *************************
+ * Сollection of network class instances created from store.wallets list (local storage).
+ * Used to call specific wallet methods in publicActions (prepareTransfer, getBalanceById, etc.)
+ * WalletsManager first updates the list of wallets in the store, and then in the walletInstances collection
+ *
+ * HOW TO USE:
+ * const balance = await walletinstances.getBalanceById(walletId)
+ **********************************************************/
+
 const instanceCollection = new Map()
 
 const clearWalletInstances = () => instanceCollection.clear()

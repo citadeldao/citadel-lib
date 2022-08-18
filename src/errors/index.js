@@ -11,16 +11,13 @@ import { LedgerError } from './LedgerError'
 import { ViewingKeyError } from './ViewingKeyError'
 import { StorageError } from './StorageError'
 
-/**
- * ERROR MODULE
- *
+/********************** ERROR MODULE***********************
  * Exports by default an object with a method to throw the error of the specific class
  *
- * How to use
- * // throw some 'Mrthod not supported'error
+ * HOW TO USE:
+ * // throw some 'Method not supported' error
  * errors.throwError('MethodNotSupported', { message: ' method X not supported for Y'})
- *
- */
+ **********************************************************/
 
 const errors = {
   MethodNotSupported,

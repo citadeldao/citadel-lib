@@ -15,6 +15,7 @@ import { getDerivationPathTemplates } from './getDerivationPathTemplates'
 import { getDerivationPathByIndex } from './getDerivationPathByIndex'
 import { getTransactionDuration } from './getTransactionDuration'
 
+// Methods that take a network key as an argument. Wrappers over static methods of grid classes
 export const network = {
   validateAddress,
   createWalletByPrivateKey,

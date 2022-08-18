@@ -94,13 +94,6 @@ export async function updateSnip20SubtokensList() {
     )
 
     if (!error) {
-      // add token to subtokenList
-      const tokenListItem = await createSnip20TokenListItem(
-        token,
-        amount,
-        this.savedViewingKeys
-      )
-      snip20SubtokensList.push(tokenListItem)
       // save VK to instance
       this.savedViewingKeys[token] = {
         token,
@@ -109,6 +102,13 @@ export async function updateSnip20SubtokensList() {
         viewingKeyType: VIEWING_KEYS_TYPES.SIMPLE,
         viewingKey: simpleViewingKey,
       }
+      // add token to subtokenList
+      const tokenListItem = await createSnip20TokenListItem(
+        token,
+        amount,
+        this.savedViewingKeys
+      )
+      snip20SubtokensList.push(tokenListItem)
     }
   }
   // get subtokesList without snip20 tokens

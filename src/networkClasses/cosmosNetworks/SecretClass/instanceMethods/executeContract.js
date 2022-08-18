@@ -8,6 +8,7 @@ export async function executeContract({
   gas,
   msg,
   sender,
+  sentFunds,
 } = {}) {
   const GAS_PRICE = 0.0125
   if (!gas) {
@@ -21,6 +22,7 @@ export async function executeContract({
       type: this.type,
       publicKey: this.publicKey,
       simulate: true,
+      sentFunds,
     })
 
     // set estimated gas
@@ -39,6 +41,7 @@ export async function executeContract({
       gasPriceInFeeDenom: GAS_PRICE,
     },
     privateKey,
+    sentFunds,
     derivationPath,
     type: this.type,
     publicKey: this.publicKey,

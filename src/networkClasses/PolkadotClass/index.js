@@ -132,7 +132,7 @@ export class PolkadotNetwork extends BaseNetwork {
     // send transaction by special api
     const { data } = await api.requests.polkadotSignAndSend(signedTransaction)
     // return hash
-    return data.hash || data.txhash || data
+    return [data.hash || data.txhash || data]
   }
 
   static getDerivationPathByIndex(type = 'seed', index = 0) {

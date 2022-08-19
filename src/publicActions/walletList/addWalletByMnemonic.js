@@ -51,8 +51,7 @@ export const addWalletByMnemonic = async (options) => {
   // return wallet with private key and derivation path
   return {
     ...newWallet,
-    privateKey: createdPrivateKey,
+    ...(createdPrivateKey && { privateKey: createdPrivateKey }),
     derivationPath: createdDerivationPath,
-    // mnemonic,
   }
 }

@@ -51,7 +51,7 @@ export class PolkadotNetwork extends BaseNetwork {
       return await signTxByLedger(transaction, derivationPath, this.address)
     }
     // mnemonic / privateKey signer (mnemonic can be used as private key fot sign)
-    return signTxByPrivateKeyOrMnemonic(transaction, privateKey || mnemonic)
+    return signTxByPrivateKeyOrMnemonic(transaction, privateKey || mnemonic, derivationPath)
   }
 
   async prepareDelegation({
@@ -160,8 +160,6 @@ export class PolkadotNetwork extends BaseNetwork {
     return {
       net: this.net,
       address,
-      // for polka return mnemonic
-      mnemonic,
       publicKey: Buffer.from(publicKey).toString('hex'),
       derivationPath,
       type: WALLET_TYPES.ONE_SEED,

@@ -4,11 +4,12 @@ const { Metadata } = require('@polkadot/types/metadata')
 
 export const signTxByPrivateKeyOrMnemonic = (
   rawTransaction,
-  privateKeyOrMnemonic
+  privateKeyOrMnemonic,
+  derivationPath
 ) => {
   // polka transfer
   const account = new Keyring({ type: 'sr25519', ss58Format: 0 }).addFromUri(
-    privateKeyOrMnemonic
+    derivationPath ? privateKeyOrMnemonic + derivationPath : privateKeyOrMnemonic
   )
   const registry = new TypeRegistry()
   const metadata = new Metadata(registry, rawTransaction.metadata)

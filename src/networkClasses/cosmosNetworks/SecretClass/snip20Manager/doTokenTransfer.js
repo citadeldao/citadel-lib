@@ -11,10 +11,10 @@ export async function doTokenTransfer({
   type,
   toAddress,
   amount,
-  fee,
+  fee = 0.003,
 }) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  const gasLimit = 40_000
+  const gasLimit = 50_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
   const response = await executeContract({

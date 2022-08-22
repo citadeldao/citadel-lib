@@ -41,7 +41,7 @@ const txInputFormatter = (options) => {
   }
 }
 const formatToHex = (num) => {
-  const bn = new BN(num)
+  const bn = new BN(+num)
   const result = bn.toString(16)
   return bn.lt(new BN(0)) ? '-0x' + result.substr(1) : '0x' + result
 }

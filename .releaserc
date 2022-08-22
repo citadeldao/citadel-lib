@@ -28,7 +28,7 @@
     [
         "semantic-release-telegram",
         {
-            "chats": [ -1001167618050 ]
+            "chats": [ -779627620 ]
         }
     ]
   ]

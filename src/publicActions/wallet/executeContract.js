@@ -26,7 +26,7 @@ export const executeContract = async (walletId, options) => {
     ['gas', gas, ['String', 'Number']],
     ['msg', msg, ['Object'], true],
     ['sender', sender, ['String']],
-    ['sentFunds', sentFunds, ['String']]
+    ['sentFunds', sentFunds, ['Array']]
   )
 
   const walletInstance = walletInstances.getWalletInstanceById(walletId)

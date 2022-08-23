@@ -12,22 +12,27 @@ export async function executeContract({
 } = {}) {
   const GAS_PRICE = 0.0125
   if (!gas) {
-    // estimate gas
-    const response = await snip20Manager.executeContract({
-      address: sender,
-      contractAddress: contract,
-      message: msg,
-      privateKey,
-      derivationPath,
-      type: this.type,
-      publicKey: this.publicKey,
-      simulate: true,
-      sentFunds,
-    })
+    try {
+      // estimate gas
+      const response = await snip20Manager.executeContract({
+        address: sender,
+        contractAddress: contract,
+        message: msg,
+        privateKey,
+        derivationPath,
+        type: this.type,
+        publicKey: this.publicKey,
+        simulate: true,
+        sentFunds,
+      })
 
-    // set estimated gas
-    if (response?.gasInfo?.gasUsed) {
-      gas = response?.gasInfo?.gasUsed * 1.1
+      // set estimated gas
+      if (response?.gasInfo?.gasUsed) {
+        gas = response?.gasInfo?.gasUsed * 1.1
+      }
+    } catch (error) {
+      console.warn('Simulate secret tx error')
+      console.warn(error)
     }
   }
 

@@ -18,8 +18,15 @@ export const executeContract = async (walletId, options) => {
   )
   checkWalletId(walletId)
 
-  const { privateKey, derivationPath, contract, gas, msg, sender, sentFunds } =
-    options
+  const {
+    privateKey,
+    derivationPath,
+    contract,
+    gas,
+    msg,
+    sender,
+    sent_funds: sentFunds,
+  } = options
 
   checkTypes(
     ['contract', contract, ['String'], true],
@@ -28,6 +35,8 @@ export const executeContract = async (walletId, options) => {
     ['sender', sender, ['String']],
     ['sentFunds', sentFunds, ['Array']]
   )
+
+  options.sentFunds = sentFunds
 
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
 

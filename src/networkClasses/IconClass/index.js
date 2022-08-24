@@ -74,7 +74,7 @@ export class IconNetwork extends BaseNetwork {
   }) {
     checkDelegationTypes(type)
     const nodeAddress = nodeAddresses[0]
-    const redelegateNodeAddress = redelegateNodeAddresses[0]
+    const redelegateNodeAddress = redelegateNodeAddresses?.[0]
 
     if (isWithoutDelegation) {
       if (type === DELEGATION_TYPES.STAKE) {

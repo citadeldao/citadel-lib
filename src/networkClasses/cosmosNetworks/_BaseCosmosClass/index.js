@@ -93,11 +93,12 @@ export class BaseCosmosNetwork extends BaseNetwork {
     nodeAddresses,
     amount,
     type = DELEGATION_TYPES.STAKE,
-    redelegateNodeAddress,
+    redelegateNodeAddresses,
   }) {
     // check type
     checkDelegationTypes(type)
     const nodeAddress = nodeAddresses[0]
+    const redelegateNodeAddress = redelegateNodeAddresses[0]
 
     // redelegation
     if (type === DELEGATION_TYPES.REDELEGATE) {

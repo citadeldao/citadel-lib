@@ -18,7 +18,7 @@ export const prepareDelegation = async (walletId, options) => {
     nodeAddresses,
     amount,
     type,
-    redelegateNodeAddress,
+    redelegateNodeAddresses,
     kt,
     rewardsAddress,
     rewardsRestake,
@@ -31,7 +31,7 @@ export const prepareDelegation = async (walletId, options) => {
     ['amount', amount, ['String', 'Number']],
     ['type', type, ['String']],
     // Array for polkadot
-    ['redelegateNodeAddress', redelegateNodeAddress, ['String', 'Array']],
+    ['redelegateNodeAddresses', redelegateNodeAddresses, ['Array']],
     ['kt', kt, ['String']],
     ['rewardsAddress', rewardsAddress, ['String']],
     ['rewardsRestake', rewardsRestake, ['Boolean']],
@@ -46,7 +46,7 @@ export const prepareDelegation = async (walletId, options) => {
       nodeAddresses,
       amount,
       type,
-      redelegateNodeAddress,
+      redelegateNodeAddresses,
       kt,
       // for polkadot
       rewardsAddress,

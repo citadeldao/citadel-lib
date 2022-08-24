@@ -904,4 +904,45 @@ export const additionalConfig = [
       },
     },
   },
+  {
+    net: 'polygon',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+        ledger: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+      },
+    },
+  },
 ]

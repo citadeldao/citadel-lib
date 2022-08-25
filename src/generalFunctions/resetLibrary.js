@@ -8,11 +8,12 @@ import storage from '../storage'
 /********************** RESET LIBRARY ***********************
  * Returns the library to its original state
  **********************************************************/
-export const resetLibrary = async (clearCache) => {
+export const resetLibrary = async (clearCache, userId) => {
   // disconnect sockets
   await socketManager.reset()
   // clear walletInstances
   walletInstances.clearWalletInstances()
+  userId && state.setState('user', { id: userId })
   // clear storage
   clearCache && storage.clearCache()
   // clear static network classes properties (with configs)

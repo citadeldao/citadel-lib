@@ -39,6 +39,7 @@ import { AxelarNetwork } from './cosmosNetworks/AxelarClass'
 import { PolkadotNetwork } from './PolkadotClass'
 import { OraiNetwork } from './cosmosNetworks/OraiClass'
 import { PolygonNetwork } from './ethNetworks/PolygonClass'
+import { OasisNetwork } from './OasisClass'
 
 export const networkClasses = {
   tez: TezosNetwork,
@@ -81,5 +82,6 @@ export const networkClasses = {
   axelar: AxelarNetwork,
   polkadot: PolkadotNetwork,
   orai: OraiNetwork,
-  polygon: PolygonNetwork
+  polygon: PolygonNetwork,
+  oasis: OasisNetwork
 }

@@ -905,6 +905,23 @@ export const additionalConfig = [
     },
   },
   {
+    net: 'oasis',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/474'/N'`,
+            key: `m/44'/474'/N'`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44/474/0/0/N`, key: `44/474/0/0/N` },
+        ],
+      },
+    },
+  },
+  {
     net: 'polygon',
     config: {
       derivationPathTemplates: {

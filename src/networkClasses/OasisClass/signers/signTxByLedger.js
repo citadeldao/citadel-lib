@@ -1,33 +1,32 @@
-import { Psbt } from 'bitcoinjs-lib'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import BtcApp from '@ledgerhq/hw-app-btc'
+import OasisApp from '@oasisprotocol/ledger'
+import { generateContext, u8FromBuf, bufFromU8 } from './functions'
+import { getHdDerivationPath } from '../../_functions/ledger'
 
-export const signTxByLedger = async (rawTransaction, derivationPath) => {
-  if (!global.ledger_btc) {
-    const transport = (await WebHidTransport.isSupported())
-      ? await WebHidTransport.create(10000)
-      : await TransportWebUSB.create(10000)
-    global.ledger_btc = new BtcApp(transport)
+export const signTxByLedger = async (rawTransaction, derivationPath, publicKey) => {
+  const transport = await TransportWebUSB.create(1000)
+  const app = new OasisApp(transport)
+  const context = await generateContext()
+  const HDDerPath = getHdDerivationPath(derivationPath)
+  const response = await app.sign( HDDerPath, context, bufFromU8(rawTransaction))
+  if (!response.signature || response.return_code !== 0x9000) {
+    const error = new Error(response.error_message)
+    error.code = response.return_code
+    throw error
   }
-  const psbt = Psbt.fromBase64(rawTransaction)
-  const tx_data = {
-    inputs: psbt.txInputs.map((input, index) => {
-      // @ts-ignore
-      const raw = psbt.data.inputs[index].nonWitnessUtxo.toString('hex')
-      const isSegwit = raw.substring(8, 12) === '0001'
-
-      return [global.ledger_btc.splitTransaction(raw, isSegwit), input.index]
-    }),
-    associatedKeysets: new Array(psbt.txInputs.length).fill(derivationPath),
-    outputScriptHex: await global.ledger_btc
-      .serializeTransactionOutputs(
-        global.ledger_btc.splitTransaction(psbt.__CACHE.__TX.toHex())
-      )
-      .toString('hex'),
-    // to prevent error "... inclides()" in @ledgerhq/hw-app-btc version 6.23
-    additionals: [],
-  }
-  const res = await global.ledger_btc.createPaymentTransactionNew(tx_data)
-  return res
+  await transport.close()
+  
+  return {
+    untrusted_raw_value: rawTransaction,
+    signature: {
+        public_key: u8FromBuf(Buffer.from(publicKey,  'hex')),
+        signature:  u8FromBuf(response.signature),
+    },
+};
 }
+
+
+// 436917
+// 44/474/0/0/0
+// oasis1qqm7wfqr2y227esu2wnl59t4wnplh04hcgz84230
+//node  oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe

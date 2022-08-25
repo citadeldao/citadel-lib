@@ -12,15 +12,14 @@ export class PolygonNetwork extends BaseEthNetwork {
   }
 
   getScannerLinkById() {
-    return `https://etherscan.io/address/${this.address}`
+    return `https://polygonscan.com/address/${this.address}`
   }
 
   getTransactionURLByHash(hash) {
-    return `https://etherscan.io/tx/${hash}`
+    return `https://polygonscan.com/tx/${hash}`
   }
 
   static async createWalletByLedger({ derivationPath }) {
-    console.log(111,global);
     // add global ledger app to avoid ledger reconnect error
     if (!global.ledger_eth && !global.ledger_bsc) {
       const transport = (await WebHidTransport.isSupported())
@@ -55,18 +54,4 @@ export class PolygonNetwork extends BaseEthNetwork {
   }
 }
 
-
-//435216
-// {
-//     "from": "0x4dd28bee5135fc5dbb358a68ba941a5bf8e7aab2",
-//     "to": "0x4dd28bee5135fc5dbb358a68ba941a5bf8e7aab2",
-//     "value": "0xde0b6b3a7640000",
-//     "gas": 27300,
-//     "nonce": 7,
-//     "gasPrice": "46000000000",
-//     "chainId": 137
-// }
-// m/44'/60'/0'/0/0
-
-// 0x499c4074a0f0382de9c01805ba1a07872d574e4b9521c42a703c1ac9fa841555
 

@@ -19,7 +19,6 @@ export class OasisNetwork extends BaseNetwork {
       nodeAddress,
       amount,
       type = DELEGATION_TYPES.STAKE,
-      redelegateNodeAddress,
     }) {
       // check type
       checkDelegationTypes(type)

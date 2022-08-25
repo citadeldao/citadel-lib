@@ -10,6 +10,34 @@ import {
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../constants'
 
+/**
+ * assigns a BSC (XCT) address to a wallet to receive XCT for staking
+ *
+ * @param walletId STRING, NUMBER (REQUIRED) - wallet id
+ * @param holderAddress STRING (REQUIRED) - BSC address to be assigned to the wallet
+ * @param options OBJECT (REQUIRED) = { privateKey, derivationPath }
+ * @param options.privateKey STRING (OPTIONAL) - the private key of the wallet which we assign the BSC address (not BSC private key!)
+ * @param options.derivationPath STRING (OPTIONAL) - for hardware wallets
+ * 
+ * @returns Returns NULL
+ * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
+ * @example
+  const response = await citadel.assignToDao(
+    '12345',
+    '0x4dd28bee5135fc5dbb358a68ba941a5bf8e7aab2',
+    {
+      privateKey: 'L54AvJyYLo9kNCPGpL6mSqworGwJ9nfWYXRmMRXgHExvdfY2kSpb'
+    }
+  )
+
+  // =>
+  {
+    "result": "success",
+    "data": null,
+    "error": null
+  }
+ */
+
 export const assignToDao = async (walletId, holderAddress, options) => {
   // checks
   checkInitialization()

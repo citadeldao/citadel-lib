@@ -6,6 +6,7 @@ import { merge } from '../../../../helpers/merge'
 import networkClasses from '../../../'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
+import { createSnip20TokenListItem } from '../../../cosmosNetworks/SecretClass/instanceMethods/_functions/createSnip20TokenListItem'
 
 // TODO: refact
 export async function balance_scrt({ token }) {
@@ -48,12 +49,16 @@ export async function balance_scrt({ token }) {
       viewingKey
     )
 
-    const tokenBalance = { mainBalance: amount, calculatedBalance: amount }
+    const { tokenBalance } = await createSnip20TokenListItem(
+      token,
+      amount,
+      this.savedViewingKeys
+    )
 
     // VK is valid
     if (!error) {
       await updateSubtokensList(true, tokenBalance)
-      return { mainBalance: amount, calculatedBalance: amount }
+      return tokenBalance
     }
 
     // VK is not valid
@@ -84,7 +89,11 @@ export async function balance_scrt({ token }) {
     VIEWING_KEYS_TYPES.SIMPLE
   )
   await this._saveViewingKeysToStorage()
-  const tokenBalance = { mainBalance: amount, calculatedBalance: amount }
+  const { tokenBalance } = await createSnip20TokenListItem(
+    token,
+    amount,
+    this.savedViewingKeys
+  )
   await updateSubtokensList(true, tokenBalance)
 
   // EVENT: inform the client that it is time to update wallet list

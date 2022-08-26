@@ -7,7 +7,7 @@ export async function executeContract({
   contract,
   gas,
   msg,
-  sender,
+  sender = this.address,
   sentFunds,
 } = {}) {
   const GAS_PRICE = 0.0125

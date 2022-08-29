@@ -1,5 +1,5 @@
 import errors from '../../../../errors'
-import { VIEWING_KEYS_TYPES } from '../../../../constants'
+import { VIEWING_KEYS_TYPES, WALLET_TYPES } from '../../../../constants'
 import walletsManager from '../../../../walletsManager'
 import { calculateSubtokenBalanceUSD } from '../../../_functions/balances'
 import { merge } from '../../../../helpers/merge'
@@ -63,25 +63,40 @@ export async function balance_scrt({ token }) {
 
     // VK is not valid
     this._saveViewingKeyToInstance(token, null)
-    // update savedViewingKeys
+    // remove saved vk savedViewingKeys
     await this._saveViewingKeysToStorage()
     await updateSubtokensList(false)
     viewingKeyType === VIEWING_KEYS_TYPES.SIMPLE &&
       errors.throwError('ViewingKeyError')
   }
 
-  // check simple viewingKey
-  const simpleViewingKey = snip20Manager.generateSimpleViewingKey(
-    networkClass.tokens[token].address,
-    this.privateKeyHash
-  )
-  const { amount, error } = await snip20Manager.getTokenBalance(
-    this.address,
-    networkClass.tokens[token].address,
-    networkClass.tokens[token].decimals,
-    simpleViewingKey
-  )
-  error && errors.throwError('ViewingKeyError', { message: error.message })
+  let amount = null
+  // check simple viewingKey if privateKeyHash exist
+  if (this.privateKeyHash) {
+    const simpleViewingKey = snip20Manager.generateSimpleViewingKey(
+      networkClass.tokens[token].address,
+      this.privateKeyHash
+    )
+
+    const response = await snip20Manager.getTokenBalance(
+      this.address,
+      networkClass.tokens[token].address,
+      networkClass.tokens[token].decimals,
+      simpleViewingKey
+    )
+
+    response.error &&
+      errors.throwError('ViewingKeyError', { message: response.error.message })
+
+    amount = response.amount
+    // check keplr vk
+  } else if (this.type === WALLET_TYPES.KEPLR) {
+    // >>>>
+    response.error &&
+      errors.throwError('ViewingKeyError', { message: response.error.message })
+
+    amount = response.amount
+  }
 
   this._saveViewingKeyToInstance(
     token,

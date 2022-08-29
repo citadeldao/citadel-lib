@@ -4,7 +4,6 @@ import { WALLET_TYPES } from '../../../../constants'
 import errors from '../../../../errors'
 
 export async function getViewingKeyByKeplr(token) {
-  console.log('TOKEN', token)
   if (this.type !== WALLET_TYPES.KEPLR) {
     errors.throwError('MethodNotSupported', {
       message: `Method "getViewingKeyByKeplr" only supported by "${WALLET_TYPES.KEPLR}" wallet type. Current wallet type is ${this.type}`,

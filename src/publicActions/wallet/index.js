@@ -40,6 +40,7 @@ import { prepareAssignToDaoMessage } from './prepareAssignToDaoMessage'
 import { prepareClaimUnstaked } from './prepareClaimUnstaked'
 import { signMessage } from './signMessage'
 import { executeContract } from './executeContract'
+import { setViewingKeyByContract } from './setViewingKeyByContract'
 
 // Methods that take wallet ID as an argument. Wrappers over wallet instance methods
 export const wallet = {
@@ -84,4 +85,5 @@ export const wallet = {
   signMessage,
   prepareClaimUnstaked,
   executeContract,
+  setViewingKeyByContract,
 }

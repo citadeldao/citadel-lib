@@ -80,7 +80,6 @@ export async function updateSnip20SubtokensList() {
       this.savedViewingKeys[token]
     )
       continue
-    // >>>>
     const simpleViewingKey = snip20Manager.generateSimpleViewingKey(
       tokensConfig[token].address,
       this.privateKeyHash

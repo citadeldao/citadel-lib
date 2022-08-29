@@ -107,7 +107,7 @@ export async function balance_scrt({ token }) {
           message: error.message,
         })
     }
-    viewingKeyType = VIEWING_KEYS_TYPES.SIMPLE
+    viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
   }
 
   const response = await snip20Manager.getTokenBalance(

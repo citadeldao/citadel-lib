@@ -8,5 +8,6 @@ export class KeplrError extends LibraryError {
 }
 
 const keplrErrorDictionary = {
-  'Signer mismatched': 'Please change account in Keplr to sign transaction',
+  'Signer mismatched': 'Please change account in Keplr',
+  'There is no matched secret20': 'Please change account in Keplr',
 }

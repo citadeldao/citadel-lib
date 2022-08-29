@@ -75,6 +75,11 @@ export async function setViewingKey(
         type,
         publicKey,
       })
+      if (!response.data || response.data.length < 1) {
+        errors.throwError('ViewingKeyError', {
+          message: response?.rawLog || 'Viewing Key setting faild',
+        })
+      }
       transactionHash = response.transactionHash
       break
     }
@@ -98,6 +103,13 @@ export async function setViewingKey(
         type,
         publicKey,
       })
+
+      if (!response.data || response.data.length < 1) {
+        errors.throwError('ViewingKeyError', {
+          message: response?.rawLog || 'Viewing Key setting faild',
+        })
+      }
+
       const {
         create_viewing_key: { key: randomViewingKey },
       } = JSON.parse(Buffer.from(response.data[0]).toString('utf-8'))

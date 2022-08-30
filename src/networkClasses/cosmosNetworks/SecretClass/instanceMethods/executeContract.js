@@ -28,7 +28,7 @@ export async function executeContract({
 
       // set estimated gas
       if (response?.gasInfo?.gasUsed) {
-        gas = response?.gasInfo?.gasUsed * 1.1
+        gas = response?.gasInfo?.gasUsed * 1.5
       }
     } catch (error) {
       console.warn('Simulate secret tx error')

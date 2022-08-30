@@ -34,7 +34,6 @@ export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
       rawTransactionsList = list
     }
   }
-
   // has no saved VK
   if (!rawTransactionsList) {
     // try simple viewingKey

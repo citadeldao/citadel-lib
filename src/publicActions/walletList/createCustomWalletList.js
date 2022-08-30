@@ -10,5 +10,9 @@ export const createCustomWalletList = async (listName, wallets) => {
   )
 
   // call api
-  await api.requests.createCustomWalletList({ name: listName, wallets })
+  const { data } = await api.requests.createCustomWalletList({
+    name: listName,
+    wallets,
+  })
+  return data
 }

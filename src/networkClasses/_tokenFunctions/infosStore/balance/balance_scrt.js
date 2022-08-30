@@ -99,14 +99,7 @@ export async function balance_scrt({ token }) {
 
   // CHECK KEPLR VK
   if (this.type === WALLET_TYPES.KEPLR) {
-    try {
-      newViewingKey = await this.getViewingKeyByKeplr(token)
-    } catch (error) {
-      error &&
-        errors.throwError('ViewingKeyError', {
-          message: error.message,
-        })
-    }
+    newViewingKey = await this.getViewingKeyByKeplr(token)
     viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
   }
 

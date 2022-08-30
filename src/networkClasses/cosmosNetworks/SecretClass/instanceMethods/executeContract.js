@@ -1,4 +1,5 @@
 import errors from '../../../../errors'
+import { debugConsoleLog } from '../../../../helpers/debugConsoleLog'
 import snip20Manager from '../snip20Manager'
 
 export async function executeContract({
@@ -29,6 +30,7 @@ export async function executeContract({
       // set estimated gas
       if (response?.gasInfo?.gasUsed) {
         gas = response?.gasInfo?.gasUsed * 1.5
+        debugConsoleLog('K and gas simulate', 1.5, gas)
       }
     } catch (error) {
       console.warn('Simulate secret tx error')

@@ -8,6 +8,7 @@ import { setViewingKey } from './setViewingKey'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
 import { queryContract } from './queryContract'
 import { executeContract } from './executeContract'
+import { getViewingKeyByKeplr } from './getViewingKeyByKeplr'
 
 /******************** SNIP-20 MANAGER **********************
  * Secretjs library logic.
@@ -24,4 +25,5 @@ export default {
   generateSimpleViewingKey,
   queryContract,
   executeContract,
+  getViewingKeyByKeplr,
 }

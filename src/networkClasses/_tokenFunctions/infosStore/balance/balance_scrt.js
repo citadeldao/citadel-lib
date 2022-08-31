@@ -1,9 +1,5 @@
 import errors from '../../../../errors'
-import {
-  PRIVATE_KEY_SIGNER_WALLET_TYPES,
-  VIEWING_KEYS_TYPES,
-  WALLET_TYPES,
-} from '../../../../constants'
+import { VIEWING_KEYS_TYPES, WALLET_TYPES } from '../../../../constants'
 import walletsManager from '../../../../walletsManager'
 import { calculateSubtokenBalanceUSD } from '../../../_functions/balances'
 import networkClasses from '../../../'
@@ -12,7 +8,6 @@ import { LIB_EVENT_NAMES } from '../../../../constants'
 import { createSnip20TokenListItem } from '../../../cosmosNetworks/SecretClass/instanceMethods/_functions/createSnip20TokenListItem'
 import { saveViewingKeyToInstance } from '../../../cosmosNetworks/SecretClass/instanceMethods/_functions/saveViewingKeyToInstance'
 
-// TODO: refact
 export async function balance_scrt({ token }) {
   const networkClass = networkClasses.getNetworkClass(this.net)
 
@@ -77,32 +72,18 @@ export async function balance_scrt({ token }) {
     delete this.savedViewingKeys[token]
     // delete subtokenItem
     await updateSubtokensList()
-    if (viewingKeyType === VIEWING_KEYS_TYPES.SIMPLE) {
+    if (
+      viewingKeyType === VIEWING_KEYS_TYPES.SIMPLE &&
+      this.type !== WALLET_TYPES.KEPLR
+    ) {
       dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
       errors.throwError('ViewingKeyError')
     }
   }
 
-  let newViewingKey = null
-  let viewingKeyType = null
-
-  // CHECK SIMPLE VK
-  if (
-    PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type) &&
-    this.privateKeyHash
-  ) {
-    newViewingKey = snip20Manager.generateSimpleViewingKey(
-      networkClass.tokens[token].address,
-      this.privateKeyHash
-    )
-    viewingKeyType = VIEWING_KEYS_TYPES.SIMPLE
-  }
-
-  // CHECK KEPLR VK
-  if (this.type === WALLET_TYPES.KEPLR) {
-    newViewingKey = await this.getViewingKeyByKeplr(token)
-    viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
-  }
+  // simple and keplr VK
+  const { viewingKey: newViewingKey, viewingKeyType } =
+    await this.getPossibleViewingKeyForCheck(token)
 
   const response =
     newViewingKey &&

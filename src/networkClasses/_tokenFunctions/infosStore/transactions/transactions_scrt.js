@@ -1,6 +1,9 @@
 import errors from '../../../../errors'
 import { VIEWING_KEYS_TYPES } from '../../../../constants'
 import networkClasses from '../../../'
+import { calculateSubtokenBalanceUSD } from '../../../_functions/balances'
+import walletsManager from '../../../../walletsManager'
+import { WALLET_TYPES } from '../../../../constants'
 
 export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
   const networkClass = networkClasses.getNetworkClass(this.net)
@@ -23,24 +26,44 @@ export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
     })
 
     if (error) {
-      // clear not valid vk
-      this._saveViewingKeyToInstance(token, null)
-      await this._saveViewingKeysToStorage()
+      // VK is not valid
+      // delete saved VK
+      delete this.savedViewingKeys[token]
+      // delete subtokenItem
+      const subtokensListItemIndex = this.subtokensList.findIndex(
+        (tokenItem) => tokenItem.net === token
+      )
+      subtokensListItemIndex > -1 &&
+        this.subtokensList.splice(subtokensListItemIndex, 1)
+      // update subtokenBalance
+      this.subtokenBalanceUSD = calculateSubtokenBalanceUSD(this.subtokensList)
+      // update wallet
+      walletsManager.updateWallet({
+        walletId: this.id,
+        newWalletInfo: {
+          subtokensList: this.subtokensList,
+          subtokenBalanceUSD: this.subtokenBalanceUSD,
+          savedViewingKeys: this.savedViewingKeys,
+        },
+      })
+
       // throw error if vk was simple
       viewingKeyType === VIEWING_KEYS_TYPES.SIMPLE &&
+        this.type !== WALLET_TYPES.KEPLR &&
         errors.throwError('ViewingKeyError')
     } else {
       // set raw transaction list
       rawTransactionsList = list
     }
   }
-  // has no saved VK
+  // has no valid saved VK
   if (!rawTransactionsList) {
-    // try simple viewingKey
-    const simpleViewingKey = snip20Manager.generateSimpleViewingKey(
-      networkClass.tokens[token].address,
-      this.privateKeyHash
-    )
+    // simple and keplr VK
+    const { viewingKey } = await this.getPossibleViewingKeyForCheck(token)
+
+    // if no vk throw error
+    viewingKey && errors.throwError('ViewingKeyError')
+
     const { error, list } = await snip20Manager.getTokenTransactions({
       address: this.address,
       contractAddress: networkClass.tokens[token].address,
@@ -48,16 +71,8 @@ export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
       page: 0,
       pageSize: 200,
     })
-    // if simple vk is not valid (error), throw error
+    // if generated vk is not valid (error), throw error
     error && errors.throwError('ViewingKeyError')
-
-    // if simple vk is valid save it to instance and storage
-    this._saveViewingKeyToInstance(
-      token,
-      simpleViewingKey,
-      VIEWING_KEYS_TYPES.SIMPLE
-    )
-    await this._saveViewingKeysToStorage()
 
     rawTransactionsList = list
   }

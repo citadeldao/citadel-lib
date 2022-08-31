@@ -11,6 +11,7 @@ import { prepareCrossNetworkTransfer } from './prepareCrossNetworkTransfer'
 import { executeContract } from './executeContract'
 import { getFees } from './getFees'
 import { getViewingKeyByKeplr } from './getViewingKeyByKeplr'
+import { getPossibleViewingKeyForCheck } from './getPossibleViewingKeyForCheck'
 
 export default {
   useSnip20Manager,
@@ -26,4 +27,5 @@ export default {
   executeContract,
   getFees,
   getViewingKeyByKeplr,
+  getPossibleViewingKeyForCheck,
 }

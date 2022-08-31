@@ -12,6 +12,7 @@ import { executeContract } from './executeContract'
 import { getFees } from './getFees'
 import { getViewingKeyByKeplr } from './getViewingKeyByKeplr'
 import { getPossibleViewingKeyForCheck } from './getPossibleViewingKeyForCheck'
+import { loadSnip20TokenBalance } from './loadSnip20TokenBalance'
 
 export default {
   useSnip20Manager,
@@ -28,4 +29,5 @@ export default {
   getFees,
   getViewingKeyByKeplr,
   getPossibleViewingKeyForCheck,
+  loadSnip20TokenBalance,
 }

@@ -6,12 +6,15 @@ import {
 import snip20Manager from '../snip20Manager'
 import networkClasses from '../../..'
 
-export const getPossibleViewingKeyForCheck = async (token) => {
+export async function getPossibleViewingKeyForCheck(token) {
   let viewingKey = null
   let viewingKeyType = null
 
   // SIMPLE VK
-  if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type)) {
+  if (
+    PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type) &&
+    this.privateKeyHash
+  ) {
     viewingKey = snip20Manager.generateSimpleViewingKey(
       networkClasses.getNetworkClass(this.net).tokens[token].address,
       this.privateKeyHash

@@ -52,7 +52,8 @@ export const messageFromApp = async ({
           try {
             savedVK = await snip20Manager.getViewingKeyByKeplr(
               SECRET_NET_KEY,
-              contract
+              contract,
+              sender
             )
           } catch (error) {
             // throw 'change keplr account' error only

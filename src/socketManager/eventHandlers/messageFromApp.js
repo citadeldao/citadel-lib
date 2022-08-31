@@ -1,5 +1,5 @@
 import api from '../../api'
-import { WALLET_TYPES } from '../../constants'
+import { WALLET_TYPES, SECRET_NET_KEY } from '../../constants'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
 
@@ -8,8 +8,6 @@ const TYPES = {
 }
 
 const VK_TEXT_VARIABLE = '%viewing_key%'
-
-const SECRET_NET_KEY = 'secret'
 
 export const messageFromApp = async ({
   from: token,

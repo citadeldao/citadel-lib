@@ -10,6 +10,7 @@ import networkClasses from '../../../'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 import { createSnip20TokenListItem } from '../../../cosmosNetworks/SecretClass/instanceMethods/_functions/createSnip20TokenListItem'
+import { saveViewingKeyToInstance } from '../../../cosmosNetworks/SecretClass/instanceMethods/_functions/saveViewingKeyToInstance'
 
 // TODO: refact
 export async function balance_scrt({ token }) {
@@ -119,13 +120,13 @@ export async function balance_scrt({ token }) {
 
   // VK is valid
   // add new VK to savedVK
-  this.savedViewingKeys[token] = {
+  saveViewingKeyToInstance(
     token,
-    contractAddress: networkClasses.getNetworkClass(this.net).tokens[token]
-      .address,
+    newViewingKey,
     viewingKeyType,
-    viewingKey: newViewingKey,
-  }
+    this.savedViewingKeys
+  )
+
   const snip20TokenListItem = await createSnip20TokenListItem(
     token,
     response.amount,

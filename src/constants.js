@@ -47,6 +47,8 @@ export const DELEGATION_TYPES = {
   REDELEGATE: 'redelegate',
 }
 
+export const SECRET_NET_KEY = 'secret'
+
 export const WALLET_TYPES = {
   TREZOR: 'trezor',
   LEDGER: 'ledger',

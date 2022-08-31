@@ -6,7 +6,7 @@ export class KeplrError extends LibraryError {
       message: keplrErrorConfig[options.message]?.message || options.message,
     })
     this.name = 'KeplrError'
-    this.code = keplrErrorConfig[options.message]?.code || 0
+    this.code = keplrErrorConfig[options.message]?.code || options.code || 0
   }
 }
 

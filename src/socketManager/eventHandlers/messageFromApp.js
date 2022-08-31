@@ -50,7 +50,7 @@ export const messageFromApp = async ({
         // get keplr VK if no sevedVK
         if (!savedVK && walletInstance.type === WALLET_TYPES.KEPLR) {
           try {
-            savedVK = snip20Manager.getViewingKeyByKeplr(
+            savedVK = await snip20Manager.getViewingKeyByKeplr(
               SECRET_NET_KEY,
               contract
             )
@@ -82,7 +82,7 @@ export const messageFromApp = async ({
       // send error to app
       await api.externalRequests.sendCustomMessage({
         token,
-        message: { error },
+        message: { error: error.message },
         type,
       })
     }

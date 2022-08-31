@@ -45,19 +45,18 @@ export async function setViewingKey(
   )
   subtokensListItemIndex > -1 &&
     this.subtokensList.splice(subtokensListItemIndex, 1)
-
   // get balance
   const { amount } = await snip20Manager.getTokenBalance(
     this.address,
     networkClass.tokens[token].address,
     networkClass.tokens[token].decimals,
-    viewingKey
+    viewingKey || data.viewingKey
   )
 
   // add token to subtokenList
   const tokenListItem = await createSnip20TokenListItem(
     token,
-    amount,
+    amount || 0,
     this.savedViewingKeys
   )
   this.subtokensList.push(tokenListItem)

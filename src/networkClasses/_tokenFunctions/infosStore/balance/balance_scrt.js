@@ -103,18 +103,21 @@ export async function balance_scrt({ token }) {
     viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
   }
 
-  const response = await snip20Manager.getTokenBalance(
-    this.address,
-    networkClass.tokens[token].address,
-    networkClass.tokens[token].decimals,
-    newViewingKey
-  )
+  const response =
+    newViewingKey &&
+    (await snip20Manager.getTokenBalance(
+      this.address,
+      networkClass.tokens[token].address,
+      networkClass.tokens[token].decimals,
+      newViewingKey
+    ))
 
   // VK is not valid
-  response.error &&
-    errors.throwError('ViewingKeyError', { message: response.error.message })
-  // VK is valid
+  if (!response || response.error) {
+    errors.throwError('ViewingKeyError', { message: response?.error?.message })
+  }
 
+  // VK is valid
   // add new VK to savedVK
   this.savedViewingKeys[token] = {
     token,

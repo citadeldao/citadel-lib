@@ -1,4 +1,5 @@
 import api from '../../api'
+import { WALLET_TYPES } from '../../constants'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
 
@@ -41,11 +42,25 @@ export const messageFromApp = async ({
       const msgString = JSON.stringify(msg)
       if (msgString.includes(VK_TEXT_VARIABLE)) {
         // get savedVK
-        const savedVK =
+        let savedVK =
           walletInstance?.savedViewingKeys &&
           Object.values(walletInstance.savedViewingKeys).find(
             ({ contractAddress }) => contractAddress === contract
           )?.viewingKey
+        // get keplr VK if no sevedVK
+        if (!savedVK && walletInstance.type === WALLET_TYPES.KEPLR) {
+          try {
+            savedVK = snip20Manager.getViewingKeyByKeplr(
+              SECRET_NET_KEY,
+              contract
+            )
+          } catch (error) {
+            // throw 'change keplr account' error only
+            if (error.code === 1) {
+              throw error
+            }
+          }
+        }
 
         // replace msg with VK
         msg = JSON.parse(msgString.replace(VK_TEXT_VARIABLE, savedVK))

@@ -95,7 +95,7 @@ export const initializeLibrary = async ({
 
   storage.caches.setCache(CACHE_NAMES.RATES, ratesCache)
 
-  // prepare initialCaches
+  // prepare initialCaches for fast init
   initialCacheManager.prepareCaches()
 
   // load caches if they don't exist. Use after state.setState('user'), when localStorage is available

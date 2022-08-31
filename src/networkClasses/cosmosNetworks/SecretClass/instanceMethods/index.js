@@ -13,6 +13,7 @@ import { getFees } from './getFees'
 import { getViewingKeyByKeplr } from './getViewingKeyByKeplr'
 import { getPossibleViewingKeyForCheck } from './getPossibleViewingKeyForCheck'
 import { loadSnip20TokenBalance } from './loadSnip20TokenBalance'
+import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 
 export default {
   useSnip20Manager,
@@ -30,4 +31,5 @@ export default {
   getViewingKeyByKeplr,
   getPossibleViewingKeyForCheck,
   loadSnip20TokenBalance,
+  loadKeplrSnip20Balances
 }

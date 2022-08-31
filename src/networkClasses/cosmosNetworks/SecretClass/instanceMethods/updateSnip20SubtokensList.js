@@ -47,7 +47,6 @@ export async function updateSnip20SubtokensList() {
       tokensConfig[token].decimals,
       viewingKey
     )
-
     error = response.error
     amount = response.amount
 
@@ -116,13 +115,13 @@ export async function updateSnip20SubtokensList() {
       // if wallet not favorite
       (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type) &&
         !tokensConfig[token].favorite)
-    )
+    ) {
       continue
+    }
 
     // simple and keplr VK
     const { viewingKey, viewingKeyType } =
       await this.getPossibleViewingKeyForCheck(token)
-
     if (!viewingKey) {
       continue
     }
@@ -132,7 +131,6 @@ export async function updateSnip20SubtokensList() {
       tokensConfig[token].decimals,
       viewingKey
     )
-
     if (!error) {
       // save VK to instance
       saveViewingKeyToInstance(
@@ -141,7 +139,6 @@ export async function updateSnip20SubtokensList() {
         viewingKeyType,
         this.savedViewingKeys
       )
-
       // add token to subtokenList
       const tokenListItem = await createSnip20TokenListItem(
         token,

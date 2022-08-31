@@ -40,6 +40,7 @@ import { updateSubtokensList } from './updateSubtokensList'
 import { signMessage } from './signMessage'
 import { polkadotPrepareClaimUnstaked } from './polkadotPrepareClaimUnstaked'
 import { executeContract } from './executeContract'
+import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 
 export const instanceMethods = {
   renameTitle,
@@ -83,4 +84,5 @@ export const instanceMethods = {
   signMessage,
   polkadotPrepareClaimUnstaked,
   executeContract,
+  loadKeplrSnip20Balances,
 }

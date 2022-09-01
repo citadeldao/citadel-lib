@@ -18,8 +18,6 @@ export async function setViewingKey(
     derivationPath,
     viewingKey,
     fee = 0.003,
-    keplr,
-    enigmaUtils,
   } = {}
 ) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
@@ -52,8 +50,6 @@ export async function setViewingKey(
         derivationPath,
         type,
         publicKey,
-        keplr,
-        enigmaUtils,
       })
       transactionHash = response.transactionHash
       viewingKey = simpleViewingKey
@@ -78,8 +74,6 @@ export async function setViewingKey(
         derivationPath,
         type,
         publicKey,
-        keplr,
-        enigmaUtils,
       })
       if (!response.data || response.data.length < 1) {
         errors.throwError('ViewingKeyError', {
@@ -108,8 +102,6 @@ export async function setViewingKey(
         derivationPath,
         type,
         publicKey,
-        keplr,
-        enigmaUtils,
       })
 
       if (!response.data || response.data.length < 1) {

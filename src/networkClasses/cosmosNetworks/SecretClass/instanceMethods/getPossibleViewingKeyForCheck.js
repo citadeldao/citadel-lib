@@ -21,13 +21,12 @@ export async function getPossibleViewingKeyForCheck(token) {
     )
     viewingKeyType = VIEWING_KEYS_TYPES.SIMPLE
   }
-
   // KEPLR VK
   if (this.type === WALLET_TYPES.KEPLR) {
     try {
       viewingKey = await this.getViewingKeyByKeplr(token)
       viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
-    } catch {
+    } catch (error) {
       // skip all keplr errors
       false
     }

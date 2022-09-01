@@ -11,5 +11,10 @@ export async function getViewingKeyByKeplr(token) {
   }
   const contractAddress = networkClasses.getNetworkClass(this.net).tokens[token]
     .address
-  return await snip20Manager.getViewingKeyByKeplr(this.net, contractAddress, this.address)
+
+  return await snip20Manager.getViewingKeyByKeplr(
+    this.net,
+    contractAddress,
+    this.address
+  )
 }

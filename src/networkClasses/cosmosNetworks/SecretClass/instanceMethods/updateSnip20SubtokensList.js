@@ -119,7 +119,7 @@ export async function updateSnip20SubtokensList() {
       continue
     }
 
-    // simple and keplr VK
+    // try simple or keplr VK
     const { viewingKey, viewingKeyType } =
       await this.getPossibleViewingKeyForCheck(token)
     if (!viewingKey) {

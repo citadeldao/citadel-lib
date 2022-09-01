@@ -58,11 +58,11 @@ export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
   }
   // has no valid saved VK
   if (!rawTransactionsList) {
-    // simple and keplr VK
+    // try simple or keplr VK
     const { viewingKey } = await this.getPossibleViewingKeyForCheck(token)
 
     // if no vk throw error
-    viewingKey && errors.throwError('ViewingKeyError')
+    !viewingKey && errors.throwError('ViewingKeyError')
 
     const { error, list } = await snip20Manager.getTokenTransactions({
       address: this.address,

@@ -29,7 +29,7 @@ export async function balance_scrt({ token }) {
     }
   }
 
-  // simple and keplr VK
+  // try simple or keplr VK
   const { viewingKey: newViewingKey, viewingKeyType } =
     await this.getPossibleViewingKeyForCheck(token)
   // throw VK error if no generated VK

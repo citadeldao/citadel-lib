@@ -4,9 +4,8 @@ import { saveViewingKeyToInstance } from './_functions/saveViewingKeyToInstance'
 import { calculateSubtokenBalanceUSD } from '../../../_functions/balances'
 import walletInstances from '../../../../walletInstances'
 import snip20Manager from '../snip20Manager'
-import storage from '../../../../storage'
+import networkClasses from '../../..'
 import {
-  CACHE_NAMES,
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
   VIEWING_KEYS_TYPES,
   WALLET_TYPES,
@@ -14,7 +13,6 @@ import {
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 
-// TODO: split function
 export async function updateSnip20SubtokensList() {
   // skip if wallet has public type
   if (this.type === WALLET_TYPES.PUBLIC_KEY) {
@@ -22,8 +20,7 @@ export async function updateSnip20SubtokensList() {
   }
 
   // get secret tokens config
-  const tokensConfig = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)
-    .secret.tokens
+  const tokensConfig = networkClasses.getNetworkClass(this.net).tokens
 
   const snip20SubtokensList = []
   // 1) CHECK SAVED VIEWING_KEYS
@@ -50,7 +47,6 @@ export async function updateSnip20SubtokensList() {
       tokensConfig[token].decimals,
       viewingKey
     )
-
     error = response.error
     amount = response.amount
 
@@ -115,35 +111,17 @@ export async function updateSnip20SubtokensList() {
       // // if token is not favorite
       // !tokensConfig[token].favorite ||
       // if  already checked saved VK:
-      this.savedViewingKeys[token]
-    )
-      continue
-    let viewingKey = null
-    let viewingKeyType = null
-
-    // check simple viewing key for favorite token
-    if (
-      PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type) &&
-      tokensConfig[token].favorite
+      this.savedViewingKeys[token] ||
+      // if wallet not favorite
+      (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type) &&
+        !tokensConfig[token].favorite)
     ) {
-      viewingKey = snip20Manager.generateSimpleViewingKey(
-        tokensConfig[token].address,
-        this.privateKeyHash
-      )
-      viewingKeyType = VIEWING_KEYS_TYPES.SIMPLE
+      continue
     }
 
-    // check keplr viewing key for all snip20 tokens
-    if (this.type === WALLET_TYPES.KEPLR) {
-      try {
-        viewingKey = await this.getViewingKeyByKeplr(token)
-        viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
-      } catch {
-        // skip all keplr errors
-        false
-      }
-    }
-
+    // try simple or keplr VK
+    const { viewingKey, viewingKeyType } =
+      await this.getPossibleViewingKeyForCheck(token)
     if (!viewingKey) {
       continue
     }
@@ -153,7 +131,6 @@ export async function updateSnip20SubtokensList() {
       tokensConfig[token].decimals,
       viewingKey
     )
-
     if (!error) {
       // save VK to instance
       saveViewingKeyToInstance(
@@ -162,7 +139,6 @@ export async function updateSnip20SubtokensList() {
         viewingKeyType,
         this.savedViewingKeys
       )
-
       // add token to subtokenList
       const tokenListItem = await createSnip20TokenListItem(
         token,

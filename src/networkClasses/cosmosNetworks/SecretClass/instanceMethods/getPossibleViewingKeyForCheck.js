@@ -9,6 +9,7 @@ import networkClasses from '../../..'
 export async function getPossibleViewingKeyForCheck(token) {
   let viewingKey = null
   let viewingKeyType = null
+  let error = null
 
   // SIMPLE VK
   if (
@@ -26,11 +27,11 @@ export async function getPossibleViewingKeyForCheck(token) {
     try {
       viewingKey = await this.getViewingKeyByKeplr(token)
       viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
-    } catch (error) {
+    } catch (catchedError) {
       // skip all keplr errors
-      false
+      error = catchedError
     }
   }
 
-  return { viewingKey, viewingKeyType }
+  return { viewingKey, viewingKeyType, error }
 }

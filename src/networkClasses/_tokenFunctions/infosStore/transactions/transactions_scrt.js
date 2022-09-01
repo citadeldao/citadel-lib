@@ -59,9 +59,14 @@ export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
   // has no valid saved VK
   if (!rawTransactionsList) {
     // try simple or keplr VK
-    const { viewingKey } = await this.getPossibleViewingKeyForCheck(token)
+    const { viewingKey, error: getVKError } =
+      await this.getPossibleViewingKeyForCheck(token)
 
-    // if no vk throw error
+    // throw 'change account' keplr error
+    if (getVKError?.code === 1 && this.type === WALLET_TYPES.KEPLR) {
+      throw getVKError
+    }
+    // if no vk throw standard error
     !viewingKey && errors.throwError('ViewingKeyError')
 
     const { error, list } = await snip20Manager.getTokenTransactions({

@@ -5,6 +5,7 @@ import walletsManager from '../../../../walletsManager'
 import { saveViewingKeyToInstance } from './_functions/saveViewingKeyToInstance'
 import { createSnip20TokenListItem } from './_functions/createSnip20TokenListItem'
 
+//** Load SNIP-20 balance by viewingKey and update of the saved viewing key, subtokenlist and subtokenlist total balance */
 export async function loadSnip20TokenBalance(
   token,
   viewingKey,

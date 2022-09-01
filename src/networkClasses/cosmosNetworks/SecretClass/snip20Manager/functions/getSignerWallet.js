@@ -1,6 +1,6 @@
 import {
-  HARDWARE_SIGNER_WALLET_TYPES,
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
+  WALLET_TYPES,
 } from '../../../../../constants'
 import { getLedgerApp } from '../../../_BaseCosmosClass/signers/getLedgerApp'
 import { serializeSignDoc } from './serializeSignDoc'
@@ -15,6 +15,8 @@ export async function getSignerWallet({
   type,
   publicKey,
   address,
+  chainId,
+  keplr,
 }) {
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
     privateKey = privateKey.replace('0x', '')
@@ -27,8 +29,13 @@ export async function getSignerWallet({
     return wallet
   }
 
-  // hardware signer
-  if (HARDWARE_SIGNER_WALLET_TYPES.includes(type)) {
+  if (type === WALLET_TYPES.KEPLR) {
+    // get old keplr signer (for all types of messages)
+    return await keplr.getOfflineSigner(chainId)
+  }
+
+  // ledger signer
+  if (type === WALLET_TYPES.LEDGER) {
     // create signer by ledger
     return {
       getAccounts() {

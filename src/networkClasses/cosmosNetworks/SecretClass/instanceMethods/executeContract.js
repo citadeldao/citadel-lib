@@ -1,6 +1,8 @@
 import errors from '../../../../errors'
 import { debugConsoleLog } from '../../../../helpers/debugConsoleLog'
 import snip20Manager from '../snip20Manager'
+import { keplrChains } from '../../_BaseCosmosClass/signers/keplrChains'
+import { WALLET_TYPES } from '../../../../constants'
 
 export async function executeContract({
   privateKey,
@@ -12,6 +14,17 @@ export async function executeContract({
   sentFunds,
 } = {}) {
   const GAS_PRICE = 0.0125
+
+  // get enigmaUtils to decode transaction history after execute (so far only for kepler)
+  let enigmaUtils = null
+  let keplr = null
+
+  if (this.type === WALLET_TYPES.KEPLR) {
+    const chainId = keplrChains[this.net]
+    keplr = await this.getKeplr()
+    enigmaUtils = await keplr.getEnigmaUtils(chainId)
+  }
+
   if (!gas) {
     try {
       // estimate gas
@@ -25,6 +38,8 @@ export async function executeContract({
         publicKey: this.publicKey,
         simulate: true,
         sentFunds,
+        keplr,
+        enigmaUtils,
       })
 
       // set estimated gas
@@ -52,6 +67,8 @@ export async function executeContract({
     derivationPath,
     type: this.type,
     publicKey: this.publicKey,
+    keplr,
+    enigmaUtils,
   })
 
   // check error (not sure if this is a reliable way)

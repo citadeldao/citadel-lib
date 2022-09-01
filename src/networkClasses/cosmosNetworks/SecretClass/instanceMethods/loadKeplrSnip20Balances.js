@@ -27,8 +27,9 @@ export async function loadKeplrSnip20Balances() {
         keplrViewingKey,
         VIEWING_KEYS_TYPES.CUSTOM
       )
-    } catch (error) {
-      //skip all errors (front is already throwing an error)
+    } catch {
+      // skip all errors (front is already throwing an error)
+      false
       // // throw only change account error
       // if (error.code === 1) {
       //   throw error

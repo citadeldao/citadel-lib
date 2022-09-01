@@ -1,6 +1,7 @@
 import { getSignerWallet } from './functions/getSignerWallet'
 import { SecretNetworkClient } from 'secretjs'
 import { GRPC_WEB_URL } from '../../../../constants'
+import { keplrChains } from '../../_BaseCosmosClass/signers/keplrChains'
 
 export const executeContract = async ({
   address,
@@ -13,22 +14,30 @@ export const executeContract = async ({
   type,
   publicKey,
   simulate = false,
+  keplr,
+  enigmaUtils,
 }) => {
+  const chainId = keplrChains.secret
+
   const signerWallet = await getSignerWallet({
     privateKey,
     derivationPath,
     type,
     publicKey,
     address,
+    chainId,
+    keplr,
   })
 
   // prepare secret client
   const secretjs = await SecretNetworkClient.create({
     grpcWebUrl: GRPC_WEB_URL,
-    chainId: 'secret-4',
+    chainId,
     // wallet: signerWallet,
     wallet: signerWallet,
     walletAddress: address,
+    // encode tx for decode after execute. Tx will encoded by random key if utils not passed
+    enigmaUtils,
   })
 
   // get contract codeHash

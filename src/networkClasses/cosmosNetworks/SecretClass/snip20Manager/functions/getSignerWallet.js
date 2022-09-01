@@ -30,8 +30,8 @@ export async function getSignerWallet({
   }
 
   if (type === WALLET_TYPES.KEPLR) {
-    // get old keplr signer (for all types of messages)
-    return await keplr.getOfflineSigner(chainId)
+    // get signer
+    return await keplr.getOfflineSignerOnlyAmino(chainId)
   }
 
   // ledger signer

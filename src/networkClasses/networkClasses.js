@@ -40,6 +40,9 @@ import { PolkadotNetwork } from './PolkadotClass'
 import { OraiNetwork } from './cosmosNetworks/OraiClass'
 import { PolygonNetwork } from './ethNetworks/PolygonClass'
 import { OasisNetwork } from './OasisClass'
+import { ArbitrumNetwork } from './ethNetworks/ArbitrumClass'
+import { OptimismNetwork } from './ethNetworks/OptimismClass'
+
 
 export const networkClasses = {
   tez: TezosNetwork,
@@ -83,5 +86,7 @@ export const networkClasses = {
   polkadot: PolkadotNetwork,
   orai: OraiNetwork,
   polygon: PolygonNetwork,
-  oasis: OasisNetwork
+  oasis: OasisNetwork,
+  arbitrum: ArbitrumNetwork,
+  optimism: OptimismNetwork
 }

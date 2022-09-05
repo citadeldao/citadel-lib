@@ -2,6 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
+  getType,
 } from '../../helpers/checkArguments'
 import {
   HARDWARE_SIGNER_WALLET_TYPES,
@@ -26,7 +27,7 @@ import walletInstances from '../../walletInstances'
  * @param options.derivationPath STRING (OPTIONAL) derivation path for hardware wallet
  * @param options.contract STRING (REQUIRED) contract address
  * @param options.gas STRING (OPTIONAL) gas limit for the transaction. If not defined, then the library will try to calculate it through transaction simulation
- * @param options.msg STRING (REQUIRED) message to execute
+ * @param options.msg OBJECT, ARRAY (REQUIRED) message to execute
  * @param options.sender STRING (OPTIONAL) sender address. By default - wallet address, which corresponds to id
  * @param options.sent_funds ARRAY (OPTIONAL) additional argument (to work with derivatives for example)
  * 
@@ -83,7 +84,7 @@ export const executeContract = async (walletId, options) => {
   checkTypes(
     ['contract', contract, ['String'], true],
     ['gas', gas, ['String', 'Number']],
-    ['msg', msg, ['Object'], true],
+    ['msg', msg, ['Object', 'Array'], true],
     ['sender', sender, ['String']],
     ['sentFunds', sentFunds, ['Array']]
   )
@@ -99,6 +100,16 @@ export const executeContract = async (walletId, options) => {
     checkTypes(['privateKey', privateKey, ['String'], true])
   }
 
-  // call wallet instance method
-  return await walletInstance.executeContract(options)
+  if (getType(msg) === 'Object') {
+    // call wallet instance method
+    return await walletInstance.executeContract(options)
+  } else if (getType(msg) === 'Array') {
+    const responses = []
+    for (const msgItem of msg) {
+      responses.push(
+        await walletInstance.executeContract({ ...options, msg: msgItem })?.[0]
+      )
+    }
+    return responses
+  }
 }

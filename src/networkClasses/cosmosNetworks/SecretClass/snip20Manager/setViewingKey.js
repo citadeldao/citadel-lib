@@ -51,6 +51,11 @@ export async function setViewingKey(
         type,
         publicKey,
       })
+      if (!response.data || response.data.length < 1) {
+        errors.throwError('ViewingKeyError', {
+          message: response?.rawLog || 'Viewing Key setting faild',
+        })
+      }
       transactionHash = response.transactionHash
       viewingKey = simpleViewingKey
       break

@@ -1,9 +1,10 @@
 import networkClasses from '../../..'
-import { VIEWING_KEYS_TYPES } from '../../../../constants'
+import { VIEWING_KEYS_TYPES, LIB_EVENT_NAMES } from '../../../../constants'
+import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 
 export async function loadKeplrSnip20Balances() {
   const tokensConfig = networkClasses.getNetworkClass(this.net).tokens
-
+  let updateClientWalletList = false
   // try to get keplr key for every snip20 tokens
   for (const token in tokensConfig) {
     // skip
@@ -21,6 +22,7 @@ export async function loadKeplrSnip20Balances() {
       if (!keplrViewingKey) {
         continue
       }
+      updateClientWalletList = true
       // load balance
       await this.loadSnip20TokenBalance(
         token,
@@ -36,4 +38,8 @@ export async function loadKeplrSnip20Balances() {
       // }
     }
   }
+
+  // EVENT: inform the client that it is time to update wallet list
+  updateClientWalletList &&
+    dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 }

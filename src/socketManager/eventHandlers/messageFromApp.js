@@ -1,5 +1,9 @@
 import api from '../../api'
-import { WALLET_TYPES, SECRET_NET_KEY } from '../../constants'
+import {
+  WALLET_TYPES,
+  SECRET_NET_KEY,
+  APP_MESSAGE_TYPES,
+} from '../../constants'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
 
@@ -71,17 +75,34 @@ export const messageFromApp = async ({
         query: msg,
       })
 
+      // detect error
+      let isError = false
+      const errorKeywords = ['err', 'unauthorized']
+      Object.keys(response || {}).map((key) =>
+        errorKeywords.map((errorKeyword) => {
+          if (key.includes(errorKeyword)) {
+            isError = true
+          }
+        })
+      )
+
       // send result to app
       await api.externalRequests.sendCustomMessage({
         token,
-        message: response,
+        message: {
+          type: isError ? APP_MESSAGE_TYPES.ERROR : APP_MESSAGE_TYPES.SUCCESS,
+          response,
+        },
         type,
       })
     } catch (error) {
       // send error to app
       await api.externalRequests.sendCustomMessage({
         token,
-        message: { error: error.message },
+        message: {
+          type: APP_MESSAGE_TYPES.ERROR,
+          response: { error: error.message },
+        },
         type,
       })
     }

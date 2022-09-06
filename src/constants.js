@@ -79,3 +79,8 @@ export const STATUSES = {
   SUCCESS: 'success',
   ERROR: 'error',
 }
+
+export const APP_MESSAGE_TYPES = {
+  SUCCESS: 'SUCCESS',
+  ERROR: 'FAILED',
+}

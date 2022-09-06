@@ -15,6 +15,7 @@ import { getPossibleViewingKeyForCheck } from './getPossibleViewingKeyForCheck'
 import { loadSnip20TokenBalance } from './loadSnip20TokenBalance'
 import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { getKeplr } from './getKeplr'
+import { executeMessageCollection } from './executeMessageCollection'
 
 export default {
   useSnip20Manager,
@@ -34,4 +35,5 @@ export default {
   loadSnip20TokenBalance,
   loadKeplrSnip20Balances,
   getKeplr,
+  executeMessageCollection,
 }

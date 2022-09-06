@@ -19,6 +19,7 @@ export async function getTokenTransactions({
           page_size: pageSize,
         },
       },
+      address,
     })
 
     if (resp?.transfer_history?.txs) {

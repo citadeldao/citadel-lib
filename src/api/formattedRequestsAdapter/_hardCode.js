@@ -1044,4 +1044,21 @@ export const additionalConfig = [
       },
     },
   },
+  {
+    net: 'tron',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/195'/0'/0/N'`,
+            key: `m/44'/195'/0'/0/N`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44'/195'/0'/0/N`, key: `44'/195'/0'/0/N` },
+        ],
+      },
+    },
+  },
 ]

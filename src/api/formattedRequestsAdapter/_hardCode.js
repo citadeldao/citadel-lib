@@ -79,11 +79,16 @@ export const additionalConfig = [
         seed: [
           {
             id: 1,
+            label: `Default - m/44'/118'/0'/0/N`,
+            key: `m/44'/118'/0'/0/N`,
+          },
+          {
+            id: 2,
             label: `Default - m/44'/750'/0'/0/N`,
             key: `m/44'/750'/0'/0/N`,
           },
           {
-            id: 1,
+            id: 3,
             label: `Derivation template 2 - m/44'/529'/0'/0/N`,
             key: `m/44'/529'/0'/0/N`,
           },

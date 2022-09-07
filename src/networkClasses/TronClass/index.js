@@ -5,7 +5,7 @@ import TronWeb from 'tronweb'
 import Trx from "@ledgerhq/hw-app-trx";
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import { getPubKeyFromPriKey, hexStr2byteArray } from '../_functions/crypto'
+import { getPubKeyFromPriKey, hexStr2byteArray } from './signers/functions'
 import { WALLET_TYPES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
 

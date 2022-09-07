@@ -1,7 +1,8 @@
 import bs58check from 'bs58check'
 import BN from 'bn.js'
 
-// functions wich reused in some signers
+/******* Functions that are REUSED in different networks *******/
+
 export const base58checkEncode = (prefix, payload) => {
   const n = new Uint8Array(prefix.length + payload.length)
   n.set(prefix)

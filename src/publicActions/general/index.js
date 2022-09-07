@@ -22,6 +22,8 @@ import { manageSubscriptions } from './manageSubscriptions'
 // Relevant until the Kepler signature is integrated into the library. After using the 'Assign To Dao' method
 import { sendAssignToDaoMessage } from './sendAssignToDaoMessage'
 import { prettyNumber } from './prettyNumber'
+import { decodeMnemonicByPassword } from './decodeMnemonicByPassword'
+import { encodeMnemonicByPassword } from './encodeMnemonicByPassword'
 
 // 'init', 'reset' and other methods that are not included in other groups
 export const general = {
@@ -48,4 +50,6 @@ export const general = {
   getSubscriptions,
   manageSubscriptions,
   prettyNumber,
+  decodeMnemonicByPassword,
+  encodeMnemonicByPassword,
 }

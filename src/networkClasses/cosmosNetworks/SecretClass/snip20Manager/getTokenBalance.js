@@ -15,6 +15,7 @@ export async function getTokenBalance(
           key: viewingKey,
         },
       },
+      address
     })
 
     if (resp.balance && resp.balance.amount)

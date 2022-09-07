@@ -6,7 +6,6 @@ module.exports = {
   mode: 'production',
   resolve: {
       fallback: {
-          "querystring": require.resolve("querystring-es3"),
           "tronweb": require.resolve('tronweb'),
           "crypto": require.resolve("crypto-browserify"),
           "stream": require.resolve("stream-browserify"),

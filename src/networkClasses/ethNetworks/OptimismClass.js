@@ -12,11 +12,11 @@ export class OptimismNetwork extends BaseEthNetwork {
   }
 
   getScannerLinkById() {
-    return `https://arbiscan.io/address/${this.address}`
+    return `https://optimistic.etherscan.io/address/${this.address}`
   }
 
   getTransactionURLByHash(hash) {
-    return `https://arbiscan.io/tx/${hash}`
+    return `https://optimistic.etherscan.io/tx/${hash}`
   }
 
   static async createWalletByLedger({ derivationPath }) {

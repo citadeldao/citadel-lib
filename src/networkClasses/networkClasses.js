@@ -42,6 +42,7 @@ import { PolygonNetwork } from './ethNetworks/PolygonClass'
 import { OasisNetwork } from './OasisClass'
 import { ArbitrumNetwork } from './ethNetworks/ArbitrumClass'
 import { OptimismNetwork } from './ethNetworks/OptimismClass'
+import { TronNetwork } from './TronClass'
 
 
 export const networkClasses = {
@@ -88,5 +89,6 @@ export const networkClasses = {
   polygon: PolygonNetwork,
   oasis: OasisNetwork,
   arbitrum: ArbitrumNetwork,
-  optimism: OptimismNetwork
+  optimism: OptimismNetwork,
+  tron: TronNetwork
 }

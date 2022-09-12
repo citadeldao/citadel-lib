@@ -10,8 +10,6 @@ export async function setViewingKey(
   viewingKeyType,
   { privateKey, derivationPath, viewingKey, fee = 0.003 } = {}
 ) {
-  console.log('>>>fee', fee)
-  console.log('>>>this.balance.calculatedBalance', this.balance.calculatedBalance)
   if (this.balance.calculatedBalance < fee) {
     errors.throwError('ViewingKeyError', { message: 'Insufficient funds' })
   }

@@ -3,12 +3,18 @@ import snip20Manager from '../snip20Manager'
 import networkClasses from '../../../'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
+import errors from '../../../../errors'
 
 export async function setViewingKey(
   token,
   viewingKeyType,
-  { privateKey, derivationPath, viewingKey, fee } = {}
+  { privateKey, derivationPath, viewingKey, fee = 0.003 } = {}
 ) {
+  console.log('>>>fee', fee)
+  console.log('>>>this.balance.calculatedBalance', this.balance.calculatedBalance)
+  if (this.balance.calculatedBalance < fee) {
+    errors.throwError('ViewingKeyError', { message: 'Insufficient funds' })
+  }
   const networkClass = networkClasses.getNetworkClass(this.net)
 
   // set viewingKey

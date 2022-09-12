@@ -42,6 +42,7 @@ export const signTxByLedger = async (
   const signatureParsed = Buffer.from(parsedSignature).toString('hex')
   // const signMessage = rawTransaction.json
   const signedTx = {
+    // ...sortObject(signMessage),
     ...signMessage,
     fee: rawTransaction.json.fee,
     signature: signatureParsed,

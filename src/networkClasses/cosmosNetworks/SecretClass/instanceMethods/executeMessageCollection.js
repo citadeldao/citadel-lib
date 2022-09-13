@@ -6,7 +6,7 @@ export async function executeMessageCollection(
   /** messages model:
       [{
         sender,
-        contractAddress,
+        contract,
         codeHash, // optional but way faster
         msg,
         sentFunds, // optional

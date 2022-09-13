@@ -1,6 +1,7 @@
 import { getHdDerivationPath } from '../../../_functions/ledger'
 import { getLedgerApp } from './getLedgerApp'
 import errors from '../../../../errors'
+import { sortObject } from '../functions'
 const secp256k1 = require('secp256k1')
 
 export const signTxByLedger = async (
@@ -13,7 +14,7 @@ export const signTxByLedger = async (
   const hdPath = getHdDerivationPath(derivationPath)
   const response = await ledgerApp.cosmosApp.sign(
     hdPath,
-    JSON.stringify(rawTransaction.json)
+    JSON.stringify(sortObject(rawTransaction.json))
   )
 
   if (!response.signature) {
@@ -41,6 +42,7 @@ export const signTxByLedger = async (
   const signatureParsed = Buffer.from(parsedSignature).toString('hex')
   // const signMessage = rawTransaction.json
   const signedTx = {
+    // ...sortObject(signMessage),
     ...signMessage,
     fee: rawTransaction.json.fee,
     signature: signatureParsed,

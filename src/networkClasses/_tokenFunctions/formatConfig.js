@@ -46,4 +46,22 @@ export const formatConfig = {
       transactions: 'transactions_scrt',
     },
   },
+  trc10: {
+    actions: {
+      transfer: 'transfer_default',
+    },
+    infos: {
+      balance: 'balance_default',
+      transactions: 'transactions_default',
+    },
+  },
+  trc20: {
+    actions: {
+      transfer: 'transfer_default',
+    },
+    infos: {
+      balance: 'balance_default',
+      transactions: 'transactions_default',
+    },
+  },
 }

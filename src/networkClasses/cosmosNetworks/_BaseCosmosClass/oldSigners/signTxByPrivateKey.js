@@ -1,4 +1,5 @@
 import { ECPair } from 'bitcoinjs-lib'
+import { sortObject } from '../functions'
 const secp256k1 = require('secp256k1')
 const crypto = require('crypto')
 
@@ -14,18 +15,6 @@ export const signTxByPrivateKey = (
   function getPubKeyBase64(ecpairPriv) {
     const pubKeyByte = secp256k1.publicKeyCreate(ecpairPriv)
     return Buffer.from(pubKeyByte, 'binary').toString('base64')
-  }
-
-  function sortObject(obj) {
-    if (obj === null) return null
-    if (typeof obj !== 'object') return obj
-    if (Array.isArray(obj)) return obj.map(sortObject)
-    const sortedKeys = Object.keys(obj).sort()
-    const result = {}
-    sortedKeys.forEach((key) => {
-      result[key] = sortObject(obj[key])
-    })
-    return result
   }
 
   let signMessage = new Object()

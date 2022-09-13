@@ -17,7 +17,7 @@ export async function setViewingKey(
     privateKeyHash,
     derivationPath,
     viewingKey,
-    fee = 0.003,
+    fee,
   } = {}
 ) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())

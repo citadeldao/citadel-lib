@@ -7,7 +7,7 @@ export const broadcast = async ({
   /** messages model:
     [{
       sender,
-      contractAddress,
+      contract,
       codeHash, // optional but way faster
       msg,
       sentFunds, // optional
@@ -21,7 +21,6 @@ export const broadcast = async ({
   publicKey,
   simulate = false,
 }) => {
-
   // prepare secret client
   const secretjs = await getSecretClient({
     address,
@@ -36,10 +35,11 @@ export const broadcast = async ({
   for (const messageIndex in clonedMessages) {
     // add contract codeHash to messages
     const message = clonedMessages[messageIndex]
-    if (!message.codeHash && message.contractAddress) {
+    if (!message.codeHash && message.contract) {
       message.codeHash = await secretjs.query.compute.contractCodeHash(
-        message.contractAddress
+        message.contract
       )
+      message.contractAddress = message.contract
     }
     // format message
     clonedMessages[messageIndex] = new MsgExecuteContract(

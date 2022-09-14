@@ -6,6 +6,7 @@ import {
   MARKETCAPS_SOCKET_EVENT_NAMES,
 } from '../constants'
 import state from '../state'
+import { debugConsole } from '../helpers/debugConsole'
 
 /********************* SOCKET MANAGER *********************
  * Listens for socket events, handles them as needed, and passes them to the client
@@ -48,7 +49,7 @@ const connect = async () => {
       query: { token },
     })
   } catch (error) {
-    console.error(`Socket connection error`, error)
+    debugConsole.error(`Socket connection error`, error)
   }
 }
 

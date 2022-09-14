@@ -19,6 +19,9 @@ export async function updateSnip20SubtokensList() {
     return
   }
 
+  // prevent double keplr unlock
+  let keplrRejected = false
+
   // get secret tokens config
   const tokensConfig = networkClasses.getNetworkClass(this.net).tokens
 
@@ -52,6 +55,9 @@ export async function updateSnip20SubtokensList() {
 
     // check keplr vk on error
     if (error && this.type === WALLET_TYPES.KEPLR) {
+      if (keplrRejected) {
+        return
+      }
       try {
         const keplrViewingKey = await this.getViewingKeyByKeplr(token)
 
@@ -76,6 +82,7 @@ export async function updateSnip20SubtokensList() {
         }
         // viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
       } catch {
+        keplrRejected = true
         // skip all keplr errors
         false
       }
@@ -119,9 +126,21 @@ export async function updateSnip20SubtokensList() {
       continue
     }
 
+    // skip rejected keplr
+    if (this.type === WALLET_TYPES.KEPLR && keplrRejected) {
+      continue
+    }
     // try simple or keplr VK
-    const { viewingKey, viewingKeyType } =
-      await this.getPossibleViewingKeyForCheck(token)
+    const {
+      viewingKey,
+      viewingKeyType,
+      error: vkError,
+    } = await this.getPossibleViewingKeyForCheck(token)
+
+    if (this.type === WALLET_TYPES.KEPLR && vkError) {
+      keplrRejected = true
+    }
+
     if (!viewingKey) {
       continue
     }

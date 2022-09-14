@@ -2,7 +2,7 @@ import { checkTypes } from '../../helpers/checkArguments'
 import state from '../../state'
 import errors from '../../errors'
 import { initializeLibrary } from '../../generalFunctions/initializeLibrary'
-import { debugConsoleLog } from '../../helpers/debugConsoleLog'
+import { debugConsole } from '../../helpers/debugConsole'
 /**
  * Loads a user's balance history
  *
@@ -41,7 +41,7 @@ import { debugConsoleLog } from '../../helpers/debugConsoleLog'
  */
 
 export const init = async (options = {}) => {
-  debugConsoleLog('Start initialization...')
+  debugConsole.log('Start initialization...')
 
   // checks
   checkTypes(['options', options, ['Object'], true])
@@ -98,7 +98,7 @@ export const init = async (options = {}) => {
     refreshToken,
   })
 
-  debugConsoleLog('Initialization completed')
+  debugConsole.log('Initialization completed')
 
   // return user info (id, email)
   return { user: state.getState('user') }

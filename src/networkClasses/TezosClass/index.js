@@ -22,6 +22,7 @@ import { prepareTrezorConnection } from '../_functions/trezor'
 import TrezorConnect from 'trezor-connect'
 import BigNumber from 'bignumber.js'
 import { getType } from '../../helpers/checkArguments'
+import { debugConsole } from '../../helpers/debugConsole'
 
 export class TezosNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -153,7 +154,7 @@ export class TezosNetwork extends BaseNetwork {
     try {
       keyPair = await walletFromPrivate(privateKey)
     } catch (error) {
-      console.error(error)
+      debugConsole.error(error)
       errors.throwError('WrongArguments', { message: 'Invalid Private Key' })
     }
     keyPair.publicExtendedKey = TezosUtil.readKeyWithHint(

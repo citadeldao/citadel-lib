@@ -1,4 +1,5 @@
 import state from '../state'
+import { debugConsole } from '../helpers/debugConsole'
 
 export const checkWalletPK = (wallet) => {
   if (
@@ -9,7 +10,7 @@ export const checkWalletPK = (wallet) => {
     wallet.mnemonic
   ) {
     state.getState('debug') && alert(`Warning! PK! ID: ${wallet.id}`)
-    console.error(`Can't pass wallet with PK, ID: ${wallet.id}`)
+    debugConsole.error(`Can't pass wallet with PK, ID: ${wallet.id}`)
     delete wallet.privateKey
     delete wallet.privKey
     delete wallet.privatekey

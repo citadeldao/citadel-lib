@@ -6,7 +6,6 @@ export async function getKeplr() {
   if (this.type !== WALLET_TYPES.KEPLR) {
     return
   }
-
   const keplr = window.keplr
   const chainId = keplrChains[this.net]
 
@@ -19,7 +18,6 @@ export async function getKeplr() {
   try {
     // enable keplr
     await keplr.enable(chainId)
-
     // check current keplr address
     const keplrAddress = (await keplr.getKey(chainId))?.bech32Address
     if (this.address !== keplrAddress) {

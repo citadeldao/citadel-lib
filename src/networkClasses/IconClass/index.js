@@ -18,6 +18,7 @@ import {
   signTxByLedger,
 } from './signers'
 import { IconApp } from './ledgerApp'
+import { debugConsole } from '../../helpers/debugConsole'
 
 export class IconNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -218,7 +219,7 @@ export class IconNetwork extends BaseNetwork {
         }),
       }
     } catch (error) {
-      console.error(error)
+      debugConsole.error(error)
       errors.throwError('WrongArguments', { message: 'Invalid Private Key' })
     }
   }

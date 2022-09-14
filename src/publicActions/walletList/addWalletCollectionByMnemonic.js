@@ -3,6 +3,7 @@ import { addWalletByMnemonic } from './addWalletByMnemonic'
 import errors from '../../errors'
 import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
+import { debugConsole } from '../../helpers/debugConsole'
 
 export const addWalletCollectionByMnemonic = async (walletsOptions) => {
   // checks
@@ -26,7 +27,7 @@ export const addWalletCollectionByMnemonic = async (walletsOptions) => {
         return await addWalletByMnemonic(walletOptions)
         // catch error to continue
       } catch (error) {
-        console.warn(`Wallet with net "${walletOptions.net}" and`, error)
+        debugConsole.warn(`Wallet with net "${walletOptions.net}" and`, error)
         error.message = `For wallet with net "${walletOptions.net}" and index "${walletIndex}". ${error.message}`
         // if error - return object with error instead wallet
         return { error: error.toString(), code: error.code }

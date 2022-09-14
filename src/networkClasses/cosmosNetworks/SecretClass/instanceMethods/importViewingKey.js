@@ -15,7 +15,7 @@ export async function importViewingKey(token, viewingKey) {
   // check VK
   error &&
     errors.throwError('ViewingKeyError', {
-      message: `Viewing key is not valid. ${error.message}`,
+      message: `Viewing key is not valid. ${error.message || ''}`,
     })
 
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)

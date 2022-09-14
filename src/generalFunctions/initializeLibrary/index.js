@@ -8,6 +8,7 @@ import { initialCacheManager } from './initialCacheManager'
 import { configureModulesByCaches } from './configureModulesByCaches'
 import { backgroundUpdates } from './backgroundUpdates'
 import socketManager from '../../socketManager'
+import { debugConsole } from '../../helpers/debugConsole'
 
 /****************** INITIALIZE LIBRARY ********************/
 export const initializeLibrary = async ({
@@ -34,7 +35,7 @@ export const initializeLibrary = async ({
     state.setState('socketURL', socketURL)
   } else {
     debug &&
-      console.warn(
+      debugConsole.warn(
         'Socket URL was not passed in arguments. Socket updates not available'
       )
   }
@@ -44,7 +45,7 @@ export const initializeLibrary = async ({
     state.setState('appURL', appURL)
   } else {
     debug &&
-      console.warn('App URL was not passed in arguments. Apps may not work')
+      debugConsole.warn('App URL was not passed in arguments. Apps may not work')
   }
 
   // set debug mode

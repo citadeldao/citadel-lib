@@ -5,6 +5,7 @@ import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 import state from '../../state'
 import { isNativeToken } from '../../helpers/isNativeToken'
+import { debugConsole } from '../../helpers/debugConsole'
 
 export const mempoolRemoveTxClient = async (data) => {
   const { from, net, to, type } = data
@@ -49,14 +50,14 @@ const getBalanceById = async (walletId, token) => {
     try {
       return await walletInstance.getDelegationBalance()
     } catch (error) {
-      console.error(error)
+      debugConsole.error(error)
     }
   } else {
     // for native token call walletInstance method
     try {
       return await walletInstance.callTokenInfo(token, 'balance')
     } catch (error) {
-      console.error(error)
+      debugConsole.error(error)
     }
   }
 }

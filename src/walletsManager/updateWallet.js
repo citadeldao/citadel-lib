@@ -2,6 +2,7 @@ import { merge } from '../helpers/merge'
 import { getWalletInfoById } from './getWalletInfoById'
 import walletInstances from '../walletInstances'
 import storage from '../storage'
+import { debugConsole } from '../helpers/debugConsole'
 
 // used to update the cache (and instance state) of the wallet
 export const updateWallet = ({
@@ -13,7 +14,7 @@ export const updateWallet = ({
 
   // return if wallet was removed to prevent errors
   if (!wallet) {
-    console.warn(
+    debugConsole.warn(
       `Wallet does not exist. Wallet keys "${Object.keys(
         newWalletInfo
       )}" have not been updated`

@@ -3,6 +3,7 @@ import networkClasses from '../../'
 import api from '../../../api'
 import { retryRequestOnError } from '../../../helpers/retryRequestOnError'
 import { calculateSubtokenBalanceUSD } from '../../_functions/balances'
+import { debugConsole } from '../../../helpers/debugConsole'
 
 // private method
 export const updateSubtokensList = async function (
@@ -68,7 +69,7 @@ export const updateSubtokensList = async function (
               ...detailedBalance,
             }
           } catch (error) {
-            console.error(error)
+            debugConsole.error(error)
           }
         }
 

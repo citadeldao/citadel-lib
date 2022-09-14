@@ -12,9 +12,9 @@ import walletInstances from '../../walletInstances'
 import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import {
   LIB_EVENT_NAMES,
-  // VIEWING_KEYS_TYPES
+  VIEWING_KEYS_TYPES
 } from '../../constants'
-// import errors from '../../errors'
+import errors from '../../errors'
 
 export const setViewingKey = async (
   walletId,
@@ -51,15 +51,15 @@ export const setViewingKey = async (
     checkTypes(['privateKey', privateKey, ['String'], true])
   }
 
-  // // throw error if wallet does not have a private key hash and needs set Simple Viewing Key
-  // if (
-  //   viewingKeyType === VIEWING_KEYS_TYPES.SIMPLE &&
-  //   !PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(walletInstance.type)
-  // ) {
-  //   errors.throwError('WrongArguments', {
-  //     message: `Wallet with "${walletInstance.type}" type does not support Simple Viewing Key installation`,
-  //   })
-  // }
+  // throw error if wallet does not have a private key hash and needs set Simple Viewing Key
+  if (
+    viewingKeyType === VIEWING_KEYS_TYPES.SIMPLE &&
+    !PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(walletInstance.type)
+  ) {
+    errors.throwError('WrongArguments', {
+      message: `Wallet with "${walletInstance.type}" type does not support Simple Viewing Key installation`,
+    })
+  }
 
   // call wallet instance method
   const data = await walletInstance.setViewingKey(

@@ -31,7 +31,7 @@ export const getNetworksConfig = async () => {
 
   // add hasTransactionComment true for all tokens except snip20
   Object.entries(networksConfig).map(([net, { tokens }]) => {
-    networksConfig[net].unstakeingPerioud = storage.caches.getCache(CACHE_NAMES.MARKETCAPS)[net].unbondingPeriod || 0
+    networksConfig[net].unstakeingPerioud = storage.caches.getCache(CACHE_NAMES.MARKETCAPS)[net]?.unbondingPeriod || 0
     if (tokens && Object.keys(tokens).length) {
       Object.entries(tokens).map(([token, { standard }]) => {
         if (standard === 'snip20') {

@@ -1,5 +1,10 @@
 import networkClasses from '../../..'
-import { VIEWING_KEYS_TYPES, LIB_EVENT_NAMES } from '../../../../constants'
+import {
+  VIEWING_KEYS_TYPES,
+  LIB_EVENT_NAMES,
+  WALLET_TYPES,
+  KEPLR,
+} from '../../../../constants'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 
 export async function loadKeplrSnip20Balances() {
@@ -10,6 +15,8 @@ export async function loadKeplrSnip20Balances() {
   for (const token in tokensConfig) {
     // skip
     if (
+      // not keplr wallet
+      this.type !== WALLET_TYPES.KEPLR ||
       // not snip20 tokens
       tokensConfig[token]?.standard !== 'snip20' ||
       // if viewingKey already saved
@@ -33,7 +40,9 @@ export async function loadKeplrSnip20Balances() {
         VIEWING_KEYS_TYPES.CUSTOM
       )
     } catch (error) {
-      keplrRejected = true
+      if (error.message === KEPLR.ERRORS.REJECTED) {
+        keplrRejected = true
+      }
       // skip all errors (front is already throwing an error)
       false
       // // throw only change account error

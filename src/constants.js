@@ -86,3 +86,9 @@ export const APP_MESSAGE_TYPES = {
   SUCCESS: 'SUCCESS',
   ERROR: 'FAILED',
 }
+
+export const KEPLR = {
+  ERRORS: {
+    REJECTED: 'Request rejected',
+  },
+}

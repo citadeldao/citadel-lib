@@ -71,7 +71,6 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   }
 
   static async createWalletByLedger(options, specialKey) {
-    console.log('test888',options, specialKey);
     // wallet creation function like etherium
     const wallet = await EthNetwork.createWalletByLedger.call(
       // bind the context to create a ninstance of the current net
@@ -81,5 +80,10 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     // but with modified address
     wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
     return wallet
+  }
+
+  async prepareTransfer(options){
+    console.log(888,{...options, isTyped: true});
+    return super.prepareTransfer({...options, isTyped: true})
   }
 }

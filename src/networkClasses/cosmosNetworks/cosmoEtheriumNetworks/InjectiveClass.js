@@ -16,7 +16,6 @@ export class InjectiveNetwork extends BaseCosmoEtheriumNetwork {
 
   // pass your own address prefix
   static async createWalletByLedger(options) {
-    console.log(77,);
     return super.createWalletByLedger(options, 'inj')
   }
 }

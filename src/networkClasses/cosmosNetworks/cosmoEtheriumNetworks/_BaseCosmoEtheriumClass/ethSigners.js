@@ -46,7 +46,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath, publicKey) 
   return {
     signedTransaction:{
       ...rawTransaction.message,
-      signature: signatureParsed,
+      signature,
       publicKey,
     },
     mode: 'ledger',

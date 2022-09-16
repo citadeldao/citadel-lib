@@ -18,6 +18,7 @@ import { getHdDerivationPath, getBech32FromPK } from '../../_functions/ledger'
 import { getLedgerApp } from './signers/getLedgerApp'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import CosmosApp from 'ledger-cosmos-js'
+import { debugConsole } from '../../../helpers/debugConsole'
 
 export class BaseCosmosNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -214,7 +215,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
       }
     } catch (error) {
       // error means invalid private key
-      console.error(error)
+      debugConsole.error(error)
       errors.throwError('WrongArguments', { message: 'Invalid Private Key' })
     }
   }

@@ -1,5 +1,5 @@
 import errors from '../../../../errors'
-import { debugConsoleLog } from '../../../../helpers/debugConsoleLog'
+import { debugConsole } from '../../../../helpers/debugConsole'
 import snip20Manager from '../snip20Manager'
 
 export async function executeMessageCollection(
@@ -33,11 +33,11 @@ export async function executeMessageCollection(
     // set estimated gas
     if (response?.gasInfo?.gasUsed) {
       gas = response?.gasInfo?.gasUsed * 1.5
-      debugConsoleLog('K and gas simulate', 1.5, gas)
+      debugConsole.log('K and gas simulate', 1.5, gas)
     }
   } catch (error) {
-    console.warn('Simulate secret tx error')
-    console.warn(error)
+    debugConsole.warn('Simulate secret tx error')
+    debugConsole.warn(error)
   }
 
   // broadcast messages

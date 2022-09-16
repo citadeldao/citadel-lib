@@ -3,13 +3,13 @@ import errors from '../errors'
 import state from '../state'
 import { getType } from '../helpers/checkArguments'
 import { cloneDeep } from 'lodash'
-import { debugConsoleLog } from '../helpers/debugConsoleLog'
+import { debugConsole } from '../helpers/debugConsole'
 
 // action decorator format public actions returns and catch all errors
 export const actionDecorator = (action, actionName) => {
   // return wrapped public action (it will be called by the user via citadel[actionName](...args))
   return function (...args) {
-    debugConsoleLog(`Lib function called: "${actionName}". Arguments:`, args)
+    debugConsole.log(`Lib function called: "${actionName}". Arguments:`, args)
     try {
       // execute a public function with passed arguments and get result
       const result = action(...args)
@@ -51,7 +51,7 @@ const successResponseFormatter = (result, actionName) => {
     wrappedResult = JSON.stringify(wrappedResult)
   }
 
-  debugConsoleLog(
+  debugConsole.log(
     `Lib function "${actionName}" returned:`,
     cloneDeep(wrappedResult)
   )
@@ -62,7 +62,7 @@ const successResponseFormatter = (result, actionName) => {
 
 const errorResponseFormatter = (error, actionName) => {
   // console error
-  console.error(error)
+  debugConsole.error(error)
 
   // for unhandled error (not one of the library error instances) modify name)
   if (!(error instanceof errors.getErrorClass('LibraryError'))) {
@@ -91,7 +91,7 @@ const errorResponseFormatter = (error, actionName) => {
     wrappedResult = JSON.stringify(wrappedResult)
   }
 
-  debugConsoleLog(
+  debugConsole.log(
     `Lib function "${actionName}" returned:`,
     cloneDeep(wrappedResult)
   )

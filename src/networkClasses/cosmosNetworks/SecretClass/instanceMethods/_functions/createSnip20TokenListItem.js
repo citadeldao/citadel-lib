@@ -1,6 +1,7 @@
 import api from '../../../../../api'
 import storage from '../../../../../storage'
 import { CACHE_NAMES } from '../../../../../constants'
+import { debugConsole } from '../../../../../helpers/debugConsole'
 
 export const createSnip20TokenListItem = async (
   token,
@@ -19,7 +20,7 @@ export const createSnip20TokenListItem = async (
     price = data
   } catch (e) {
     // skip error
-    console.error(e)
+    debugConsole.error(e)
   }
 
   return {

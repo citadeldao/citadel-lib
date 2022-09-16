@@ -9,6 +9,7 @@ import {
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
   VIEWING_KEYS_TYPES,
   WALLET_TYPES,
+  KEPLR,
 } from '../../../../constants'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
@@ -18,6 +19,9 @@ export async function updateSnip20SubtokensList() {
   if (this.type === WALLET_TYPES.PUBLIC_KEY) {
     return
   }
+
+  // prevent double keplr unlock
+  let keplrRejected = false
 
   // get secret tokens config
   const tokensConfig = networkClasses.getNetworkClass(this.net).tokens
@@ -40,6 +44,12 @@ export async function updateSnip20SubtokensList() {
 
     let error = null
     let amount = null
+
+    // skip getBalance if keplr rejected
+    if (this.type === WALLET_TYPES.KEPLR && keplrRejected) {
+      continue
+    }
+
     // get viewing key balance (using a balance request)
     const response = await snip20Manager.getTokenBalance(
       this.address,
@@ -50,8 +60,14 @@ export async function updateSnip20SubtokensList() {
     error = response.error
     amount = response.amount
 
-    // check keplr vk on error
-    if (error && this.type === WALLET_TYPES.KEPLR) {
+    if (
+      this.type === WALLET_TYPES.KEPLR &&
+      error &&
+      error.message === KEPLR.ERRORS.REJECTED
+    ) {
+      keplrRejected = true
+    } else {
+      // check keplr vk on not rejected error
       try {
         const keplrViewingKey = await this.getViewingKeyByKeplr(token)
 
@@ -75,9 +91,10 @@ export async function updateSnip20SubtokensList() {
           }
         }
         // viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
-      } catch {
-        // skip all keplr errors
-        false
+      } catch (error) {
+        if (error.message === KEPLR.ERRORS.REJECTED) {
+          keplrRejected = true
+        }
       }
     }
 
@@ -119,9 +136,23 @@ export async function updateSnip20SubtokensList() {
       continue
     }
 
+    // skip rejected keplr
+    if (this.type === WALLET_TYPES.KEPLR && keplrRejected) {
+      continue
+    }
     // try simple or keplr VK
-    const { viewingKey, viewingKeyType } =
-      await this.getPossibleViewingKeyForCheck(token)
+    const {
+      viewingKey,
+      viewingKeyType,
+      error: vkError,
+    } = await this.getPossibleViewingKeyForCheck(token)
+    if (
+      this.type === WALLET_TYPES.KEPLR &&
+      vkError?.message === KEPLR.ERRORS.REJECTED
+    ) {
+      keplrRejected = true
+    }
+
     if (!viewingKey) {
       continue
     }

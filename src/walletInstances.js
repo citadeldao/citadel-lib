@@ -1,5 +1,6 @@
 import networkClasses from './networkClasses'
 import { merge } from './helpers/merge'
+import { debugConsole } from './helpers/debugConsole'
 
 /******************** WALLET INSTANCES MODULE *************************
  * Сollection of network class instances created from store.wallets list (local storage).
@@ -38,7 +39,7 @@ const updateWalletInstance = (newWalletInfo) => {
   const walletInstance = getWalletInstanceById(newWalletInfo.id)
 
   if (!walletInstance) {
-    console.warn(
+    debugConsole.warn(
       `Wallet instance does not exist. Wallet keys "${Object.keys(
         newWalletInfo
       )}" have not been updated`

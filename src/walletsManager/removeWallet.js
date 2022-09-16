@@ -1,6 +1,7 @@
 import api from '../api'
 import storage from '../storage'
 import walletInstances from '../walletInstances'
+import { debugConsole } from '../helpers/debugConsole'
 
 export const removeWallet = async (walletId) => {
   // remove wallet from account
@@ -8,7 +9,7 @@ export const removeWallet = async (walletId) => {
     await api.requests.removeWallet(walletId)
     // catch error if wallet not exist in account
   } catch (error) {
-    console.error(error)
+    debugConsole.error(error)
     if (error.status >= 500) {
       throw error
     }

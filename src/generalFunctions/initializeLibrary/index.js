@@ -8,6 +8,8 @@ import { initialCacheManager } from './initialCacheManager'
 import { configureModulesByCaches } from './configureModulesByCaches'
 import { backgroundUpdates } from './backgroundUpdates'
 import socketManager from '../../socketManager'
+import { debugConsole } from '../../helpers/debugConsole'
+import { addKeplrChangeAccountListener } from './addKeplrChangeAccountListener'
 
 /****************** INITIALIZE LIBRARY ********************/
 export const initializeLibrary = async ({
@@ -34,7 +36,7 @@ export const initializeLibrary = async ({
     state.setState('socketURL', socketURL)
   } else {
     debug &&
-      console.warn(
+      debugConsole.warn(
         'Socket URL was not passed in arguments. Socket updates not available'
       )
   }
@@ -44,7 +46,9 @@ export const initializeLibrary = async ({
     state.setState('appURL', appURL)
   } else {
     debug &&
-      console.warn('App URL was not passed in arguments. Apps may not work')
+      debugConsole.warn(
+        'App URL was not passed in arguments. Apps may not work'
+      )
   }
 
   // set debug mode
@@ -116,4 +120,7 @@ export const initializeLibrary = async ({
 
   // EVENT: inform the client that it is time to update wallet list
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+
+  // add Keplr event listener to update keplr snip20 subtokens
+  addKeplrChangeAccountListener()
 }

@@ -12,6 +12,7 @@ import { mnemonicToSeed } from 'bip39'
 import { signTxByPrivateKey, MessageSigner } from './signers'
 import { registerAccount } from './functions/registerAccount'
 import { genAddress } from './functions/genAddress'
+import { debugConsole } from '../../helpers/debugConsole'
 
 export class IostNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -147,7 +148,7 @@ export class IostNetwork extends BaseNetwork {
         Buffer.from(bs58.decode(privateKey), 'hex')
       )
     } catch (error) {
-      console.error(error)
+      debugConsole.error(error)
       errors.throwError('WrongArguments', { message: 'Invalid Private Key' })
     }
 
@@ -205,7 +206,7 @@ export class IostNetwork extends BaseNetwork {
         Buffer.from(bs58.decode(privateKey), 'hex')
       )
     } catch (error) {
-      console.error(error)
+      debugConsole.error(error)
       errors.throwError('WrongArguments', { message: 'Invalid Private Key' })
     }
 

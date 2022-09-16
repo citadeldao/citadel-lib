@@ -1,6 +1,6 @@
 import state from '../state'
 import { LIB_EVENT_CALLBACK_NAMES } from '../constants'
-import { debugConsoleLog } from '../helpers/debugConsoleLog'
+import { debugConsole } from '../helpers/debugConsole'
 
 /****************** DISPATCH LIB EVENT *********************
  * Executes the callback assigned to the given event.
@@ -14,7 +14,7 @@ import { debugConsoleLog } from '../helpers/debugConsoleLog'
 export const dispatchLibEvent = async (eventName, callbackArgument) => {
   // debug logs
   state.getState('debugEvents') &&
-    debugConsoleLog(
+    debugConsole.log(
       `Lib event: "${eventName}". CallbackArgument: `,
       callbackArgument
     )

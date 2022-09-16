@@ -44,11 +44,9 @@ export const signTxByLedger = async (rawTransaction, derivationPath, publicKey) 
   // const signatureParsed = Buffer.from(signature).toString('hex');
 
   return {
-    signedTransaction:{
-      ...rawTransaction.message,
-      signature,
-      publicKey,
-    },
+    ...rawTransaction.message,
+    signature,
+    publicKey,
     mode: 'ledger',
     isTyped: true,
   };

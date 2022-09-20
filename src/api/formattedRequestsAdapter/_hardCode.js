@@ -848,7 +848,18 @@ export const additionalConfig = [
             key: `m/44'/60'/0'/0/N`,
           },
         ],
-        ledger: [{ id: 1, label: `Default - 44/60/0/0/N`, key: `44/60/0/0/N` }],
+        ledger: [
+          {
+            id: 1,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 2,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
       },
     },
   },

@@ -73,7 +73,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
 
   async prepareCrossNetworkTransfer(
     token,
-    { toNetwork, toAddress, amount, fee, memo }
+    { toNetwork, toAddress, amount, fee, memo, isTyped = false }
   ) {
     const { data } = await api.requests.buildBridge({
       version: '1.0.2',
@@ -86,6 +86,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
       amount,
       fee,
       memo,
+      isTyped
     })
     return data
   }
@@ -95,6 +96,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     amount,
     type = DELEGATION_TYPES.STAKE,
     redelegateNodeAddress,
+    isTyped = false
   }) {
     // check type
     checkDelegationTypes(type)
@@ -108,6 +110,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
         to: redelegateNodeAddress,
         amount: Math.abs(amount),
         publicKey: this.publicKey,
+        isTyped
       })
       return data
     }
@@ -128,15 +131,17 @@ export class BaseCosmosNetwork extends BaseNetwork {
         },
       ],
       publicKey: this.publicKey,
+      isTyped
     })
 
     return data
   }
 
-  async prepareClaim() {
+  async prepareClaim({isTyped = false}) {
     const { data } = await api.requests.prepareClaim({
       net: this.net,
       address: this.address,
+      isTyped
     })
 
     return data

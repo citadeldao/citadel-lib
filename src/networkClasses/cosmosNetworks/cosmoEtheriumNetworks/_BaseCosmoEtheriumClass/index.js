@@ -79,11 +79,30 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     )
     // but with modified address
     wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
+    let publicKey = Buffer.from(wallet.publicKey, 'hex');
+    if (publicKey.length !== 33) {
+      publicKey = [...publicKey];
+      publicKey = publicKey.slice(1, 33);
+      publicKey.unshift(2);
+      publicKey = Buffer.from(publicKey).toString('base64');
+    }
+    wallet.publicKey = publicKey
     return wallet
   }
 
   async prepareTransfer(options){
-    console.log(888,{...options, isTyped: true});
     return super.prepareTransfer({...options, isTyped: true})
+  }
+
+  async prepareDelegation(options){
+    return super.prepareDelegation({...options, isTyped: true})
+  }
+
+  async prepareCrossNetworkTransfer(token, options){
+    return super.prepareCrossNetworkTransfer(token, {...options, isTyped: true})
+  }
+
+  async prepareClaim(){
+    return super.prepareClaim({isTyped: true})
   }
 }

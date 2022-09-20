@@ -84,7 +84,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       publicKey = [...publicKey];
       publicKey = publicKey.slice(1, 33);
       publicKey.unshift(2);
-      publicKey = Buffer.from(publicKey).toString('base64');
+      publicKey = Buffer.from(publicKey).toString('hex');
     }
     wallet.publicKey = publicKey
     return wallet

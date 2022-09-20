@@ -17,7 +17,8 @@ export const LIB_EVENT_NAMES = {
   SOCKET_EVENT: 'socketEvent',
   TOKEN_REFRESHED: 'tokenRefreshed',
   REFRESHED_TOKEN_EXPIRED: 'refreshedTokenExpired',
-  LEDGER_SIGN_FINISHED: 'ledgerSignFinished',
+  LEDGER_SIGNING_FINISHED: 'ledgerSigningFinished',
+  LEDGER_SIGNING_STARTED: 'ledgerSigningStarted',
 }
 
 // computed properties to associate event with its callback in the state
@@ -26,7 +27,8 @@ export const LIB_EVENT_CALLBACK_NAMES = {
   [LIB_EVENT_NAMES.SOCKET_EVENT]: 'socketEventCallback',
   [LIB_EVENT_NAMES.TOKEN_REFRESHED]: 'tokenRefreshedCallback',
   [LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]: 'refreshedTokenExpiredCallback',
-  [LIB_EVENT_NAMES.LEDGER_SIGN_FINISHED]: 'refreshedTokenExpiredCallback',
+  [LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]: 'ledgerSigningFinisedCallback',
+  [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'ledgerSigningStartedCallback',
 }
 
 export const CACHE_NAMES = {

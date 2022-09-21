@@ -43,6 +43,8 @@ import { OasisNetwork } from './OasisClass'
 import { ArbitrumNetwork } from './ethNetworks/ArbitrumClass'
 import { OptimismNetwork } from './ethNetworks/OptimismClass'
 import { TronNetwork } from './TronClass'
+import { StafiNetwork } from './cosmosNetworks/StafiClass'
+import { StrideNetwork } from './cosmosNetworks/StrideClass'
 
 
 export const networkClasses = {
@@ -90,5 +92,7 @@ export const networkClasses = {
   oasis: OasisNetwork,
   arbitrum: ArbitrumNetwork,
   optimism: OptimismNetwork,
-  tron: TronNetwork
+  tron: TronNetwork,
+  stafi: StafiNetwork,
+  stride: StrideNetwork
 }

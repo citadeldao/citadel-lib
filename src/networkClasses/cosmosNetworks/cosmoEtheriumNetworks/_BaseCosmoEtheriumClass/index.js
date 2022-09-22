@@ -5,6 +5,7 @@ import {
   signTxByLedger,
 } from './ethSigners'
 import { BaseEthNetwork } from '../../../ethNetworks/_BaseEthClass'
+import { EthNetwork } from '../../../ethNetworks/EthClass'
 import { getCosmosAddressFromEthAddress } from './functions'
 import { ECPair } from 'bitcoinjs-lib'
 import { WALLET_TYPES } from '../../../../constants'
@@ -67,5 +68,41 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       Buffer.from(wallet.privateKey, 'hex')
     ).publicKey.toString('hex')
     return wallet
+  }
+
+  static async createWalletByLedger(options, specialKey) {
+    // wallet creation function like etherium
+    const wallet = await EthNetwork.createWalletByLedger.call(
+      // bind the context to create a ninstance of the current net
+      this,
+      options
+    )
+    // but with modified address
+    wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
+    let publicKey = Buffer.from(wallet.publicKey, 'hex');
+    if (publicKey.length !== 33) {
+      publicKey = [...publicKey];
+      publicKey = publicKey.slice(1, 33);
+      publicKey.unshift(2);
+      publicKey = Buffer.from(publicKey).toString('hex');
+    }
+    wallet.publicKey = publicKey
+    return wallet
+  }
+
+  async prepareTransfer(options){
+    return super.prepareTransfer({...options, isTyped: true})
+  }
+
+  async prepareDelegation(options){
+    return super.prepareDelegation({...options, isTyped: true})
+  }
+
+  async prepareCrossNetworkTransfer(token, options){
+    return super.prepareCrossNetworkTransfer(token, {...options, isTyped: true})
+  }
+
+  async prepareClaim(){
+    return super.prepareClaim({isTyped: true})
   }
 }

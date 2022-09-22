@@ -6,6 +6,7 @@ export const prepareRedelegation = ({
   to,
   amount,
   publicKey,
+  isTyped
 }) => {
   return {
     // backend domain is in the axios instance
@@ -16,6 +17,7 @@ export const prepareRedelegation = ({
       validator_dst_address: to,
       amount,
       publicKey,
+      isTyped
     },
   }
 }

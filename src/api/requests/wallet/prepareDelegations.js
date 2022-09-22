@@ -5,6 +5,7 @@ export const prepareDelegations = ({
   from,
   delegations,
   publicKey,
+  isTyped
 }) => {
   return {
     // backend domain is in the axios instance
@@ -13,6 +14,7 @@ export const prepareDelegations = ({
     data: {
       delegations,
       publicKey,
+      isTyped
     },
   }
 }

@@ -1,53 +1,51 @@
 const secp256k1 = require('secp256k1')
 const keccak256 = require('keccak256')
 
-import { getHdDerivationPath } from '../../../_functions/ledger'
-import { getLedgerApp } from '../../_BaseCosmosClass/signers/getLedgerApp'
-import errors from '../../../../errors'
+import WebHidTransport from '@ledgerhq/hw-transport-webhid'
+import EthApp from '@ledgerhq/hw-app-eth'
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+import { TypedDataUtils, SignTypedDataVersion } from '@metamask/eth-sig-util';
 
-export const signTxByLedger = async (
-  rawTransaction,
-  derivationPath,
-  publicKey,
-  modeType = 'sync'
-) => {
-  const ledgerApp = await getLedgerApp()
-  const hdPath = getHdDerivationPath(derivationPath)
-  const response = await ledgerApp.cosmosApp.sign(hdPath, rawTransaction.bytes)
+const domainHash = (message) => {
+  return TypedDataUtils.hashStruct('EIP712Domain', message.domain, message.types, SignTypedDataVersion.V4);
+};
 
-  if (!response.signature) {
-    errors.throwError('LedgerError', {
-      message: response.error_message,
-      code: response.return_code,
-    })
+const messageHash = (message) => {
+  return TypedDataUtils.hashStruct(
+    message.primaryType,
+    message.message,
+    message.types,
+    SignTypedDataVersion.V4
+  );
+};
+
+
+
+export const signTxByLedger = async (rawTransaction, derivationPath, publicKey) => {
+  if (!global.ledger_eth && !global.ledger_bsc) {
+    const transport = (await WebHidTransport.isSupported())
+      ? await WebHidTransport.create(10000)
+      : await TransportWebUSB.create(10000)
+    global.ledger_eth = new EthApp(transport)
   }
+  const { v, r, s } = await global.ledger_eth.signEIP712HashedMessage(
+    derivationPath,
+    Buffer.from(domainHash(rawTransaction)).toString('hex'),
+    Buffer.from(messageHash(rawTransaction)).toString('hex'),
+  );
 
-  const parsedSignature = secp256k1.signatureImport(response.signature)
+  const combined = `${r}${s}${v.toString(16)}`;
+  const signature = combined.startsWith('0x') ? combined.slice(2) : combined;
 
-  let signMessage = new Object()
-  if (
-    rawTransaction.json.msgs[0].type === 'irishub/bank/Send' ||
-    rawTransaction.json.msgs[0].type === 'irishub/stake/BeginUnbonding' ||
-    rawTransaction.json.msgs[0].type === 'irishub/stake/BeginRedelegate'
-  ) {
-    signMessage = rawTransaction.jsonForSigningIrisTx
-  } else {
-    signMessage = rawTransaction.json
-  }
-
-  const signatureParsed = Buffer.from(parsedSignature).toString('hex')
-  // const signMessage = rawTransaction.json
-  const signedTx = {
-    ...signMessage,
-    fee: rawTransaction.json.fee,
-    signature: signatureParsed,
+  return {
+    ...rawTransaction.message,
+    signature,
     publicKey,
-    memo: rawTransaction.json.memo,
-    mode: modeType,
-  }
-
-  return signedTx
+    mode: 'ledger',
+    isTyped: true,
+  };
 }
+
 
 export const signTxByPrivateKey = (stdSignMsg, publicKeyHex, privateKeyHex) => {
   const msgHash = keccak256(stdSignMsg.bytes)

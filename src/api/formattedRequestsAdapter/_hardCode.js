@@ -1088,4 +1088,38 @@ export const additionalConfig = [
       },
     },
   },
+  {
+    net: 'stafi',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/118'/0'/0/N`,
+            key: `m/44'/118'/0'/0/N`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
+        ],
+      },
+    },
+  },
+  {
+    net: 'stride',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/118'/0'/0/N`,
+            key: `m/44'/118'/0'/0/N`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
+        ],
+      },
+    },
+  },
 ]

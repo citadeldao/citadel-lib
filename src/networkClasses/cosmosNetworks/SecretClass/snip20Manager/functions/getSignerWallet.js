@@ -50,6 +50,8 @@ export async function getSignerWallet({
         ]
       },
       async signAmino(...args) {
+        // EVENT: inform the client that it is time to update wallet list
+        dispatchLibEvent(LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED)
         // first arg is address
         const signDoc = args[1]
         const message = serializeSignDoc(signDoc)
@@ -63,7 +65,7 @@ export async function getSignerWallet({
         )
 
         // EVENT: inform the client that it is time to update wallet list
-        dispatchLibEvent(LIB_EVENT_NAMES.LEDGER_SIGN_FINISHED)
+        dispatchLibEvent(LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED)
 
         if (!res.signature) {
           errors.throwError('LedgerError', {

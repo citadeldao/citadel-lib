@@ -1,5 +1,6 @@
 import { executeContract } from './executeContract'
 import { SecretNetwork } from '../'
+import errors from '../../../../errors'
 
 export async function doTokenTransfer({
   address,
@@ -14,7 +15,7 @@ export async function doTokenTransfer({
   fee = 0.003,
 }) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  const gasLimit = 50_000
+  const gasLimit = 225_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
   const response = await executeContract({
@@ -35,5 +36,14 @@ export async function doTokenTransfer({
     type,
     publicKey,
   })
+
+  // check error (not sure if this is a reliable way)
+  if (response.data?.length === 0) {
+    // throw error if data array is empty
+    errors.throwError('RequestError', {
+      message: response.rawLog,
+    })
+  }
+
   return [response.transactionHash]
 }

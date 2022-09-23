@@ -114,10 +114,11 @@ export async function setViewingKey(
           message: response?.rawLog || 'Viewing Key setting faild',
         })
       }
-
+      const rawJsonData = Buffer.from(response.data[0]).toString('utf-8')
+      const cleanJsonData = rawJsonData.slice(rawJsonData.search('{'))
       const {
         create_viewing_key: { key: randomViewingKey },
-      } = JSON.parse(Buffer.from(response.data[0]).toString('utf-8'))
+      } = JSON.parse(cleanJsonData)
       transactionHash = response.transactionHash
       viewingKey = randomViewingKey
       break

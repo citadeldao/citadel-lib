@@ -2,6 +2,7 @@ import { CACHE_NAMES } from '../../../../constants'
 import { SecretNetwork } from '../'
 import storage from '../../../../storage'
 import { executeContract } from './executeContract'
+import errors from '../../../../errors'
 
 export async function convertScrtToSecretScrt({
   address,
@@ -42,5 +43,14 @@ export async function convertScrtToSecretScrt({
       },
     ],
   })
+
+  // check error (not sure if this is a reliable way)
+  if (response.data?.length === 0) {
+    // throw error if data array is empty
+    errors.throwError('RequestError', {
+      message: response.rawLog,
+    })
+  }
+
   return [response.transactionHash]
 }

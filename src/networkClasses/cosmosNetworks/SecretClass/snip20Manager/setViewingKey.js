@@ -21,7 +21,7 @@ export async function setViewingKey(
   } = {}
 ) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  const gasLimit = 40_000
+  const gasLimit = 175_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
 

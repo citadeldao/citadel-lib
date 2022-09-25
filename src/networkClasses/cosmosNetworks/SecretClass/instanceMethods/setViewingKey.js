@@ -12,12 +12,13 @@ export async function setViewingKey(
   { privateKey, derivationPath, viewingKey, fee = 0.003 } = {}
 ) {
   const networkClass = networkClasses.getNetworkClass(this.net)
-  let data
+  let data = null
   // separate flow for kepler
   if (this.type === WALLET_TYPES.KEPLR) {
+    let keplr = null
+    const chainId = keplrChains[this.net]
     try {
-      const keplr = await this.getKeplr()
-      const chainId = keplrChains[this.net]
+      keplr = await this.getKeplr()
       // set token to keplr
       await keplr.suggestToken(chainId, networkClass.tokens[token].address)
       // get token VK from keplr
@@ -26,6 +27,41 @@ export async function setViewingKey(
       data = { transactionHash: null, viewingKey: keplrViewingKey }
     } catch (error) {
       errors.throwError('KeplrError', { message: error.message })
+    }
+    // load balance
+    const { error } = await this.loadSnip20TokenBalance(
+      token,
+      viewingKey || data.viewingKey,
+      viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
+    )
+
+    // if keplr error - set vk with keplr signer and export it to keplr
+    if (error) {
+      // set random viewingKey by keplr signer
+      data = await snip20Manager.setViewingKey(VIEWING_KEYS_TYPES.RANDOM, {
+        address: this.address,
+        contractAddress: networkClass.tokens[token].address,
+        type: this.type,
+        publicKey: this.publicKey,
+        privateKey,
+        privateKeyHash: this.privateKeyHash,
+        derivationPath,
+        viewingKey,
+        fee,
+      })
+      // load balance
+      await this.loadSnip20TokenBalance(
+        token,
+        viewingKey || data.viewingKey,
+        viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
+      )
+
+      // export vk to keplr
+      await keplr.suggestToken(
+        chainId,
+        networkClass.tokens[token].address,
+        data.viewingKey
+      )
     }
   } else {
     if (this.balance.calculatedBalance < fee) {
@@ -44,14 +80,13 @@ export async function setViewingKey(
       viewingKey,
       fee,
     })
+    // load balance
+    await this.loadSnip20TokenBalance(
+      token,
+      viewingKey || data.viewingKey,
+      viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
+    )
   }
-
-  // load balance
-  await this.loadSnip20TokenBalance(
-    token,
-    viewingKey || data.viewingKey,
-    viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
-  )
 
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 

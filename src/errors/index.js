@@ -10,6 +10,7 @@ import { TrezorError } from './TrezorError'
 import { LedgerError } from './LedgerError'
 import { ViewingKeyError } from './ViewingKeyError'
 import { StorageError } from './StorageError'
+import { KeplrError } from './KeplrError'
 
 /********************** ERROR MODULE***********************
  * Exports by default an object with a method to throw the error of the specific class
@@ -31,7 +32,8 @@ const errors = {
   TrezorError,
   LedgerError,
   ViewingKeyError,
-  StorageError
+  StorageError,
+  KeplrError,
 }
 
 const getErrorClass = (errorName) => errors[errorName]

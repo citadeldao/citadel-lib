@@ -1,5 +1,6 @@
 import { SecretNetwork } from '../'
 import { executeContract } from './executeContract'
+import errors from '../../../../errors'
 
 export async function doCrossNetworkTransfer({
   address,
@@ -13,10 +14,10 @@ export async function doCrossNetworkTransfer({
   toAddress,
   // for secret_eth - 0.1 minimum
   amount,
-  fee = 0.003,
+  fee = 0.006,
 }) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  const gasLimit = 90_000
+  const gasLimit = 500_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (+fee * 10 ** SecretNetwork.decimals) / gasLimit
 
@@ -39,6 +40,14 @@ export async function doCrossNetworkTransfer({
     type,
     publicKey,
   })
+
+  // check error (not sure if this is a reliable way)
+  if (response.data?.length === 0) {
+    // throw error if data array is empty
+    errors.throwError('RequestError', {
+      message: response.rawLog,
+    })
+  }
 
   return [response.transactionHash]
 }

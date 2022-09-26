@@ -1,6 +1,7 @@
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { TezApp } from '../ledgerApp'
+import { debugConsole } from '../../../helpers/debugConsole'
 
 export const signTxByLedger = async (rawTransaction, derivationPath) => {
   // add globa ledger app to avoid ledger reconnect error
@@ -21,6 +22,6 @@ export const signTxByLedger = async (rawTransaction, derivationPath) => {
 
     return { sopbytes: opbytes + signature }
   } catch (err) {
-    console.error(err)
+    debugConsole.error(err)
   }
 }

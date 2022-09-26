@@ -1,4 +1,9 @@
 import api from '../../api'
+import {
+  WALLET_TYPES,
+  SECRET_NET_KEY,
+  APP_MESSAGE_TYPES,
+} from '../../constants'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
 
@@ -7,8 +12,6 @@ const TYPES = {
 }
 
 const VK_TEXT_VARIABLE = '%viewing_key%'
-
-const SECRET_NET_KEY = 'secret'
 
 export const messageFromApp = async ({
   from: token,
@@ -23,7 +26,6 @@ export const messageFromApp = async ({
   if (!Object.values(TYPES).includes(type)) {
     return
   }
-
   // get snip20 manager
   const snip20Manager = networkClasses
     .getNetworkClass(SECRET_NET_KEY)
@@ -41,12 +43,26 @@ export const messageFromApp = async ({
       const msgString = JSON.stringify(msg)
       if (msgString.includes(VK_TEXT_VARIABLE)) {
         // get savedVK
-        const savedVK =
+        let savedVK =
           walletInstance?.savedViewingKeys &&
           Object.values(walletInstance.savedViewingKeys).find(
             ({ contractAddress }) => contractAddress === contract
           )?.viewingKey
-
+        // get keplr VK if no sevedVK
+        if (!savedVK && walletInstance.type === WALLET_TYPES.KEPLR) {
+          try {
+            savedVK = await snip20Manager.getViewingKeyByKeplr(
+              SECRET_NET_KEY,
+              contract,
+              sender
+            )
+          } catch (error) {
+            // throw 'change keplr account' error only
+            if (error.code === 1) {
+              throw error
+            }
+          }
+        }
         // replace msg with VK
         msg = JSON.parse(msgString.replace(VK_TEXT_VARIABLE, savedVK))
       }
@@ -56,18 +72,33 @@ export const messageFromApp = async ({
         contractAddress: contract,
         query: msg,
       })
-
+      // detect error
+      let isError = false
+      const errorKeywords = ['err', 'unauthorized']
+      Object.keys(response || {}).map((key) =>
+        errorKeywords.map((errorKeyword) => {
+          if (key.includes(errorKeyword)) {
+            isError = true
+          }
+        })
+      )
       // send result to app
       await api.externalRequests.sendCustomMessage({
         token,
-        message: response,
+        message: {
+          type: isError ? APP_MESSAGE_TYPES.ERROR : APP_MESSAGE_TYPES.SUCCESS,
+          response,
+        },
         type,
       })
     } catch (error) {
       // send error to app
       await api.externalRequests.sendCustomMessage({
         token,
-        message: { error },
+        message: {
+          type: APP_MESSAGE_TYPES.ERROR,
+          response: { error: error.message },
+        },
         type,
       })
     }

@@ -6,6 +6,7 @@ export async function getTokenTransactions({
   viewingKey,
   page,
   pageSize,
+  type
 }) {
   try {
     // get token transfer history
@@ -19,6 +20,8 @@ export async function getTokenTransactions({
           page_size: pageSize,
         },
       },
+      address,
+      type
     })
 
     if (resp?.transfer_history?.txs) {

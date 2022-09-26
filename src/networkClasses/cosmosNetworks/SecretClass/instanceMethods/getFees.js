@@ -11,13 +11,13 @@ export const getFees = async function (token) {
   if (tokensConfig[token]?.standard === 'snip20') {
     return {
       low: {
-        fee: 0.002,
+        fee: 0.004,
       },
       medium: {
-        fee: 0.003,
+        fee: 0.006,
       },
       high: {
-        fee: 0.004,
+        fee: 0.008,
       },
     }
   }

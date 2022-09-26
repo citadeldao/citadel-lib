@@ -79,11 +79,16 @@ export const additionalConfig = [
         seed: [
           {
             id: 1,
+            label: `Default - m/44'/118'/0'/0/N`,
+            key: `m/44'/118'/0'/0/N`,
+          },
+          {
+            id: 2,
             label: `Default - m/44'/750'/0'/0/N`,
             key: `m/44'/750'/0'/0/N`,
           },
           {
-            id: 1,
+            id: 3,
             label: `Derivation template 2 - m/44'/529'/0'/0/N`,
             key: `m/44'/529'/0'/0/N`,
           },
@@ -766,7 +771,18 @@ export const additionalConfig = [
             key: `m/44'/60'/0'/0/N`,
           },
         ],
-        ledger: [{ id: 1, label: `Default - 44/60/0/0/N`, key: `44/60/0/0/N` }],
+        ledger: [
+          {
+            id: 1,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 2,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
       },
     },
   },
@@ -832,7 +848,18 @@ export const additionalConfig = [
             key: `m/44'/60'/0'/0/N`,
           },
         ],
-        ledger: [{ id: 1, label: `Default - 44/60/0/0/N`, key: `44/60/0/0/N` }],
+        ledger: [
+          {
+            id: 1,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 2,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
       },
     },
   },
@@ -889,6 +916,197 @@ export const additionalConfig = [
   },
   {
     net: 'orai',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/118'/0'/0/N`,
+            key: `m/44'/118'/0'/0/N`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
+        ],
+      },
+    },
+  },
+  {
+    net: 'oasis',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/474'/N'`,
+            key: `m/44'/474'/N'`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44/474/0/0/N`, key: `44/474/0/0/N` },
+        ],
+      },
+    },
+  },
+  {
+    net: 'polygon',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+        ledger: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+      },
+    },
+  },
+  {
+    net: 'arbitrum',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+        ledger: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+      },
+    },
+  },
+  {
+    net: 'optimism',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+        ledger: [
+          {
+            id: 1,
+            label: `Default, Metamask, Trezor - m/44'/60'/0'/0/N`,
+            key: `m/44'/60'/0'/0/N`,
+          },
+          {
+            id: 2,
+            label: `Ledger live - m/44'/60'/N'/0/0`,
+            key: `m/44'/60'/N'/0/0`,
+          },
+          {
+            id: 3,
+            label: `Legacy (MEW / MyCrypto) - m/44'/60'/0'/N`,
+            key: `m/44'/60'/0'/N`,
+          },
+        ],
+      },
+    },
+  },
+  {
+    net: 'tron',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/195'/0'/0/N'`,
+            key: `m/44'/195'/0'/0/N`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44'/195'/0'/0/N`, key: `44'/195'/0'/0/N` },
+        ],
+      },
+    },
+  },
+  {
+    net: 'stafi',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/118'/0'/0/N`,
+            key: `m/44'/118'/0'/0/N`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
+        ],
+      },
+    },
+  },
+  {
+    net: 'stride',
     config: {
       derivationPathTemplates: {
         seed: [

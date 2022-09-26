@@ -1,6 +1,4 @@
-import { getSignerWallet } from './functions/getSignerWallet'
-import { SecretNetworkClient } from 'secretjs'
-import { GRPC_WEB_URL } from '../../../../constants'
+import { getSecretClient } from './functions/getSecretClient'
 
 export const executeContract = async ({
   address,
@@ -14,21 +12,13 @@ export const executeContract = async ({
   publicKey,
   simulate = false,
 }) => {
-  const signerWallet = await getSignerWallet({
+  // prepare secret client
+  const secretjs = await getSecretClient({
+    address,
     privateKey,
     derivationPath,
     type,
     publicKey,
-    address,
-  })
-
-  // prepare secret client
-  const secretjs = await SecretNetworkClient.create({
-    grpcWebUrl: GRPC_WEB_URL,
-    chainId: 'secret-4',
-    // wallet: signerWallet,
-    wallet: signerWallet,
-    walletAddress: address,
   })
 
   // get contract codeHash

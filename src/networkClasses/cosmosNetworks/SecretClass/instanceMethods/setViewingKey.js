@@ -1,76 +1,92 @@
-import { VIEWING_KEYS_TYPES } from '../../../../constants'
+import { VIEWING_KEYS_TYPES, WALLET_TYPES } from '../../../../constants'
 import snip20Manager from '../snip20Manager'
 import networkClasses from '../../../'
-import walletsManager from '../../../../walletsManager'
-import { createSnip20TokenListItem } from './_functions/createSnip20TokenListItem'
-import { calculateSubtokenBalanceUSD } from '../../../_functions/balances'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
+import errors from '../../../../errors'
+import { keplrChains } from '../../_BaseCosmosClass/signers/keplrChains'
 
 export async function setViewingKey(
   token,
   viewingKeyType,
-  { privateKey, derivationPath, viewingKey, fee } = {}
+  { privateKey, derivationPath, viewingKey, fee = 0.003 } = {}
 ) {
   const networkClass = networkClasses.getNetworkClass(this.net)
+  let data = null
+  // separate flow for kepler
+  if (this.type === WALLET_TYPES.KEPLR) {
+    let keplr = null
+    const chainId = keplrChains[this.net]
+    try {
+      keplr = await this.getKeplr()
+      // set token to keplr
+      await keplr.suggestToken(chainId, networkClass.tokens[token].address)
+      // get token VK from keplr
+      const keplrViewingKey = await this.getViewingKeyByKeplr(token)
+      viewingKeyType = VIEWING_KEYS_TYPES.CUSTOM
+      data = { transactionHash: null, viewingKey: keplrViewingKey }
+    } catch (error) {
+      errors.throwError('KeplrError', { message: error.message })
+    }
+    // load balance
+    const { error } = await this.loadSnip20TokenBalance(
+      token,
+      viewingKey || data.viewingKey,
+      viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
+    )
 
-  // set vievingKey
-  const data = await snip20Manager.setViewingKey(viewingKeyType, {
-    address: this.address,
-    contractAddress: networkClass.tokens[token].address,
-    type: this.type,
-    publicKey: this.publicKey,
-    privateKey,
-    privateKeyHash: this.privateKeyHash,
-    derivationPath,
-    viewingKey,
-    fee,
-  })
+    // if keplr error - set vk with keplr signer and export it to keplr
+    if (error) {
+      // set random viewingKey by keplr signer
+      data = await snip20Manager.setViewingKey(VIEWING_KEYS_TYPES.RANDOM, {
+        address: this.address,
+        contractAddress: networkClass.tokens[token].address,
+        type: this.type,
+        publicKey: this.publicKey,
+        privateKey,
+        privateKeyHash: this.privateKeyHash,
+        derivationPath,
+        viewingKey,
+        fee,
+      })
+      // load balance
+      await this.loadSnip20TokenBalance(
+        token,
+        viewingKey || data.viewingKey,
+        viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
+      )
 
-  // save VK to instance
-  this.savedViewingKeys[token] = {
-    token,
-    contractAddress: networkClasses.getNetworkClass(this.net).tokens[token]
-      .address,
-    viewingKeyType:
-      viewingKeyType === VIEWING_KEYS_TYPES.RANDOM
-        ? VIEWING_KEYS_TYPES.CUSTOM
-        : viewingKeyType,
-    viewingKey: data.viewingKey,
+      // export vk to keplr
+      await keplr.suggestToken(
+        chainId,
+        networkClass.tokens[token].address,
+        data.viewingKey
+      )
+    }
+  } else {
+    if (this.balance.calculatedBalance < fee) {
+      errors.throwError('ViewingKeyError', { message: 'Insufficient funds' })
+    }
+
+    // set viewingKey
+    data = await snip20Manager.setViewingKey(viewingKeyType, {
+      address: this.address,
+      contractAddress: networkClass.tokens[token].address,
+      type: this.type,
+      publicKey: this.publicKey,
+      privateKey,
+      privateKeyHash: this.privateKeyHash,
+      derivationPath,
+      viewingKey,
+      fee,
+    })
+    // load balance
+    await this.loadSnip20TokenBalance(
+      token,
+      viewingKey || data.viewingKey,
+      viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
+    )
   }
-
-  // remove old token from subtokensList if it exist
-  const subtokensListItemIndex = this.subtokensList.findIndex(
-    (tokenItem) => tokenItem.net === token
-  )
-  subtokensListItemIndex > -1 &&
-    this.subtokensList.splice(subtokensListItemIndex, 1)
-
-  // get balance
-  const { amount } = await snip20Manager.getTokenBalance(
-    this.address,
-    networkClass.tokens[token].address,
-    networkClass.tokens[token].decimals,
-    viewingKey
-  )
-
-  // add token to subtokenList
-  const tokenListItem = await createSnip20TokenListItem(
-    token,
-    amount,
-    this.savedViewingKeys
-  )
-  this.subtokensList.push(tokenListItem)
-
-  // save viewing keys to storage
-  walletsManager.updateWallet({
-    walletId: this.id,
-    newWalletInfo: {
-      savedViewingKeys: this.savedViewingKeys,
-      subtokensList: this.subtokensList,
-      subtokenBalanceUSD: calculateSubtokenBalanceUSD(this.subtokensList),
-    },
-  })
 
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 

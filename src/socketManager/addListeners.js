@@ -1,6 +1,7 @@
 import { LIB_EVENT_NAMES } from '../constants'
 import { eventHandlers } from './eventHandlers'
 import { dispatchLibEvent } from '../generalFunctions/dispatchLibEvent'
+import { debugConsole } from '../helpers/debugConsole'
 
 export const addListeners = (socket, socketEventNames) => {
   try {
@@ -20,6 +21,6 @@ export const addListeners = (socket, socketEventNames) => {
       })
     })
   } catch (error) {
-    console.error(`Add socket listeners error`, error)
+    debugConsole.error(`Add socket listeners error`, error)
   }
 }

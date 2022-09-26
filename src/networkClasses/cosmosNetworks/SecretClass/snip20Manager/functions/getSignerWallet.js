@@ -1,12 +1,14 @@
 import {
-  HARDWARE_SIGNER_WALLET_TYPES,
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
+  WALLET_TYPES,
+  LIB_EVENT_NAMES,
 } from '../../../../../constants'
 import { getLedgerApp } from '../../../_BaseCosmosClass/signers/getLedgerApp'
 import { serializeSignDoc } from './serializeSignDoc'
 import { DirectSecp256k1Wallet } from '@cosmjs/proto-signing'
 import { getHdDerivationPath } from '../../../../_functions/ledger'
 import errors from '../../../../../errors'
+import { dispatchLibEvent } from '../../../../../generalFunctions/dispatchLibEvent'
 const secp256k1 = require('secp256k1')
 
 export async function getSignerWallet({
@@ -15,6 +17,8 @@ export async function getSignerWallet({
   type,
   publicKey,
   address,
+  chainId,
+  keplr,
 }) {
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
     privateKey = privateKey.replace('0x', '')
@@ -27,8 +31,13 @@ export async function getSignerWallet({
     return wallet
   }
 
-  // hardware signer
-  if (HARDWARE_SIGNER_WALLET_TYPES.includes(type)) {
+  if (type === WALLET_TYPES.KEPLR) {
+    // get signer
+    return await keplr.getOfflineSignerOnlyAmino(chainId)
+  }
+
+  // ledger signer
+  if (type === WALLET_TYPES.LEDGER) {
     // create signer by ledger
     return {
       getAccounts() {
@@ -41,6 +50,8 @@ export async function getSignerWallet({
         ]
       },
       async signAmino(...args) {
+        // EVENT: inform the client that it is time to update wallet list
+        dispatchLibEvent(LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED)
         // first arg is address
         const signDoc = args[1]
         const message = serializeSignDoc(signDoc)
@@ -52,6 +63,10 @@ export async function getSignerWallet({
           getHdDerivationPath(derivationPath),
           formattedMessage
         )
+
+        // EVENT: inform the client that it is time to update wallet list
+        dispatchLibEvent(LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED)
+
         if (!res.signature) {
           errors.throwError('LedgerError', {
             message: res.error_message,

@@ -1,3 +1,5 @@
+import { debugConsole } from '../helpers/debugConsole'
+
 export const retryRequestOnError = async (
   requestFunction,
   {
@@ -42,7 +44,7 @@ export const retryRequestOnError = async (
   if (error && throwError) {
     throw error
   }
-  error && console.error(error)
+  error && debugConsole.error(error)
 
   return { data, error: null }
 }

@@ -17,11 +17,11 @@ export async function setViewingKey(
     privateKeyHash,
     derivationPath,
     viewingKey,
-    fee = 0.003,
+    fee,
   } = {}
 ) {
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
-  const gasLimit = 40_000
+  const gasLimit = 175_000
   // native secret decimals for fee
   const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
 
@@ -51,6 +51,11 @@ export async function setViewingKey(
         type,
         publicKey,
       })
+      if (!response.data || response.data.length < 1) {
+        errors.throwError('ViewingKeyError', {
+          message: response?.rawLog || 'Viewing Key setting faild',
+        })
+      }
       transactionHash = response.transactionHash
       viewingKey = simpleViewingKey
       break
@@ -75,6 +80,11 @@ export async function setViewingKey(
         type,
         publicKey,
       })
+      if (!response.data || response.data.length < 1) {
+        errors.throwError('ViewingKeyError', {
+          message: response?.rawLog || 'Viewing Key setting faild',
+        })
+      }
       transactionHash = response.transactionHash
       break
     }
@@ -98,9 +108,17 @@ export async function setViewingKey(
         type,
         publicKey,
       })
+
+      if (!response.data || response.data.length < 1) {
+        errors.throwError('ViewingKeyError', {
+          message: response?.rawLog || 'Viewing Key setting faild',
+        })
+      }
+      const rawJsonData = Buffer.from(response.data[0]).toString('utf-8')
+      const cleanJsonData = rawJsonData.slice(rawJsonData.search('{'))
       const {
         create_viewing_key: { key: randomViewingKey },
-      } = JSON.parse(Buffer.from(response.data[0]).toString('utf-8'))
+      } = JSON.parse(cleanJsonData)
       transactionHash = response.transactionHash
       viewingKey = randomViewingKey
       break

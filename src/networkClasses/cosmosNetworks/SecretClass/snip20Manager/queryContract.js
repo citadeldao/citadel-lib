@@ -1,10 +1,17 @@
-import { SecretNetworkClient } from 'secretjs'
-import { GRPC_WEB_URL } from '../../../../constants'
+import { getSecretClient } from './functions/getSecretClient'
+
 // get query messages from node_modules\secretjs\dist\extensions\snip20\types.d.ts
-export const queryContract = async ({ contractAddress, query }) => {
-  const secretjs = await SecretNetworkClient.create({
-    grpcWebUrl: GRPC_WEB_URL,
-    chainId: 'secret-4',
+export const queryContract = async ({
+  contractAddress,
+  query,
+  address,
+  type,
+}) => {
+  // prepare secret client
+  const secretjs = await getSecretClient({
+    address,
+    type,
+    readOnly: true,
   })
 
   // get contract codeHash

@@ -17,6 +17,8 @@ export const LIB_EVENT_NAMES = {
   SOCKET_EVENT: 'socketEvent',
   TOKEN_REFRESHED: 'tokenRefreshed',
   REFRESHED_TOKEN_EXPIRED: 'refreshedTokenExpired',
+  LEDGER_SIGNING_FINISHED: 'ledgerSigningFinished',
+  LEDGER_SIGNING_STARTED: 'ledgerSigningStarted',
 }
 
 // computed properties to associate event with its callback in the state
@@ -25,6 +27,8 @@ export const LIB_EVENT_CALLBACK_NAMES = {
   [LIB_EVENT_NAMES.SOCKET_EVENT]: 'socketEventCallback',
   [LIB_EVENT_NAMES.TOKEN_REFRESHED]: 'tokenRefreshedCallback',
   [LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]: 'refreshedTokenExpiredCallback',
+  [LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]: 'ledgerSigningFinisedCallback',
+  [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'ledgerSigningStartedCallback',
 }
 
 export const CACHE_NAMES = {
@@ -46,6 +50,8 @@ export const DELEGATION_TYPES = {
   UNSTAKE: 'unstake',
   REDELEGATE: 'redelegate',
 }
+
+export const SECRET_NET_KEY = 'secret'
 
 export const WALLET_TYPES = {
   TREZOR: 'trezor',
@@ -76,4 +82,15 @@ export const VIEWING_KEYS_TYPES = {
 export const STATUSES = {
   SUCCESS: 'success',
   ERROR: 'error',
+}
+
+export const APP_MESSAGE_TYPES = {
+  SUCCESS: 'SUCCESS',
+  ERROR: 'FAILED',
+}
+
+export const KEPLR = {
+  ERRORS: {
+    REJECTED: 'Request rejected',
+  },
 }

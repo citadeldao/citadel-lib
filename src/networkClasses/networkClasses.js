@@ -38,6 +38,14 @@ import { CrescentNetwork } from './cosmosNetworks/CrescentClass'
 import { AxelarNetwork } from './cosmosNetworks/AxelarClass'
 import { PolkadotNetwork } from './PolkadotClass'
 import { OraiNetwork } from './cosmosNetworks/OraiClass'
+import { PolygonNetwork } from './ethNetworks/PolygonClass'
+import { OasisNetwork } from './OasisClass'
+import { ArbitrumNetwork } from './ethNetworks/ArbitrumClass'
+import { OptimismNetwork } from './ethNetworks/OptimismClass'
+import { TronNetwork } from './TronClass'
+import { StafiNetwork } from './cosmosNetworks/StafiClass'
+import { StrideNetwork } from './cosmosNetworks/StrideClass'
+
 
 export const networkClasses = {
   tez: TezosNetwork,
@@ -79,5 +87,12 @@ export const networkClasses = {
   crescent: CrescentNetwork,
   axelar: AxelarNetwork,
   polkadot: PolkadotNetwork,
-  orai: OraiNetwork
+  orai: OraiNetwork,
+  polygon: PolygonNetwork,
+  oasis: OasisNetwork,
+  arbitrum: ArbitrumNetwork,
+  optimism: OptimismNetwork,
+  tron: TronNetwork,
+  stafi: StafiNetwork,
+  stride: StrideNetwork
 }

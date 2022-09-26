@@ -10,7 +10,10 @@ import {
 } from '../../constants'
 import walletInstances from '../../walletInstances'
 import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
-import { LIB_EVENT_NAMES, VIEWING_KEYS_TYPES } from '../../constants'
+import {
+  LIB_EVENT_NAMES,
+  VIEWING_KEYS_TYPES
+} from '../../constants'
 import errors from '../../errors'
 
 export const setViewingKey = async (
@@ -24,7 +27,7 @@ export const setViewingKey = async (
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
     ['token', token, ['String'], true],
-    ['viewingKeyType', viewingKeyType, ['String'], true],
+    ['viewingKeyType', viewingKeyType, ['String']],
     ['options', options, ['Object'], true]
   )
   checkNetworkOrToken(token)
@@ -43,6 +46,7 @@ export const setViewingKey = async (
   if (HARDWARE_SIGNER_WALLET_TYPES.includes(walletInstance.type)) {
     checkTypes(['derivationPath', derivationPath, ['String'], true])
   }
+
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(walletInstance.type)) {
     checkTypes(['privateKey', privateKey, ['String'], true])
   }

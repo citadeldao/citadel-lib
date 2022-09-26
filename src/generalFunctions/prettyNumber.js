@@ -28,7 +28,7 @@ export const prettyNumber = (value) => {
     return value
   }
 
-  const formatedValue = value.toString().trim().replaceAll(',', '')
+  const formatedValue = value.toString().trim().replace(/,/g, '')
 
   const abbDecimals = 2
   const maxDecimals = 5

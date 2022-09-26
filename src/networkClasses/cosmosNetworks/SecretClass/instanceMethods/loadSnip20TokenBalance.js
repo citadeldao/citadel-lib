@@ -20,7 +20,8 @@ export async function loadSnip20TokenBalance(
       this.address,
       tokenConfig.address,
       tokenConfig.decimals,
-      viewingKey
+      viewingKey,
+      this.type
     )
     error = response.error?.message
   } catch (err) {

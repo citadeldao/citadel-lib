@@ -26,7 +26,6 @@ export const messageFromApp = async ({
   if (!Object.values(TYPES).includes(type)) {
     return
   }
-
   // get snip20 manager
   const snip20Manager = networkClasses
     .getNetworkClass(SECRET_NET_KEY)
@@ -64,7 +63,6 @@ export const messageFromApp = async ({
             }
           }
         }
-
         // replace msg with VK
         msg = JSON.parse(msgString.replace(VK_TEXT_VARIABLE, savedVK))
       }
@@ -74,7 +72,6 @@ export const messageFromApp = async ({
         contractAddress: contract,
         query: msg,
       })
-
       // detect error
       let isError = false
       const errorKeywords = ['err', 'unauthorized']
@@ -85,7 +82,6 @@ export const messageFromApp = async ({
           }
         })
       )
-
       // send result to app
       await api.externalRequests.sendCustomMessage({
         token,

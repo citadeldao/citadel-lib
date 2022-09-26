@@ -26,7 +26,7 @@ export const getSecretClient = async ({
   let keplr = null
   const chainId = keplrChains.secret
 
-  if (walletInstance.type === WALLET_TYPES.KEPLR) {
+  if (walletInstance?.type === WALLET_TYPES.KEPLR) {
     keplr = await walletInstance.getKeplr()
     encryptionUtils = await keplr.getEnigmaUtils(chainId)
   }

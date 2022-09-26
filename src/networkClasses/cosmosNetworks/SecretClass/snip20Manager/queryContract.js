@@ -1,10 +1,16 @@
 import { getSecretClient } from './functions/getSecretClient'
 
 // get query messages from node_modules\secretjs\dist\extensions\snip20\types.d.ts
-export const queryContract = async ({ contractAddress, query, address }) => {
+export const queryContract = async ({
+  contractAddress,
+  query,
+  address,
+  type,
+}) => {
   // prepare secret client
   const secretjs = await getSecretClient({
     address,
+    type,
     readOnly: true,
   })
 

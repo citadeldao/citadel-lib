@@ -4,7 +4,8 @@ export async function getTokenBalance(
   address,
   contractAddress,
   decimals,
-  viewingKey
+  viewingKey,
+  type
 ) {
   try {
     const resp = await queryContract({
@@ -15,7 +16,8 @@ export async function getTokenBalance(
           key: viewingKey,
         },
       },
-      address
+      address,
+      type
     })
 
     if (resp.balance && resp.balance.amount)

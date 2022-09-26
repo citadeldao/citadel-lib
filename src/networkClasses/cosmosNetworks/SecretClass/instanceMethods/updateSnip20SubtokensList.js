@@ -55,7 +55,8 @@ export async function updateSnip20SubtokensList() {
       this.address,
       tokensConfig[token].address,
       tokensConfig[token].decimals,
-      viewingKey
+      viewingKey,
+      this.type
     )
     error = response.error
     amount = response.amount
@@ -76,7 +77,8 @@ export async function updateSnip20SubtokensList() {
             this.address,
             tokensConfig[token].address,
             tokensConfig[token].decimals,
-            keplrViewingKey
+            keplrViewingKey,
+            this.type
           )
           error = response.error
           amount = response.amount
@@ -160,7 +162,8 @@ export async function updateSnip20SubtokensList() {
       this.address,
       tokensConfig[token].address,
       tokensConfig[token].decimals,
-      viewingKey
+      viewingKey,
+      this.type
     )
     if (!error) {
       // save VK to instance

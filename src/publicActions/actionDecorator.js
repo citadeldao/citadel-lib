@@ -9,7 +9,13 @@ import { debugConsole } from '../helpers/debugConsole'
 export const actionDecorator = (action, actionName) => {
   // return wrapped public action (it will be called by the user via citadel[actionName](...args))
   return function (...args) {
-    debugConsole.log(`Lib function called: "${actionName}". Arguments:`, args)
+    debugConsole.log(
+      `%cLib function called: `,
+      'color: lightblue;',
+      `"${actionName}". Arguments:`,
+      'color: lightblue;',
+      args
+    )
     try {
       // execute a public function with passed arguments and get result
       const result = action(...args)
@@ -52,7 +58,9 @@ const successResponseFormatter = (result, actionName) => {
   }
 
   debugConsole.log(
-    `Lib function "${actionName}" returned:`,
+    `%cLib function `,
+    'color: lightblue;',
+    `"${actionName}" returned:`,
     cloneDeep(wrappedResult)
   )
 
@@ -92,7 +100,9 @@ const errorResponseFormatter = (error, actionName) => {
   }
 
   debugConsole.log(
-    `Lib function "${actionName}" returned:`,
+    `%cLib function `,
+    'color: lightblue;',
+    `"${actionName}" returned:`,
     cloneDeep(wrappedResult)
   )
 

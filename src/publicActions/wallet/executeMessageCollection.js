@@ -10,7 +10,7 @@ import {
 import walletInstances from '../../walletInstances'
 
 /**
- * Executes  complex (composite) secret token transactions
+ * Executes complex (composite) secret token transactions
  * 
  * @param walletId STRING, NUMBER (REQUIRED) - Secret wallet id
  * @param messages ARRAY (REQUIRED) array of transaction messages. Model:

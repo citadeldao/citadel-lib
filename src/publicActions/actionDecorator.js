@@ -13,7 +13,6 @@ export const actionDecorator = (action, actionName) => {
       `%cLib function called: `,
       'color: lightblue;',
       `"${actionName}". Arguments:`,
-      'color: lightblue;',
       args
     )
     try {

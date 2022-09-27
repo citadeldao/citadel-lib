@@ -9,6 +9,8 @@ import { getAllMarketcaps } from './getAllMarketcaps'
 import { getSubscriptions } from './getSubscriptions'
 import { manageSubscriptions } from './manageSubscriptions'
 import { refreshAuthToken } from './refreshAuthToken'
+import { searchExtension } from './searchExtension'
+import { getExtensionById } from './getExtensionById'
 
 export const common = {
   getInfo,
@@ -22,4 +24,6 @@ export const common = {
   getSubscriptions,
   manageSubscriptions,
   refreshAuthToken,
+  searchExtension,
+  getExtensionById,
 }

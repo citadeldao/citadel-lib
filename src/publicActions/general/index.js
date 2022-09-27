@@ -24,6 +24,8 @@ import { sendAssignToDaoMessage } from './sendAssignToDaoMessage'
 import { prettyNumber } from './prettyNumber'
 import { decodeMnemonicByPassword } from './decodeMnemonicByPassword'
 import { encodeMnemonicByPassword } from './encodeMnemonicByPassword'
+import { searchExtension } from './searchExtension'
+import { getExtensionById } from './getExtensionById'
 
 // 'init', 'reset' and other methods that are not included in other groups
 export const general = {
@@ -52,4 +54,6 @@ export const general = {
   prettyNumber,
   decodeMnemonicByPassword,
   encodeMnemonicByPassword,
+  searchExtension,
+  getExtensionById,
 }

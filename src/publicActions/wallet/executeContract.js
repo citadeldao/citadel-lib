@@ -29,8 +29,6 @@ import walletInstances from '../../walletInstances'
  * @param options.msg OBJECT (REQUIRED) message to execute
  * @param options.sender STRING (OPTIONAL) sender address. By default - wallet address, which corresponds to id
  * @param options.sent_funds ARRAY (OPTIONAL) additional argument (to work with derivatives for example)
- * 
- * @param token  STRING (REQUIRED) - the token for which the Viewing Key is being removed
  *
  * @returns Returns ARRAY with transaction hash string (['hexHashString'])
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }

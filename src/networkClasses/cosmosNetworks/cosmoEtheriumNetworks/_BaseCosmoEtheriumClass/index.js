@@ -91,18 +91,27 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   }
 
   async prepareTransfer(options){
-    return super.prepareTransfer({...options, isTyped: true})
+    return super.prepareTransfer({
+      ...options, 
+      isTyped: this.type === WALLET_TYPES.LEDGER
+    })
   }
 
   async prepareDelegation(options){
-    return super.prepareDelegation({...options, isTyped: true})
+    return super.prepareDelegation({
+      ...options, 
+      isTyped: this.type === WALLET_TYPES.LEDGER
+    })
   }
 
   async prepareCrossNetworkTransfer(token, options){
-    return super.prepareCrossNetworkTransfer(token, {...options, isTyped: true})
+    return super.prepareCrossNetworkTransfer(token, {
+      ...options, 
+      isTyped: this.type === WALLET_TYPES.LEDGER
+    })
   }
 
   async prepareClaim(){
-    return super.prepareClaim({isTyped: true})
+    return super.prepareClaim({isTyped: this.type === WALLET_TYPES.LEDGER})
   }
 }

@@ -137,7 +137,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     return data
   }
 
-  async prepareClaim({isTyped = false}) {
+  async prepareClaim(isTyped = false) {
     const { data } = await api.requests.prepareClaim({
       net: this.net,
       address: this.address,

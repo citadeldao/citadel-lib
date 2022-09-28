@@ -112,6 +112,6 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   }
 
   async prepareClaim(){
-    return super.prepareClaim({isTyped: this.type === WALLET_TYPES.LEDGER})
+    return super.prepareClaim(this.type === WALLET_TYPES.LEDGER)
   }
 }

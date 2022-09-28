@@ -5,7 +5,7 @@ export const prepareClaim = (data) => {
   url: `/transactions/${data.net}/${data.address}/prepare-claim-reward?version=1.0.5`,
     method: 'post',
     data: {
-      isTyped: data.isTyped
+      isTyped: data?.isTyped
     },
   }
 }

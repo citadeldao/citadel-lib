@@ -57,7 +57,7 @@ export class IostNetwork extends BaseNetwork {
               ? // stake
                 amount
               : // unstake
-                `-${amount}`,
+                -amount,
         },
       ],
       publicKey: this.publicKey,

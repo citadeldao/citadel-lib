@@ -127,7 +127,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
             type === DELEGATION_TYPES.STAKE
               ? amount
               : // unstake
-                `-${amount}`,
+                -amount,
         },
       ],
       publicKey: this.publicKey,

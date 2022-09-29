@@ -79,7 +79,7 @@ export class IconNetwork extends BaseNetwork {
         const { data } = await api.requests.prepareStakeWithoutDelegation({
           address: this.address,
           net: this.net,
-          amount: Math.abs(amount),
+          amount,
         })
         return data
       }
@@ -87,7 +87,7 @@ export class IconNetwork extends BaseNetwork {
         const { data } = await api.requests.prepareUnstakeWithoutDelegation({
           address: this.address,
           net: this.net,
-          amount: Math.abs(amount),
+          amount,
         })
         return data
       }
@@ -98,7 +98,7 @@ export class IconNetwork extends BaseNetwork {
         net: this.net,
         from: nodeAddress,
         to: redelegateNodeAddress,
-        amount: Math.abs(amount),
+        amount,
       })
       return data
     }
@@ -122,7 +122,7 @@ export class IconNetwork extends BaseNetwork {
         address: nodeAddress,
         value:
           type === DELEGATION_TYPES.STAKE
-            ? Math.abs(amount)
+            ? amount
             : // ustake
               0,
       })
@@ -131,11 +131,9 @@ export class IconNetwork extends BaseNetwork {
       alreadyStakedNode.value =
         type === DELEGATION_TYPES.STAKE
           ? // plus for stake
-            BigNumber(alreadyStakedNode.value).plus(Math.abs(amount)).toNumber()
+            BigNumber(alreadyStakedNode.value).plus(amount).toNumber()
           : // minus for stake
-            BigNumber(alreadyStakedNode.value)
-              .minus(Math.abs(amount))
-              .toNumber()
+            BigNumber(alreadyStakedNode.value).minus(amount).toNumber()
     }
 
     // send preparedStakeList with values

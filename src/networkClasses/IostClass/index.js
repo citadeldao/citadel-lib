@@ -55,9 +55,9 @@ export class IostNetwork extends BaseNetwork {
           value:
             type === DELEGATION_TYPES.STAKE
               ? // stake
-                Math.abs(amount)
+                amount
               : // unstake
-                -Math.abs(amount),
+                -amount,
         },
       ],
       publicKey: this.publicKey,

@@ -89,12 +89,12 @@ export class TezosNetwork extends BaseNetwork {
     })
   }
 
-  async prepareDelegation({ nodeAddress, kt }) {
+  async prepareDelegation({ nodeAddresses, kt }) {
     // send difference of values
     const { data } = await api.requests.prepareDelegation({
       from: this.address,
       net: this.net,
-      toAddress: nodeAddress,
+      toAddress: nodeAddresses[0],
       amount: 0,
       publicKey: this.publicKey,
       kt,

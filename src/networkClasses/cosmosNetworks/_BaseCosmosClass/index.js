@@ -92,14 +92,16 @@ export class BaseCosmosNetwork extends BaseNetwork {
   }
 
   async prepareDelegation({
-    nodeAddress,
+    nodeAddresses,
     amount,
     type = DELEGATION_TYPES.STAKE,
-    redelegateNodeAddress,
+    redelegateNodeAddresses,
     isTyped = false,
   }) {
     // check type
     checkDelegationTypes(type)
+    const nodeAddress = nodeAddresses[0]
+    const redelegateNodeAddress = redelegateNodeAddresses?.[0]
 
     // redelegation
     if (type === DELEGATION_TYPES.REDELEGATE) {
@@ -131,7 +133,6 @@ export class BaseCosmosNetwork extends BaseNetwork {
         },
       ],
       publicKey: this.publicKey,
-      isTyped,
     })
 
     return data
@@ -141,7 +142,6 @@ export class BaseCosmosNetwork extends BaseNetwork {
     const { data } = await api.requests.prepareClaim({
       net: this.net,
       address: this.address,
-      isTyped,
     })
 
     return data

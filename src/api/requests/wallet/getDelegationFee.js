@@ -7,11 +7,11 @@ export const getDelegationFee = ({
   publicKey,
   sourceNodeAddress,
   kt,
-  isWithoutDelegation
+  isWithoutDelegation,
 }) => {
   return {
     // backend domain is in the axios instance
-  url: `transactions/${net}/${address}/fee-info/${transactionType}`,
+    url: `transactions/${net}/${address}/fee-info/${transactionType}`,
     method: 'get',
     data: {
       params: {
@@ -19,7 +19,8 @@ export const getDelegationFee = ({
         validatorAddr: nodeAddress,
         validatorSrcAddr: sourceNodeAddress,
         kt,
-        isWithoutDelegation
+        isWithoutDelegation,
+        version: '1.1.0',
       },
     },
   }

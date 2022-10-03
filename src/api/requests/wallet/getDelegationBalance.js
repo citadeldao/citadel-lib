@@ -4,5 +4,10 @@ export const getDelegationBalance = ({ address, net }) => {
     // backend domain is in the axios instance
     url: `/transactions/${net}/${address}/delegation-balance-info`,
     method: 'get',
+    data: {
+      params: {
+        version: '1.1.0',
+      },
+    },
   }
 }

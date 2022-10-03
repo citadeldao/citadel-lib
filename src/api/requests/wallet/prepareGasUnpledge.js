@@ -8,12 +8,13 @@ export const prepareGasUnpledge = ({
 }) => {
   return {
     // backend domain is in the axios instance
-  url: `/transactions/${net}/${address}/prepare-unpledge`,
+    url: `/transactions/${net}/${address}/prepare-unpledge`,
     method: 'post',
     data: {
       publicKey,
       toAddress,
       amount,
+      version: '1.1.0',
     },
   }
 }

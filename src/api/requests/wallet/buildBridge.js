@@ -6,6 +6,7 @@ export const buildBridge = ({ net, address, ...params }) => {
     method: 'get',
     data: {
       params,
+      version: '1.1.0',
     },
   }
 }

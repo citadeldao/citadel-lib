@@ -6,12 +6,13 @@ export const getWalletTransactions = ({
 }) => {
   return {
     // backend domain is in the axios instance
-  url: `/transactions/${net}/${address}`,
+    url: `/transactions/${net}/${address}`,
     method: 'get',
     data: {
       params: {
         offset: (page - 1) * pageSize,
         limit: pageSize,
+        version: '1.1.0',
       },
     },
   }

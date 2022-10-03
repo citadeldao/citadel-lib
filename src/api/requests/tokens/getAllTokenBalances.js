@@ -4,5 +4,10 @@ export const getAllTokenBalances = ({ net, address }) => {
     // backend domain is in the axios instance
     url: `/transactions/${net}/${address}/tokens`,
     method: 'get',
+    data: {
+      params: {
+        version: '1.1.0',
+      },
+    },
   }
 }

@@ -35,9 +35,9 @@ export const actionDecorator = (action, actionName) => {
         // add handlers to promise (to resolve the promise to a formatted object)
         return result.then(
           // on success return formatted success result
-          (result) => successResponseFormatter(result, actionName),
+          (result) => successResponseFormatter(result, actionName, ts, args),
           // on error return formatted error result
-          (error) => errorResponseFormatter(error, actionName)
+          (error) => errorResponseFormatter(error, actionName, ts, args)
         )
       }
       // else (result is not Promise)

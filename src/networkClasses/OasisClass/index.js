@@ -147,4 +147,17 @@ export class OasisNetwork extends BaseNetwork {
       ...(this.bridges && { bridges: this.bridges }),
     }
   }
+
+  async createMessageSignature(data, { privateKey, derivationPath }) {
+    let signedTx
+    // ledger signer
+    if (this.type === WALLET_TYPES.LEDGER) {
+      signedTx = await signTxByLedger(data, derivationPath, this.publicKey)
+    }else{
+      // privateKey signer
+      signedTx = await signTxByPrivateKey(data, privateKey)
+    }
+    
+    return Buffer.from(signedTx.signature.signature).toString('hex')  
+  }
 }

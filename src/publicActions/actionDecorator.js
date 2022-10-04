@@ -9,12 +9,21 @@ import { debugConsole } from '../helpers/debugConsole'
 export const actionDecorator = (action, actionName) => {
   // return wrapped public action (it will be called by the user via citadel[actionName](...args))
   return function (...args) {
-    debugConsole.log(
-      `%cLib function called: `,
-      'color: lightblue;',
-      `"${actionName}". Arguments:`,
-      args
-    )
+    if (state.getState('stringifyResponse')) {
+      debugConsole.log(
+        `Lib function called: `,
+        `"${actionName}". Arguments:`,
+        args
+      )
+    } else {
+      debugConsole.log(
+        `%cLib function called: `,
+        'color: lightblue;',
+        `"${actionName}". Arguments:`,
+        args
+      )
+    }
+
     try {
       // execute a public function with passed arguments and get result
       const result = action(...args)
@@ -53,7 +62,13 @@ const successResponseFormatter = (result, actionName) => {
 
   // stringify result if the stringifyResponse flag is enabled
   if (state.getState('stringifyResponse')) {
-    wrappedResult = JSON.stringify(wrappedResult)
+    debugConsole.log(
+      `Lib function `,
+      `"${actionName}" returned:`,
+      cloneDeep(wrappedResult)
+    )
+
+    return JSON.stringify(wrappedResult)
   }
 
   debugConsole.log(
@@ -94,8 +109,15 @@ const errorResponseFormatter = (error, actionName) => {
       stack: error.stack,
       details: error.details,
     }
+
+    debugConsole.log(
+      `Lib function `,
+      `"${actionName}" returned:`,
+      cloneDeep(wrappedResult)
+    )
+
     // wrappedResult
-    wrappedResult = JSON.stringify(wrappedResult)
+    return JSON.stringify(wrappedResult)
   }
 
   debugConsole.log(

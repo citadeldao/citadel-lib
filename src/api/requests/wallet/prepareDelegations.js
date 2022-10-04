@@ -9,7 +9,7 @@ export const prepareDelegations = ({
 }) => {
   return {
     // backend domain is in the axios instance
-  url: `/transactions/${net}/${from}/prepare-delegations?version=1.0.5`,
+  url: `/transactions/${net}/${from}/prepare-delegations?version=1.1.0`,
     method: 'post',
     data: {
       delegations,

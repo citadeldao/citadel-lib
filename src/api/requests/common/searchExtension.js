@@ -6,6 +6,7 @@ export const searchExtension = ({ query }) => ({
   data: {
     params: {
       query,
+      version: '1.0.6',
     },
   },
 })

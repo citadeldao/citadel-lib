@@ -7,14 +7,24 @@ import { debugConsole } from '../helpers/debugConsole'
 
 // action decorator format public actions returns and catch all errors
 export const actionDecorator = (action, actionName) => {
+  const ts = Date.now()
   // return wrapped public action (it will be called by the user via citadel[actionName](...args))
   return function (...args) {
-    debugConsole.log(
-      `%cLib function called: `,
-      'color: lightblue;',
-      `"${actionName}". Arguments:`,
-      args
-    )
+    if (state.getState('stringifyResponse')) {
+      debugConsole.log(
+        `Lib function called: `,
+        `"${actionName}". Ts: ${ts}. Arguments:`,
+        args
+      )
+    } else {
+      debugConsole.log(
+        `%cLib function called: `,
+        'color: lightblue;',
+        `"${actionName}". Arguments:`,
+        args
+      )
+    }
+
     try {
       // execute a public function with passed arguments and get result
       const result = action(...args)
@@ -31,15 +41,15 @@ export const actionDecorator = (action, actionName) => {
         )
       }
       // else (result is not Promise)
-      return successResponseFormatter(result, actionName)
+      return successResponseFormatter(result, actionName, ts, args)
     } catch (error) {
       // if the public фсешщт threw an exception - wrap error
-      return errorResponseFormatter(error, actionName)
+      return errorResponseFormatter(error, actionName, ts, args)
     }
   }
 }
 
-const successResponseFormatter = (result, actionName) => {
+const successResponseFormatter = (result, actionName, ts, args) => {
   // clone the result, preventing the state of the library from changing outside
   const clonedResult = cloneDeep(result)
   // create result object
@@ -53,7 +63,15 @@ const successResponseFormatter = (result, actionName) => {
 
   // stringify result if the stringifyResponse flag is enabled
   if (state.getState('stringifyResponse')) {
-    wrappedResult = JSON.stringify(wrappedResult)
+    debugConsole.log(
+      `Lib function `,
+      `"${actionName}" returned:`,
+      cloneDeep(wrappedResult),
+      `Call Ts: ${ts}. Arguments:`,
+      args
+    )
+
+    return JSON.stringify(wrappedResult)
   }
 
   debugConsole.log(
@@ -67,7 +85,7 @@ const successResponseFormatter = (result, actionName) => {
   return wrappedResult
 }
 
-const errorResponseFormatter = (error, actionName) => {
+const errorResponseFormatter = (error, actionName, ts, args) => {
   // console error
   debugConsole.error(error)
 
@@ -94,8 +112,17 @@ const errorResponseFormatter = (error, actionName) => {
       stack: error.stack,
       details: error.details,
     }
+
+    debugConsole.log(
+      `Lib function `,
+      `"${actionName}" returned:`,
+      cloneDeep(wrappedResult),
+      `Call Ts: ${ts}. Arguments:`,
+      args
+    )
+
     // wrappedResult
-    wrappedResult = JSON.stringify(wrappedResult)
+    return JSON.stringify(wrappedResult)
   }
 
   debugConsole.log(

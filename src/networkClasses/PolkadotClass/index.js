@@ -62,7 +62,7 @@ export class PolkadotNetwork extends BaseNetwork {
     nodeAddresses,
     amount,
     type = DELEGATION_TYPES.STAKE,
-    redelegateNodeAddress,
+    redelegateNodeAddresses,
     additionalFee = 0,
     rewardsAddress,
     rewardsRestake,
@@ -97,7 +97,7 @@ export class PolkadotNetwork extends BaseNetwork {
       const { data } = await api.requests.polkadotPrepareRedelegation({
         address: this.address,
         // адреса на которые ределигируется
-        delegations: redelegateNodeAddress.map(({ address }) => address),
+        delegations: redelegateNodeAddresses,
         tip: additionalFee,
       })
 

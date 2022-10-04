@@ -10,7 +10,7 @@ export const prepareRedelegation = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `transactions/${net}/${address}/prepare-redelegation?version=1.0.5`,
+    url: `transactions/${net}/${address}/prepare-redelegation`,
     method: 'post',
     data: {
       validator_src_address: from,

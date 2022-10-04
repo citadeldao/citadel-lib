@@ -7,12 +7,13 @@ import { debugConsole } from '../helpers/debugConsole'
 
 // action decorator format public actions returns and catch all errors
 export const actionDecorator = (action, actionName) => {
+  const ts = Date.now()
   // return wrapped public action (it will be called by the user via citadel[actionName](...args))
   return function (...args) {
     if (state.getState('stringifyResponse')) {
       debugConsole.log(
         `Lib function called: `,
-        `"${actionName}". Arguments:`,
+        `"${actionName}". Ts: ${ts}. Arguments:`,
         args
       )
     } else {
@@ -40,15 +41,15 @@ export const actionDecorator = (action, actionName) => {
         )
       }
       // else (result is not Promise)
-      return successResponseFormatter(result, actionName)
+      return successResponseFormatter(result, actionName, ts, args)
     } catch (error) {
       // if the public фсешщт threw an exception - wrap error
-      return errorResponseFormatter(error, actionName)
+      return errorResponseFormatter(error, actionName, ts, args)
     }
   }
 }
 
-const successResponseFormatter = (result, actionName) => {
+const successResponseFormatter = (result, actionName, ts, args) => {
   // clone the result, preventing the state of the library from changing outside
   const clonedResult = cloneDeep(result)
   // create result object
@@ -65,7 +66,9 @@ const successResponseFormatter = (result, actionName) => {
     debugConsole.log(
       `Lib function `,
       `"${actionName}" returned:`,
-      cloneDeep(wrappedResult)
+      cloneDeep(wrappedResult),
+      `Call Ts: ${ts}. Arguments:`,
+      args
     )
 
     return JSON.stringify(wrappedResult)
@@ -82,7 +85,7 @@ const successResponseFormatter = (result, actionName) => {
   return wrappedResult
 }
 
-const errorResponseFormatter = (error, actionName) => {
+const errorResponseFormatter = (error, actionName, ts, args) => {
   // console error
   debugConsole.error(error)
 
@@ -113,7 +116,9 @@ const errorResponseFormatter = (error, actionName) => {
     debugConsole.log(
       `Lib function `,
       `"${actionName}" returned:`,
-      cloneDeep(wrappedResult)
+      cloneDeep(wrappedResult),
+      `Call Ts: ${ts}. Arguments:`,
+      args
     )
 
     // wrappedResult

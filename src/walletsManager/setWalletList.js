@@ -4,7 +4,7 @@ import { WALLET_TYPES, CACHE_NAMES } from '../constants'
 import { addCreatedWallet } from './addCreatedWallet'
 import { getWalletList } from './getWalletList'
 import { updateWallet } from './updateWallet'
-import { checkWalletPK } from'../helpers/checkWalletPK'
+import { checkWalletPK } from '../helpers/checkWalletPK'
 
 // used to set walletList by the client
 export const setWalletList = async (

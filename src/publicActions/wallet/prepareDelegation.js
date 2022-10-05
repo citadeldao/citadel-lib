@@ -15,10 +15,10 @@ export const prepareDelegation = async (walletId, options) => {
 
   checkWalletId(walletId)
   const {
-    nodeAddress,
+    nodeAddresses,
     amount,
     type,
-    redelegateNodeAddress,
+    redelegateNodeAddresses,
     kt,
     rewardsAddress,
     rewardsRestake,
@@ -27,11 +27,11 @@ export const prepareDelegation = async (walletId, options) => {
   } = options
   checkTypes(
     // nodeAddress - Array for polkadot
-    ['nodeAddress', nodeAddress, ['String', 'Array']],
+    ['nodeAddresses', nodeAddresses, ['String', 'Array']],
     ['amount', amount, ['String', 'Number']],
     ['type', type, ['String']],
     // Array for polkadot
-    ['redelegateNodeAddress', redelegateNodeAddress, ['String', 'Array']],
+    ['redelegateNodeAddresses', redelegateNodeAddresses, ['String', 'Array']],
     ['kt', kt, ['String']],
     ['rewardsAddress', rewardsAddress, ['String']],
     ['rewardsRestake', rewardsRestake, ['Boolean']],
@@ -43,10 +43,10 @@ export const prepareDelegation = async (walletId, options) => {
   return await walletInstances
     .getWalletInstanceById(walletId)
     .prepareDelegation({
-      nodeAddress,
+      nodeAddresses,
       amount,
       type,
-      redelegateNodeAddress,
+      redelegateNodeAddresses,
       kt,
       // for polkadot
       rewardsAddress,

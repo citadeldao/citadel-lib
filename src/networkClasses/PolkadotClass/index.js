@@ -51,14 +51,18 @@ export class PolkadotNetwork extends BaseNetwork {
       return await signTxByLedger(transaction, derivationPath, this.address)
     }
     // mnemonic / privateKey signer (mnemonic can be used as private key fot sign)
-    return signTxByPrivateKeyOrMnemonic(transaction, privateKey || mnemonic, derivationPath)
+    return signTxByPrivateKeyOrMnemonic(
+      transaction,
+      privateKey || mnemonic,
+      derivationPath
+    )
   }
 
   async prepareDelegation({
-    nodeAddress,
+    nodeAddresses,
     amount,
     type = DELEGATION_TYPES.STAKE,
-    redelegateNodeAddress,
+    redelegateNodeAddresses,
     additionalFee = 0,
     rewardsAddress,
     rewardsRestake,
@@ -68,7 +72,7 @@ export class PolkadotNetwork extends BaseNetwork {
     if (type === DELEGATION_TYPES.STAKE) {
       const { data } = await api.requests.polkadotPrepareStakeAndNominate({
         address: this.address,
-        delegations: nodeAddress.map(({ address }) => address),
+        delegations: nodeAddresses,
         // amount: >= 120
         amount,
         tip: additionalFee,
@@ -93,7 +97,7 @@ export class PolkadotNetwork extends BaseNetwork {
       const { data } = await api.requests.polkadotPrepareRedelegation({
         address: this.address,
         // адреса на которые ределигируется
-        delegations: redelegateNodeAddress.map(({ address }) => address),
+        delegations: redelegateNodeAddresses,
         tip: additionalFee,
       })
 

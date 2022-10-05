@@ -5,7 +5,7 @@ import { merge } from '../../../../helpers/merge'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 
-export async function balance_default({ token }) {
+export async function balance_default({ token, preventEvent }) {
   // get token balance
   const { data: tokenBalance } = await api.requests.getDelegationBalance({
     net: token,
@@ -30,7 +30,7 @@ export async function balance_default({ token }) {
   }
 
   // EVENT: inform the client that it is time to update wallet list
-  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+  !preventEvent && dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 
   return tokenBalance
 }

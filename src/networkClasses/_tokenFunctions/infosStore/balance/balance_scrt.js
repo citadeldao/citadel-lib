@@ -3,7 +3,7 @@ import { VIEWING_KEYS_TYPES, WALLET_TYPES } from '../../../../constants'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 
-export async function balance_scrt({ token }) {
+export async function balance_scrt({ token, preventEvent }) {
   // CHECK SAVED VK
   if (this.savedViewingKeys[token]) {
     const { viewingKey, viewingKeyType } = this.savedViewingKeys[token]
@@ -22,7 +22,8 @@ export async function balance_scrt({ token }) {
     // throw error if simple vk is invalid for privateKey wallets
     if (
       viewingKeyType === VIEWING_KEYS_TYPES.SIMPLE &&
-      this.type !== WALLET_TYPES.KEPLR
+      this.type !== WALLET_TYPES.KEPLR &&
+      !preventEvent
     ) {
       dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
       errors.throwError('ViewingKeyError')

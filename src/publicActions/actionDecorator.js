@@ -7,9 +7,9 @@ import { debugConsole } from '../helpers/debugConsole'
 
 // action decorator format public actions returns and catch all errors
 export const actionDecorator = (action, actionName) => {
-  const ts = Date.now()
   // return wrapped public action (it will be called by the user via citadel[actionName](...args))
   return function (...args) {
+    const ts = Date.now()
     if (state.getState('stringifyResponse')) {
       debugConsole.log(
         `Lib function called: `,
@@ -35,9 +35,9 @@ export const actionDecorator = (action, actionName) => {
         // add handlers to promise (to resolve the promise to a formatted object)
         return result.then(
           // on success return formatted success result
-          (result) => successResponseFormatter(result, actionName),
+          (result) => successResponseFormatter(result, actionName, ts, args),
           // on error return formatted error result
-          (error) => errorResponseFormatter(error, actionName)
+          (error) => errorResponseFormatter(error, actionName, ts, args)
         )
       }
       // else (result is not Promise)

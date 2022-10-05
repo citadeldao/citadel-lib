@@ -9,13 +9,14 @@ export const sendSignedTransaction = ({
 }) => {
   return {
     // backend domain is in the axios instance
-  url: `/transactions/${net}/${from}/send`,
+    url: `/transactions/${net}/${from}/send`,
     method: 'post',
     data: {
       signedTransaction,
       type,
       mem_tx_id,
       proxy,
+      version: '1.1.0',
     },
   }
 }

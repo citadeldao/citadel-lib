@@ -16,7 +16,7 @@ export class OasisNetwork extends BaseNetwork {
   }
 
   async prepareDelegation({
-    nodeAddress,
+    nodeAddresses,
     amount,
     type = DELEGATION_TYPES.STAKE,
   }) {
@@ -30,7 +30,7 @@ export class OasisNetwork extends BaseNetwork {
       net: this.net,
       delegations: [
         {
-          address: nodeAddress,
+          address: nodeAddresses[0],
           value:
             type === DELEGATION_TYPES.STAKE
               ? amount

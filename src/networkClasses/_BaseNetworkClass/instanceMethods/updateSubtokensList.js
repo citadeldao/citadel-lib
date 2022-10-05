@@ -63,7 +63,9 @@ export const updateSubtokensList = async function (
         if (this.getTokenActions(token).includes('stake')) {
           // catch error to to keep looping anyway
           try {
-            const detailedBalance = await this.callTokenInfo(token, 'balance')
+            const detailedBalance = await this.callTokenInfo(token, 'balance', {
+              preventEvent: true,
+            })
             subtokenListItem.tokenBalance = {
               ...subtokenListItem.tokenBalance,
               ...detailedBalance,

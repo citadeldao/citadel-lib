@@ -7,9 +7,9 @@ import { debugConsole } from '../helpers/debugConsole'
 
 // action decorator format public actions returns and catch all errors
 export const actionDecorator = (action, actionName) => {
-  const ts = Date.now()
   // return wrapped public action (it will be called by the user via citadel[actionName](...args))
   return function (...args) {
+    const ts = Date.now()
     if (state.getState('stringifyResponse')) {
       debugConsole.log(
         `Lib function called: `,

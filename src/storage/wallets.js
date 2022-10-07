@@ -12,7 +12,7 @@ const getWalletListObject = () => {
     '>>> localStorage.getItem(getStorageKey()))',
     localStorage.getItem(getStorageKey())
   )
-  JSON.parse(localStorage.getItem(getStorageKey())) || {}
+  return JSON.parse(localStorage.getItem(getStorageKey())) || {}
 }
 
 const setWalletListObject = (walletListObject) =>

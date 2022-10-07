@@ -1,12 +1,19 @@
 import state from '../state'
 import { checkWalletPK } from '../helpers/checkWalletPK'
+import { debugConsole } from '../helpers/debugConsole'
 
 const getStorageKey = () => `lib-wallets-${state.getState('user').id}`
 
 const clearCache = () => localStorage.removeItem(getStorageKey())
 
-const getWalletListObject = () =>
+const getWalletListObject = () => {
+  debugConsole.log('>>> getStorageKey()', getStorageKey())
+  debugConsole.log(
+    '>>> localStorage.getItem(getStorageKey()))',
+    localStorage.getItem(getStorageKey())
+  )
   JSON.parse(localStorage.getItem(getStorageKey())) || {}
+}
 
 const setWalletListObject = (walletListObject) =>
   localStorage.setItem(getStorageKey(), JSON.stringify(walletListObject))

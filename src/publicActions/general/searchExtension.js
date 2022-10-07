@@ -4,13 +4,13 @@ import { checkInitialization, checkTypes } from '../../helpers/checkArguments'
 /**
  * Get extension by id
  *
- * @param id STRING (REQUIRED) - extesion id
+ * @param query STRING (REQUIRED) - extesion id
  *
  * @returns Returns ARRAY with list of apps.
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
  *
- * const response = await citadel.searchExtension(id)
+ * const response = await citadel.searchExtension('secret')
  *
  * // =>
  * {

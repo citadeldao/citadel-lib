@@ -134,7 +134,7 @@ export class PolkadotNetwork extends BaseNetwork {
       derivationPath,
     })
     // send transaction by special api
-    const { data } = await api.requests.polkadotSignAndSend(signedTransaction)
+    const { data } = await api.requests.polkadotSignAndSend({...signedTransaction, mem_tx_id: rawTransaction?.mem_tx_id})
     // return hash
     return [data.hash || data.txhash || data]
   }

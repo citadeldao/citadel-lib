@@ -6,19 +6,12 @@ import storage from '../storage'
 import networkClasses from '../networkClasses'
 import { CACHE_NAMES } from '../constants'
 import walletInstances from '../walletInstances'
-import { debugConsole } from '../helpers/debugConsole'
 
 // update wallet list by account wallets (used inside the library with 'info', 'wallets', 'walletsDetail' requests)
 export const updateWalletList = async (
   accountWallets,
   updateSubtokensList = true
 ) => {
-  debugConsole.log('>>> updateWalletList start')
-  debugConsole.log('>>> accountWallets', accountWallets)
-  debugConsole.log(
-    '>>> state.getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS)',
-    state.getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS)
-  )
   const supportedAccountWallets = accountWallets
     // filter unsupported network
     .filter((wallet) =>
@@ -41,7 +34,6 @@ export const updateWalletList = async (
   const networksConfig = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)
   // get storage wallets
   const walletList = getWalletList()
-  debugConsole.log('>>> getWalletList', walletList)
 
   // delete or update existing wallets
   walletList.map((storageWallet) => {

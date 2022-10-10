@@ -17,7 +17,7 @@ const getWalletListObject = () => {
 
 const setWalletListObject = (walletListObject) => {
   debugConsole.log('>>> setWalletListObject start', walletListObject)
-  consdebugConsoleole.log(
+  debugConsole.log(
     '>>> setWalletListObject getStorageKey()',
     getStorageKey()
   )

@@ -11,7 +11,7 @@ import {
   createMessageSignatureByPrivateKey,
   signTxByLedger,
   createMessageSignatureByLedger,
-  // signJsonByPrivateKey,
+  signJsonByPrivateKey,
 } from './signers'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../../constants'
 import errors from '../../../errors'
@@ -59,13 +59,12 @@ export class BaseCosmosNetwork extends BaseNetwork {
     if (this.type === WALLET_TYPES.LEDGER) {
       return await signTxByLedger(transaction, derivationPath, this.publicKey)
     }
-    // if (!transaction.bytes) {
-    //   return signJsonByPrivateKey(transaction, privateKey, this.publicKey)
-    // }
     // privateKey signer
+    if (!transaction.bytes) {
+      return signJsonByPrivateKey(transaction, privateKey, this.publicKey)
+    }
     return signTxByPrivateKey(transaction, privateKey, this.publicKey)
   }
-
   async createMessageSignature(data, { privateKey, derivationPath }) {
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {

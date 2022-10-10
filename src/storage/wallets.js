@@ -4,7 +4,11 @@ import { debugConsole } from '../helpers/debugConsole'
 
 const getStorageKey = () => `lib-wallets-${state.getState('user').id}`
 
-const clearCache = () => localStorage.removeItem(getStorageKey())
+const clearCache = () => {
+  debugConsole.log('>>> clearCache')
+  debugConsole.log('>>> clearCache getStorageKey()', getStorageKey())
+  return localStorage.removeItem(getStorageKey())
+}
 
 const getWalletListObject = () => {
   debugConsole.log('>>> getStorageKey()', getStorageKey())
@@ -17,10 +21,7 @@ const getWalletListObject = () => {
 
 const setWalletListObject = (walletListObject) => {
   debugConsole.log('>>> setWalletListObject start', walletListObject)
-  debugConsole.log(
-    '>>> setWalletListObject getStorageKey()',
-    getStorageKey()
-  )
+  debugConsole.log('>>> setWalletListObject getStorageKey()', getStorageKey())
   debugConsole.log(
     '>>> JSON.stringify(walletListObject)',
     JSON.stringify(walletListObject)

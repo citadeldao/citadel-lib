@@ -9,20 +9,24 @@ import walletInstances from '../../walletInstances'
 
 const TYPES = {
   SECRET_QUERY: 'scrt-query',
+  SECRET_BALANCE: 'view-scrt-balance',
 }
 
 const VK_TEXT_VARIABLE = '%viewing_key%'
 
 export const messageFromApp = async ({
-  from: token,
+  from,
   type,
   message: {
     contract,
     sender,
     //  gas,
     msg,
+    address,
+    tokenContract,
   } = {},
-}) => {
+} = {}) => {
+  console.log('>>> messageFromApp', type)
   if (!Object.values(TYPES).includes(type)) {
     return
   }
@@ -84,7 +88,7 @@ export const messageFromApp = async ({
       )
       // send result to app
       await api.externalRequests.sendCustomMessage({
-        token,
+        token: from,
         message: {
           type: isError ? APP_MESSAGE_TYPES.ERROR : APP_MESSAGE_TYPES.SUCCESS,
           response,
@@ -94,13 +98,61 @@ export const messageFromApp = async ({
     } catch (error) {
       // send error to app
       await api.externalRequests.sendCustomMessage({
-        token,
+        token: from,
         message: {
           type: APP_MESSAGE_TYPES.ERROR,
           response: { error: error.message },
         },
         type,
       })
+    }
+  } else if (type === TYPES.SECRET_BALANCE) {
+    const sendErrorMessage = async () => {
+      // send error to app
+      await api.externalRequests.sendCustomMessage({
+        token: from,
+        message: {
+          balance: 'Viewingkey not found, balance: ?',
+          tokenContract,
+        },
+        type,
+      })
+    }
+    try {
+      // get toke key by contract address
+      const tokenKey = Object.values(
+        networkClasses.getNetworkClass(SECRET_NET_KEY).tokens
+      ).find(
+        ({ standard, address }) =>
+          standard === 'snip20' && address === tokenContract
+      )?.net
+      // return if no tokenKey (constract address not found in networks.json)
+      if (!tokenKey) return
+      const walletInstance = walletInstances.getWalletInstanceByAddress(
+        SECRET_NET_KEY,
+        address
+      )
+
+      if (!walletInstance) return
+
+      // update balance (by SVK, keplr etc)
+      const { data: balance, error } = await walletInstance.callTokenInfo(
+        tokenKey,
+        'balance'
+      )
+      error && (await sendErrorMessage())
+      // send result to app
+      !error &&
+        (await api.externalRequests.sendCustomMessage({
+          token: from,
+          message: {
+            balance: balance.calculatedBalance,
+            tokenContract,
+          },
+          type,
+        }))
+    } catch {
+      await sendErrorMessage()
     }
   }
 }

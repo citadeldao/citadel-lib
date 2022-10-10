@@ -15,14 +15,26 @@ const getWalletListObject = () => {
   return JSON.parse(localStorage.getItem(getStorageKey())) || {}
 }
 
-const setWalletListObject = (walletListObject) =>
-  localStorage.setItem(getStorageKey(), JSON.stringify(walletListObject))
+const setWalletListObject = (walletListObject) => {
+  debugConsole.log('>>> setWalletListObject start', walletListObject)
+  consdebugConsoleole.log(
+    '>>> setWalletListObject getStorageKey()',
+    getStorageKey()
+  )
+  debugConsole.log(
+    '>>> JSON.stringify(walletListObject)',
+    JSON.stringify(walletListObject)
+  )
+  return localStorage.setItem(getStorageKey(), JSON.stringify(walletListObject))
+}
 
 const putWallet = (wallet) => {
+  debugConsole.log('>>> putWallet', wallet)
   if (!wallet.id || !wallet.net || !wallet.address) {
     return
   }
   const walletListObject = getWalletListObject()
+  debugConsole.log('>>> putWallet walletListObject', walletListObject)
   // for security
   checkWalletPK(wallet)
   // add wallet to bject
@@ -32,8 +44,10 @@ const putWallet = (wallet) => {
 }
 
 const removeWallet = (id) => {
+  debugConsole.log('>>> removeWallet id', id)
   // get wallet list
   const walletListObject = getWalletListObject()
+  debugConsole.log('>>> removeWallet id', id)
   // delete wallet
   delete walletListObject[id]
   // set wallet list

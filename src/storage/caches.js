@@ -52,12 +52,16 @@ const clearCache = () => {
 
 // keep localStorage free space
 const clearOutdatedCache = () => {
+  console.log('>>> clearOutdatedCache')
   // caches that changed the category
   Object.values(CACHE_NAMES).map((cacheName) => {
+    console.log('>>> clearOutdatedCache cacheName', cacheName)
     // caches that were 'singleuser' and now are not
     if (MULTIUSER_CACHE_NAMES.includes(cacheName)) {
+      console.log('>>> clearOutdatedCache MULTIUSER_CACHE_NAMES', getSingleuserStorageKey(cacheName))
       localStorage.removeItem(getSingleuserStorageKey(cacheName))
     } else {
+      console.log('>>> clearOutdatedCache SINGLEUSER_CACHE_NAMES', getMultiuserStorageKey(cacheName))
       // caches that were 'multiuser' and now are not
       localStorage.removeItem(getMultiuserStorageKey(cacheName))
     }

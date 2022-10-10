@@ -26,7 +26,6 @@ export const messageFromApp = async ({
     tokenContract,
   } = {},
 } = {}) => {
-  console.log('>>> messageFromApp', type)
   if (!Object.values(TYPES).includes(type)) {
     return
   }
@@ -136,21 +135,15 @@ export const messageFromApp = async ({
       if (!walletInstance) return
 
       // update balance (by SVK, keplr etc)
-      const { data: balance, error } = await walletInstance.callTokenInfo(
-        tokenKey,
-        'balance'
-      )
-      error && (await sendErrorMessage())
-      // send result to app
-      !error &&
-        (await api.externalRequests.sendCustomMessage({
-          token: from,
-          message: {
-            balance: balance.calculatedBalance,
-            tokenContract,
-          },
-          type,
-        }))
+      const balance = await walletInstance.callTokenInfo(tokenKey, 'balance')
+      await api.externalRequests.sendCustomMessage({
+        token: from,
+        message: {
+          balance: balance.calculatedBalance,
+          tokenContract,
+        },
+        type,
+      })
     } catch {
       await sendErrorMessage()
     }

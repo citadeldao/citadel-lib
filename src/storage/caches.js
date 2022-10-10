@@ -52,7 +52,7 @@ const clearCache = () => {
 
 // keep localStorage free space
 const clearOutdatedCache = () => {
-  console.log('>>> clearOutdatedCache')
+  console.log('>>> clearOutdatedCache ')
   // caches that changed the category
   Object.values(CACHE_NAMES).map((cacheName) => {
     console.log('>>> clearOutdatedCache cacheName', cacheName)

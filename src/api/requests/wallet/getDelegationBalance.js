@@ -1,3 +1,4 @@
+import state from '../../../state'
 // function returns request parameters for the axios instance.
 export const getDelegationBalance = ({ address, net }) => {
   return {
@@ -6,7 +7,7 @@ export const getDelegationBalance = ({ address, net }) => {
     method: 'get',
     data: {
       params: {
-        version: '1.1.0',
+        version: state.getState('backendApiVersion'),
       },
     },
   }

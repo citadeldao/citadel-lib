@@ -1,3 +1,4 @@
+import state from '../../../state'
 // function returns request parameters for the axios instance.
 export const prepareUnstakeWithoutDelegation = ({ net, address, amount }) => {
   return {
@@ -7,7 +8,7 @@ export const prepareUnstakeWithoutDelegation = ({ net, address, amount }) => {
     data: {
       params: {
         unstake: amount,
-        version: '1.1.0',
+        version: state.getState('backendApiVersion'),
       },
     },
   }

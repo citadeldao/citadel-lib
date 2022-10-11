@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const getBalanceFund = ({ address, category }) => ({
   // backend domain is in the axios instance
@@ -6,6 +8,7 @@ export const getBalanceFund = ({ address, category }) => ({
   data: {
     params: {
       category,
+      version: state.getState('backendApiVersion'),
     },
   },
 })

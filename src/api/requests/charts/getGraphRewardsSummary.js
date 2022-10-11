@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const getGraphRewardsSummary = ({ dateFrom, dateTo, listId }) => {
   return {
@@ -8,7 +10,7 @@ export const getGraphRewardsSummary = ({ dateFrom, dateTo, listId }) => {
     method: 'get',
     data: {
       params: {
-        version: '1.0.1',
+        version: state.getState('backendApiVersion'),
         date_from: dateFrom,
         date_to: dateTo,
       },

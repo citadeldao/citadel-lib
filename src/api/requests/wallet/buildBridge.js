@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const buildBridge = ({ net, address, ...params }) => {
   return {
@@ -6,7 +8,7 @@ export const buildBridge = ({ net, address, ...params }) => {
     method: 'get',
     data: {
       params,
-      version: '1.1.0',
+      version: state.getState('backendApiVersion'),
     },
   }
 }

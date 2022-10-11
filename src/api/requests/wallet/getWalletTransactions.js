@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const getWalletTransactions = ({
   net,
@@ -12,7 +14,7 @@ export const getWalletTransactions = ({
       params: {
         offset: (page - 1) * pageSize,
         limit: pageSize,
-        version: '1.1.0',
+        version: state.getState('backendApiVersion'),
       },
     },
   }

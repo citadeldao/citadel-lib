@@ -1,3 +1,4 @@
+import state from '../../../state'
 // multi stake
 // function returns request parameters for the axios instance.
 export const prepareDelegations = ({
@@ -5,16 +6,18 @@ export const prepareDelegations = ({
   from,
   delegations,
   publicKey,
-  isTyped
+  isTyped,
 }) => {
   return {
     // backend domain is in the axios instance
-  url: `/transactions/${net}/${from}/prepare-delegations?version=1.1.0`,
+    url: `/transactions/${net}/${from}/prepare-delegations?version=${state.getState(
+      'backendApiVersion'
+    )}`,
     method: 'post',
     data: {
       delegations,
       publicKey,
-      isTyped
+      isTyped,
     },
   }
 }

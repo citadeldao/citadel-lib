@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const getRewardsByRange = ({ dateFrom, dateTo }) => ({
   // backend domain is in the axios instance
@@ -7,6 +9,7 @@ export const getRewardsByRange = ({ dateFrom, dateTo }) => ({
     params: {
       date_from: dateFrom,
       date_to: dateTo,
+      version: state.getState('backendApiVersion'),
     },
   },
 })

@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const getStakeNodes = () => {
   return {
@@ -6,7 +8,7 @@ export const getStakeNodes = () => {
     method: 'get',
     data: {
       params: {
-        version: '1.0.4',
+        version: state.getState('backendApiVersion'),
       },
     },
   }

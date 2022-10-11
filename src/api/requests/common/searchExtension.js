@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const searchExtension = ({ query }) => ({
   // backend domain is in the axios instance
@@ -6,7 +8,7 @@ export const searchExtension = ({ query }) => ({
   data: {
     params: {
       query,
-      version: '1.0.6',
+      version: state.getState('backendApiVersion'),
     },
   },
 })

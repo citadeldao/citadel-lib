@@ -1,3 +1,5 @@
+import state from '../../../../state'
+
 // function returns request parameters for the axios instance.
 export const getXctStakeTransaction = ({ address, amount }) => {
   return {
@@ -7,6 +9,7 @@ export const getXctStakeTransaction = ({ address, amount }) => {
     data: {
       params: {
         amount,
+        version: state.getState('backendApiVersion'),
       },
     },
   }

@@ -14,6 +14,7 @@ import { addKeplrChangeAccountListener } from './addKeplrChangeAccountListener'
 /****************** INITIALIZE LIBRARY ********************/
 export const initializeLibrary = async ({
   backendUrl,
+  backendApiVersion,
   publicBackendUrl,
   socketURL,
   appURL,
@@ -27,6 +28,9 @@ export const initializeLibrary = async ({
 }) => {
   // set backend URL
   state.setState('backendUrl', backendUrl)
+
+  // set backend api version
+  state.setState('backendApiVersion', backendApiVersion)
 
   // set public backend URL
   state.setState('publicBackendUrl', publicBackendUrl)

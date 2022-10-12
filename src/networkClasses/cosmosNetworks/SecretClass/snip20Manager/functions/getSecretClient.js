@@ -27,8 +27,15 @@ export const getSecretClient = async ({
   const chainId = keplrChains.secret
 
   if (walletInstance?.type === WALLET_TYPES.KEPLR) {
-    keplr = await walletInstance.getKeplr()
-    encryptionUtils = await keplr.getEnigmaUtils(chainId)
+    try {
+      keplr = await walletInstance.getKeplr()
+      encryptionUtils = await keplr.getEnigmaUtils(chainId)
+    } catch (error) {
+      // skip error if readOnly (to use saved keplr VK)
+      if (!readOnly) {
+        throw error
+      }
+    }
   }
 
   if (readOnly) {

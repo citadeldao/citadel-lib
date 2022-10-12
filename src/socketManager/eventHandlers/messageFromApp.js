@@ -6,6 +6,7 @@ import {
 } from '../../constants'
 import networkClasses from '../../networkClasses'
 import walletInstances from '../../walletInstances'
+import { keplrChains } from '../../networkClasses/cosmosNetworks/_BaseCosmosClass/signers/keplrChains'
 
 const TYPES = {
   SECRET_QUERY: 'scrt-query',
@@ -106,17 +107,8 @@ export const messageFromApp = async ({
       })
     }
   } else if (type === TYPES.SECRET_BALANCE) {
-    const sendErrorMessage = async () => {
-      // send error to app
-      await api.externalRequests.sendCustomMessage({
-        token: from,
-        message: {
-          balance: 'Viewingkey not found, balance: ?',
-          tokenContract,
-        },
-        type,
-      })
-    }
+    let warningMessage = false
+
     try {
       // get toke key by contract address
       const tokenKey = Object.values(
@@ -131,7 +123,15 @@ export const messageFromApp = async ({
         SECRET_NET_KEY,
         address
       )
-
+      // send warning message if balance came, but account mismatch
+      if (walletInstance.type === WALLET_TYPES.KEPLR) {
+        // chec account
+        const chainId = keplrChains[walletInstance.net]
+        const keplrAddress = (await window.keplr.getKey(chainId))?.bech32Address
+        if (address !== keplrAddress) {
+          warningMessage = 'Please change Keplr account'
+        }
+      }
       if (!walletInstance) return
 
       // update balance (by SVK, keplr etc)
@@ -141,11 +141,25 @@ export const messageFromApp = async ({
         message: {
           balance: balance.calculatedBalance,
           tokenContract,
+          ...(warningMessage && {
+            warning: warningMessage,
+          }),
         },
         type,
       })
-    } catch {
-      await sendErrorMessage()
+    } catch (error) {
+      // send error to app
+      await api.externalRequests.sendCustomMessage({
+        token: from,
+        message: {
+          balance: 'Viewingkey not found, balance: ?',
+          tokenContract,
+          ...(warningMessage && {
+            warning: warningMessage,
+          }),
+        },
+        type,
+      })
     }
   }
 }

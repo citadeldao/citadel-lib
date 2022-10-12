@@ -1,3 +1,4 @@
+import state from '../../../state'
 // function returns request parameters for the axios instance.
 export const getDelegationFee = ({
   net,
@@ -20,7 +21,7 @@ export const getDelegationFee = ({
         validatorSrcAddr: sourceNodeAddress,
         kt,
         isWithoutDelegation,
-        version: '1.1.0',
+        version: state.getState('backendApiVersion'),
       },
     },
   }

@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const getPrepareTransferFund = ({
   address,
@@ -13,6 +15,7 @@ export const getPrepareTransferFund = ({
       category,
       amount,
       recipient,
+      version: state.getState('backendApiVersion'),
     },
   },
 })

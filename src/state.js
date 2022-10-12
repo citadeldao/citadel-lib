@@ -24,6 +24,7 @@ const defaultState = {
   debug: false,
   debugEvents: false,
   backendUrl: '',
+  backendApiVersion: '',
   publicBackendUrl: null,
   socketURL: null,
   appURL: null,

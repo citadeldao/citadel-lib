@@ -1,3 +1,4 @@
+import state from '../../../state'
 // function returns request parameters for the axios instance.
 export const sendSignedTransaction = ({
   net,
@@ -16,7 +17,7 @@ export const sendSignedTransaction = ({
       type,
       mem_tx_id,
       proxy,
-      version: '1.1.0',
+      version: state.getState('backendApiVersion'),
     },
   }
 }

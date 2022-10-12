@@ -1,3 +1,5 @@
+import state from '../../../state'
+
 // function returns request parameters for the axios instance.
 export const getCurrencyHistoryByRange = ({ net, dateFrom, dateTo }) => ({
   // backend domain is in the axios instance
@@ -9,6 +11,7 @@ export const getCurrencyHistoryByRange = ({ net, dateFrom, dateTo }) => ({
       fiat: 'usd',
       from_date: dateFrom,
       to_date: dateTo,
+      version: state.getState('backendApiVersion'),
     },
   },
 })

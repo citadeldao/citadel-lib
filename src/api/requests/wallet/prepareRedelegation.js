@@ -1,3 +1,4 @@
+import state from '../../../state'
 // function returns request parameters for the axios instance.
 export const prepareRedelegation = ({
   net,
@@ -18,7 +19,7 @@ export const prepareRedelegation = ({
       amount,
       publicKey,
       isTyped,
-      version: '1.1.0',
+      version: state.getState('backendApiVersion'),
     },
   }
 }

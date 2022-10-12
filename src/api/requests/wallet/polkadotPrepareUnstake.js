@@ -1,3 +1,4 @@
+import state from '../../../state'
 // function returns request parameters for the axios instance.
 export const polkadotPrepareUnstake = (data) => ({
   // backend domain is in the axios instance
@@ -7,6 +8,7 @@ export const polkadotPrepareUnstake = (data) => ({
     params: {
       amount: data.amount,
       tip: data.tip,
+      version: state.getState('backendApiVersion'),
     },
   },
-});
+})

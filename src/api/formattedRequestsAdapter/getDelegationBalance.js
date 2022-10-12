@@ -3,20 +3,16 @@ import BigNumber from 'bignumber.js'
 import { requests } from '../requests'
 import { createApiRequests } from '../createApiRequests'
 import state from '../../state'
-import { getAuthToken } from '../getAuthToken'
 
 // modify the backend response (will move to the backend in the future)
 export const getDelegationBalance = async (options) => {
   const backendUrl = state.getState('backendUrl')
-  // get access token
-  const accessToken = await getAuthToken()
   // create original axios function
   const originalRequest = createApiRequests({
     baseURL: backendUrl,
     withCredentials: true,
     singleRequest: requests.getDelegationBalance,
     enableResponseHandler: true,
-    accessToken,
   })
 
   // get original response

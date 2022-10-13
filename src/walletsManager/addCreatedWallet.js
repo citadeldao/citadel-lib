@@ -1,7 +1,7 @@
 import { retryRequestOnError } from '../helpers/retryRequestOnError.js'
 import api from '../api'
 import storage from '../storage'
-import { WALLET_TYPES } from '../constants'
+import { SECRET_NET_KEY, WALLET_TYPES } from '../constants'
 import { getWalletInfoByAddress } from './getWalletInfoByAddress'
 import { getWalletInfoById } from './getWalletInfoById'
 import { updateWallet } from './updateWallet'
@@ -63,10 +63,17 @@ export const addCreatedWallet = async ({
     ) {
       if (existingWallet.type === WALLET_TYPES.PUBLIC_KEY) {
         // rewrite any others types and return updated wallet
-        return updateWallet({
+        const updatedWallet = updateWallet({
           walletId: existingWallet.id,
           newWalletInfo: createdWallet,
         })
+        // update subtokens for secret wallet
+        existingWallet.net === SECRET_NET_KEY &&
+          (await walletInstances
+            .getWalletInstanceById(existingWallet.id)
+            .updateSubtokensList())
+
+        return updatedWallet
       }
       // throw error for any other wallets
       errors.throwError('WalletListError', {

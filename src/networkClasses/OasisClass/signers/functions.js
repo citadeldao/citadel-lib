@@ -30,7 +30,7 @@ export const tranformTransaction = async (transaction)=> {
       if(transaction.body.account){
         transaction.body.account = new Uint8Array(Object.values(transaction.body.account));
       }
-      transaction.fee.amount = new Uint8Array(Object.values([0]));
+      transaction.fee.amount = new Uint8Array(Object.values(transaction.fee.amount));
       let tx = await oasis.misc.toCBOR(transaction)
       return tx
 }

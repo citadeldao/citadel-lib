@@ -149,15 +149,16 @@ export class OasisNetwork extends BaseNetwork {
   }
 
   async createMessageSignature(data, { privateKey, derivationPath }) {
+    const formatedTx = await tranformTransaction(data)
     let signedTx
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      signedTx = await signTxByLedger(data, derivationPath, this.publicKey)
+      signedTx = await signTxByLedger(formatedTx, derivationPath, this.publicKey)
     }else{
       // privateKey signer
-      signedTx = await signTxByPrivateKey(data, privateKey)
+      signedTx = await signTxByPrivateKey(formatedTx, privateKey)
     }
-    
-    return Buffer.from(signedTx.signature.signature).toString('hex')  
+
+    return Buffer.from(signedTx.signature.signature).toString('hex')
   }
 }

@@ -3,7 +3,10 @@ import state from '../../../state'
 export const removeWallet = (walletId) => {
   return {
     // backend domain is in the axios instance
-    url: `/wallets/${walletId}?version=${state.getState('backendApiVersion')}`,
+    url: `/wallets/${walletId}`,
     method: 'delete',
+    data: {
+      version: state.getState('backendApiVersion'),
+    },
   }
 }

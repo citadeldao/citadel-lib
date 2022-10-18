@@ -8,15 +8,13 @@ export const sendAssignToDaoMessage = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    // backend domain is in the axios instance
-    url: `/dao/holder/${holderAddress}/wallets?version=${state.getState(
-      'backendApiVersion'
-    )}`,
+    url: `/dao/holder/${holderAddress}/wallets`,
     method: 'put',
     data: {
       sign: {
         id: messageId,
         signature: messageSignature,
+        version: state.getState('backendApiVersion'),
       },
     },
   }

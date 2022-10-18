@@ -9,13 +9,12 @@ export const prepareGasPledge = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `/transactions/${net}/${address}/prepare-pledge`,
+    url: `/transactions/${net}/${address}/prepare-pledge?version=${state.getState('backendApiVersion')}`,
     method: 'post',
     data: {
       publicKey,
       toAddress,
       amount,
-      version: state.getState('backendApiVersion'),
     },
   }
 }

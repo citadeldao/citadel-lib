@@ -11,14 +11,15 @@ export const prepareDelegation = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `/transactions/${net}/${from}/prepare-delegation`,
+    url: `/transactions/${net}/${from}/prepare-delegation?version=${state.getState(
+      'backendApiVersion'
+    )}`,
     method: 'post',
     data: {
       toAddress,
       publicKey,
       amount,
       kt,
-      version: state.getState('backendApiVersion'),
     },
   }
 }

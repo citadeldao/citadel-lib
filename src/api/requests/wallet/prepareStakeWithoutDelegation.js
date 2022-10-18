@@ -3,12 +3,11 @@ import state from '../../../state'
 export const prepareStakeWithoutDelegation = ({ net, address, amount }) => {
   return {
     // backend domain is in the axios instance
-    url: `transactions/${net}/${address}/simple-staked`,
+    url: `transactions/${net}/${address}/simple-staked?version=${state.getState('backendApiVersion')}`,
     method: 'get',
     data: {
       params: {
         amount,
-        version: state.getState('backendApiVersion'),
       },
     },
   }

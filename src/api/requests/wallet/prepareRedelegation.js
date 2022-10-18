@@ -11,7 +11,7 @@ export const prepareRedelegation = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `transactions/${net}/${address}/prepare-redelegation`,
+    url: `transactions/${net}/${address}/prepare-redelegation?version=${state.getState('backendApiVersion')}`,
     method: 'post',
     data: {
       validator_src_address: from,
@@ -19,7 +19,6 @@ export const prepareRedelegation = ({
       amount,
       publicKey,
       isTyped,
-      version: state.getState('backendApiVersion'),
     },
   }
 }

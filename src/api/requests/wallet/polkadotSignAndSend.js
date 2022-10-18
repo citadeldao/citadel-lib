@@ -9,14 +9,15 @@ export const polkadotSignAndSend = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `/transactions/polkadot/${signer}/signAndSend`,
+    url: `/transactions/polkadot/${signer}/signAndSend?version=${state.getState(
+      'backendApiVersion'
+    )}`,
     method: 'post',
     data: {
       unsignedTx,
       signature,
       payload,
       mem_tx_id,
-      version: state.getState('backendApiVersion'),
     },
   }
 }

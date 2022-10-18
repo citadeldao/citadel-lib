@@ -26,10 +26,12 @@ import { decodeMnemonicByPassword } from './decodeMnemonicByPassword'
 import { encodeMnemonicByPassword } from './encodeMnemonicByPassword'
 import { searchExtension } from './searchExtension'
 import { getExtensionById } from './getExtensionById'
+import { getPossibleMnemonicWords } from './getPossibleMnemonicWords'
 
 // 'init', 'reset' and other methods that are not included in other groups
 export const general = {
   generateMnemonic,
+  getPossibleMnemonicWords,
   getSupportedNetworkKeys,
   init,
   reset,

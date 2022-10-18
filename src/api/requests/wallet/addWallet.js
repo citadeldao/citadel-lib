@@ -4,8 +4,11 @@ import state from '../../../state'
 export const addWallet = (data) => {
   return {
     // backend domain is in the axios instance
-    url: `/wallets?version=${state.getState('backendApiVersion')}`,
+    url: `/wallets`,
     method: 'put',
-    data,
+    data: {
+      ...data,
+      version: state.getState('backendApiVersion'),
+    },
   }
 }

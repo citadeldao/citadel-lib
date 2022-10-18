@@ -3,8 +3,11 @@ import state from '../../../state'
 export const renameWalletTitle = (data) => {
   return {
     // backend domain is in the axios instance
-    url: `/wallets/rename?version=${state.getState('backendApiVersion')}`,
+    url: `/wallets/rename`,
     method: 'post',
-    data,
+    data: {
+      ...data,
+      version: state.getState('backendApiVersion'),
+    },
   }
 }

@@ -8,10 +8,10 @@ export const getExstensionLocalWallets = async () => {
   // mock chromeStorage for manual testing on web test UI
   if (!chromeStorage) {
     rawWallets =
-      JSON.parse(JSON.parse(localStorage.getItem('allWallets') || [])) || []
+      JSON.parse(JSON.parse(localStorage.getItem('allWallets') || '[]')) || []
   } else {
     const { allWallets = [] } = (await chromeStorage.get(['allWallets'])) || {}
-    rawWallets = JSON.parse(allWallets || [])
+    rawWallets = JSON.parse(allWallets || '[]')
   }
 
   const wallets = []

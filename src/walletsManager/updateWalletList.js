@@ -92,7 +92,6 @@ export const updateWalletList = async (
             // add balance, title and id from account wallet
             ...accountWallet,
           },
-          checkExistence: false,
           addToAccount: false,
           loadBalance: false,
           updateSubtokensList,

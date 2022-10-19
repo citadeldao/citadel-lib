@@ -27,11 +27,11 @@ export const prepareDelegation = async (walletId, options) => {
   } = options
   checkTypes(
     // nodeAddress - Array for polkadot
-    ['nodeAddresses', nodeAddresses, ['String', 'Array']],
+    ['nodeAddresses', nodeAddresses, ['Array']],
     ['amount', amount, ['String', 'Number']],
     ['type', type, ['String']],
     // Array for polkadot
-    ['redelegateNodeAddresses', redelegateNodeAddresses, ['String', 'Array']],
+    ['redelegateNodeAddresses', redelegateNodeAddresses, ['Array']],
     ['kt', kt, ['String']],
     ['rewardsAddress', rewardsAddress, ['String']],
     ['rewardsRestake', rewardsRestake, ['Boolean']],

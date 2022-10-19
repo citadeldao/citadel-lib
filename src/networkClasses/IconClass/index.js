@@ -163,6 +163,7 @@ export class IconNetwork extends BaseNetwork {
     mnemonic,
     derivationPath,
     passphrase = '',
+    oneSeed = true,
   }) {
     // generate address, public and private keys
     const seed = await mnemonicToSeed(mnemonic, passphrase)
@@ -178,7 +179,7 @@ export class IconNetwork extends BaseNetwork {
       publicKey: publicKeyHex,
       derivationPath,
       privateKey: privateKey.toString('hex'),
-      type: WALLET_TYPES.ONE_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
       // update network info
       code: this.code,
       methods: this.methods,

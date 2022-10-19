@@ -58,7 +58,7 @@ export const dispatchLibEvent = async (eventName, callbackArgument) => {
   const timeSinceLastEvent = Date.now() - lastWalletListUpdatedEventTime
   // calc delay
   const delay = minWalletListUpdatedEventInterval - timeSinceLastEvent
-  // set future event tim
+  // set future event time
   lastWalletListUpdatedEventTime = Date.now() + delay
   // dispatch event with delay
   setTimeout(

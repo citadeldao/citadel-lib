@@ -17,6 +17,7 @@ import errors from '../../errors'
  * @param options.derivationPath STRING (OPTIONAL) - derivation path, by default, a zero path is set according to the template of this network
  * @param options.passphrase STRING (OPTIONAL) - additional passphrase
  * @param options.account STRING (OPTIONAL) - account name for iost wallets
+ * @param options.oneSeed BOOLEAN (OPTIONAL) - if true, created wallet type is "oneSeed", if false - walletType is "generatedFromSeed". Default - true ("oneSeed" type)
  * @returns Returns OBJECT with wallet info
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
@@ -71,12 +72,14 @@ export const createWalletByMnemonic = async (options) => {
     derivationPath = networkClass.getDerivationPathByIndex(),
     passphrase,
     account,
+    oneSeed,
   } = options
   checkTypes(
     ['mnemonic', mnemonic, ['String'], true],
     ['derivationPath', derivationPath, ['String']],
     ['passphrase', passphrase, ['String']],
-    ['account', account, ['String']]
+    ['account', account, ['String']],
+    ['oneSeed', oneSeed, ['Boolean']]
   )
   if (!mnemonic.trim().length) {
     errors.throwError('WrongArguments', {
@@ -97,5 +100,6 @@ export const createWalletByMnemonic = async (options) => {
     derivationPath,
     passphrase,
     account,
+    oneSeed,
   })
 }

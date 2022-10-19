@@ -9,7 +9,8 @@ export const addWalletByMnemonic = async (options) => {
   // checks
   checkInitialization()
   checkTypes(['options', options, ['Object'], true])
-  const { net, mnemonic, derivationPath, title, passphrase, account } = options
+  const { net, mnemonic, derivationPath, title, passphrase, account, oneSeed } =
+    options
   checkTypes(
     ['title', title, ['String']],
     ['mnemonic', mnemonic, ['String'], true]
@@ -26,6 +27,7 @@ export const addWalletByMnemonic = async (options) => {
     derivationPath,
     passphrase,
     account,
+    oneSeed,
   })
   // save privateKey, derivation and mnemonic path for return
   const createdPrivateKey = createdWallet.privateKey

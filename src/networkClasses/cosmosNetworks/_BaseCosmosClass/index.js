@@ -153,7 +153,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
   }
 
   static async createWalletByMnemonic(
-    { mnemonic, derivationPath, passphrase = '' },
+    { mnemonic, derivationPath, passphrase = '', oneSeed = true },
     specialAddressPrefix
   ) {
     // generate address, public and private keys
@@ -173,7 +173,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
       publicKey,
       derivationPath,
       privateKey,
-      type: WALLET_TYPES.ONE_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
       isCosmosNetwork: true,
       // add network info
       code: this.code,

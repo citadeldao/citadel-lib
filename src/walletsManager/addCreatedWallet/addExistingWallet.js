@@ -17,7 +17,17 @@ export const addExistingWallet = async ({
         code: 0,
       })
     }
-    // update existing wallet and private subtokens (sescret)
+    // update existing wallet and private subtokens (secret)
+    return updateExistingWallet({
+      existingWallet,
+      createdWallet,
+      updateSubtokensList,
+    })
+  }
+
+  // ORDER FOR "generatedFromSeed"
+  if (createdWallet.type === WALLET_TYPES.GENERATED_FROM_SEED) {
+    // update existing wallet (type), private subtokens (secret) and return updated wallet
     return updateExistingWallet({
       existingWallet,
       createdWallet,
@@ -27,7 +37,7 @@ export const addExistingWallet = async ({
 
   // ORDER FOR "privateKey"
   if (createdWallet.type === WALLET_TYPES.PRIVATE_KEY) {
-    // update existing wallet (type), private subtokens (sescret) and return updated wallet
+    // update existing wallet (type), private subtokens (secret) and return updated wallet
     return updateExistingWallet({
       existingWallet,
       createdWallet,
@@ -45,7 +55,7 @@ export const addExistingWallet = async ({
     ].includes(createdWallet.type)
   ) {
     if (existingWallet.type === WALLET_TYPES.PUBLIC_KEY) {
-      // update existing wallet (type), private subtokens (sescret) and return updated wallet
+      // update existing wallet (type), private subtokens (secret) and return updated wallet
       return updateExistingWallet({
         existingWallet,
         createdWallet,

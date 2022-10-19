@@ -66,6 +66,7 @@ export class OasisNetwork extends BaseNetwork {
     mnemonic,
     derivationPath,
     passphrase = '',
+    oneSeed = true,
   }) {
     const HDDerPath = derivationPath.split('/')
     const derPathIndex = parseInt(HDDerPath[HDDerPath.length - 1])
@@ -86,7 +87,7 @@ export class OasisNetwork extends BaseNetwork {
       publicKey,
       derivationPath,
       privateKey: privateKey,
-      type: WALLET_TYPES.ONE_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
       // add network info
       code: this.code,
       methods: this.methods,
@@ -153,8 +154,12 @@ export class OasisNetwork extends BaseNetwork {
     let signedTx
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      signedTx = await signTxByLedger(formatedTx, derivationPath, this.publicKey)
-    }else{
+      signedTx = await signTxByLedger(
+        formatedTx,
+        derivationPath,
+        this.publicKey
+      )
+    } else {
       // privateKey signer
       signedTx = await signTxByPrivateKey(formatedTx, privateKey)
     }

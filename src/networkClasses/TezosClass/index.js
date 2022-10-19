@@ -111,6 +111,7 @@ export class TezosNetwork extends BaseNetwork {
     mnemonic,
     derivationPath,
     passphrase = '',
+    oneSeed = true,
   }) {
     const seed = await mnemonicToSeed(mnemonic, passphrase)
     const keyPair = await TezosOneseed.keys(seed, passphrase, derivationPath)
@@ -135,7 +136,7 @@ export class TezosNetwork extends BaseNetwork {
       publicKey: publicKeyBase58,
       derivationPath,
       privateKey: TezosUtil.readKeyWithHint(keyPair.privateKey, 'edsk'),
-      type: WALLET_TYPES.ONE_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
       // update network info
       code: this.code,
       methods: this.methods,

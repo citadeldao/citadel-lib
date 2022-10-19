@@ -73,6 +73,7 @@ export class BtcNetwork extends BaseNetwork {
     mnemonic,
     derivationPath,
     passphrase = '',
+    oneSeed = true,
   }) {
     // generate address, public and private keys
     const seed = await mnemonicToSeed(mnemonic, passphrase)
@@ -87,7 +88,7 @@ export class BtcNetwork extends BaseNetwork {
       publicKey,
       derivationPath,
       privateKey,
-      type: WALLET_TYPES.ONE_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
       // add network info
       code: this.code,
       methods: this.methods,

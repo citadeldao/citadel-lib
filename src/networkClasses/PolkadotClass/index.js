@@ -134,7 +134,10 @@ export class PolkadotNetwork extends BaseNetwork {
       derivationPath,
     })
     // send transaction by special api
-    const { data } = await api.requests.polkadotSignAndSend({...signedTransaction, mem_tx_id: rawTransaction?.mem_tx_id})
+    const { data } = await api.requests.polkadotSignAndSend({
+      ...signedTransaction,
+      mem_tx_id: rawTransaction?.mem_tx_id,
+    })
     // return hash
     return [data.hash || data.txhash || data]
   }
@@ -153,7 +156,11 @@ export class PolkadotNetwork extends BaseNetwork {
     return super.getDerivationPathByIndex(type, index)
   }
 
-  static async createWalletByMnemonic({ mnemonic, derivationPath }) {
+  static async createWalletByMnemonic({
+    mnemonic,
+    derivationPath,
+    oneSeed = true,
+  }) {
     // generate address and publicKey
     const keyring = new Keyring({ type: 'sr25519', ss58Format: 0 })
     const { address, publicKey } = await keyring.addFromUri(
@@ -166,7 +173,7 @@ export class PolkadotNetwork extends BaseNetwork {
       address,
       publicKey: Buffer.from(publicKey).toString('hex'),
       derivationPath,
-      type: WALLET_TYPES.ONE_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
       // update network info
       code: this.code,
       methods: this.methods,

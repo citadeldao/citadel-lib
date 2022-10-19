@@ -166,6 +166,7 @@ export class IostNetwork extends BaseNetwork {
     derivationPath,
     passphrase = '',
     account,
+    oneSeed = true,
   }) {
     // generate address, public and private keys
     await sodiumsumo.ready
@@ -182,7 +183,7 @@ export class IostNetwork extends BaseNetwork {
       publicKey: publicKeyHex,
       derivationPath,
       privateKey: bs58.encode(keyPair.privateKey),
-      type: WALLET_TYPES.ONE_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
       // update network info
       code: this.code,
       methods: this.methods,

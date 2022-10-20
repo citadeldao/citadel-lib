@@ -26,12 +26,13 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   }
 
   async createMessageSignature(data, { privateKey, derivationPath }) {
-    // parent's ledger signature
-    if (this.type === WALLET_TYPES.LEDGER) {
-      return super.createMessageSignature(data, { derivationPath })
+     // parent's ledger signature
+     if (this.type === WALLET_TYPES.LEDGER) {
+      const signature = await signTxByLedger(data.typedMessage, derivationPath, this.publicKey)
+      return signature.signature.slice(0, 2) === "0x" ? signature.signature : `0x${signature.signature}`
     }
     // own privateKey signature
-    return createMessageSignature(data, privateKey)
+    return createMessageSignature(data.originalCosmosMsg, privateKey)
   }
 
   static async createWalletByMnemonic(options, specialKey) {

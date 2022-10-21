@@ -9,7 +9,7 @@ import walletInstances from '../../walletInstances'
  * prepare custom transaction (claim-stake cosmos etc)
  *
  * @param walletId STRING, NUMBER (REQUIRED) - wallet id
- * @param options OBJECT (REQUIRED) - transaction options
+ * @param data OBJECT (REQUIRED) - transaction data
  * 
  * @returns Returns object with transaction ans fee
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
@@ -33,17 +33,17 @@ import walletInstances from '../../walletInstances'
   }
  */
 
-export const buildCustomTransaction = async (walletId, options) => {
+export const buildCustomTransaction = async (walletId, data) => {
   // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
-    ['options', options, ['Object'], true]
+    ['data', data, ['Object'], true]
   )
   checkWalletId(walletId)
 
   // call wallet instance method
   return await walletInstances
     .getWalletInstanceById(walletId)
-    .buildCustomTransaction(options)
+    .buildCustomTransaction(data)
 }

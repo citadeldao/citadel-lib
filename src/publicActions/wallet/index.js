@@ -42,6 +42,7 @@ import { signMessage } from './signMessage'
 import { executeContract } from './executeContract'
 import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { executeMessageCollection } from './executeMessageCollection'
+import { buildCustomTransaction } from './buildCustomTransaction'
 
 // Methods that take wallet ID as an argument. Wrappers over wallet instance methods
 export const wallet = {
@@ -88,4 +89,5 @@ export const wallet = {
   executeContract,
   loadKeplrSnip20Balances,
   executeMessageCollection,
+  buildCustomTransaction,
 }

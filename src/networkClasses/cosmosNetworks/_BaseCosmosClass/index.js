@@ -79,7 +79,6 @@ export class BaseCosmosNetwork extends BaseNetwork {
     { toNetwork, toAddress, amount, fee, memo, isTyped = false }
   ) {
     const { data } = await api.requests.buildBridge({
-      version: '1.0.2',
       net: token,
       address: this.address,
       targetNet: toNetwork,

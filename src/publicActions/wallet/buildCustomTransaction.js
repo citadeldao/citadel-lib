@@ -14,12 +14,9 @@ import walletInstances from '../../walletInstances'
  * @returns Returns object with transaction ans fee
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
-  const response = await citadel.assignToDao(
+  const response = await citadel.buildCustomTransaction(
     '12345',
-    '0x4dd28bee5135fc5dbb358a68ba941a5bf8e7aab2',
-    {
-      privateKey: 'L54AvJyYLo9kNCPGpL6mSqworGwJ9nfWYXRmMRXgHExvdfY2kSpb'
-    }
+    data
   )
 
   // =>

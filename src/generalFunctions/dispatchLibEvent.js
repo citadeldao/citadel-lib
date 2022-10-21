@@ -1,5 +1,9 @@
 import state from '../state'
-import { LIB_EVENT_CALLBACK_NAMES, LIB_EVENT_NAMES } from '../constants'
+import {
+  LIB_EVENT_CALLBACK_NAMES,
+  LIB_EVENT_NAMES,
+  LIB_EVENT_BLOCK_FLAGS,
+} from '../constants'
 import { debugConsole } from '../helpers/debugConsole'
 
 /****************** DISPATCH LIB EVENT *********************
@@ -23,6 +27,13 @@ const dispatchEvent = async (eventName, callbackArgument) => {
       `Lib event: "${eventName}". CallbackArgument: `,
       callbackArgument
     )
+
+  // skip if event blocked
+  if (state.getState(LIB_EVENT_BLOCK_FLAGS[eventName])) {
+    debugConsole.log(`Lib event: "${eventName}" blocked`)
+    return
+  }
+
   // run callback by its name
   await state.getState(LIB_EVENT_CALLBACK_NAMES[eventName])(callbackArgument)
 }

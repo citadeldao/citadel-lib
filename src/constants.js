@@ -32,6 +32,15 @@ export const LIB_EVENT_CALLBACK_NAMES = {
   [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'ledgerSigningStartedCallback',
 }
 
+export const LIB_EVENT_BLOCK_FLAGS = {
+  [LIB_EVENT_NAMES.WALLET_LIST_UPDATED]: 'blockWalletListUpdatedEvent',
+  [LIB_EVENT_NAMES.SOCKET_EVENT]: 'blockSocketEvent',
+  [LIB_EVENT_NAMES.TOKEN_REFRESHED]: 'blockTokenRefreshed',
+  [LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]: 'blockRefreshedTokenExpired',
+  [LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]: 'blockLedgerSigningFinised',
+  [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'blockLedgerSigningStarted',
+}
+
 export const CACHE_NAMES = {
   SUPPORTED_NETWORK_KEYS: 'supportedNetworkKeys',
   NETWORKS_CONFIG: 'networksConfig',

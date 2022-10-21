@@ -1,5 +1,9 @@
 import { has } from 'lodash'
-import { LIB_EVENT_NAMES, LIB_EVENT_CALLBACK_NAMES } from './constants'
+import {
+  LIB_EVENT_NAMES,
+  LIB_EVENT_CALLBACK_NAMES,
+  LIB_EVENT_BLOCK_FLAGS,
+} from './constants'
 import { debugConsole } from './helpers/debugConsole'
 /******************** STATE MODULE *************************
  * Object (store) with library states. With getters and setters for easy access from other modules
@@ -45,6 +49,13 @@ const defaultState = {
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]]: () => {},
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]]: () => {},
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]]: () => {},
+  // block event flags:
+  [LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.WALLET_LIST_UPDATED]]: false,
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.SOCKET_EVENT]]: false,
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.TOKEN_REFRESHED]]: false,
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]]: false,
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]]: false,
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]]: false,
 }
 
 // check state property name to prevent error

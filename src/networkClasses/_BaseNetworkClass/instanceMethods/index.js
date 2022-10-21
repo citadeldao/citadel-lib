@@ -42,6 +42,7 @@ import { polkadotPrepareClaimUnstaked } from './polkadotPrepareClaimUnstaked'
 import { executeContract } from './executeContract'
 import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { executeMessageCollection } from './executeMessageCollection'
+import { buildCustomTransaction } from './buildCustomTransaction'
 
 export const instanceMethods = {
   renameTitle,
@@ -86,5 +87,6 @@ export const instanceMethods = {
   polkadotPrepareClaimUnstaked,
   executeContract,
   loadKeplrSnip20Balances,
-  executeMessageCollection
+  executeMessageCollection,
+  buildCustomTransaction,
 }

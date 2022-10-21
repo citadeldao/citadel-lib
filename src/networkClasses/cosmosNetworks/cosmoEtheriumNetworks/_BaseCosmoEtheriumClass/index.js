@@ -80,12 +80,12 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     )
     // but with modified address
     wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
-    let publicKey = Buffer.from(wallet.publicKey, 'hex');
-    if (publicKey.length !== 33) {
-      publicKey = [...publicKey];
-      publicKey = publicKey.slice(1, 33);
-      publicKey.unshift(2);
-      publicKey = Buffer.from(publicKey).toString('hex');
+    let publicKey = wallet.publicKey;
+    if (publicKey.length !== 66) {
+      publicKey = publicKey.slice(2, 66);
+      const yCord = parseInt(wallet.publicKey[wallet.publicKey.length-1], 16).toString(2)
+      publicKey = yCord[yCord.length-1] === "0" ? `02${publicKey}` : `03${publicKey}`;
+
     }
     wallet.publicKey = publicKey
     return wallet

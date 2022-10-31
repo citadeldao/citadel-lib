@@ -1,6 +1,7 @@
 import networkClasses from './networkClasses'
 import { merge } from './helpers/merge'
 import { debugConsole } from './helpers/debugConsole'
+import walletsManager from './walletsManager'
 
 /******************** WALLET INSTANCES MODULE *************************
  * Сollection of network class instances created from store.wallets list (local storage).
@@ -51,6 +52,27 @@ const updateWalletInstance = (newWalletInfo) => {
   merge(walletInstance, newWalletInfo)
 }
 
+const syncWalletInstancesWithStorage = async () => {
+  // get storage wallets
+  const updatedWalletList = walletsManager.getWalletList()
+  // delete missing walletInstances
+  instanceCollection.forEach((wallet, id) => {
+    !updatedWalletList[id] && removeWalletInstanceById(id)
+  })
+  // update / create wallet instances
+  await Promise.all(
+    updatedWalletList.map(async (walletInfo) => {
+      if (getWalletInstanceById(walletInfo.id)) {
+        // update wallet instances
+        updateWalletInstance(walletInfo)
+      } else {
+        // create wallet instances
+        createWalletInstance(walletInfo)
+      }
+    })
+  )
+}
+
 export default {
   createWalletInstance,
   getWalletInstanceById,
@@ -58,4 +80,5 @@ export default {
   updateWalletInstance,
   removeWalletInstanceById,
   clearWalletInstances,
+  syncWalletInstancesWithStorage,
 }

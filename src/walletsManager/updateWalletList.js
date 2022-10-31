@@ -100,19 +100,6 @@ export const updateWalletList = async (
     })
   )
 
-  // get storage wallets
-  const updatedWalletList = getWalletList()
-
-  // update / create wallet instances
-  await Promise.all(
-    updatedWalletList.map(async (walletInfo) => {
-      if (walletInstances.getWalletInstanceById(walletInfo.id)) {
-        // update wallet instances
-        walletInstances.updateWalletInstance(walletInfo)
-      } else {
-        // create wallet instances
-        walletInstances.createWalletInstance(walletInfo)
-      }
-    })
-  )
+  // sync wallet instances
+  await walletInstances.syncWalletInstancesWithStorage()
 }

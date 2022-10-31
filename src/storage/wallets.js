@@ -44,4 +44,5 @@ export const wallets = {
   removeWallet,
   // cleare all lib cache from localStorage
   clearCache,
+  getStorageKey,
 }

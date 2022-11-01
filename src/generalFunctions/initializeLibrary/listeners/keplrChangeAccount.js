@@ -1,9 +1,9 @@
-import { SECRET_NET_KEY } from '../../constants'
-import walletInstances from '../../walletInstances'
-import { keplrChains } from '../../networkClasses/cosmosNetworks/_BaseCosmosClass/signers/keplrChains'
-import { debugConsole } from '../../helpers/debugConsole'
+import { SECRET_NET_KEY } from '../../../constants'
+import walletInstances from '../../../walletInstances'
+import { keplrChains } from '../../../networkClasses/cosmosNetworks/_BaseCosmosClass/signers/keplrChains'
+import { debugConsole } from '../../../helpers/debugConsole'
 
-export const addKeplrChangeAccountListener = async () => {
+export const keplrChangeAccount = async () => {
   try {
     const keplr = window.keplr
     if (!keplr) {

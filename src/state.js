@@ -42,6 +42,8 @@ const defaultState = {
   stakeList: false,
   accessToken: null,
   refreshToken: null,
+
+  // TODO: refact (events state / module?)
   // event callbacks. Computed property to prevent errors and for simple event handling
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.WALLET_LIST_UPDATED]]: () => {},
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.SOCKET_EVENT]]: () => {},
@@ -49,6 +51,9 @@ const defaultState = {
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]]: () => {},
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]]: () => {},
   [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]]: () => {},
+  [LIB_EVENT_CALLBACK_NAMES[LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]]:
+    () => {},
+
   // block event flags:
   [LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.WALLET_LIST_UPDATED]]: false,
   [LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.SOCKET_EVENT]]: false,
@@ -56,6 +61,7 @@ const defaultState = {
   [LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]]: false,
   [LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]]: false,
   [LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]]: false,
+  [LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]]: false,
 }
 
 // check state property name to prevent error

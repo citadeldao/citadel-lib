@@ -1,10 +1,10 @@
 import api from '../../api'
 import walletsManager from '../../walletsManager'
 import errors from '../../errors'
-import walletInstances from '../../walletInstances'
+// import walletInstances from '../../walletInstances'
 import { checkInitialization, checkTypes } from '../../helpers/checkArguments'
 import { GET_WALLET_LIST_TYPES } from '../../constants'
-import storage from '../../storage'
+// import storage from '../../storage'
 
 export const getWalletList = async (type = GET_WALLET_LIST_TYPES.CACHE) => {
   // checks
@@ -37,19 +37,19 @@ export const getWalletList = async (type = GET_WALLET_LIST_TYPES.CACHE) => {
   const walletList = walletsManager.getWalletList()
 
   // for 'lazy' request sync walletInstances with storage (in case localStorage has been changed from another tab)
-  if (type === GET_WALLET_LIST_TYPES.LAZY) {
-    // get walletList object from storage
-    const walletListObject = storage.wallets.getWalletListObject()
-    walletList.map((wallet) => {
-      if (!walletListObject[wallet.id]) {
-        // create wallet instance for new wallet, which was added in another tab
-        walletInstances.createWalletInstance(wallet)
-      } else {
-        // sync existing wallet instances with storage
-        walletInstances.updateWalletInstance(wallet)
-      }
-    })
-  }
+  // if (type === GET_WALLET_LIST_TYPES.LAZY) {
+  //   // get walletList object from storage
+  //   const walletListObject = storage.wallets.getWalletListObject()
+  //   walletList.map((wallet) => {
+  //     if (!walletListObject[wallet.id]) {
+  //       // create wallet instance for new wallet, which was added in another tab
+  //       walletInstances.createWalletInstance(wallet)
+  //     } else {
+  //       // sync existing wallet instances with storage
+  //       walletInstances.updateWalletInstance(wallet)
+  //     }
+  //   })
+  // }
 
   return walletList
 }

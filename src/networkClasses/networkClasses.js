@@ -45,6 +45,7 @@ import { OptimismNetwork } from './ethNetworks/OptimismClass'
 import { TronNetwork } from './TronClass'
 import { StafiNetwork } from './cosmosNetworks/StafiClass'
 import { StrideNetwork } from './cosmosNetworks/StrideClass'
+import { JackalNetwork } from './cosmosNetworks/JackalClass'
 
 
 export const networkClasses = {
@@ -94,5 +95,6 @@ export const networkClasses = {
   optimism: OptimismNetwork,
   tron: TronNetwork,
   stafi: StafiNetwork,
-  stride: StrideNetwork
+  stride: StrideNetwork,
+  jackal: JackalNetwork
 }

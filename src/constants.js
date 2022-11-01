@@ -15,6 +15,7 @@ export const MARKETCAPS_SOCKET_EVENT_NAMES = {
 
 export const LIB_EVENT_NAMES = {
   WALLET_LIST_UPDATED: 'walletListUpdated',
+  STORAGE_CHANGED_EXTERNALLY: 'storageChangedExternally',
   SOCKET_EVENT: 'socketEvent',
   TOKEN_REFRESHED: 'tokenRefreshed',
   REFRESHED_TOKEN_EXPIRED: 'refreshedTokenExpired',
@@ -22,6 +23,7 @@ export const LIB_EVENT_NAMES = {
   LEDGER_SIGNING_STARTED: 'ledgerSigningStarted',
 }
 
+// TODO: generate next 2 consts automatically
 // computed properties to associate event with its callback in the state
 export const LIB_EVENT_CALLBACK_NAMES = {
   [LIB_EVENT_NAMES.WALLET_LIST_UPDATED]: 'walletListUpdatedCallback',
@@ -30,6 +32,8 @@ export const LIB_EVENT_CALLBACK_NAMES = {
   [LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]: 'refreshedTokenExpiredCallback',
   [LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]: 'ledgerSigningFinisedCallback',
   [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'ledgerSigningStartedCallback',
+  [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]:
+    'storageChangedExternallyCallback',
 }
 
 export const LIB_EVENT_BLOCK_FLAGS = {
@@ -39,6 +43,7 @@ export const LIB_EVENT_BLOCK_FLAGS = {
   [LIB_EVENT_NAMES.REFRESHED_TOKEN_EXPIRED]: 'blockRefreshedTokenExpired',
   [LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]: 'blockLedgerSigningFinised',
   [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'blockLedgerSigningStarted',
+  [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]: 'blockStorageChangedExternally',
 }
 
 export const CACHE_NAMES = {

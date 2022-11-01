@@ -9,7 +9,7 @@ import { configureModulesByCaches } from './configureModulesByCaches'
 import { backgroundUpdates } from './backgroundUpdates'
 import socketManager from '../../socketManager'
 import { debugConsole } from '../../helpers/debugConsole'
-import { addKeplrChangeAccountListener } from './addKeplrChangeAccountListener'
+import { listeners } from './listeners'
 
 /****************** INITIALIZE LIBRARY ********************/
 export const initializeLibrary = async ({
@@ -126,5 +126,8 @@ export const initializeLibrary = async ({
   dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 
   // add Keplr event listener to update keplr snip20 subtokens
-  addKeplrChangeAccountListener()
+  listeners.keplrChangeAccount()
+
+  // add storage event to sync with other citadel app tabs
+  listeners.storageChangedExternally()
 }

@@ -1,4 +1,3 @@
-import { ec as EC } from 'elliptic'
 import {
   modifiedKeccak,
   trimLeadingZero,
@@ -28,8 +27,9 @@ export const signTxByPrivateKey = (data, privateKey) => {
   )
 }
 
-const signMessageBySecp256k1 = (msg, privateKey) => {
-  const ellipticCurves = new EC('secp256k1')
+const signMessageBySecp256k1 = async (msg, privateKey) => {
+  const { default: elliptic } = await import('elliptic')
+  const ellipticCurves = new elliptic.ec('secp256k1')
   const keys = ellipticCurves.keyFromPrivate(privateKey)
   const signature = keys.sign(msg, { canonical: true })
 
@@ -40,7 +40,7 @@ const signMessageBySecp256k1 = (msg, privateKey) => {
   }
 }
 
-const ethereumSigner = (tx, privateKey, applyKeccak = true) => {
+const ethereumSigner = async (tx, privateKey, applyKeccak = true) => {
   if (!tx.gas) {
     throw new Error('ETH: "gas" is missing')
   }
@@ -54,7 +54,7 @@ const ethereumSigner = (tx, privateKey, applyKeccak = true) => {
     throw new Error('Gas, gasPrice, nonce or chainId is lower than 0')
   }
 
-  const txFormatted = inputCallFormatter({ ...tx })
+  const txFormatted = await inputCallFormatter({ ...tx })
 
   const formatted = {
     ...txFormatted,
@@ -64,13 +64,13 @@ const ethereumSigner = (tx, privateKey, applyKeccak = true) => {
     chainId: fromNumber(txFormatted.chainId),
   }
 
-  const makeSigner = (hash, addToV = 0) => {
-    const signature = signMessageBySecp256k1(
+  const makeSigner = async (hash, addToV = 0) => {
+    const signature = await signMessageBySecp256k1(
       Buffer.from(hash.slice(2), 'hex'),
       privateKey
     )
     return encodeSignature([
-      fromString(fromNumber(addToV + signature.recoveryParam)),
+      await fromString(fromNumber(addToV + signature.recoveryParam)),
       padBytes(32, fromNat('0x' + signature.r.toString(16))),
       padBytes(32, fromNat('0x' + signature.s.toString(16))),
     ])
@@ -78,8 +78,11 @@ const ethereumSigner = (tx, privateKey, applyKeccak = true) => {
 
   const data = rlpEncode(formatted)
   const signature = applyKeccak
-    ? makeSigner(modifiedKeccak(data), toNumber(formatted.chainId) * 2 + 35)
-    : makeSigner(data)
+    ? await makeSigner(
+        modifiedKeccak(data),
+        (await toNumber(formatted.chainId)) * 2 + 35
+      )
+    : await makeSigner(data)
 
   const rawTransaction = RLPDecode(data)
     .slice(0, 6)

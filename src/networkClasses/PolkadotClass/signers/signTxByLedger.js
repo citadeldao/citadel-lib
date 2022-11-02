@@ -1,10 +1,7 @@
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import U2fTransport from '@ledgerhq/hw-transport-u2f'
-import { u8aToHex } from '@polkadot/util'
 import errors from '../../../errors'
-const { TypeRegistry } = require('@polkadot/types')
-const { Metadata } = require('@polkadot/types/metadata')
 
 export const signTxByLedger = async (
   rawTransaction,
@@ -17,7 +14,11 @@ export const signTxByLedger = async (
       : await U2fTransport.create(10000)
     global.ledger_polkadot = new PolkadotLedger(transport)
   }
+  // dynamic import of large module (for fast init)
+  const { TypeRegistry } = await import('@polkadot/types')
   const registry = new TypeRegistry()
+  // dynamic import of large module (for fast init)
+  const { Metadata } = await import('@polkadot/types/metadata')
   const metadata = new Metadata(registry, rawTransaction.metadata)
 
   registry.setMetadata(metadata)
@@ -40,6 +41,8 @@ export const signTxByLedger = async (
       code: response.return_code,
     })
   }
+  // dynamic import of large module (for fast init)
+  const { u8aToHex } = await import('@polkadot/util')
 
   return {
     signer: address,

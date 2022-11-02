@@ -1,6 +1,5 @@
 import { getSecretClient } from './functions/getSecretClient'
-import { cloneDeep } from 'lodash'
-import { MsgExecuteContract } from 'secretjs'
+import cloneDeep from 'lodash/cloneDeep'
 
 export const broadcast = async ({
   address,
@@ -41,6 +40,9 @@ export const broadcast = async ({
       )
       message.contractAddress = message.contract
     }
+    // dynamic import of large module (for fast init)
+    const { MsgExecuteContract } = await import('secretjs')
+
     // format message
     clonedMessages[messageIndex] = new MsgExecuteContract(
       clonedMessages[messageIndex]

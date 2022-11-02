@@ -1,7 +1,4 @@
 import { BaseNetwork } from '../_BaseNetworkClass'
-import { mnemonicToSeed } from 'bip39'
-import { bip32 } from 'bitcoinjs-lib'
-import TronWeb from 'tronweb'
 import Trx from '@ledgerhq/hw-app-trx'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
@@ -36,12 +33,19 @@ export class TronNetwork extends BaseNetwork {
     passphrase = '',
     oneSeed = true,
   }) {
+    // dynamic import of large module (for fast init)
+    const { default: TronWeb } = await import('tronweb')
+    // dynamic import of large module (for fast init)
+    const { mnemonicToSeed } = await import('bip39')
+
     const seed = await mnemonicToSeed(mnemonic, passphrase)
-    const node = await bip32.fromSeed(seed)
-    const child = await node.derivePath(derivationPath)
-    const privateKey = await child.privateKey.toString('hex')
+    // dynamic import of large module (for fast init)
+    const { bip32 } = await import('bitcoinjs-lib')
+    const node = bip32.fromSeed(seed)
+    const child = node.derivePath(derivationPath)
+    const privateKey = child.privateKey.toString('hex')
     const publicKey = Buffer.from(
-      getPubKeyFromPriKey(hexStr2byteArray(privateKey))
+      await getPubKeyFromPriKey(hexStr2byteArray(privateKey))
     ).toString('hex')
     const address = await TronWeb.address.fromPrivateKey(privateKey)
 
@@ -62,9 +66,11 @@ export class TronNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey }) {
+    // dynamic import of large module (for fast init)
+    const { default: TronWeb } = await import('tronweb')
     const address = await TronWeb.address.fromPrivateKey(privateKey)
     const publicKey = Buffer.from(
-      getPubKeyFromPriKey(hexStr2byteArray(privateKey))
+      await getPubKeyFromPriKey(hexStr2byteArray(privateKey))
     ).toString('hex')
     return {
       net: this.net,

@@ -1,11 +1,8 @@
 import api from '../../../api'
 import state from '../../../state'
 import { hashMnemonic } from '../../../helpers/hashMnemonic'
-import cosmos from 'cosmos-lib'
 import { checkDelegationTypes } from '../../../helpers/checkArguments'
-import { mnemonicToSeed } from 'bip39'
 import { BaseNetwork } from '../../_BaseNetworkClass'
-import { ECPair, bip32 } from 'bitcoinjs-lib'
 import {
   signTxByPrivateKey,
   createMessageSignatureByPrivateKey,
@@ -18,7 +15,6 @@ import errors from '../../../errors'
 import { getHdDerivationPath, getBech32FromPK } from '../../_functions/ledger'
 import { getLedgerApp } from './signers/getLedgerApp'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import CosmosApp from 'ledger-cosmos-js'
 import { debugConsole } from '../../../helpers/debugConsole'
 
 export class BaseCosmosNetwork extends BaseNetwork {
@@ -155,6 +151,10 @@ export class BaseCosmosNetwork extends BaseNetwork {
     { mnemonic, derivationPath, passphrase = '', oneSeed = true },
     specialAddressPrefix
   ) {
+    // dynamic import of large module (for fast init)
+    const { mnemonicToSeed } = await import('bip39')
+    const { bip32 } = await import('bitcoinjs-lib')
+    const { default: cosmos } = await import('cosmos-lib')
     // generate address, public and private keys
     const seed = await mnemonicToSeed(mnemonic, passphrase)
     const master = bip32.fromSeed(seed)
@@ -190,6 +190,9 @@ export class BaseCosmosNetwork extends BaseNetwork {
 
   static async createWalletByPrivateKey({ privateKey }, specialAddressPrefix) {
     try {
+      // dynamic import of large module (for fast init)
+      const { ECPair } = await import('bitcoinjs-lib')
+      const { default: cosmos } = await import('cosmos-lib')
       // generate address and public key
       privateKey = privateKey.replace('0x', '')
       const keyPair = ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'))
@@ -271,6 +274,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     specialAddressPrefix
   ) {
     const transport = await TransportWebUSB.create(1000)
+    const { default: CosmosApp } = await import('ledger-cosmos-js')
     const cosmosApp = new CosmosApp(transport)
     const hdPathArray = getHdDerivationPath(derivationPath)
     const resp = await cosmosApp.publicKey(hdPathArray)
@@ -280,7 +284,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
       throw error
     }
 
-    const address = getBech32FromPK(
+    const address = await getBech32FromPK(
       specialAddressPrefix || this.net,
       Buffer.from(resp.compressed_pk.buffer)
     )

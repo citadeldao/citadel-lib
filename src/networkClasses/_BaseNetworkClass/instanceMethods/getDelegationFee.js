@@ -6,7 +6,8 @@ export const getDelegationFee = async function ({
   nodeAddress,
   sourceNodeAddress = '',
   kt,
-  isWithoutDelegation
+  isWithoutDelegation,
+  newAddingFormat = false
 }) {
   const data = await api.requests.getDelegationFee({
     net: this.net,
@@ -16,7 +17,8 @@ export const getDelegationFee = async function ({
     sourceNodeAddress,
     publicKey: this.publicKey,
     kt,
-    isWithoutDelegation
+    isWithoutDelegation,
+    newAddingFormat
   })
   return data.data
 }

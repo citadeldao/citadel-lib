@@ -1,5 +1,4 @@
 import { VIEWING_KEYS_TYPES, WALLET_TYPES } from '../../../../constants'
-import snip20Manager from '../snip20Manager'
 import networkClasses from '../../../'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
@@ -11,6 +10,8 @@ export async function setViewingKey(
   viewingKeyType,
   { privateKey, derivationPath, viewingKey, fee = 0.003 } = {}
 ) {
+  // dynamic import module with huge npm package
+  const { default: snip20Manager } = await import('../snip20Manager')
   const networkClass = networkClasses.getNetworkClass(this.net)
   let data = null
   // separate flow for kepler

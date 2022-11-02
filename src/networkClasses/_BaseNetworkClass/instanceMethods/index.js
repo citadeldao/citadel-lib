@@ -43,6 +43,8 @@ import { executeContract } from './executeContract'
 import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { executeMessageCollection } from './executeMessageCollection'
 import { buildCustomTransaction } from './buildCustomTransaction'
+import { getRewardsById } from './getRewardsById'
+
 
 export const instanceMethods = {
   renameTitle,
@@ -89,4 +91,5 @@ export const instanceMethods = {
   loadKeplrSnip20Balances,
   executeMessageCollection,
   buildCustomTransaction,
+  getRewardsById
 }

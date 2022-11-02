@@ -9,6 +9,7 @@ export const getDelegationFee = ({
   sourceNodeAddress,
   kt,
   isWithoutDelegation,
+  newAddingFormat
 }) => {
   return {
     // backend domain is in the axios instance
@@ -22,6 +23,7 @@ export const getDelegationFee = ({
         kt,
         isWithoutDelegation,
         version: state.getState('backendApiVersion'),
+        newAddingFormat
       },
     },
   }

@@ -44,6 +44,7 @@ import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { executeMessageCollection } from './executeMessageCollection'
 import { buildCustomTransaction } from './buildCustomTransaction'
 import { getRewardsById } from './getRewardsById'
+import { getRedelegationUnlockDateById } from './getRedelegationUnlockDateById'
 
 
 export const instanceMethods = {
@@ -91,5 +92,6 @@ export const instanceMethods = {
   loadKeplrSnip20Balances,
   executeMessageCollection,
   buildCustomTransaction,
-  getRewardsById
+  getRewardsById,
+  getRedelegationUnlockDateById
 }

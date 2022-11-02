@@ -6,14 +6,10 @@ import { signTxByLedger } from './signers/signTxByLedger'
 import { signTxByPrivateKeyOrMnemonic } from './signers/signTxByPrivateKeyOrMnemonic'
 import api from '../../api'
 import errors from '../../errors'
-import { Keyring } from '@polkadot/api'
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import U2fTransport from '@ledgerhq/hw-transport-u2f'
 import { DELEGATION_TYPES, WALLET_TYPES } from '../../constants'
-import { cryptoWaitReady } from '@polkadot/util-crypto'
-// init polkadot
-cryptoWaitReady()
 
 export class PolkadotNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -43,6 +39,10 @@ export class PolkadotNetwork extends BaseNetwork {
     rawTransaction,
     { privateKey, mnemonic, derivationPath }
   ) {
+    // dynamic import of large module (for fast init)
+    const { cryptoWaitReady } = await import('@polkadot/util-crypto')
+    // init polkadot
+    await cryptoWaitReady()
     // get transaction object
     const transaction =
       (!rawTransaction.metadata && rawTransaction.transaction) || rawTransaction
@@ -161,6 +161,12 @@ export class PolkadotNetwork extends BaseNetwork {
     derivationPath,
     oneSeed = true,
   }) {
+    // dynamic import of large module (for fast init)
+    const { cryptoWaitReady } = await import('@polkadot/util-crypto')
+    // init polkadot
+    await cryptoWaitReady()
+    // dynamic import of large module (for fast init)
+    const { Keyring } = await import('@polkadot/api')
     // generate address and publicKey
     const keyring = new Keyring({ type: 'sr25519', ss58Format: 0 })
     const { address, publicKey } = await keyring.addFromUri(
@@ -189,6 +195,12 @@ export class PolkadotNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey }) {
+    // dynamic import of large module (for fast init)
+    const { cryptoWaitReady } = await import('@polkadot/util-crypto')
+    // init polkadot
+    await cryptoWaitReady()
+    // dynamic import of large module (for fast init)
+    const { Keyring } = await import('@polkadot/api')
     // generate address and publicKey
     const keyring = new Keyring({ type: 'sr25519', ss58Format: 0 })
     const { address, publicKey } = keyring.addFromUri(privateKey)
@@ -214,6 +226,10 @@ export class PolkadotNetwork extends BaseNetwork {
   }
 
   static async createWalletByLedger({ derivationPath }) {
+    // dynamic import of large module (for fast init)
+    const { cryptoWaitReady } = await import('@polkadot/util-crypto')
+    // init polkadot
+    await cryptoWaitReady()
     // add global ledger app to avoid ledger reconnect error
     if (!global.ledger_polkadot) {
       const transport = (await WebHidTransport.isSupported())

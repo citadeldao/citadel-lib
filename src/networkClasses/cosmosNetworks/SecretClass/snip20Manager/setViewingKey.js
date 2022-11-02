@@ -1,7 +1,6 @@
 import errors from '../../../../errors'
 import { VIEWING_KEYS_TYPES } from '../../../../constants'
 import { checkTypes } from '../../../../helpers/checkArguments'
-import crypto from 'crypto'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
 import { executeContract } from './executeContract'
 import { SecretNetwork } from '../'
@@ -29,7 +28,7 @@ export async function setViewingKey(
   switch (viewingKeyType) {
     // set simple viewing key
     case VIEWING_KEYS_TYPES.SIMPLE: {
-      const simpleViewingKey = generateSimpleViewingKey(
+      const simpleViewingKey = await generateSimpleViewingKey(
         contractAddress,
         privateKeyHash
       )
@@ -90,6 +89,8 @@ export async function setViewingKey(
     }
     // set random viewing key
     case VIEWING_KEYS_TYPES.RANDOM: {
+      // dynamic import of large module (for fast init)
+      const { default: crypto } = await import('crypto')
       const entropy = crypto.randomBytes(64).toString('base64')
       const response = await executeContract({
         address,

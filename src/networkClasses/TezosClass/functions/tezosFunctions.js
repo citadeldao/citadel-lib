@@ -1,5 +1,4 @@
 import * as TezosUtil from './utils'
-import sodiumsumo from 'libsodium-wrappers-sumo'
 
 export const TezosPrefix = {
   tz1: Buffer.from([6, 161, 159]),
@@ -14,6 +13,8 @@ export const TezosPrefix = {
 }
 
 export const walletFromPrivate = async (edsk) => {
+  // dynamic import of large module (for fast init)
+  const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
   const publickey = async (sk) => {
     await sodiumsumo.ready
     const seed =

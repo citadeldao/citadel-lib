@@ -1,16 +1,20 @@
-import { Keyring } from '@polkadot/api'
-const { TypeRegistry } = require('@polkadot/types')
-const { Metadata } = require('@polkadot/types/metadata')
-
-export const signTxByPrivateKeyOrMnemonic = (
+export const signTxByPrivateKeyOrMnemonic = async (
   rawTransaction,
   privateKeyOrMnemonic,
   derivationPath
 ) => {
+  // dynamic import of large module (for fast init)
+  const { TypeRegistry } = await import('@polkadot/types')
+  const { Metadata } = await import('@polkadot/types/metadata')
+  const { Keyring } = await import('@polkadot/api')
+
   // polka transfer
   const account = new Keyring({ type: 'sr25519', ss58Format: 0 }).addFromUri(
-    derivationPath ? privateKeyOrMnemonic + derivationPath : privateKeyOrMnemonic
+    derivationPath
+      ? privateKeyOrMnemonic + derivationPath
+      : privateKeyOrMnemonic
   )
+
   const registry = new TypeRegistry()
   const metadata = new Metadata(registry, rawTransaction.metadata)
   registry.setMetadata(metadata)

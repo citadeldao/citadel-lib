@@ -16,7 +16,7 @@ export async function getPossibleViewingKeyForCheck(token) {
     PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(this.type) &&
     this.privateKeyHash
   ) {
-    viewingKey = snip20Manager.generateSimpleViewingKey(
+    viewingKey = await snip20Manager.generateSimpleViewingKey(
       networkClasses.getNetworkClass(this.net).tokens[token].address,
       this.privateKeyHash
     )

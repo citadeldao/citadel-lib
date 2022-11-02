@@ -1,6 +1,6 @@
 import { toHexNumber } from '../../../_functions/crypto'
 
-export function toRawTransaction(transaction) {
+export async function toRawTransaction(transaction) {
   const {
     to,
     from,
@@ -17,18 +17,18 @@ export function toRawTransaction(transaction) {
   const rawTransaction = {
     to,
     from,
-    stepLimit: toHexNumber(stepLimit),
-    nid: toHexNumber(nid),
-    version: toHexNumber(version),
-    timestamp: toHexNumber(timestamp),
+    stepLimit: await toHexNumber(stepLimit),
+    nid: await toHexNumber(nid),
+    version: await toHexNumber(version),
+    timestamp: await toHexNumber(timestamp),
   }
 
   if (value) {
-    rawTransaction.value = toHexNumber(value)
+    rawTransaction.value = await toHexNumber(value)
   }
 
   if (nonce) {
-    rawTransaction.nonce = toHexNumber(nonce)
+    rawTransaction.nonce = await toHexNumber(nonce)
   }
 
   if (dataType) {

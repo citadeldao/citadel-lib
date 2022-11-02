@@ -5,11 +5,9 @@ import {
 } from '../../../../../constants'
 import { getLedgerApp } from '../../../_BaseCosmosClass/signers/getLedgerApp'
 import { serializeSignDoc } from './serializeSignDoc'
-import { DirectSecp256k1Wallet } from '@cosmjs/proto-signing'
 import { getHdDerivationPath } from '../../../../_functions/ledger'
 import errors from '../../../../../errors'
 import { dispatchLibEvent } from '../../../../../generalFunctions/dispatchLibEvent'
-const secp256k1 = require('secp256k1')
 
 export async function getSignerWallet({
   privateKey,
@@ -21,6 +19,11 @@ export async function getSignerWallet({
   keplr,
 }) {
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
+    // dynamic import of large module (for fast init)
+    const { default: DirectSecp256k1Wallet } = await import(
+      '@cosmjs/proto-signing'
+    )
+
     privateKey = privateKey.replace('0x', '')
     // create signer wallet by privateKey
     const wallet = await DirectSecp256k1Wallet.fromKey(
@@ -38,6 +41,8 @@ export async function getSignerWallet({
 
   // ledger signer
   if (type === WALLET_TYPES.LEDGER) {
+    // dynamic import for guge module
+    const { default: secp256k1 } = await import('secp256k1')
     // create signer by ledger
     return {
       getAccounts() {

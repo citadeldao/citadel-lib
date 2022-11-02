@@ -12,7 +12,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath) => {
     global.ledger_icon = new IconApp(transport)
   }
 
-  const rawTx = toRawTransaction(rawTransaction)
+  const rawTx = await toRawTransaction(rawTransaction)
   const phraseToSign = generateHashKey(rawTx)
   const { signedRawTxBase64 } = await global.ledger_icon.signTransaction(
     derivationPath,

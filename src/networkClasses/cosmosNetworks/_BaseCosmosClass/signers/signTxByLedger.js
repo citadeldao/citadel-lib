@@ -2,7 +2,6 @@ import { getHdDerivationPath } from '../../../_functions/ledger'
 import { getLedgerApp } from './getLedgerApp'
 import errors from '../../../../errors'
 import { sortObject } from '../functions'
-const secp256k1 = require('secp256k1')
 
 export const signTxByLedger = async (
   rawTransaction,
@@ -24,6 +23,8 @@ export const signTxByLedger = async (
     })
   }
 
+  // dynamic import for guge module
+  const { default: secp256k1 } = await import('secp256k1')
   const parsedSignature = secp256k1.signatureImport(
     Buffer.from(response.signature)
   )

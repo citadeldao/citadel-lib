@@ -1,8 +1,6 @@
 import api from '../../api'
 import { BaseNetwork } from '../_BaseNetworkClass'
-import * as oasis from '@oasisprotocol/client'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
-import nacl from 'tweetnacl'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import OasisApp from '@oasisprotocol/ledger'
 import { getHdDerivationPath } from '../_functions/ledger'
@@ -70,16 +68,17 @@ export class OasisNetwork extends BaseNetwork {
   }) {
     const HDDerPath = derivationPath.split('/')
     const derPathIndex = parseInt(HDDerPath[HDDerPath.length - 1])
-
-    const signer = await oasis.hdkey.HDKey.getAccountSigner(
+    // dynamic import of large module (for fast init)
+    const { hdkey, staking } = await import('@oasisprotocol/client')
+    const signer = await hdkey.HDKey.getAccountSigner(
       mnemonic,
       derPathIndex,
       passphrase
     )
     const privateKey = Buffer.from(signer.secretKey).toString('base64')
     const publicKey = Buffer.from(signer.publicKey).toString('hex')
-    const data = await oasis.staking.addressFromPublicKey(signer.publicKey)
-    const address = oasis.staking.addressToBech32(data)
+    const data = await staking.addressFromPublicKey(signer.publicKey)
+    const address = staking.addressToBech32(data)
 
     return {
       net: this.net,
@@ -98,11 +97,15 @@ export class OasisNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey }) {
+    // dynamic import of large module (for fast init)
+    const { staking } = await import('@oasisprotocol/client')
+    const { default: nacl } = await import('tweetnacl')
     const publicKeyBytes = nacl.sign.keyPair.fromSecretKey(
       Buffer.from(privateKey, 'base64')
     ).publicKey
-    const data = await oasis.staking.addressFromPublicKey(publicKeyBytes)
-    const address = oasis.staking.addressToBech32(data)
+
+    const data = await staking.addressFromPublicKey(publicKeyBytes)
+    const address = staking.addressToBech32(data)
     const publicKey = Buffer.from(publicKeyBytes).toString('hex')
     return {
       net: this.net,
@@ -129,8 +132,10 @@ export class OasisNetwork extends BaseNetwork {
       const error = new Error(resp.error.message)
       throw error
     }
-    const data = await oasis.staking.addressFromPublicKey(resp.pk)
-    const address = oasis.staking.addressToBech32(data)
+    // dynamic import of large module (for fast init)
+    const { staking } = await import('@oasisprotocol/client')
+    const data = await staking.addressFromPublicKey(resp.pk)
+    const address = staking.addressToBech32(data)
     const publicKey = Buffer.from(resp.pk).toString('hex')
     await transport.close()
     return {
@@ -150,18 +155,13 @@ export class OasisNetwork extends BaseNetwork {
   }
 
   async createMessageSignature(data, { privateKey, derivationPath }) {
-    const formatedTx = await tranformTransaction(data)
     let signedTx
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      signedTx = await signTxByLedger(
-        formatedTx,
-        derivationPath,
-        this.publicKey
-      )
+      signedTx = await signTxByLedger(data, derivationPath, this.publicKey)
     } else {
       // privateKey signer
-      signedTx = await signTxByPrivateKey(formatedTx, privateKey)
+      signedTx = await signTxByPrivateKey(data, privateKey)
     }
 
     return Buffer.from(signedTx.signature.signature).toString('hex')

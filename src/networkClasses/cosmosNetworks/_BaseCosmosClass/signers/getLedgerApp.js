@@ -1,6 +1,5 @@
-import Ledger from '@lunie/cosmos-ledger'
-
 export const getLedgerApp = async () => {
+  const { default: Ledger } = await import('@lunie/cosmos-ledger')
   // add global btc ledger app to avoid ledger reconnect error
   let ledger
   if (

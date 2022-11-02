@@ -2,7 +2,7 @@ import { STATUSES } from '../constants'
 import errors from '../errors'
 import state from '../state'
 import { getType } from '../helpers/checkArguments'
-import { cloneDeep } from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 import { debugConsole } from '../helpers/debugConsole'
 
 // action decorator format public actions returns and catch all errors

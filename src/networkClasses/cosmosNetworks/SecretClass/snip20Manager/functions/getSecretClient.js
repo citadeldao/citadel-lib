@@ -1,5 +1,4 @@
 import { getSignerWallet } from './getSignerWallet'
-import { SecretNetworkClient } from 'secretjs'
 import {
   GRPC_WEB_URL,
   SECRET_NET_KEY,
@@ -16,6 +15,9 @@ export const getSecretClient = async ({
   publicKey,
   readOnly = false,
 }) => {
+  // dynamic import of large module (for fast init)
+  const { default: SecretNetworkClient } = await import('secretjs')
+
   // get keplr and enigmaUtils
   const walletInstance = walletInstances.getWalletInstanceByAddress(
     SECRET_NET_KEY,

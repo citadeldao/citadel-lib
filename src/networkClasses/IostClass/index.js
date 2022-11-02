@@ -2,13 +2,10 @@ import api from '../../api'
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
-import { derivePath } from 'ed25519-hd-key'
 import bs58 from 'bs58'
-import sodiumsumo from 'libsodium-wrappers-sumo'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
 import errors from '../../errors'
 import { BaseNetwork } from '../_BaseNetworkClass'
-import { mnemonicToSeed } from 'bip39'
 import { signTxByPrivateKey, MessageSigner } from './signers'
 import { registerAccount } from './functions/registerAccount'
 import { genAddress } from './functions/genAddress'
@@ -111,9 +108,9 @@ export class IostNetwork extends BaseNetwork {
     )
   }
 
-  createMessageSignature(data, { privateKey }) {
+  async createMessageSignature(data, { privateKey }) {
     const signer = new MessageSigner({ message: data })
-    signer.addPublishSign(
+    await signer.addPublishSign(
       this.address,
       'ed25519',
       Buffer.from(this.publicKey, 'hex'),
@@ -141,6 +138,9 @@ export class IostNetwork extends BaseNetwork {
   }
 
   static async getAccountsByPrivateKey(privateKey) {
+    // dynamic import of large module (for fast init)
+    const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
+
     await sodiumsumo.ready
     let keys
     try {
@@ -168,9 +168,14 @@ export class IostNetwork extends BaseNetwork {
     account,
     oneSeed = true,
   }) {
+    // dynamic import of large module (for fast init)
+    const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
+    const { mnemonicToSeed } = await import('bip39')
     // generate address, public and private keys
     await sodiumsumo.ready
     const seed = await mnemonicToSeed(mnemonic, passphrase)
+    // dynamic import of large module (for fast init)
+    const { derivePath } = await import('ed25519-hd-key')
     const keys = derivePath(derivationPath, seed).key.slice(0, 32)
     const keyPair = sodiumsumo.crypto_sign_seed_keypair(keys)
     const address = await genAddress(keyPair.publicKey)
@@ -199,6 +204,8 @@ export class IostNetwork extends BaseNetwork {
   }
 
   static async createWalletByPrivateKey({ privateKey, account }) {
+    // dynamic import of large module (for fast init)
+    const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
     // generate address and public key
     await sodiumsumo.ready
     let keys
@@ -237,18 +244,18 @@ export class IostNetwork extends BaseNetwork {
     }
   }
 
-  static decodePrivateKeyByPassword(encodedPrivateKey, password) {
+  static async decodePrivateKeyByPassword(encodedPrivateKey, password) {
     return bs58.encode(
       Buffer.from(
-        super.decodePrivateKeyByPassword(encodedPrivateKey, password),
+        await super.decodePrivateKeyByPassword(encodedPrivateKey, password),
         'hex'
       )
     )
   }
 
-  static encodePrivateKeyByPassword(privateKey, password) {
+  static async encodePrivateKeyByPassword(privateKey, password) {
     // do not change format for backwards compatibility
-    return super.encodePrivateKeyByPassword(
+    return await super.encodePrivateKeyByPassword(
       Buffer.from(bs58.decode(privateKey)).toString('hex'),
       password
     )

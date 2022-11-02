@@ -1,7 +1,6 @@
 import { BaseEthNetwork } from './_BaseEthClass'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import EthApp from '@ledgerhq/hw-app-eth'
 import { WALLET_TYPES } from '../../constants'
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
@@ -20,6 +19,9 @@ export class EthNetwork extends BaseEthNetwork {
   }
 
   static async createWalletByLedger({ derivationPath }) {
+    // dynamic import of large module (for fast init)
+    const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
+
     // add global ledger app to avoid ledger reconnect error
     if (!global.ledger_eth && !global.ledger_bsc) {
       const transport = (await WebHidTransport.isSupported())

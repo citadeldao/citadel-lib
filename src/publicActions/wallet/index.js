@@ -43,6 +43,9 @@ import { executeContract } from './executeContract'
 import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { executeMessageCollection } from './executeMessageCollection'
 import { buildCustomTransaction } from './buildCustomTransaction'
+import { getRewardsById } from './getRewardsById'
+import { getRedelegationUnlockDateById } from './getRedelegationUnlockDateById'
+
 
 // Methods that take wallet ID as an argument. Wrappers over wallet instance methods
 export const wallet = {
@@ -90,4 +93,6 @@ export const wallet = {
   loadKeplrSnip20Balances,
   executeMessageCollection,
   buildCustomTransaction,
+  getRewardsById,
+  getRedelegationUnlockDateById
 }

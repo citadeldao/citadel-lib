@@ -1,16 +1,18 @@
-import { ECPair } from 'bitcoinjs-lib'
 import { sortObject } from '../functions'
-const secp256k1 = require('secp256k1')
-const crypto = require('crypto')
 
 // ecpariPriv: Buffer(32)
-export const signTxByPrivateKey = (
+export const signTxByPrivateKey = async (
   stdSignMsg,
   privateKey,
   modeType = 'sync'
 ) => {
+  // dynamic import of large module (for fast init)
+  const { ECPair } = await import('bitcoinjs-lib')
   privateKey = privateKey.replace('0x', '')
   const keyPair = ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'))
+
+  // dynamic import for guge module
+  const { default: secp256k1 } = await import('secp256k1')
 
   function getPubKeyBase64(ecpairPriv) {
     const pubKeyByte = secp256k1.publicKeyCreate(ecpairPriv)
@@ -27,6 +29,10 @@ export const signTxByPrivateKey = (
   } else {
     signMessage = stdSignMsg.json
   }
+
+  // dynamic import of large module (for fast init)
+  const { default: crypto } = await import('crypto')
+
   const hash = crypto
     .createHash('sha256')
     .update(JSON.stringify(sortObject(signMessage)))
@@ -36,7 +42,7 @@ export const signTxByPrivateKey = (
   var signatureBase64 = Buffer.from(signObj.signature, 'binary').toString(
     'base64'
   )
-
+  const value = await getPubKeyBase64(keyPair.privateKey)
   const signedTx = {
     tx: {
       msg: stdSignMsg.json.msgs,
@@ -48,7 +54,7 @@ export const signTxByPrivateKey = (
           signature: signatureBase64,
           pub_key: {
             type: 'tendermint/PubKeySecp256k1',
-            value: getPubKeyBase64(keyPair.privateKey),
+            value,
           },
         },
       ],

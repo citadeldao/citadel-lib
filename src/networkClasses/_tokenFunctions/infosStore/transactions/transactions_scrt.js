@@ -7,7 +7,7 @@ import { WALLET_TYPES } from '../../../../constants'
 
 export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
   const networkClass = networkClasses.getNetworkClass(this.net)
-  const snip20Manager = networkClass.getSnip20Manager()
+  const snip20Manager = await networkClass.getSnip20Manager()
 
   let rawTransactionsList
   // check saved viewingKey

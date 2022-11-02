@@ -1,5 +1,4 @@
 import { bech32 } from 'bech32'
-import crypto from 'crypto'
 import Ripemd160 from 'ripemd160'
 
 // ledger helpers
@@ -10,10 +9,13 @@ export const getHdDerivationPath = (derivationPath = '') => {
     .filter((p) => !isNaN(p))
 }
 
-export const getBech32FromPK = (prefix, publicKey) => {
+export const getBech32FromPK = async (prefix, publicKey) => {
   if (publicKey.length !== 33) {
     throw new Error('expected compressed public key [31 bytes]')
   }
+  // dynamic import of large module (for fast init)
+  const { default: crypto } = await import('crypto')
+
   const hashSha256 = crypto.createHash('sha256').update(publicKey).digest()
   const hashRip = new Ripemd160().update(hashSha256).digest()
 

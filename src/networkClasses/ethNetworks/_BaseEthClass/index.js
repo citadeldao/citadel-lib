@@ -3,18 +3,12 @@ import { hashMnemonic } from '../../../helpers/hashMnemonic'
 import { BaseNetwork } from '../../_BaseNetworkClass'
 import api from '../../../api'
 import { signTxByLedger, signTxByTrezor, signTxByPrivateKey } from './signers'
-import { pubToAddress, privateToPublic } from 'ethereumjs-util'
-import { mnemonicToSeed } from 'bip39'
-import hdkey from 'hdkey'
 import { WALLET_TYPES } from '../../../constants'
 import errors from '../../../errors'
 import { prepareTrezorConnection } from '../../_functions/trezor'
 import { bip32PublicToEthereumPublic } from '../../_functions/crypto'
-import TrezorConnect from 'trezor-connect'
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import EthApp from '@ledgerhq/hw-app-eth'
-import { signTypedData } from '@metamask/eth-sig-util'
 
 export class BaseEthNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -37,6 +31,9 @@ export class BaseEthNetwork extends BaseNetwork {
   }
 
   async signMessage(message, { privateKey, derivationPath }) {
+    // dynamic import of large module (for fast init)
+    const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
+
     // add global ledger app to avoid ledger reconnect error
     if (this.type === WALLET_TYPES.LEDGER) {
       if (!global[`ledger_${this.net}`]) {
@@ -62,6 +59,8 @@ export class BaseEthNetwork extends BaseNetwork {
       }
     }
 
+    // dynamic import of large module (for fast init)
+    const { signTypedData } = await import('@metamask/eth-sig-util')
     return signTypedData({
       privateKey: Buffer.from(privateKey.replace('0x', ''), 'hex'),
       data: message,
@@ -120,15 +119,22 @@ export class BaseEthNetwork extends BaseNetwork {
     passphrase = '',
     oneSeed = true,
   }) {
+    // dynamic import of large module (for fast init)
+    const { mnemonicToSeed } = await import('bip39')
     // generate address, public and private keys
     const seed = await mnemonicToSeed(mnemonic, passphrase)
+    const { default: hdkey } = await import('hdkey')
     const master = hdkey.fromMasterSeed(seed)
     const keyPair = master.derive(derivationPath)
-    const ethPublic = bip32PublicToEthereumPublic(
+    const ethPublic = await bip32PublicToEthereumPublic(
       Buffer.from(keyPair.publicKey)
     )
+    // dynamic import of large module (for fast init)
+    const { pubToAddress } = await import('ethereumjs-util')
     const address = '0x' + pubToAddress(ethPublic).toString('hex')
     const privateKey = keyPair.privateKey.toString('hex')
+    // dynamic import of large module (for fast init)
+    const { privateToPublic } = await import('ethereumjs-util')
     const publicKey = privateToPublic(Buffer.from(privateKey, 'hex')).toString(
       'hex'
     )
@@ -157,7 +163,11 @@ export class BaseEthNetwork extends BaseNetwork {
     // generate address and public key
     privateKey = privateKey.replace('0x', '')
     try {
+      // dynamic import of large module (for fast init)
+      const { privateToPublic } = await import('ethereumjs-util')
       const publicKey = privateToPublic(Buffer.from(privateKey, 'hex'))
+      // dynamic import of large module (for fast init)
+      const { pubToAddress } = await import('ethereumjs-util')
       const address = '0x' + pubToAddress(publicKey).toString('hex')
       const publicKeyHex = publicKey.toString('hex')
       return {
@@ -186,6 +196,8 @@ export class BaseEthNetwork extends BaseNetwork {
   }
 
   static async createWalletByTrezor({ derivationPath }) {
+    // dynamic import of large module (for fast init)
+    const { defautl: TrezorConnect } = await import('trezor-connect')
     // prepare Trezor
     await prepareTrezorConnection()
     // generate address and public key
@@ -236,14 +248,17 @@ export class BaseEthNetwork extends BaseNetwork {
     return address.toLowerCase()
   }
 
-  static decodePrivateKeyByPassword(encodedPrivateKey, password) {
-    return `0x${super.decodePrivateKeyByPassword(encodedPrivateKey, password)}`
+  static async decodePrivateKeyByPassword(encodedPrivateKey, password) {
+    return `0x${await super.decodePrivateKeyByPassword(
+      encodedPrivateKey,
+      password
+    )}`
   }
 
-  static encodePrivateKeyByPassword(privateKey, password) {
+  static async encodePrivateKeyByPassword(privateKey, password) {
     // do not change format for backwards compatibility
     privateKey = privateKey.replace('0x', '')
 
-    return super.encodePrivateKeyByPassword(privateKey, password)
+    return await super.encodePrivateKeyByPassword(privateKey, password)
   }
 }

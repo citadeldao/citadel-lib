@@ -1,5 +1,4 @@
 import { keccak256 } from 'js-sha3'
-import BN from 'bn.js'
 
 export const modifiedKeccak = (str) => {
   let msg
@@ -27,26 +26,28 @@ export const makeEven = (hex) => {
   return hex
 }
 
-export const inputCallFormatter = (options) => {
+export const inputCallFormatter = async (options) => {
   options.to = options.to.toLowerCase()
-  return txInputFormatter(options)
+  return await txInputFormatter(options)
 }
-const txInputFormatter = (options) => {
+const txInputFormatter = async (options) => {
   return {
     ...options,
-    gasPrice: options.gasPrice && formatToHex(options.gasPrice),
-    gas: (options.gas && formatToHex(options.gas)) || '0x',
+    gasPrice: options.gasPrice && (await formatToHex(options.gasPrice)),
+    gas: (options.gas && (await formatToHex(options.gas))) || '0x',
     value: (options.value && options.value.toString()) || '0x',
-    nonce: (options.nonce && formatToHex(options.nonce)) || '0x',
+    nonce: (options.nonce && (await formatToHex(options.nonce))) || '0x',
   }
 }
-const formatToHex = (num) => {
+const formatToHex = async (num) => {
+  const { default: BN } = await import('bn.js')
   const bn = new BN(+num)
   const result = bn.toString(16)
   return bn.lt(new BN(0)) ? '-0x' + result.substr(1) : '0x' + result
 }
 
-export const fromString = (str) => {
+export const fromString = async (str) => {
+  const { default: BN } = await import('bn.js')
   const bn =
     '0x' +
     (str.slice(0, 2) === '0x'
@@ -58,9 +59,12 @@ export const fromString = (str) => {
 
 export const fromNat = (bn) =>
   bn === '0x0' ? '0x' : bn.length % 2 === 0 ? bn : '0x0' + bn.slice(2)
-const toBN = (str) => new BN(str.slice(2), 16)
+const toBN = async (str) => {
+  const { default: BN } = await import('bn.js')
+  new BN(str.slice(2), 16)
+}
 
-export const toNumber = (a) => toBN(a).toNumber()
+export const toNumber = async (a) => await toBN(a).toNumber()
 
 export const fromNumber = (num) => {
   const hex = num.toString(16)
@@ -126,7 +130,7 @@ export const ethereumHardwareSigner = async (
     const signature = await signFunction(Buffer.from(hash.slice(2), 'hex'))
 
     return encodeSignature([
-      fromString(fromNumber(addToV + signature.recoveryParam)),
+      await fromString(fromNumber(addToV + signature.recoveryParam)),
       padBytes(32, fromNat(`0x${signature.r.toString(16)}`)),
       padBytes(32, fromNat(`0x${signature.s.toString(16)}`)),
     ])
@@ -137,7 +141,7 @@ export const ethereumHardwareSigner = async (
     ? await makeHardwareSigner(
         modifiedKeccak(data),
         signFunction,
-        toNumber(formatted.chainId) * 2 + 35
+        (await toNumber(formatted.chainId)) * 2 + 35
       )
     : await makeHardwareSigner(data, signFunction)
 

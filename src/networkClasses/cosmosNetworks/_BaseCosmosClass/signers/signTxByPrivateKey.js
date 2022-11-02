@@ -1,17 +1,20 @@
 /* eslint-disable */
-import { ECPair } from 'bitcoinjs-lib'
-const secp256k1 = require('secp256k1')
-const crypto = require('crypto')
 
 // ecpariPriv: Buffer(32)
-export const signTxByPrivateKey = (stdSignMsg, privateKey, publicKey) => {
+export const signTxByPrivateKey = async (stdSignMsg, privateKey, publicKey) => {
+  // dynamic import of large module (for fast init)
+  const { ECPair } = await import('bitcoinjs-lib')
   privateKey = privateKey.replace('0x', '')
   const keyPair = ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'))
   const signMessage = stdSignMsg.json
+  // dynamic import for guge module
+  const { default: crypto } = await import('crypto')
   const hash = crypto
     .createHash('sha256')
     .update(Buffer.from(stdSignMsg.bytes))
     .digest('hex')
+  // dynamic import for guge module
+  const { default: secp256k1 } = await import('secp256k1')
   const { signature } = secp256k1.ecdsaSign(
     Buffer.from(hash, 'hex'),
     keyPair.privateKey

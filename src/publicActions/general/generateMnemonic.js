@@ -18,7 +18,7 @@ import { generateBip39Mnemonic } from '../../generalFunctions/generateBip39Mnemo
  * }
  */
 
-export const generateMnemonic = (length = 12) => {
+export const generateMnemonic = async (length = 12) => {
   // checks
   checkInitialization()
   checkTypes(['length', length, ['String', 'Number'], true])

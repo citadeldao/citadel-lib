@@ -1,4 +1,4 @@
-import { mergeWith } from 'lodash'
+import mergeWith from 'lodash/mergeWith'
 
 // deep clone with array replacement
 export const merge = (oldValue, newValue) => {

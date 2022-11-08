@@ -17,9 +17,13 @@ export const setWalletList = async (
   { addNotAddedWallets } = {}
 ) => {
   try {
-    // !IMPORTANT: block WALLET_LIST_UPDATED event to prevent 'getWalletList' callback with incomplete list
+    // !IMPORTANT: block WALLET_LIST_UPDATED and STORAGE_CHANGED_EXTERNALLY events to prevent 'getWalletList' callback with incomplete list
     state.setState(
       LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.WALLET_LIST_UPDATED],
+      true
+    )
+    state.setState(
+      LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY],
       true
     )
 
@@ -124,6 +128,10 @@ export const setWalletList = async (
     // unlock WALLET_LIST_UPDATED event
     state.setState(
       LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.WALLET_LIST_UPDATED],
+      false
+    )
+    state.setState(
+      LIB_EVENT_BLOCK_FLAGS[LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY],
       false
     )
   }

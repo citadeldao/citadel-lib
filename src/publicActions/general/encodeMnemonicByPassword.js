@@ -24,7 +24,7 @@ import errors from '../../errors'
  *}
  */
 
-export const encodeMnemonicByPassword = (mnemonic, password) => {
+export const encodeMnemonicByPassword = async (mnemonic, password) => {
   checkInitialization()
 
   checkTypes(
@@ -37,7 +37,7 @@ export const encodeMnemonicByPassword = (mnemonic, password) => {
   }
 
   // call static native network method
-  const mnemonicEncoded = encodeMnemonic(mnemonic, password)
+  const mnemonicEncoded = await encodeMnemonic(mnemonic, password)
 
   if (mnemonicEncoded.includes(mnemonic)) {
     errors.throwError('LibraryError', { message: 'Encoder is broken' })

@@ -15,7 +15,7 @@ export class BtcNetwork extends BaseNetwork {
   }
 
   getScannerLinkById() {
-    return `https://www.blockchain.com/ru/search?search=${this.address}`
+    return `https://blockchair.com/bitcoin/address/${this.address}`
   }
 
   getTransactionURLByHash(hash) {

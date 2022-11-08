@@ -32,20 +32,9 @@ export class StarnameNetwork extends BaseCosmosNetwork {
     // privateKey signer
     return super.createMessageSignature(data, { privateKey })
   }
-
-  // special address prefix
-  static async createWalletByMnemonic(options) {
-    return super.createWalletByMnemonic(options, 'star')
-  }
-
-  // special address prefix
-  static async createWalletByPrivateKey(options) {
-    return super.createWalletByPrivateKey(options, 'star')
-  }
-
-  // special address prefix
+  
   static async createWalletByLedger(options) {
     // alternative wallet factory
-    return super.createWalletByLedger_2(options, 'star')
+    return super.createWalletByLedger_2(options)
   }
 }

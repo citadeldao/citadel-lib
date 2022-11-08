@@ -40,7 +40,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     return createMessageSignature(data.originalCosmosMsg, privateKey)
   }
 
-  static async createWalletByMnemonic(options, specialKey) {
+  static async createWalletByMnemonic(options) {
     // dynamic import of large module (for fast init)
     const { ECPair } = await import('bitcoinjs-lib')
     // wallet creation function like etherium
@@ -52,7 +52,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     // but with modified address
     wallet.address = await getCosmosAddressFromEthAddress(
       wallet.address,
-      specialKey
+      this.netPrefix
     )
     // and privateKey without '0x'
     wallet.privateKey = wallet.privateKey.replace('0x', '')
@@ -63,7 +63,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     return wallet
   }
 
-  static async createWalletByPrivateKey(options, specialKey) {
+  static async createWalletByPrivateKey(options) {
     // dynamic import of large module (for fast init)
     const { ECPair } = await import('bitcoinjs-lib')
     // wallet creation function like etherium
@@ -75,7 +75,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     // but with modified address
     wallet.address = await getCosmosAddressFromEthAddress(
       wallet.address,
-      specialKey
+      this.netPrefix
     )
     // and privateKey without '0x'
     wallet.privateKey = wallet.privateKey.replace('0x', '')
@@ -86,7 +86,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     return wallet
   }
 
-  static async createWalletByLedger(options, specialKey) {
+  static async createWalletByLedger(options) {
     // wallet creation function like etherium
     const wallet = await EthNetwork.createWalletByLedger.call(
       // bind the context to create a ninstance of the current net
@@ -94,7 +94,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       options
     )
     // but with modified address
-    wallet.address = getCosmosAddressFromEthAddress(wallet.address, specialKey)
+    wallet.address = getCosmosAddressFromEthAddress(wallet.address, this.netPrefix)
     let publicKey = wallet.publicKey
     if (publicKey.length !== 66) {
       publicKey = publicKey.slice(2, 66)

@@ -23,7 +23,6 @@ export const fromPrivateKey = async (prvKey) => {
   const { default: secp256k1 } = await import('secp256k1')
   const pubKey = secp256k1.publicKeyCreate(pkBuffer, false)
   const address = prefix + sha3_256(pubKey.slice(1)).slice(-40)
-
   return {
     prvKey,
     pubKey,

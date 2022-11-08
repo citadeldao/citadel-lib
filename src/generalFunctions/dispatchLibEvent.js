@@ -16,9 +16,17 @@ import { debugConsole } from '../helpers/debugConsole'
  **********************************************************/
 
 // trotling for too frequent events - minimum interval, ms
-const minWalletListUpdatedEventInterval = 1000
-// last dispatched time
-let lastWalletListUpdatedEventTime = 0
+const minEventsInterval = {
+  // eventName: interval(ms)
+  [LIB_EVENT_NAMES.WALLET_LIST_UPDATED]: 1000,
+  [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]: 2000,
+}
+
+const lastEventsTime = {
+  // eventName: timeStamp
+  [LIB_EVENT_NAMES.WALLET_LIST_UPDATED]: 0,
+  [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]: 0,
+}
 
 const dispatchEvent = async (eventName, callbackArgument) => {
   // debug logs
@@ -28,7 +36,7 @@ const dispatchEvent = async (eventName, callbackArgument) => {
       callbackArgument
     )
 
-  // skip if event blocked
+  // skip if event was blocked (in some component)
   if (state.getState(LIB_EVENT_BLOCK_FLAGS[eventName])) {
     debugConsole.log(`Lib event: "${eventName}" blocked`)
     return
@@ -39,42 +47,40 @@ const dispatchEvent = async (eventName, callbackArgument) => {
 }
 
 export const dispatchLibEvent = async (eventName, callbackArgument) => {
-  // dispatch lib event (except WALLET_LIST_UPDATED)
-  if (eventName !== LIB_EVENT_NAMES.WALLET_LIST_UPDATED) {
+  // CASE 1: dispatch lib event if no minEventInterval
+  if (!Object.keys(minEventsInterval).includes(eventName)) {
     // dispatch other events
     await dispatchEvent(eventName, callbackArgument)
     return
   }
 
-  // FOR WALLET_LIST_UPDATED
-
-  // event is already waiting to be dispatch - skip it
-  if (lastWalletListUpdatedEventTime > Date.now()) {
+  // CASE 2: event is already waiting to be dispatch? - skip it
+  if (lastEventsTime[eventName] > Date.now()) {
     return
   }
 
-  // first event or last event sent more than lastWalletListUpdatedEventTime ms ago
+  // CASE 3: first event. Or last event sent more than lastEventsTime[eventName] ago
   if (
-    lastWalletListUpdatedEventTime <
-    Date.now() - minWalletListUpdatedEventInterval
+    lastEventsTime[eventName] <
+    Date.now() - minEventsInterval[eventName]
   ) {
     // set current time
-    lastWalletListUpdatedEventTime = Date.now()
+    lastEventsTime[eventName] = Date.now()
     // dispatch event
     await dispatchEvent(eventName, callbackArgument)
     return
   }
 
-  // event dispatched less than a second ago
-  const timeSinceLastEvent = Date.now() - lastWalletListUpdatedEventTime
+  // CASE 4: event dispatched less than a min interval ago
+  const timeSinceLastEvent = Date.now() - lastEventsTime[eventName]
   // calc delay
-  const delay = minWalletListUpdatedEventInterval - timeSinceLastEvent
+  const delay = minEventsInterval[eventName] - timeSinceLastEvent
   // set future event time
-  lastWalletListUpdatedEventTime = Date.now() + delay
+  lastEventsTime[eventName] = Date.now() + delay
   // dispatch event with delay
   setTimeout(
     () => dispatchEvent(eventName, callbackArgument),
-    // dispatch after minWalletListUpdatedEventInterval from last event
+    // dispatch after minEventsInterval[eventName] from last event
     delay
   )
 }

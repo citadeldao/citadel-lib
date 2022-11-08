@@ -12,9 +12,6 @@
     [
       "@semantic-release/gitlab",
       {
-        "assets": [
-          { "path": "dist/citadel-lib.js", "label": "Minified lib" }
-        ]
       }
     ],
     "@semantic-release/npm",

@@ -148,8 +148,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
   }
 
   static async createWalletByMnemonic(
-    { mnemonic, derivationPath, passphrase = '', oneSeed = true },
-    specialAddressPrefix
+    { mnemonic, derivationPath, passphrase = '', oneSeed = true }
   ) {
     // dynamic import of large module (for fast init)
     const { mnemonicToSeed } = await import('bip39')
@@ -161,7 +160,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     const keyPair = master.derivePath(derivationPath)
     const address = cosmos.address.getAddress(
       keyPair.publicKey,
-      specialAddressPrefix || this.net
+      this.netPrefix
     )
     const privateKey = keyPair.privateKey.toString('hex')
     const publicKey = keyPair.publicKey.toString('hex')
@@ -188,7 +187,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByPrivateKey({ privateKey }, specialAddressPrefix) {
+  static async createWalletByPrivateKey({ privateKey }) {
     try {
       // dynamic import of large module (for fast init)
       const { ECPair } = await import('bitcoinjs-lib')
@@ -199,7 +198,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
 
       const address = cosmos.address.getAddress(
         keyPair.publicKey,
-        specialAddressPrefix || this.net
+        this.netPrefix
       )
       const publicKeyHex = keyPair.publicKey.toString('hex')
 
@@ -230,14 +229,14 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }, specialAddressPrefix) {
+  static async createWalletByLedger({ derivationPath }) {
     // prepare ledger app
     const ledgerApp = await getLedgerApp()
 
     const hdPath = getHdDerivationPath(derivationPath)
     const resp = await ledgerApp.cosmosApp?.getAddressAndPubKey(
       hdPath,
-      specialAddressPrefix || this.net
+      this.netPrefix
     )
 
     if (!resp?.bech32_address) {
@@ -269,10 +268,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
   }
 
   // alternative wallet factory (for some cosmos networks)
-  static async createWalletByLedger_2(
-    { derivationPath },
-    specialAddressPrefix
-  ) {
+  static async createWalletByLedger_2({ derivationPath }) {
     const transport = await TransportWebUSB.create(1000)
     const { default: CosmosApp } = await import('ledger-cosmos-js')
     const cosmosApp = new CosmosApp(transport)
@@ -285,7 +281,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
 
     const address = await getBech32FromPK(
-      specialAddressPrefix || this.net,
+      this.netPrefix,
       Buffer.from(resp.compressed_pk.buffer)
     )
     await transport.close()

@@ -59,12 +59,13 @@ export const fromString = async (str) => {
 
 export const fromNat = (bn) =>
   bn === '0x0' ? '0x' : bn.length % 2 === 0 ? bn : '0x0' + bn.slice(2)
+
 const toBN = async (str) => {
   const { default: BN } = await import('bn.js')
-  new BN(str.slice(2), 16)
+  return new BN(str.slice(2), 16)
 }
 
-export const toNumber = async (a) => await toBN(a).toNumber()
+export const toNumber = async (a) => (await toBN(a)).toNumber()
 
 export const fromNumber = (num) => {
   const hex = num.toString(16)

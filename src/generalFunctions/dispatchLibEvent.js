@@ -19,7 +19,7 @@ import { debugConsole } from '../helpers/debugConsole'
 const minEventsInterval = {
   // eventName: interval(ms)
   [LIB_EVENT_NAMES.WALLET_LIST_UPDATED]: 1000,
-  [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]: 1000,
+  [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]: 2000,
 }
 
 const lastEventsTime = {
@@ -76,7 +76,7 @@ export const dispatchLibEvent = async (eventName, callbackArgument) => {
   // calc delay
   const delay = minEventsInterval[eventName] - timeSinceLastEvent
   // set future event time
-  minEventsInterval[eventName] = Date.now() + delay
+  lastEventsTime[eventName] = Date.now() + delay
   // dispatch event with delay
   setTimeout(
     () => dispatchEvent(eventName, callbackArgument),

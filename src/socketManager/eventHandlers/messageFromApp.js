@@ -31,7 +31,7 @@ export const messageFromApp = async ({
     return
   }
   // get snip20 manager
-  const snip20Manager = networkClasses
+  const snip20Manager = await networkClasses
     .getNetworkClass(SECRET_NET_KEY)
     .getSnip20Manager()
 

@@ -37,16 +37,8 @@ export class KichainNetwork extends BaseCosmosNetwork {
     return super.getTransactionURLByHash(hash, 'ki-chain')
   }
 
-  static async createWalletByMnemonic(options) {
-    return super.createWalletByMnemonic(options, 'ki')
-  }
-
-  static async createWalletByPrivateKey(options) {
-    return super.createWalletByPrivateKey(options, 'ki')
-  }
-
   static async createWalletByLedger(options) {
     // alternative wallet factory
-    return super.createWalletByLedger_2(options, 'ki')
+    return super.createWalletByLedger_2(options)
   }
 }

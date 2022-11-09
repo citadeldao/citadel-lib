@@ -14,19 +14,4 @@ export class GbridgeNetwork extends BaseCosmosNetwork {
   getTransactionURLByHash(hash) {
     return super.getTransactionURLByHash(hash, 'gravity-bridge')
   }
-
-  // special address prefix
-  static async createWalletByMnemonic(options) {
-    return super.createWalletByMnemonic(options, 'gravity')
-  }
-
-  // special address prefix
-  static async createWalletByPrivateKey(options) {
-    return super.createWalletByPrivateKey(options, 'gravity')
-  }
-
-  // special address prefix
-  static async createWalletByLedger(options) {
-    return super.createWalletByLedger(options, 'gravity')
-  }
 }

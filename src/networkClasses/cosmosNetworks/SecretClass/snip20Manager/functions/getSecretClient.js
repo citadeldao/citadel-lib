@@ -16,7 +16,7 @@ export const getSecretClient = async ({
   readOnly = false,
 }) => {
   // dynamic import of large module (for fast init)
-  const { default: SecretNetworkClient } = await import('secretjs')
+  const { SecretNetworkClient } = await import('secretjs')
 
   // get keplr and enigmaUtils
   const walletInstance = walletInstances.getWalletInstanceByAddress(

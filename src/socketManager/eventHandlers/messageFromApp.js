@@ -7,6 +7,7 @@ import {
 import networkClasses from "../../networkClasses"
 import walletInstances from "../../walletInstances"
 import { keplrChains } from "../../networkClasses/cosmosNetworks/_BaseCosmosClass/signers/keplrChains"
+import { ViewingKeyError } from "../../errors/ViewingKeyError"
 
 const TYPES = {
   SECRET_QUERY: "scrt-query",
@@ -14,7 +15,11 @@ const TYPES = {
 }
 
 const VK_TEXT_VARIABLE = "%viewing_key%"
-const KEPLR_ACCOUNT_MISMATCH_MESSAGE = "Please change Keplr account"
+const ERRORS = {
+  KEPLR_ACCOUNT_MISMATCH_MESSAGE: "Please change Keplr account",
+  VIEWING_KEY_NOT_FOUND_ERROR: "Viewing Key not found",
+  CONTRACT_ADDRESS_NOT_SUPPORTED: "Сontract address not supported",
+}
 
 export const messageFromApp = async ({
   from,
@@ -46,21 +51,18 @@ export const messageFromApp = async ({
     SECRET_NET_KEY,
     sender || address
   )
-  // TODO: refact!
+
   if (type === TYPES.SECRET_QUERY) {
-    // detect error
-    let isError = false
-    let warningMessage = false
     try {
       // replace %viewing_key% in msg if it exist
       const msgString = JSON.stringify(msg)
       if (msgString.includes(VK_TEXT_VARIABLE)) {
-        // send warning message if VK required and account mismatch
+        // send error message if VK required and account mismatch
         if (
           walletInstance.type === WALLET_TYPES.KEPLR &&
           (await checkKeplrAccountMismatch(walletInstance.address))
         ) {
-          warningMessage = KEPLR_ACCOUNT_MISMATCH_MESSAGE
+          throw Error(ERRORS.KEPLR_ACCOUNT_MISMATCH_MESSAGE)
         }
         // get savedVK
         let savedVK =
@@ -68,6 +70,7 @@ export const messageFromApp = async ({
           Object.values(walletInstance.savedViewingKeys).find(
             ({ contractAddress }) => contractAddress === tokenContract
           )?.viewingKey
+
         // get keplr VK if no sevedVK
         if (!savedVK && walletInstance.type === WALLET_TYPES.KEPLR) {
           try {
@@ -76,17 +79,16 @@ export const messageFromApp = async ({
               tokenContract,
               sender
             )
-          } catch (error) {
-            // throw 'change keplr account' (code: 1) error only
-            if (error.code === 1) {
-              throw error
-            }
+          } catch {
+            // skip all keplr errors
+            false
           }
         }
+
         if (!savedVK) {
-          isError = true
-          throw Error("Viewingkey not found, query skipped")
+          throw Error(ERRORS.VIEWING_KEY_NOT_FOUND_ERROR)
         }
+
         // replace msg with VK
         msg = JSON.parse(msgString.replace(VK_TEXT_VARIABLE, savedVK))
       }
@@ -101,7 +103,7 @@ export const messageFromApp = async ({
       const errorKeywords = ["err", "unauthorized"]
       errorKeywords.map((errorKeyword) => {
         if (JSON.stringify(response).includes(errorKeyword)) {
-          isError = true
+          throw Error(JSON.stringify(response))
         }
       })
 
@@ -109,12 +111,9 @@ export const messageFromApp = async ({
       await api.externalRequests.sendCustomMessage({
         token: from,
         message: {
-          type: isError ? APP_MESSAGE_TYPES.ERROR : APP_MESSAGE_TYPES.SUCCESS,
+          type: APP_MESSAGE_TYPES.SUCCESS,
           response,
           tokenContract,
-          ...(warningMessage && {
-            warning: warningMessage,
-          }),
         },
         type,
       })
@@ -124,18 +123,14 @@ export const messageFromApp = async ({
         token: from,
         message: {
           type: APP_MESSAGE_TYPES.ERROR,
-          response: { error: error.message },
+          // response: { error: error.message },
           tokenContract,
-          ...(warningMessage && {
-            warning: warningMessage,
-          }),
+          error: error.message,
         },
         type,
       })
     }
   } else if (type === TYPES.SECRET_BALANCE) {
-    let warningMessage = false
-
     try {
       // get toke key by contract address
       const tokenKey = Object.values(
@@ -145,26 +140,34 @@ export const messageFromApp = async ({
           standard === "snip20" && address === tokenContract
       )?.net
       // return if no tokenKey (constract address not found in networks.json)
-      if (!tokenKey) return
-      // send warning message if account mismatch
+      if (!tokenKey) {
+        throw Error(ERRORS.CONTRACT_ADDRESS_NOT_SUPPORTED)
+      }
+      // send error message if account mismatch
       if (
         walletInstance.type === WALLET_TYPES.KEPLR &&
         (await checkKeplrAccountMismatch(walletInstance.address))
       ) {
-        warningMessage = KEPLR_ACCOUNT_MISMATCH_MESSAGE
+        throw Error(ERRORS.KEPLR_ACCOUNT_MISMATCH_MESSAGE)
       }
       if (!walletInstance) return
 
       // update balance (by SVK, keplr etc)
-      const balance = await walletInstance.callTokenInfo(tokenKey, "balance")
+      let balance
+      try {
+        balance = await walletInstance.callTokenInfo(tokenKey, "balance")
+      } catch (error) {
+        if (error instanceof ViewingKeyError){
+          throw Error(ERRORS.VIEWING_KEY_NOT_FOUND_ERROR)
+        }
+        throw error
+      }
       await api.externalRequests.sendCustomMessage({
         token: from,
         message: {
           balance: balance.calculatedBalance,
           tokenContract,
-          ...(warningMessage && {
-            warning: warningMessage,
-          }),
+          type: APP_MESSAGE_TYPES.SUCCESS,
         },
         type,
       })
@@ -173,11 +176,9 @@ export const messageFromApp = async ({
       await api.externalRequests.sendCustomMessage({
         token: from,
         message: {
-          balance: "Viewingkey not found, balance: ?",
           tokenContract,
-          ...(warningMessage && {
-            warning: warningMessage,
-          }),
+          error: error.message,
+          type: APP_MESSAGE_TYPES.ERROR,
         },
         type,
       })

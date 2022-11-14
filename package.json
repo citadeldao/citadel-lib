@@ -65,6 +65,7 @@
     "tronweb": "^4.3.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/gitlab": "^9.3.0",
     "@semantic-release/npm": "^9.0.1",

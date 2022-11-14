@@ -60,4 +60,4 @@ const response = citadel.generateMnemonic(12)
 
 ## Structure
 
-![Library structure](https://gitlab.com/citadel1/citadel-lib/-/raw/dev/structure.png)
+![Library structure](https://github.com/citadeldao/citadel-lib/raw/master/structure.png)

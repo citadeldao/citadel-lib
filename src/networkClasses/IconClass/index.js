@@ -49,7 +49,7 @@ export class IconNetwork extends BaseNetwork {
 
     // sign all transactions before send
     if (Array.isArray(transaction)) {
-      return transaction.map((tx) => signTxByPrivateKey(tx, privateKey))
+      return Promise.all(transaction.map((tx) => signTxByPrivateKey(tx, privateKey)))
     } else {
       return signTxByPrivateKey(transaction, privateKey)
     }

@@ -1,4 +1,4 @@
-import { getType } from '../../helpers/checkArguments'
+import { getType } from "../../helpers/checkArguments"
 
 export const getExstensionLocalWallets = async () => {
   // eslint-disable-next-line
@@ -8,10 +8,10 @@ export const getExstensionLocalWallets = async () => {
   // mock chromeStorage for manual testing on web test UI
   if (!chromeStorage) {
     rawWallets =
-      JSON.parse(JSON.parse(localStorage.getItem('allWallets') || '[]')) || []
+      JSON.parse(JSON.parse(localStorage.getItem('allWallets') || '"[]"')) || []
   } else {
-    const { allWallets = [] } = (await chromeStorage.get(['allWallets'])) || {}
-    rawWallets = JSON.parse(allWallets || '[]')
+    const { allWallets = [] } = (await chromeStorage.get(["allWallets"])) || {}
+    rawWallets = JSON.parse(allWallets || "[]")
   }
 
   const wallets = []
@@ -29,7 +29,7 @@ export const getExstensionLocalWallets = async () => {
         type,
       }) => {
         // balance was originally a number
-        if (getType(balance) === 'Number') {
+        if (getType(balance) === "Number") {
           // convert to standard lib format
           balance = {
             mainBalance: balance,
@@ -39,7 +39,7 @@ export const getExstensionLocalWallets = async () => {
         wallets.push({
           address,
           code,
-          title: title || '',
+          title: title || "",
           id,
           net,
           balance,
@@ -56,7 +56,7 @@ export const getExstensionLocalWallets = async () => {
   const generateWalletId = () => {
     const idsArray = wallets.map(({ id }) => +id).filter((id) => id)
     if (!idsArray.length) {
-      return '1'
+      return "1"
     }
     return `${Math.max(...idsArray) + 1}`
   }

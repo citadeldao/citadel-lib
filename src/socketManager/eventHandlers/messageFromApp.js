@@ -15,6 +15,7 @@ const TYPES = {
 }
 
 const VK_TEXT_VARIABLE = "%viewing_key%"
+
 const ERRORS = {
   KEPLR_ACCOUNT_MISMATCH_MESSAGE: "Please change Keplr account",
   VIEWING_KEY_NOT_FOUND_ERROR: "Viewing Key not found",

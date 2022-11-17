@@ -70,21 +70,20 @@ export class BaseEthNetwork extends BaseNetwork {
 
   async prepareCrossNetworkTransfer(
     token,
-    { toNetwork, toAddress, amount, fee, memo }
+    { toNetwork, toAddress, amount, fee, memo, isTyped = false }
   ) {
     const { data } = await api.requests.buildBridge({
       net: token,
       address: this.address,
-      // TODO: why not like in comos? why construct a token?? ask backend
-      targetNet: `${toNetwork.toLowerCase()}_${token}`,
+      targetNet: toNetwork,
       to: toAddress,
+      publicKey: this.publicKey,
+      // token,
       amount,
       fee,
       memo,
+      isTyped,
     })
-    // temporary crutch due to special format
-    data.transaction = data.send
-    delete data.send
     return data
   }
 

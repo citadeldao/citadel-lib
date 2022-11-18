@@ -1,6 +1,5 @@
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { ethereumHardwareSigner } from './functions'
+import {getLedgerTransport} from "../../../../ledgerTransportProvider";
 // TODO: update Ledger signer with resolution!
 /*
 hw-app-eth: signTransaction(path, rawTxHex, resolution): please provide the 'resolution' parameter. See https://github.com/LedgerHQ/ledgerjs/blob/master/packages/hw-app-eth/README.md – the previous signature is deprecated and providing the 3rd 'resolution' parameter explicitly will become mandatory so you have the control on the resolution and the fallback mecanism (e.g. fallback to blind signing or not).// Possible solution:
@@ -13,9 +12,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath, net) => {
 
   // add global ledger app to avoid ledger reconnect error
   if (!global[`ledger_${net}`]) {
-    const transport = (await WebHidTransport.isSupported())
-      ? await WebHidTransport.create(10000)
-      : await TransportWebUSB.create(10000)
+    const transport = await getLedgerTransport()
     global[`ledger_${net}`] = new EthApp(transport)
   }
 

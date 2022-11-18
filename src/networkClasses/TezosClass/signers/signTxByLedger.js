@@ -1,14 +1,11 @@
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { TezApp } from '../ledgerApp'
 import { debugConsole } from '../../../helpers/debugConsole'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export const signTxByLedger = async (rawTransaction, derivationPath) => {
   // add globa ledger app to avoid ledger reconnect error
   if (!global.ledger_tez) {
-    const transport = (await WebHidTransport.isSupported())
-      ? await WebHidTransport.create(10000)
-      : await TransportWebUSB.create(10000)
+    const transport = await getLedgerTransport()
     global.ledger_tez = new TezApp(transport)
   }
 

@@ -7,9 +7,8 @@ import { signTxByPrivateKeyOrMnemonic } from './signers/signTxByPrivateKeyOrMnem
 import api from '../../api'
 import errors from '../../errors'
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import U2fTransport from '@ledgerhq/hw-transport-u2f'
 import { DELEGATION_TYPES, WALLET_TYPES } from '../../constants'
+import {getLedgerTransport} from "../../ledgerTransportProvider";
 
 export class PolkadotNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -232,9 +231,7 @@ export class PolkadotNetwork extends BaseNetwork {
     await cryptoWaitReady()
     // add global ledger app to avoid ledger reconnect error
     if (!global.ledger_polkadot) {
-      const transport = (await WebHidTransport.isSupported())
-        ? await WebHidTransport.create(10000)
-        : await U2fTransport.create(10000)
+      const transport = await getLedgerTransport()
       global.ledger_polkadot = new PolkadotLedger(transport)
     }
     // generate address and public key

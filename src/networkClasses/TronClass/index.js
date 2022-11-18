@@ -1,10 +1,9 @@
 import { BaseNetwork } from '../_BaseNetworkClass'
 import Trx from '@ledgerhq/hw-app-trx'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { getPubKeyFromPriKey, hexStr2byteArray } from './signers/functions'
 import { WALLET_TYPES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
+import {getLedgerTransport} from "../../ledgerTransportProvider";
 
 export class TronNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -89,9 +88,7 @@ export class TronNetwork extends BaseNetwork {
   }
 
   static async createWalletByLedger({ derivationPath }) {
-    const transport = (await WebHidTransport.isSupported())
-      ? await WebHidTransport.create(10000)
-      : await TransportWebUSB.create(10000)
+    const transport = await getLedgerTransport()
 
     const tronApp = new Trx(transport)
     const { publicKey, address } = await tronApp.getAddress(derivationPath)

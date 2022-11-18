@@ -14,8 +14,8 @@ import { WALLET_TYPES, DELEGATION_TYPES } from '../../../constants'
 import errors from '../../../errors'
 import { getHdDerivationPath, getBech32FromPK } from '../../_functions/ledger'
 import { getLedgerApp } from './signers/getLedgerApp'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { debugConsole } from '../../../helpers/debugConsole'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export class BaseCosmosNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -269,7 +269,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
 
   // alternative wallet factory (for some cosmos networks)
   static async createWalletByLedger_2({ derivationPath }) {
-    const transport = await TransportWebUSB.create(1000)
+    const transport = await getLedgerTransport()
     const { default: CosmosApp } = await import('ledger-cosmos-js')
     const cosmosApp = new CosmosApp(transport)
     const hdPathArray = getHdDerivationPath(derivationPath)

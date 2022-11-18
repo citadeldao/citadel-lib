@@ -72,7 +72,7 @@ export const signTxByPrivateKey = async (
   )
 
   return {
-    ...stdSignMsg.json,
+    ...(stdSignMsg.json || stdSignMsg.message),
     signature: Buffer.from(signature).toString('hex'),
     publicKey: publicKeyHex,
   }

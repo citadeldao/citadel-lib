@@ -117,7 +117,7 @@ export const ethereumHardwareSigner = async (
     throw new Error('Gas, gasPrice, nonce or chainId is lower than 0')
   }
 
-  const txFormatted = inputCallFormatter({ ...tx })
+  const txFormatted = await inputCallFormatter({ ...tx })
 
   const formatted = {
     ...txFormatted,

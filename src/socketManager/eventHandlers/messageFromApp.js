@@ -15,10 +15,12 @@ const TYPES = {
 }
 
 const VK_TEXT_VARIABLE = "%viewing_key%"
+
 const ERRORS = {
   KEPLR_ACCOUNT_MISMATCH_MESSAGE: "Please change Keplr account",
   VIEWING_KEY_NOT_FOUND_ERROR: "Viewing Key not found",
   CONTRACT_ADDRESS_NOT_SUPPORTED: "Сontract address not supported",
+  WALLET_ADDRESS_MISSING: "Wallet address not added or missing",
 }
 
 export const messageFromApp = async ({
@@ -54,6 +56,9 @@ export const messageFromApp = async ({
 
   if (type === TYPES.SECRET_QUERY) {
     try {
+      if (!walletInstance) {
+        throw Error(ERRORS.WALLET_ADDRESS_MISSING)
+      }
       // replace %viewing_key% in msg if it exist
       const msgString = JSON.stringify(msg)
       if (msgString.includes(VK_TEXT_VARIABLE)) {
@@ -70,7 +75,6 @@ export const messageFromApp = async ({
           Object.values(walletInstance.savedViewingKeys).find(
             ({ contractAddress }) => contractAddress === tokenContract
           )?.viewingKey
-
         // get keplr VK if no sevedVK
         if (!savedVK && walletInstance.type === WALLET_TYPES.KEPLR) {
           try {
@@ -106,7 +110,6 @@ export const messageFromApp = async ({
           throw Error(JSON.stringify(response))
         }
       })
-
       // send result to app
       await api.externalRequests.sendCustomMessage({
         token: from,
@@ -151,13 +154,12 @@ export const messageFromApp = async ({
         throw Error(ERRORS.KEPLR_ACCOUNT_MISMATCH_MESSAGE)
       }
       if (!walletInstance) return
-
       // update balance (by SVK, keplr etc)
       let balance
       try {
         balance = await walletInstance.callTokenInfo(tokenKey, "balance")
       } catch (error) {
-        if (error instanceof ViewingKeyError){
+        if (error instanceof ViewingKeyError) {
           throw Error(ERRORS.VIEWING_KEY_NOT_FOUND_ERROR)
         }
         throw error
@@ -189,7 +191,19 @@ export const messageFromApp = async ({
 const checkKeplrAccountMismatch = async (walletAddress) => {
   // check account
   const chainId = keplrChains[SECRET_NET_KEY]
-  const keplrAddress = (await window.keplr.getKey(chainId))?.bech32Address
+  let keplrAddress = ""
+  try {
+    const keplrKey = await new Promise((resolve, reject) => {
+      window.keplr.getKey(chainId).then(resolve, reject)
+      setTimeout(() => {
+        // 9s waiting limit
+        reject()
+      }, 9000)
+    })
+    keplrAddress = keplrKey.bech32Address
+  } catch (error) {
+    return true
+  }
   if (walletAddress !== keplrAddress) {
     return true
   }

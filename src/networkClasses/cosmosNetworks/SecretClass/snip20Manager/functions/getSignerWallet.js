@@ -20,7 +20,7 @@ export async function getSignerWallet({
 }) {
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
     // dynamic import of large module (for fast init)
-    const { default: DirectSecp256k1Wallet } = await import(
+    const { DirectSecp256k1Wallet } = await import(
       '@cosmjs/proto-signing'
     )
 

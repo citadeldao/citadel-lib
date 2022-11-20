@@ -29,6 +29,7 @@ import { prepareUnstakeWithoutDelegation } from './prepareUnstakeWithoutDelegati
 import { buildCustomTransaction } from './buildCustomTransaction'
 import { getWalletRewards } from './getWalletRewards'
 import { getRedelegationUnlockDate } from './getRedelegationUnlockDate'
+import { getCrossNetFees } from './getCrossNetFees'
 
 
 export const wallet = {
@@ -62,5 +63,6 @@ export const wallet = {
   prepareUnstakeWithoutDelegation,
   buildCustomTransaction,
   getWalletRewards,
-  getRedelegationUnlockDate
+  getRedelegationUnlockDate,
+  getCrossNetFees
 }

@@ -1,3 +1,10 @@
+## 1.33.18 (2022-11-20)
+
+
+### Bug Fixes
+
+* add get crossNetFees methood 57afe2d
+
 ## 1.33.17 (2022-11-18)
 
 

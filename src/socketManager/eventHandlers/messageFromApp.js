@@ -170,6 +170,7 @@ export const messageFromApp = async ({
           balance: balance.calculatedBalance,
           tokenContract,
           type: APP_MESSAGE_TYPES.SUCCESS,
+          address: walletInstance.address,
         },
         type,
       })
@@ -181,6 +182,7 @@ export const messageFromApp = async ({
           tokenContract,
           error: error.message,
           type: APP_MESSAGE_TYPES.ERROR,
+          address: walletInstance.address,
         },
         type,
       })

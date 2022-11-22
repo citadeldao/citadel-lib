@@ -11,13 +11,11 @@ export class EvmosethNetwork extends BaseEthNetwork {
   }
 
   getScannerLinkById() {
-    return `https://www.mintscan.io/${this.net}/account/${
-      this.address
-    }`
+    return `https://evm.evmos.org/address/${this.address}/transactions`
   }
 
   getTransactionURLByHash(hash) {
-    return `https://www.mintscan.io/${this.net}/txs/${hash}`
+    return `https://evm.evmos.org/tx/${hash}`
   }
 
 

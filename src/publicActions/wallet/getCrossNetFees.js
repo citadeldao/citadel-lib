@@ -2,7 +2,6 @@ import {
     checkTypes,
     checkInitialization,
     checkWalletId,
-    checkNetworkOrToken,
   } from '../../helpers/checkArguments'
   import walletInstances from '../../walletInstances'
   

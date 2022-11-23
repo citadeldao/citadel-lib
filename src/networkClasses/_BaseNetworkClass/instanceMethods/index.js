@@ -45,6 +45,8 @@ import { executeMessageCollection } from './executeMessageCollection'
 import { buildCustomTransaction } from './buildCustomTransaction'
 import { getRewardsById } from './getRewardsById'
 import { getRedelegationUnlockDateById } from './getRedelegationUnlockDateById'
+import { getCrossNetFees } from './getCrossNetFees'
+
 
 
 export const instanceMethods = {
@@ -93,5 +95,6 @@ export const instanceMethods = {
   executeMessageCollection,
   buildCustomTransaction,
   getRewardsById,
-  getRedelegationUnlockDateById
+  getRedelegationUnlockDateById,
+  getCrossNetFees
 }

@@ -40,7 +40,7 @@ export const tranformTransaction = async (transaction) => {
       Object.values(transaction.body.account)
     )
   }
-  transaction.fee.amount = new Uint8Array(Object.values([0]))
+  transaction.fee.amount = new Uint8Array(Object.values(transaction.fee.amount));
   // dynamic import of large module (for fast init)
   const { misc } = await import('@oasisprotocol/client')
   let tx = await misc.toCBOR(transaction)

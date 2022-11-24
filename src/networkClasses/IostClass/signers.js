@@ -48,6 +48,7 @@ export const signTxByPrivateKey = async (
 const signMessageByEd25519 = async (msg, privateKey) => {
   // dynamic import of large module (for fast init)
   const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
+  await sodiumsumo.ready
   return Buffer.from(
     sodiumsumo.crypto_sign_detached(msg, Buffer.from(privateKey))
   ).toString('hex')
@@ -123,6 +124,7 @@ class Signature {
 const signData = async (publishHash, privateKey) => {
   // dynamic import of large module (for fast init)
   const { default: sodiumsumo } = await import('libsodium-wrappers-sumo')
+  await sodiumsumo.ready
   return sodiumsumo.crypto_sign_detached(
     Buffer.from(publishHash),
     Buffer.from(privateKey)

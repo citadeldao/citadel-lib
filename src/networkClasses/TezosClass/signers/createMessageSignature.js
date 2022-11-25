@@ -5,10 +5,9 @@ import {
   WALLET_TYPES,
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../../constants'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { TezApp } from '../ledgerApp'
 import { signTxByTrezor } from './signTxByTrezor'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export const createMessageSignature = async (
   data,
@@ -26,9 +25,7 @@ export const createMessageSignature = async (
   // ledger signer
   if (type === WALLET_TYPES.LEDGER) {
     if (!global.ledger_tez) {
-      const transport = (await WebHidTransport.isSupported())
-        ? await WebHidTransport.create(10000)
-        : await TransportWebUSB.create(10000)
+      const transport = await getLedgerTransport()
       global.ledger_tez = new TezApp(transport)
     }
 

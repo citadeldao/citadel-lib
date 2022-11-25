@@ -3,9 +3,8 @@ import {
   WALLET_TYPES,
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../../constants'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { IconApp } from '../ledgerApp'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export async function createMessageSignature(
   message,
@@ -25,9 +24,7 @@ export async function createMessageSignature(
   if (type === WALLET_TYPES.LEDGER) {
     // add global ledger app to avoid ledger reconnect error
     if (!global.ledger_icon) {
-      const transport = (await WebHidTransport.isSupported())
-        ? await WebHidTransport.create(10000)
-        : await TransportWebUSB.create(10000)
+      const transport = await getLedgerTransport()
       global.ledger_icon = new IconApp(transport)
     }
 

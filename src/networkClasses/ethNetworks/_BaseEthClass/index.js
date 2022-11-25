@@ -7,8 +7,7 @@ import { WALLET_TYPES } from '../../../constants'
 import errors from '../../../errors'
 import { prepareTrezorConnection } from '../../_functions/trezor'
 import { bip32PublicToEthereumPublic } from '../../_functions/crypto'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export class BaseEthNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -37,9 +36,7 @@ export class BaseEthNetwork extends BaseNetwork {
     // add global ledger app to avoid ledger reconnect error
     if (this.type === WALLET_TYPES.LEDGER) {
       if (!global[`ledger_${this.net}`]) {
-        const transport = (await WebHidTransport.isSupported())
-          ? await WebHidTransport.create(10000)
-          : await TransportWebUSB.create(10000)
+        const transport = await getLedgerTransport()
         global[`ledger_${this.net}`] = new EthApp(transport)
       }
 

@@ -1,12 +1,12 @@
 import api from '../../api'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import OasisApp from '@oasisprotocol/ledger'
 import { getHdDerivationPath } from '../_functions/ledger'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import { tranformTransaction } from './signers/functions'
+import {getLedgerTransport} from "../../ledgerTransportProvider";
 
 export class OasisNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -138,7 +138,7 @@ export class OasisNetwork extends BaseNetwork {
   }
 
   static async createWalletByLedger({ derivationPath }) {
-    const transport = await TransportWebUSB.create(1000)
+    const transport = await getLedgerTransport()
     const app = new OasisApp(transport)
     const hdPathArray = getHdDerivationPath(derivationPath)
     const resp = await app.publicKey(hdPathArray)

@@ -1,5 +1,5 @@
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { getHdDerivationPath } from '../../../_functions/ledger'
+import {getLedgerTransport} from "../../../../ledgerTransportProvider";
 
 // ledger signer (alternative version for some cosmos neworks)
 export const signTxByLedger_2 = async (
@@ -10,7 +10,7 @@ export const signTxByLedger_2 = async (
 ) => {
   const { default: CosmosApp } = await import('ledger-cosmos-js')
   // TODO: check reconnect case
-  const transport = await TransportWebUSB.create(1000)
+  const transport = await getLedgerTransport()
   const cosmosApp = new CosmosApp(transport)
   const hdPath = getHdDerivationPath(derivationPath)
   const response = await cosmosApp.sign(hdPath, rawTransaction.bytes)

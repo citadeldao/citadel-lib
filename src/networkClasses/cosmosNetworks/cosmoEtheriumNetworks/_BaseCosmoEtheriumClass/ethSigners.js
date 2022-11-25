@@ -1,7 +1,6 @@
-const keccak256 = require('keccak256')
+import {getLedgerTransport} from "../../../../ledgerTransportProvider";
 
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+const keccak256 = require('keccak256')
 
 const domainHash = async (message) => {
   // dynamic import of large module (for fast init)
@@ -36,9 +35,7 @@ export const signTxByLedger = async (
   publicKey
 ) => {
   if (!global.ledger_eth && !global.ledger_bsc) {
-    const transport = (await WebHidTransport.isSupported())
-      ? await WebHidTransport.create(10000)
-      : await TransportWebUSB.create(10000)
+    const transport = await getLedgerTransport()
     // dynamic import of large module (for fast init)
     const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
     global.ledger_eth = new EthApp(transport)

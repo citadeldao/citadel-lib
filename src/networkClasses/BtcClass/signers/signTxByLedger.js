@@ -1,14 +1,11 @@
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export const signTxByLedger = async (rawTransaction, derivationPath) => {
   // dynamic import of large module (for fast init)
   const { default: BtcApp } = await import('@ledgerhq/hw-app-btc')
   // add global btc ledger app to avoid ledger reconnect error
   if (!global.ledger_btc) {
-    const transport = (await WebHidTransport.isSupported())
-      ? await WebHidTransport.create(10000)
-      : await TransportWebUSB.create(10000)
+    const transport = await getLedgerTransport()
     global.ledger_btc = new BtcApp(transport)
   }
   // dynamic import of large module (for fast init)

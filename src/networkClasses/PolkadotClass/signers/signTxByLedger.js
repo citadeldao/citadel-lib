@@ -1,7 +1,6 @@
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import U2fTransport from '@ledgerhq/hw-transport-u2f'
 import errors from '../../../errors'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export const signTxByLedger = async (
   rawTransaction,
@@ -9,9 +8,7 @@ export const signTxByLedger = async (
   address
 ) => {
   if (!global.ledger_polkadot) {
-    const transport = (await WebHidTransport.isSupported())
-      ? await WebHidTransport.create(10000)
-      : await U2fTransport.create(10000)
+    const transport = await getLedgerTransport()
     global.ledger_polkadot = new PolkadotLedger(transport)
   }
   // dynamic import of large module (for fast init)

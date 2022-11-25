@@ -60,6 +60,7 @@ export const init = async (options = {}) => {
     getPrivateWalletInfoCallback = () => {},
     accessToken,
     refreshToken,
+    ledgerFlutterTransport = false,
   } = options
   checkTypes(
     ['backendUrl', backendUrl, ['String'], true],
@@ -77,7 +78,8 @@ export const init = async (options = {}) => {
       ['Function', 'AsyncFunction'],
     ],
     ['accessToken', accessToken, ['String']],
-    ['refreshToken', refreshToken, ['String']]
+    ['refreshToken', refreshToken, ['String']],
+    ['ledgerFlutterTransport', ledgerFlutterTransport, ['Boolean']],
   )
   // reinitialization check
   state.getState('isInitialized') &&
@@ -100,6 +102,7 @@ export const init = async (options = {}) => {
     getPrivateWalletInfoCallback,
     accessToken,
     refreshToken,
+    ledgerFlutterTransport,
   })
 
   debugConsole.log('Initialization completed')

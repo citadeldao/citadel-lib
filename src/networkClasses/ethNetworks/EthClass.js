@@ -1,9 +1,8 @@
 import { BaseEthNetwork } from './_BaseEthClass'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { WALLET_TYPES } from '../../constants'
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
+import {getLedgerTransport} from "../../ledgerTransportProvider";
 
 export class EthNetwork extends BaseEthNetwork {
   constructor(walletInfo) {
@@ -24,9 +23,7 @@ export class EthNetwork extends BaseEthNetwork {
 
     // add global ledger app to avoid ledger reconnect error
     if (!global.ledger_eth && !global.ledger_bsc) {
-      const transport = (await WebHidTransport.isSupported())
-        ? await WebHidTransport.create(10000)
-        : await TransportWebUSB.create(10000)
+      const transport = await getLedgerTransport()
       global.ledger_eth = new EthApp(transport)
     }
     // generate address and public key

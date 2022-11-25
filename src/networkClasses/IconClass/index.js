@@ -1,8 +1,6 @@
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import BigNumber from 'bignumber.js'
 import api from '../../api'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
@@ -16,6 +14,7 @@ import {
 } from './signers'
 import { IconApp } from './ledgerApp'
 import { debugConsole } from '../../helpers/debugConsole'
+import {getLedgerTransport} from "../../ledgerTransportProvider";
 
 export class IconNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -228,9 +227,7 @@ export class IconNetwork extends BaseNetwork {
   static async createWalletByLedger({ derivationPath }) {
     // add global icon ledger app to avoid ledger reconnect error
     if (!global.ledger_icon) {
-      const transport = (await WebHidTransport.isSupported())
-        ? await WebHidTransport.create(10000)
-        : await TransportWebUSB.create(10000)
+      const transport = await getLedgerTransport()
       global.ledger_icon = new IconApp(transport)
     }
     // generate address and public key

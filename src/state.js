@@ -42,6 +42,7 @@ const defaultState = {
   stakeList: false,
   accessToken: null,
   refreshToken: null,
+  ledgerFlutterTransport: false,
 
   // TODO: refact (events state / module?)
   // event callbacks. Computed property to prevent errors and for simple event handling

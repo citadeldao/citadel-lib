@@ -6,8 +6,7 @@ import { WALLET_TYPES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger, signTxByTrezor } from './signers'
 import { prepareTrezorConnection } from '../_functions/trezor'
 import { bip32PublicToEthereumPublic } from '../_functions/crypto'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+import {getLedgerTransport} from "../../ledgerTransportProvider";
 
 export class BtcNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -142,9 +141,7 @@ export class BtcNetwork extends BaseNetwork {
     const { default: BtcApp } = await import('@ledgerhq/hw-app-btc')
     // add global btc ledger app to avoid ledger reconnect error
     if (!global.ledger_btc) {
-      const transport = (await WebHidTransport.isSupported())
-        ? await WebHidTransport.create(10000)
-        : await TransportWebUSB.create(1000)
+      const transport = await getLedgerTransport()
       global.ledger_btc = new BtcApp(transport)
     }
     // generate address and public key

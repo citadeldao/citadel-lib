@@ -1,10 +1,10 @@
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import OasisApp from '@oasisprotocol/ledger'
 import { generateContext, u8FromBuf, bufFromU8 } from './functions'
 import { getHdDerivationPath } from '../../_functions/ledger'
+import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export const signTxByLedger = async (rawTransaction, derivationPath, publicKey) => {
-  const transport = await TransportWebUSB.create(1000)
+  const transport = await getLedgerTransport()
   const app = new OasisApp(transport)
   const context = await generateContext()
   const HDDerPath = getHdDerivationPath(derivationPath)
@@ -15,7 +15,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath, publicKey) 
     throw error
   }
   await transport.close()
-  
+
   return {
     untrusted_raw_value: rawTransaction,
     signature: {

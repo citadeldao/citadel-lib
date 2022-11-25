@@ -14,13 +14,12 @@ import {
 import { TezosPrefix, walletFromPrivate } from './functions/tezosFunctions'
 import { TezosOneseed } from './functions/generate'
 import * as TezosUtil from './functions/utils'
-import WebHidTransport from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import { TezApp } from './ledgerApp'
 import BigNumber from 'bignumber.js'
 import { getType } from '../../helpers/checkArguments'
 import { prepareTrezorConnection } from '../_functions/trezor'
 import { debugConsole } from '../../helpers/debugConsole'
+import {getLedgerTransport} from "../../ledgerTransportProvider";
 
 export class TezosNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -197,9 +196,7 @@ export class TezosNetwork extends BaseNetwork {
 
   static async createWalletByLedger({ derivationPath }) {
     if (!global.ledger_tez) {
-      const transport = (await WebHidTransport.isSupported())
-        ? await WebHidTransport.create(10000)
-        : await TransportWebUSB.create(10000)
+      const transport = await getLedgerTransport()
       global.ledger_tez = new TezApp(transport)
     }
     const { publicKey, address } = await global.ledger_tez.getAddress(

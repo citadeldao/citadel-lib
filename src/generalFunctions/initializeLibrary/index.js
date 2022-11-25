@@ -25,6 +25,7 @@ export const initializeLibrary = async ({
   stringifyResponse,
   accessToken,
   refreshToken,
+  ledgerFlutterTransport,
 }) => {
   // set backend URL
   state.setState('backendUrl', backendUrl)
@@ -75,6 +76,9 @@ export const initializeLibrary = async ({
 
   // set refreshToken
   state.setState('refreshToken', refreshToken)
+
+  // set ledgerFlutterTransport
+  state.setState('ledgerFlutterTransport', ledgerFlutterTransport)
 
   // create api object
   initApi()

@@ -1,7 +1,7 @@
 import state from "./state";
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
-import { LedgerFlutterTransport } from "./ledgerFlutterTransport";
+import {LedgerFlutterTransport} from "./ledgerFlutterTransport";
 
 export const getLedgerTransport = async () => {
     if (state.getState('ledgerFlutterTransport')) {

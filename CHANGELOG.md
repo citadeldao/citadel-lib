@@ -1,3 +1,10 @@
+## 1.34.1 (2022-11-28)
+
+
+### Bug Fixes
+
+* fix evmos ledger,add orai to protobuff 9df4ae8
+
 # 1.34.0 (2022-11-25)
 
 

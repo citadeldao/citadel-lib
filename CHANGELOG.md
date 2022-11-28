@@ -1,3 +1,10 @@
+## 1.34.2 (2022-11-28)
+
+
+### Bug Fixes
+
+* add socket event for notifications 85ab08a
+
 ## 1.34.1 (2022-11-28)
 
 

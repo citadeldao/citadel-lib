@@ -7,6 +7,7 @@ export const USERS_SOCKET_EVENT_NAMES = {
   MEMPOOL_ADD_TX_CLIENT: 'mempool-add-tx-client',
   MEMPOOL_REMOVE_TX_CLIENT: 'mempool-remove-tx-client',
   CHANGE_EMAIL_CLIENT: 'change-email-client',
+  NOTIFICATIONS_CLIENT: 'notifications-client'
 }
 
 export const MARKETCAPS_SOCKET_EVENT_NAMES = {

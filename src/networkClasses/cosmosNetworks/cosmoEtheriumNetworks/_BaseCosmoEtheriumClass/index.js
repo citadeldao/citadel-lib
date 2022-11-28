@@ -94,7 +94,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
       options
     )
     // but with modified address
-    wallet.address = getCosmosAddressFromEthAddress(wallet.address, this.netPrefix)
+    wallet.address = await getCosmosAddressFromEthAddress(wallet.address, this.netPrefix)
     let publicKey = wallet.publicKey
     if (publicKey.length !== 66) {
       publicKey = publicKey.slice(2, 66)

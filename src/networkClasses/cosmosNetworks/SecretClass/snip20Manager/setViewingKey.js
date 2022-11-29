@@ -33,6 +33,7 @@ export async function setViewingKey(
   const getGasPriceInFeeDenom = (fee)=> {
     return (fee * 10 ** SecretNetwork.decimals) / gasLimit
   }
+  //callback to pass to show tx and handle change of fee
   const callBackHandler = async (msgs)=> {
     const txForShowClient = {
       chainId: SecretNetwork.chain_id,
@@ -40,7 +41,7 @@ export async function setViewingKey(
       fee: {amount:[{amount: fee}]}
     }
 
-    const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_SET_VK, txForShowClient)
+    const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_TX_MIDDLEWARE, txForShowClient)
     if(res?.error){
       errors.throwError('ViewingKeyError', {
         message: 'Transaction has been rejected',
@@ -62,38 +63,15 @@ export async function setViewingKey(
         contractAddress,
         privateKeyHash
       )
-      
+      //tx structure to show
       const msgs = {
         set_viewing_key: {
           key: simpleViewingKey,
         },
       }
-      // await callBackHandler(msgs)
+      //call callback
+      await callBackHandler(msgs)
       
-      // //transaction structure to show on client
-      // const txForShowClient = {
-      //   chainId: SecretNetwork.chain_id,
-      //   msgs:[
-      //     {
-      //       set_viewing_key: {
-      //         key: simpleViewingKey,
-      //       },
-      //     }
-      //   ],
-      //   fee: {amount:[{amount: fee}]}
-      // }
-
-      // const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_SET_VK, txForShowClient)
-      // if(res.error){
-      //   errors.throwError('ViewingKeyError', {
-      //     message: 'Transaction has been rejected',
-      //   })
-      // }
-      // //change fee, if it has been changed from in client
-      // if(res?.data?.fee){
-      //   gasPriceInFeeDenom = getGasPriceInFeeDenom(res?.data?.fee)
-      // }
-
       const response = await executeContract({
         address,
         contractAddress,
@@ -123,36 +101,15 @@ export async function setViewingKey(
     // set custom viewing key
     case VIEWING_KEYS_TYPES.CUSTOM: {
       checkTypes(['viewingKey', viewingKey, ['String'], true])
+      //tx structure to show
       const msgs = {
         set_viewing_key: {
           key: viewingKey,
         },
       }
+      //call callback
       await callBackHandler(msgs)
-      // //transaction structure to show on client
-      // const txForShowClient = {
-      //   chainId: SecretNetwork.chain_id,
-      //   msgs:[
-      //     {
-      //       set_viewing_key: {
-      //         key: viewingKey,
-      //       },
-      //     }
-      //   ],
-      //   fee: {amount:[{amount: fee}]}
-      // }
-
-      // const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_SET_VK, txForShowClient)
-      // if(res.error){
-      //   errors.throwError('ViewingKeyError', {
-      //     message: 'Transaction has been rejected',
-      //   })
-      // }
-      // //change fee, if it has been changed from in client
-      // if(res?.data?.fee){
-      //   gasPriceInFeeDenom = getGasPriceInFeeDenom(res?.data?.fee)
-      // }
-
+     
       const response = await executeContract({
         address,
         contractAddress,
@@ -184,35 +141,15 @@ export async function setViewingKey(
       const { default: crypto } = await import('crypto')
       const entropy = crypto.randomBytes(64).toString('base64')
 
+      //tx structure to show
       const msgs = {
         create_viewing_key: {
           entropy,
         },
       }
+      //call callback
       await callBackHandler(msgs)
-      // //transaction structure to show on client
-      // const txForShowClient = {
-      //   chainId: SecretNetwork.chain_id,
-      //   msgs:[
-      //     {
-      //       create_viewing_key: {
-      //         entropy,
-      //       },
-      //     }
-      //   ],
-      //   fee: {amount:[{amount: fee}]}
-      // }
-
-      // const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_SET_VK, txForShowClient)
-      // if(res.error){
-      //   errors.throwError('ViewingKeyError', {
-      //     message: 'Transaction has been rejected',
-      //   })
-      // }
-      // //change fee, if it has been changed from in client
-      // if(res?.data?.fee){
-      //   gasPriceInFeeDenom = getGasPriceInFeeDenom(res?.data?.fee)
-      // }
+    
       const response = await executeContract({
         address,
         contractAddress,

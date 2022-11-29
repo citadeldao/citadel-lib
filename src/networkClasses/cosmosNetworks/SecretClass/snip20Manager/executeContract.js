@@ -21,14 +21,12 @@ export const executeContract = async ({
     type,
     publicKey,
   })
-  console.log(888,contractAddress, message, gasLimit);
 
 
   // get contract codeHash
   const codeHash = await secretjs.query.compute.contractCodeHash(
     contractAddress
   )
-  console.log(777,codeHash);
   
   // simulate to estimate gas
   if (simulate) {

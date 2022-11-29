@@ -20,7 +20,7 @@ export const executeContract = async ({
     type,
     publicKey,
   })
-
+console.log(44,contractAddress);
   // get contract codeHash
   const codeHash = await secretjs.query.compute.contractCodeHash(
     contractAddress

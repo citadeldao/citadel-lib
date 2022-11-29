@@ -7,12 +7,6 @@ import { SecretNetwork } from '../'
 import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../../../constants'
 
-//685583
-//secret_s-juno
-//simple
-//30f3097968d2bc9dace364acc801a6ef339b459c65b89b9691b52e4c08938fb6
-//0.000336
-
 export async function setViewingKey(
   viewingKeyType,
   {

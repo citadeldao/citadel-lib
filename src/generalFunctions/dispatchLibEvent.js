@@ -50,8 +50,8 @@ export const dispatchLibEvent = async (eventName, callbackArgument) => {
   // CASE 1: dispatch lib event if no minEventInterval
   if (!Object.keys(minEventsInterval).includes(eventName)) {
     // dispatch other events
-    await dispatchEvent(eventName, callbackArgument)
-    return
+    return await dispatchEvent(eventName, callbackArgument)
+    
   }
 
   // CASE 2: event is already waiting to be dispatch? - skip it

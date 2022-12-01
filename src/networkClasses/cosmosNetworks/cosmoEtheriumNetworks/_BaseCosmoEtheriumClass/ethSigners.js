@@ -2,12 +2,12 @@ import {getLedgerTransport} from "../../../../ledgerTransportProvider";
 
 const keccak256 = require('keccak256')
 
+
 const domainHash = async (message) => {
   // dynamic import of large module (for fast init)
   const { TypedDataUtils, SignTypedDataVersion } = await import(
     '@metamask/eth-sig-util'
   )
-  // const { default: nacl } = await import('tweetnacl')
 
   return TypedDataUtils.hashStruct(
     'EIP712Domain',
@@ -42,8 +42,8 @@ export const signTxByLedger = async (
   }
   const { v, r, s } = await global.ledger_eth.signEIP712HashedMessage(
     derivationPath,
-    Buffer.from(domainHash(rawTransaction)).toString('hex'),
-    Buffer.from(messageHash(rawTransaction)).toString('hex')
+    Buffer.from(await domainHash(rawTransaction)).toString('hex'),
+    Buffer.from(await messageHash(rawTransaction)).toString('hex')
   )
 
   const combined = `${r}${s}${v.toString(16)}`

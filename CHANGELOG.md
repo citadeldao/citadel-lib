@@ -1,3 +1,10 @@
+# 1.35.0 (2022-12-01)
+
+
+### Features
+
+* add Omniflix and Teritori networks a82de9f
+
 ## 1.34.4 (2022-12-01)
 
 

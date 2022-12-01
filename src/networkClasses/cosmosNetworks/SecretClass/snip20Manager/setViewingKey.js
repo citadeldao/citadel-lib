@@ -31,11 +31,15 @@ export async function setViewingKey(
   const callBackHandler = async (msgs)=> {
     const txForShowClient = {
       chainId: SecretNetwork.chain_id,
-      msgs:[msgs],
+      msgs: [msgs],
       fee: {amount:[{amount: fee}]}
     }
 
-    const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_TX_MIDDLEWARE, txForShowClient)
+    const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_TX_MIDDLEWARE, 
+      {
+        signDoc: txForShowClient,
+        wallet: {address, net: SecretNetwork.net}
+      })
     if(res?.error){
       errors.throwError('ViewingKeyError', {
         message: 'Transaction has been rejected',

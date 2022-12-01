@@ -47,6 +47,8 @@ import { StafiNetwork } from './cosmosNetworks/StafiClass'
 import { StrideNetwork } from './cosmosNetworks/StrideClass'
 import { JackalNetwork } from './cosmosNetworks/JackalClass'
 import { EvmosethNetwork } from './ethNetworks/EvmosethClass'
+import { TeritoriNetwork } from './cosmosNetworks/TeritoriClass'
+import { OmniflixNetwork } from './cosmosNetworks/OmniflixClass'
 
 
 export const networkClasses = {
@@ -98,5 +100,7 @@ export const networkClasses = {
   stafi: StafiNetwork,
   stride: StrideNetwork,
   jackal: JackalNetwork,
-  evmoseth: EvmosethNetwork
+  evmoseth: EvmosethNetwork,
+  teritori: TeritoriNetwork,
+  omniflix: OmniflixNetwork,
 }

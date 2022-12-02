@@ -141,7 +141,7 @@ export class BaseEthNetwork extends BaseNetwork {
       publicKey,
       derivationPath,
       privateKey: '0x' + privateKey,
-      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.SEED_PHRASE,
       // add network info
       code: this.code,
       methods: this.methods,

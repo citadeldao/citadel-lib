@@ -79,7 +79,7 @@ export const WALLET_TYPES = {
   PUBLIC_KEY: 'publicKey',
   METAMASK: 'metamask',
   KEPLR: 'keplr',
-  GENERATED_FROM_SEED: 'generatedFromSeed',
+  SEED_PHRASE: 'seedPhrase',
 }
 
 export const HARDWARE_SIGNER_WALLET_TYPES = [
@@ -90,7 +90,7 @@ export const HARDWARE_SIGNER_WALLET_TYPES = [
 export const PRIVATE_KEY_SIGNER_WALLET_TYPES = [
   WALLET_TYPES.ONE_SEED,
   WALLET_TYPES.PRIVATE_KEY,
-  WALLET_TYPES.GENERATED_FROM_SEED,
+  WALLET_TYPES.SEED_PHRASE,
 ]
 
 export const VIEWING_KEYS_TYPES = {

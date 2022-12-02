@@ -40,6 +40,7 @@ export async function setViewingKey(
         signDoc: txForShowClient,
         wallet: {address, net: SecretNetwork.net}
       })
+      
     if(res?.error){
       errors.throwError('ViewingKeyError', {
         message: 'Transaction has been rejected',

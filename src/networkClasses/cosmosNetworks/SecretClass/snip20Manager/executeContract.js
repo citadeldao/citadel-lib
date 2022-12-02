@@ -12,6 +12,7 @@ export const executeContract = async ({
   publicKey,
   simulate = false,
 }) => {
+  
   // prepare secret client
   const secretjs = await getSecretClient({
     address,
@@ -20,12 +21,13 @@ export const executeContract = async ({
     type,
     publicKey,
   })
-console.log(44,contractAddress);
+
+
   // get contract codeHash
   const codeHash = await secretjs.query.compute.contractCodeHash(
     contractAddress
   )
-
+  
   // simulate to estimate gas
   if (simulate) {
     return await secretjs.tx.compute.executeContract.simulate({

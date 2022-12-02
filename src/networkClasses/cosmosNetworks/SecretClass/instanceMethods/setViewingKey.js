@@ -8,7 +8,7 @@ import { keplrChains } from '../../_BaseCosmosClass/signers/keplrChains'
 export async function setViewingKey(
   token,
   viewingKeyType,
-  { privateKey, derivationPath, viewingKey, fee = 0.003 } = {}
+  { privateKey, derivationPath, viewingKey, fee = 0.003, contractAddress } = {}
 ) {
   // dynamic import module with huge npm package
   const { default: snip20Manager } = await import('../snip20Manager')
@@ -72,7 +72,7 @@ export async function setViewingKey(
     // set viewingKey
     data = await snip20Manager.setViewingKey(viewingKeyType, {
       address: this.address,
-      contractAddress: networkClass.tokens[token].address,
+      contractAddress: contractAddress || networkClass.tokens[token].address,
       type: this.type,
       publicKey: this.publicKey,
       privateKey,
@@ -81,15 +81,16 @@ export async function setViewingKey(
       viewingKey,
       fee,
     })
-    // load balance
-    await this.loadSnip20TokenBalance(
-      token,
-      viewingKey || data.viewingKey,
-      viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
-    )
+    // load balance and update wallet list
+    if(token){
+      await this.loadSnip20TokenBalance(
+        token,
+        viewingKey || data.viewingKey,
+        viewingKeyType || VIEWING_KEYS_TYPES.CUSTOM
+      )
+      dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
+    }
   }
-
-  dispatchLibEvent(LIB_EVENT_NAMES.WALLET_LIST_UPDATED)
 
   // return hash and new VK
   return data

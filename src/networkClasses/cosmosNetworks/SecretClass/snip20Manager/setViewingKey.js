@@ -4,6 +4,8 @@ import { checkTypes } from '../../../../helpers/checkArguments'
 import { generateSimpleViewingKey } from './generateSimpleViewingKey'
 import { executeContract } from './executeContract'
 import { SecretNetwork } from '../'
+import { dispatchLibEvent } from '../../../../generalFunctions/dispatchLibEvent'
+import { LIB_EVENT_NAMES } from '../../../../constants'
 
 export async function setViewingKey(
   viewingKeyType,
@@ -22,7 +24,35 @@ export async function setViewingKey(
   // gasLimit was estimated earlier for this method via transaction simulation (.simulate())
   const gasLimit = 175_000
   // native secret decimals for fee
-  const gasPriceInFeeDenom = (fee * 10 ** SecretNetwork.decimals) / gasLimit
+  const getGasPriceInFeeDenom = (fee)=> {
+    return (fee * 10 ** SecretNetwork.decimals) / gasLimit
+  }
+  //callback to pass to show tx and handle change of fee
+  const callBackHandler = async (msgs)=> {
+    const txForShowClient = {
+      chainId: SecretNetwork.chain_id,
+      msgs: [msgs],
+      fee: {amount:[{amount: fee}]}
+    }
+
+    const res = await dispatchLibEvent(LIB_EVENT_NAMES.EXTENSION_TX_MIDDLEWARE, 
+      {
+        signDoc: txForShowClient,
+        wallet: {address, net: SecretNetwork.net}
+      })
+      
+    if(res?.error){
+      errors.throwError('ViewingKeyError', {
+        message: 'Transaction has been rejected',
+      })
+    }
+    //change fee, if it has been changed from in client
+    if(res?.data?.fee){
+      gasPriceInFeeDenom = getGasPriceInFeeDenom(res?.data?.fee)
+    }
+  }
+
+  let gasPriceInFeeDenom = getGasPriceInFeeDenom(fee)
 
   let transactionHash = null
   switch (viewingKeyType) {
@@ -32,7 +62,15 @@ export async function setViewingKey(
         contractAddress,
         privateKeyHash
       )
-
+      //tx structure to show
+      const msgs = {
+        set_viewing_key: {
+          key: simpleViewingKey,
+        },
+      }
+      //call callback
+      await callBackHandler(msgs)
+      
       const response = await executeContract({
         address,
         contractAddress,
@@ -62,6 +100,15 @@ export async function setViewingKey(
     // set custom viewing key
     case VIEWING_KEYS_TYPES.CUSTOM: {
       checkTypes(['viewingKey', viewingKey, ['String'], true])
+      //tx structure to show
+      const msgs = {
+        set_viewing_key: {
+          key: viewingKey,
+        },
+      }
+      //call callback
+      await callBackHandler(msgs)
+     
       const response = await executeContract({
         address,
         contractAddress,
@@ -92,6 +139,16 @@ export async function setViewingKey(
       // dynamic import of large module (for fast init)
       const { default: crypto } = await import('crypto')
       const entropy = crypto.randomBytes(64).toString('base64')
+
+      //tx structure to show
+      const msgs = {
+        create_viewing_key: {
+          entropy,
+        },
+      }
+      //call callback
+      await callBackHandler(msgs)
+    
       const response = await executeContract({
         address,
         contractAddress,

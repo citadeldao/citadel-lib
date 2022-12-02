@@ -22,6 +22,7 @@ export const LIB_EVENT_NAMES = {
   REFRESHED_TOKEN_EXPIRED: 'refreshedTokenExpired',
   LEDGER_SIGNING_FINISHED: 'ledgerSigningFinished',
   LEDGER_SIGNING_STARTED: 'ledgerSigningStarted',
+  EXTENSION_TX_MIDDLEWARE:'extensionTxMiddleware'
 }
 
 // TODO: generate next 2 consts automatically
@@ -35,6 +36,7 @@ export const LIB_EVENT_CALLBACK_NAMES = {
   [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'ledgerSigningStartedCallback',
   [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]:
     'storageChangedExternallyCallback',
+  [LIB_EVENT_NAMES.EXTENSION_TX_MIDDLEWARE]: 'extensionTxMiddlewareCallback',
 }
 
 export const LIB_EVENT_BLOCK_FLAGS = {

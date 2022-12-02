@@ -24,17 +24,26 @@ export const setViewingKey = async (
 ) => {
   // checks
   checkInitialization()
+
+  // check if options is object first, to set token is required, depend on is there contractAddress in options
+  checkTypes(['options', options, ['Object'], true])
+
+  const { viewingKey, fee, privateKey, derivationPath, contractAddress } = options
+  
+  const isTokenRequired = !contractAddress
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
-    ['token', token, ['String'], true],
+    ['token', token, ['String'], isTokenRequired],
     ['viewingKeyType', viewingKeyType, ['String']],
-    ['options', options, ['Object'], true]
+    // ['options', options, ['Object'], true]
   )
-  checkNetworkOrToken(token)
-
+  if(isTokenRequired){
+    checkNetworkOrToken(token)
+  }
+  
   checkWalletId(walletId)
 
-  const { viewingKey, fee, privateKey, derivationPath } = options
+  
 
   checkTypes(
     ['viewingKey', viewingKey, ['String']],

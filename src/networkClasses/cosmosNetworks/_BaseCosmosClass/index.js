@@ -171,7 +171,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
       publicKey,
       derivationPath,
       privateKey,
-      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.SEED_PHRASE,
       isCosmosNetwork: true,
       // add network info
       code: this.code,

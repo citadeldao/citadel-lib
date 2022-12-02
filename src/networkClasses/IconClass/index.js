@@ -178,7 +178,7 @@ export class IconNetwork extends BaseNetwork {
       publicKey: publicKeyHex,
       derivationPath,
       privateKey: privateKey.toString('hex'),
-      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.SEED_PHRASE,
       // update network info
       code: this.code,
       methods: this.methods,

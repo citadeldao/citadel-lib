@@ -135,7 +135,7 @@ export class TezosNetwork extends BaseNetwork {
       publicKey: publicKeyBase58,
       derivationPath,
       privateKey: TezosUtil.readKeyWithHint(keyPair.privateKey, 'edsk'),
-      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.GENERATED_FROM_SEED,
+      type: oneSeed ? WALLET_TYPES.ONE_SEED : WALLET_TYPES.SEED_PHRASE,
       // update network info
       code: this.code,
       methods: this.methods,

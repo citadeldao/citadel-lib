@@ -1,3 +1,10 @@
+## 1.35.2 (2022-12-02)
+
+
+### Bug Fixes
+
+* add wallet type seed phrase d914323
+
 ## 1.35.1 (2022-12-02)
 
 

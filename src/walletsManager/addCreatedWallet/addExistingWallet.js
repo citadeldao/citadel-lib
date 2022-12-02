@@ -26,7 +26,7 @@ export const addExistingWallet = async ({
   }
 
   // ORDER FOR "generatedFromSeed"
-  if (createdWallet.type === WALLET_TYPES.GENERATED_FROM_SEED) {
+  if (createdWallet.type === WALLET_TYPES.SEED_PHRASE) {
     // update existing wallet (type), private subtokens (secret) and return updated wallet
     return updateExistingWallet({
       existingWallet,

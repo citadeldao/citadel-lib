@@ -1,3 +1,13 @@
+## 1.35.1 (2022-12-02)
+
+
+### Bug Fixes
+
+* add set vk method for extension c49cd27
+* add set vk methood for extension fa86523
+* fix setVk method for extension 66d6577
+* remove comments 918ff1a
+
 # 1.35.0 (2022-12-01)
 
 

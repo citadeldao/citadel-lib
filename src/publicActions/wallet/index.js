@@ -46,6 +46,9 @@ import { buildCustomTransaction } from './buildCustomTransaction'
 import { getRewardsById } from './getRewardsById'
 import { getRedelegationUnlockDateById } from './getRedelegationUnlockDateById'
 import { getCrossNetFees } from './getCrossNetFees'
+//vk methood
+import { queryContract } from './queryContract'
+
 
 
 
@@ -97,5 +100,6 @@ export const wallet = {
   buildCustomTransaction,
   getRewardsById,
   getRedelegationUnlockDateById,
-  getCrossNetFees
+  getCrossNetFees,
+  queryContract
 }

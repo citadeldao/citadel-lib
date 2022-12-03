@@ -16,6 +16,7 @@ import { loadSnip20TokenBalance } from './loadSnip20TokenBalance'
 import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { getKeplr } from './getKeplr'
 import { executeMessageCollection } from './executeMessageCollection'
+import { queryContract } from './queryContract'
 
 export default {
   useSnip20Manager,
@@ -36,4 +37,5 @@ export default {
   loadKeplrSnip20Balances,
   getKeplr,
   executeMessageCollection,
+  queryContract
 }

@@ -1,3 +1,10 @@
+## 1.35.3 (2022-12-03)
+
+
+### Bug Fixes
+
+* add qury contract methood for extension ae7dcff
+
 ## 1.35.2 (2022-12-02)
 
 

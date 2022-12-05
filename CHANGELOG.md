@@ -1,3 +1,10 @@
+## 1.35.4 (2022-12-05)
+
+
+### Bug Fixes
+
+* fix secretjs version a56e7ba
+
 ## 1.35.3 (2022-12-03)
 
 

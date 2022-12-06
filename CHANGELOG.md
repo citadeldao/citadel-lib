@@ -1,3 +1,10 @@
+## 1.35.5 (2022-12-06)
+
+
+### Bug Fixes
+
+* fix vk methoods for extension 2be50e4
+
 ## 1.35.4 (2022-12-05)
 
 

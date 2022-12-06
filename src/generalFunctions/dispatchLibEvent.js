@@ -43,7 +43,7 @@ const dispatchEvent = async (eventName, callbackArgument) => {
   }
 
   // run callback by its name
-  await state.getState(LIB_EVENT_CALLBACK_NAMES[eventName])(callbackArgument)
+  return await state.getState(LIB_EVENT_CALLBACK_NAMES[eventName])(callbackArgument)
 }
 
 export const dispatchLibEvent = async (eventName, callbackArgument) => {

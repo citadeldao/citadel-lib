@@ -1,7 +1,5 @@
 import { getHdDerivationPath } from '../../../_functions/ledger'
-import { getLedgerApp } from './getLedgerApp'
-import errors from '../../../../errors'
-import { sortObject } from '../functions'
+import { getLedgerTransport } from "../../../../ledgerTransportProvider";
 
 export const signTxByLedger = async (
   rawTransaction,
@@ -9,25 +7,24 @@ export const signTxByLedger = async (
   publicKey,
   modeType = 'sync'
 ) => {
-  const ledgerApp = await getLedgerApp()
+  const { default: CosmosApp } = await import('ledger-cosmos-js')
+  const transport = await getLedgerTransport()
+  const cosmosApp = new CosmosApp(transport)
   const hdPath = getHdDerivationPath(derivationPath)
-  const response = await ledgerApp.cosmosApp.sign(
+  const response = await cosmosApp.sign(
     hdPath,
-    JSON.stringify(sortObject(rawTransaction.json))
+    JSON.stringify(rawTransaction.json)
   )
 
-  if (!response.signature) {
-    errors.throwError('LedgerError', {
-      message: response.error_message,
-      code: response.return_code,
-    })
+  if (!response.signature || response.return_code !== 0x9000) {
+    const error = new Error(response.error_message)
+    error.code = response.return_code
+    throw error
   }
-
+  await transport.close()
   // dynamic import for guge module
   const { default: secp256k1 } = await import('secp256k1')
-  const parsedSignature = secp256k1.signatureImport(
-    Buffer.from(response.signature)
-  )
+  const parsedSignature = secp256k1.signatureImport(response.signature)
 
   let signMessage = new Object()
   if (
@@ -43,7 +40,6 @@ export const signTxByLedger = async (
   const signatureParsed = Buffer.from(parsedSignature).toString('hex')
   // const signMessage = rawTransaction.json
   const signedTx = {
-    // ...sortObject(signMessage),
     ...signMessage,
     fee: rawTransaction.json.fee,
     signature: signatureParsed,

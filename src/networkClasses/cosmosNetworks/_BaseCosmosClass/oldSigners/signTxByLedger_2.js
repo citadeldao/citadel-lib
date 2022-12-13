@@ -1,5 +1,5 @@
 import { getHdDerivationPath } from '../../../_functions/ledger'
-import {getLedgerTransport} from "../../../../ledgerTransportProvider";
+import { getLedgerTransport } from "../../../../ledgerTransportProvider";
 
 // ledger signer (alternative version for some cosmos neworks)
 export const signTxByLedger_2 = async (

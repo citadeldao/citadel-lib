@@ -57,7 +57,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
     // privateKey signer
     if (!transaction.bytes) {
-      return signJsonByPrivateKey(transaction, privateKey, this.publicKey)
+      return await signJsonByPrivateKey(transaction, privateKey, this.publicKey)
     }
     return signTxByPrivateKey(transaction, privateKey, this.publicKey)
   }
@@ -67,7 +67,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
       return await createMessageSignatureByLedger(data, derivationPath)
     }
     // privateKey signer
-    return createMessageSignatureByPrivateKey(data, privateKey)
+    return await createMessageSignatureByPrivateKey(data, privateKey)
   }
 
   async prepareCrossNetworkTransfer(
@@ -228,8 +228,8 @@ export class BaseCosmosNetwork extends BaseNetwork {
       errors.throwError('WrongArguments', { message: 'Invalid Private Key' })
     }
   }
-
-  static async createWalletByLedger({ derivationPath }) {
+// old ledger creator
+  static async createWalletByLedger_2({ derivationPath }) {
     // prepare ledger app
     const ledgerApp = await getLedgerApp()
 
@@ -267,8 +267,8 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
   }
 
-  // alternative wallet factory (for some cosmos networks)
-  static async createWalletByLedger_2({ derivationPath }) {
+  
+  static async createWalletByLedger({ derivationPath }) {
     const transport = await getLedgerTransport()
     const { default: CosmosApp } = await import('ledger-cosmos-js')
     const cosmosApp = new CosmosApp(transport)

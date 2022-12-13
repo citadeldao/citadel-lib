@@ -2,6 +2,7 @@ import { getHdDerivationPath } from '../../../_functions/ledger'
 import { getLedgerApp } from '../signers/getLedgerApp'
 import errors from '../../../../errors'
 
+//alternative signer
 export const signTxByLedger = async (
   rawTransaction,
   derivationPath,

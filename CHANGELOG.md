@@ -1,3 +1,10 @@
+## 1.35.6 (2022-12-13)
+
+
+### Bug Fixes
+
+* add Kujira, fix createMessageSignature(ext) 2cb9dd0
+
 ## 1.35.5 (2022-12-06)
 
 

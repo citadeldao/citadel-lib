@@ -7,7 +7,7 @@ export const signJsonByPrivateKey = async (
 ) => {
   privateKey = privateKey.replace('0x', '')
 
-  const signature = createMessageSignatureByPrivateKey(
+  const signature = await createMessageSignatureByPrivateKey(
     transaction.json,
     privateKey
   )

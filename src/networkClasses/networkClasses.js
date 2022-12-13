@@ -49,6 +49,7 @@ import { JackalNetwork } from './cosmosNetworks/JackalClass'
 import { EvmosethNetwork } from './ethNetworks/EvmosethClass'
 import { TeritoriNetwork } from './cosmosNetworks/TeritoriClass'
 import { OmniflixNetwork } from './cosmosNetworks/OmniflixClass'
+import { KujiraNetwork } from './cosmosNetworks/KujiraClass'
 
 
 export const networkClasses = {
@@ -103,4 +104,5 @@ export const networkClasses = {
   evmoseth: EvmosethNetwork,
   teritori: TeritoriNetwork,
   omniflix: OmniflixNetwork,
+  kujira: KujiraNetwork
 }

@@ -1,3 +1,10 @@
+## 1.35.7 (2022-12-15)
+
+
+### Bug Fixes
+
+* add Avalache,getAuthToken fro mobile 6fb3f33
+
 ## 1.35.6 (2022-12-13)
 
 

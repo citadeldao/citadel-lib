@@ -4,6 +4,7 @@ import { externalRequests } from './externalRequests'
 import { publicRequests } from './publicRequests'
 import { formattedRequestsAdapter } from './formattedRequestsAdapter'
 import { extensionRequestsAdapter } from './extensionRequestsAdapter'
+import { getAuthToken } from './getAuthToken'
 import state from '../state'
 /************************ API MODULE **********************
  * Exports by default an object with methods for accessing the server (using axios instances)
@@ -23,6 +24,7 @@ const api = {
   externalRequests: null,
   // requests to the public api of the citadel
   publicRequests: null,
+  getAuthToken
 }
 
 export default api

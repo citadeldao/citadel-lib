@@ -27,6 +27,8 @@ import { encodeMnemonicByPassword } from './encodeMnemonicByPassword'
 import { searchExtension } from './searchExtension'
 import { getExtensionById } from './getExtensionById'
 import { getPossibleMnemonicWords } from './getPossibleMnemonicWords'
+import { getAuthToken } from './getAuthToken'
+
 
 // 'init', 'reset' and other methods that are not included in other groups
 export const general = {
@@ -58,4 +60,5 @@ export const general = {
   encodeMnemonicByPassword,
   searchExtension,
   getExtensionById,
+  getAuthToken
 }

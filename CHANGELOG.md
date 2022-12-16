@@ -1,3 +1,10 @@
+# 1.36.0 (2022-12-16)
+
+
+### Features
+
+* starname to protobuff,e-money to noprotobuff 239f736
+
 ## 1.35.8 (2022-12-16)
 
 

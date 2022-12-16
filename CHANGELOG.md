@@ -1,3 +1,10 @@
+## 1.35.8 (2022-12-16)
+
+
+### Bug Fixes
+
+* fix getAuthToken, e-money to protobuff 2d6838a
+
 ## 1.35.7 (2022-12-15)
 
 

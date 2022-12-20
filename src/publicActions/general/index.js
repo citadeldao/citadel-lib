@@ -28,6 +28,8 @@ import { searchExtension } from './searchExtension'
 import { getExtensionById } from './getExtensionById'
 import { getPossibleMnemonicWords } from './getPossibleMnemonicWords'
 import { getAuthToken } from './getAuthToken'
+import { coingeckoGetTokenMarketChart } from './coingeckoGetTokenMarketChart'
+import { coingeckoGetTokensInfo } from './coingeckoGetTokensInfo'
 
 
 // 'init', 'reset' and other methods that are not included in other groups
@@ -60,5 +62,7 @@ export const general = {
   encodeMnemonicByPassword,
   searchExtension,
   getExtensionById,
-  getAuthToken
+  getAuthToken,
+  coingeckoGetTokenMarketChart,
+  coingeckoGetTokensInfo
 }

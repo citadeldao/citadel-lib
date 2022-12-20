@@ -1,6 +1,10 @@
 import { getKTAccounts } from './getKTAccounts'
 import { getIostAccounts } from './getIostAccounts'
 import { sendCustomMessage } from './sendCustomMessage'
+import { coingeckoGetTokenMarketChart } from './coingeckoGetTokenMarketChart'
+import { coingeckoGetTokensInfo } from './coingeckoGetTokensInfo'
+
+
 
 /**
  * EXTERNAL REQUESTS:
@@ -14,4 +18,6 @@ export const externalRequests = {
   getKTAccounts,
   getIostAccounts,
   sendCustomMessage,
+  coingeckoGetTokenMarketChart,
+  coingeckoGetTokensInfo
 }

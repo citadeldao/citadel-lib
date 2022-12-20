@@ -1,3 +1,10 @@
+## 1.36.1 (2022-12-20)
+
+
+### Bug Fixes
+
+* add mobile methodt for coingecko af95c17
+
 # 1.36.0 (2022-12-16)
 
 

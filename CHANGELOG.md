@@ -1,3 +1,10 @@
+## 1.36.2 (2022-12-21)
+
+
+### Bug Fixes
+
+* fix buildCustomTransaction cb56d46
+
 ## 1.36.1 (2022-12-20)
 
 

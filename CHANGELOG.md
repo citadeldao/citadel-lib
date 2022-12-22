@@ -1,3 +1,10 @@
+## 1.36.3 (2022-12-22)
+
+
+### Bug Fixes
+
+* fix buildCustomTransaction methood 61acbf9
+
 ## 1.36.2 (2022-12-21)
 
 

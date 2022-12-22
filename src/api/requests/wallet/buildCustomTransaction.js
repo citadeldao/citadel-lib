@@ -9,7 +9,8 @@ export const buildCustomTransaction = ({ net, address, publicKey, data }) => {
     method: 'get',
     data: {
       params: {
-        data: {...data, publicKey},
+        data,
+        publicKey,
         version: state.getState('backendApiVersion'),
       },
       paramsSerializer: (params) => {

@@ -1,3 +1,10 @@
+## 1.36.4 (2022-12-27)
+
+
+### Bug Fixes
+
+* add new time interval for coingeckoGetInfo e434eff
+
 ## 1.36.3 (2022-12-22)
 
 

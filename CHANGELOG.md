@@ -1,3 +1,10 @@
+## 1.36.6 (2023-01-11)
+
+
+### Bug Fixes
+
+* add quicksilver network f28fbef
+
 ## 1.36.5 (2023-01-10)
 
 

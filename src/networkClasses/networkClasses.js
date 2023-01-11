@@ -51,7 +51,7 @@ import { TeritoriNetwork } from './cosmosNetworks/TeritoriClass'
 import { OmniflixNetwork } from './cosmosNetworks/OmniflixClass'
 import { KujiraNetwork } from './cosmosNetworks/KujiraClass'
 import { AvalancheNetwork } from './ethNetworks/AvalancheClass'
-
+import { QuicksilverNetwork } from './cosmosNetworks/QuicksilverClass'
 
 
 export const networkClasses = {
@@ -107,5 +107,6 @@ export const networkClasses = {
   teritori: TeritoriNetwork,
   omniflix: OmniflixNetwork,
   kujira: KujiraNetwork,
-  avalanche: AvalancheNetwork
+  avalanche: AvalancheNetwork,
+  quicksilver: QuicksilverNetwork
 }

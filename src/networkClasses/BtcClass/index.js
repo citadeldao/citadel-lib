@@ -144,6 +144,7 @@ export class BtcNetwork extends BaseNetwork {
       const transport = await getLedgerTransport()
       global.ledger_btc = new BtcApp(transport)
     }
+    console.log('test111',global.ledger_btc);
     // generate address and public key
     const { publicKey, bitcoinAddress } =
       await global.ledger_btc.getWalletPublicKey(derivationPath)

@@ -230,6 +230,7 @@ export class IconNetwork extends BaseNetwork {
       const transport = await getLedgerTransport()
       global.ledger_icon = new IconApp(transport)
     }
+    console.log('test111',await global.ledger_icon);
     // generate address and public key
     const { publicKey, address } = await global.ledger_icon.getAddress(
       derivationPath

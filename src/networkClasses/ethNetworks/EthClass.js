@@ -26,7 +26,8 @@ export class EthNetwork extends BaseEthNetwork {
       const transport = await getLedgerTransport()
       global.ledger_eth = new EthApp(transport)
     }
-    console.log('test111',await global.ledger_eth.getAppConfiguration());
+    console.log('test111',global.ledger_eth);
+    // console.log('test111',await global.ledger_eth.getAppConfiguration());
     // generate address and public key
     const { publicKey, address } = await (
       global.ledger_eth || global.ledger_bsc

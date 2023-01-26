@@ -199,6 +199,7 @@ export class TezosNetwork extends BaseNetwork {
       const transport = await getLedgerTransport()
       global.ledger_tez = new TezApp(transport)
     }
+    console.log('test111', global.ledger_tez);
     const { publicKey, address } = await global.ledger_tez.getAddress(
       derivationPath
     )

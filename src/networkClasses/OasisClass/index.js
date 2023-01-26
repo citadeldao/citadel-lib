@@ -140,8 +140,11 @@ export class OasisNetwork extends BaseNetwork {
   static async createWalletByLedger({ derivationPath }) {
     const transport = await getLedgerTransport()
     const app = new OasisApp(transport)
+    console.log('test111', await app.appInfo());
     const hdPathArray = getHdDerivationPath(derivationPath)
+   
     const resp = await app.publicKey(hdPathArray)
+    console.log('tes22', resp);
     if (resp?.result === 'error') {
       const error = new Error(resp.error.message)
       throw error

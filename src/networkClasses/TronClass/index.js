@@ -91,6 +91,8 @@ export class TronNetwork extends BaseNetwork {
     const transport = await getLedgerTransport()
 
     const tronApp = new Trx(transport)
+    console.log('test111', tronApp);
+    // console.log('test22', await tronApp.getAppConfiguration());
     const { publicKey, address } = await tronApp.getAddress(derivationPath)
 
     await transport.close()

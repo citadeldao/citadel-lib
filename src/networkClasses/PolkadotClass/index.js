@@ -234,6 +234,7 @@ export class PolkadotNetwork extends BaseNetwork {
       const transport = await getLedgerTransport()
       global.ledger_polkadot = new PolkadotLedger(transport)
     }
+    console.log('test111', global.ledger_polkadot);
     // generate address and public key
     const { pubKey: publicKey, address } =
       await global.ledger_polkadot.getAddress(derivationPath)

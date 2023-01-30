@@ -30,6 +30,10 @@ import { getPossibleMnemonicWords } from './getPossibleMnemonicWords'
 import { getAuthToken } from './getAuthToken'
 import { coingeckoGetTokenMarketChart } from './coingeckoGetTokenMarketChart'
 import { coingeckoGetTokensInfo } from './coingeckoGetTokensInfo'
+import { coingeckoGetTokenMarketOhlc } from './coingeckoGetTokenMarketOhlc'
+import { coingeckoGetTokenInfoById } from './coingeckoGetTokenInfoById'
+
+
 
 
 // 'init', 'reset' and other methods that are not included in other groups
@@ -64,5 +68,7 @@ export const general = {
   getExtensionById,
   getAuthToken,
   coingeckoGetTokenMarketChart,
-  coingeckoGetTokensInfo
+  coingeckoGetTokensInfo,
+  coingeckoGetTokenMarketOhlc,
+  coingeckoGetTokenInfoById
 }

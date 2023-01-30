@@ -3,12 +3,12 @@ import {
   WALLET_TYPES,
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../../constants'
-import { IconApp } from '../ledgerApp'
+import { IconApp, ledgerErrorHandler } from '../ledgerApp'
 import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export async function createMessageSignature(
   message,
-  { privateKey, derivationPath, type }
+  { privateKey, derivationPath, type, rightApp }
 ) {
   // privateKey signers
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
@@ -23,16 +23,25 @@ export async function createMessageSignature(
   // ledger signers
   if (type === WALLET_TYPES.LEDGER) {
     // add global ledger app to avoid ledger reconnect error
+    let transport = null
     if (!global.ledger_icon) {
-      const transport = await getLedgerTransport()
+      transport = await getLedgerTransport()
       global.ledger_icon = new IconApp(transport)
     }
 
-    const { signedRawTxBase64 } = await global.ledger_icon.signTransaction(
-      derivationPath,
-      message
-    )
-    const formatted = Buffer.from(signedRawTxBase64, 'base64').slice(0, 64)
+    let res
+    try{
+      res = await global.ledger_icon.signTransaction(
+        derivationPath,
+        message
+      )
+    }catch(error){
+      ledgerErrorHandler({ error, rightApp })
+    }finally{
+      if(global.ledger_icon) global.ledger_icon = null
+      if(transport) await transport.close()
+    }
+    const formatted = Buffer.from(res.signedRawTxBase64, 'base64').slice(0, 64)
 
     return Buffer.from(formatted).toString('hex')
   }

@@ -114,3 +114,42 @@ export const KEPLR = {
     REJECTED: 'Request rejected',
   },
 }
+
+
+export const LEDGER_ERRORS = {
+  COSMOS: {
+    EMPTY_LEDGER_APP: 'BOLOS',
+    WRONG_APP_CODE: '36864'
+  },
+  ETH: { 
+    WRONG_APP_CODES: [28160, 27904, 28437, 27157, 25873]
+  },
+  ICON: { 
+    WRONG_APP_CODES: [28160, 27904, 27157, 25871]
+  },
+  OASIS: {
+    EMPTY_LEDGER_APP: 'BOLOS',
+    WRONG_APP_CODE: '36864'
+  },
+  POLKADOT: { 
+    WRONG_APP_CODES: [28160, 28161]
+  },
+  TEZOS: { 
+    WRONG_APP_CODES: [28160, 28161]
+  },
+  TRON: { 
+    WRONG_APP_CODES: [28160, 27157, 27904, 28437, 25873]
+  },
+  BTC: { 
+    WRONG_APP_CODES: [28160, 27904, 25873]
+  },
+} 
+
+
+export const ERROR_CODES = {
+  UNKNOWN_ERROR: 901,
+  //starts from 200
+  LEDGER: {
+    WRONG_APP: 200,
+  }
+}

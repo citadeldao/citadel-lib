@@ -7,8 +7,10 @@ import { signTxByPrivateKeyOrMnemonic } from './signers/signTxByPrivateKeyOrMnem
 import api from '../../api'
 import errors from '../../errors'
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
-import { DELEGATION_TYPES, WALLET_TYPES } from '../../constants'
-import {getLedgerTransport} from "../../ledgerTransportProvider";
+import { DELEGATION_TYPES, WALLET_TYPES, CACHE_NAMES } from '../../constants'
+import { getLedgerTransport } from "../../ledgerTransportProvider";
+import { ledgerErrorHandler } from "./signers/functions"
+import storage from '../../storage'
 
 export class PolkadotNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -47,7 +49,10 @@ export class PolkadotNetwork extends BaseNetwork {
       (!rawTransaction.metadata && rawTransaction.transaction) || rawTransaction
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      return await signTxByLedger(transaction, derivationPath, this.address)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return await signTxByLedger(transaction, derivationPath, this.address, rightApp)
     }
     // mnemonic / privateKey signer (mnemonic can be used as private key fot sign)
     return signTxByPrivateKeyOrMnemonic(
@@ -230,19 +235,26 @@ export class PolkadotNetwork extends BaseNetwork {
     // init polkadot
     await cryptoWaitReady()
     // add global ledger app to avoid ledger reconnect error
+    let transport
     if (!global.ledger_polkadot) {
-      const transport = await getLedgerTransport()
+      transport = await getLedgerTransport()
       global.ledger_polkadot = new PolkadotLedger(transport)
     }
-    console.log('test111', global.ledger_polkadot);
     // generate address and public key
-    const { pubKey: publicKey, address } =
-      await global.ledger_polkadot.getAddress(derivationPath)
+    let res
+    try{
+      res = await global.ledger_polkadot.getAddress(derivationPath)
+    }catch(error){
+      ledgerErrorHandler({ error, rightApp: this.ledger})
+    }finally{
+      if(global.ledger_polkadot) global.ledger_polkadot = null
+      if(transport) await transport.close()
+    }
 
     return {
       net: this.net,
-      address,
-      publicKey,
+      address: res.address,
+      publicKey: res.pubKey,
       privateKey: null,
       derivationPath,
       type: WALLET_TYPES.LEDGER,

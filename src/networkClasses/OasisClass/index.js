@@ -1,12 +1,13 @@
 import api from '../../api'
 import { BaseNetwork } from '../_BaseNetworkClass'
-import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
+import { WALLET_TYPES, DELEGATION_TYPES, CACHE_NAMES } from '../../constants'
 import OasisApp from '@oasisprotocol/ledger'
 import { getHdDerivationPath } from '../_functions/ledger'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
-import { tranformTransaction } from './signers/functions'
-import {getLedgerTransport} from "../../ledgerTransportProvider";
+import { tranformTransaction, ledgerErrorHandler } from './signers/functions'
+import { getLedgerTransport } from "../../ledgerTransportProvider";
+import storage from '../../storage'
 
 export class OasisNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -55,7 +56,10 @@ export class OasisNetwork extends BaseNetwork {
       rawTransaction.transaction || rawTransaction
     )
     if (this.type === WALLET_TYPES.LEDGER) {
-      return await signTxByLedger(transaction, derivationPath, this.publicKey)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return await signTxByLedger(transaction, derivationPath, this.publicKey, rightApp)
     }
     return signTxByPrivateKey(transaction, privateKey)
   }
@@ -65,7 +69,10 @@ export class OasisNetwork extends BaseNetwork {
     let signedTx
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      signedTx = await signTxByLedger(formatedTx, derivationPath, this.publicKey)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      signedTx = await signTxByLedger(formatedTx, derivationPath, this.publicKey, rightApp)
     } else {
       // privateKey signer
       signedTx = await signTxByPrivateKey(formatedTx, privateKey)
@@ -139,15 +146,14 @@ export class OasisNetwork extends BaseNetwork {
 
   static async createWalletByLedger({ derivationPath }) {
     const transport = await getLedgerTransport()
-    const app = new OasisApp(transport)
-    console.log('test111', await app.appInfo());
+    const oasisApp = new OasisApp(transport)
     const hdPathArray = getHdDerivationPath(derivationPath)
    
-    const resp = await app.publicKey(hdPathArray)
-    console.log('tes22', resp);
-    if (resp?.result === 'error') {
-      const error = new Error(resp.error.message)
-      throw error
+    const resp = await oasisApp.publicKey(hdPathArray)
+    if (!resp?.pk) {
+      const appInfo = await oasisApp.appInfo()
+      await transport.close()
+      ledgerErrorHandler({ appInfo, resp, rightApp: this.ledger})
     }
     // dynamic import of large module (for fast init)
     const { staking } = await import('@oasisprotocol/client')

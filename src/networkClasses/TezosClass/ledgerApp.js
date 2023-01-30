@@ -1,6 +1,8 @@
 import { TezosPrefix } from './functions/tezosFunctions'
 import blakejs from 'blakejs'
 import { base58checkEncode, splitPath } from '../_functions/crypto'
+import { LEDGER_ERRORS, ERROR_CODES } from '../../constants'
+import errors from '../../errors'
 // const Curve = {
 //   ED25519: 0x00,
 //   SECP256K1: 0x01,
@@ -202,3 +204,20 @@ export class TezApp {
     return { major, minor, patch, bakingApp }
   }
 }
+
+export function ledgerErrorHandler({ error, rightApp }) {
+    if(LEDGER_ERRORS.TEZOS.WRONG_APP_CODES.includes(+error.statusCode)){
+      errors.throwError('LedgerError', {
+        message: error.error_message,
+        code: ERROR_CODES.LEDGER.WRONG_APP,
+        data: {
+          rightApp: rightApp[0]
+        }
+      })
+    }else{
+      errors.throwError('LedgerError', {
+        message: error.error_message,
+        code: ERROR_CODES.UNKNOWN_ERROR,
+      })
+    }
+  }

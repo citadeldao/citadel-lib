@@ -10,12 +10,14 @@ import {
   createMessageSignatureByLedger,
   signJsonByPrivateKey,
 } from './signers'
-import { WALLET_TYPES, DELEGATION_TYPES } from '../../../constants'
+import { WALLET_TYPES, DELEGATION_TYPES, CACHE_NAMES } from '../../../constants'
 import errors from '../../../errors'
 import { getHdDerivationPath, getBech32FromPK } from '../../_functions/ledger'
 import { getLedgerApp } from './signers/getLedgerApp'
 import { debugConsole } from '../../../helpers/debugConsole'
-import {getLedgerTransport} from "../../../ledgerTransportProvider";
+import { getLedgerTransport } from "../../../ledgerTransportProvider";
+import { ledgerErrorHandler } from "./functions"
+import storage from '../../../storage'
 
 export class BaseCosmosNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -53,7 +55,10 @@ export class BaseCosmosNetwork extends BaseNetwork {
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      return await signTxByLedger(transaction, derivationPath, this.publicKey)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return await signTxByLedger(transaction, derivationPath, this.publicKey, null, rightApp)
     }
     // privateKey signer
     if (!transaction.bytes) {
@@ -65,7 +70,10 @@ export class BaseCosmosNetwork extends BaseNetwork {
   async createMessageSignature(data, { privateKey, derivationPath }) {
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      return await createMessageSignatureByLedger(data, derivationPath)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return await createMessageSignatureByLedger(data, derivationPath, rightApp)
     }
     // privateKey signer
     return await createMessageSignatureByPrivateKey(data, privateKey)
@@ -270,27 +278,19 @@ export class BaseCosmosNetwork extends BaseNetwork {
 transport
   
   static async createWalletByLedger({ derivationPath }) {
+    
     const transport = await getLedgerTransport()
-    console.log('test111',transport);
     const { default: CosmosApp } = await import('ledger-cosmos-js')
-    const command = new Uint8Array([0xE0, 0x06, 0x00, 0x00, 0x00]);
-    const res = await transport.exchange(command)
-    console.log(`test Opened application targetId: ${res[0]}`,res)
     const cosmosApp = new CosmosApp(transport)
-    console.log('test222',cosmosApp);
-    console.log('testappInfo',await cosmosApp.appInfo());
-    console.log('testdeviceInfo',await cosmosApp.deviceInfo());
     
     const hdPathArray = getHdDerivationPath(derivationPath)
     const resp = await cosmosApp.publicKey(hdPathArray)
-    console.log('test333',resp);
-    if (!resp?.compressed_pk || resp?.return_code !== 0x9000) {
-      const error = new Error(resp.error_message)
-      error.code = resp.return_code
-      throw error
+    if (!resp?.compressed_pk) {
+      const appInfo = await cosmosApp.appInfo()
+      await transport.close()
+      ledgerErrorHandler({ appInfo, resp, rightApp: this.ledger})
     }
-    // TO Do
-    console.log('testgetBech32FromPK',await cosmosApp.getAddressAndPubKey(hdPathArray,this.netPrefix,));
+    // TODO cahnge to cosmosApp.getBech32FromPK
     const address = await getBech32FromPK(
       this.netPrefix,
       Buffer.from(resp.compressed_pk.buffer)

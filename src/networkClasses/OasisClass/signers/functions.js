@@ -1,3 +1,6 @@
+import { LEDGER_ERRORS, ERROR_CODES } from '../../../constants'
+import errors from '../../../errors'
+
 export const generateContext = async () => {
   // dynamic import of large module (for fast init)
   const { signature, client } = await import('@oasisprotocol/client')
@@ -45,4 +48,22 @@ export const tranformTransaction = async (transaction) => {
   const { misc } = await import('@oasisprotocol/client')
   let tx = await misc.toCBOR(transaction)
   return tx
+}
+
+export function ledgerErrorHandler({ appInfo, resp, rightApp }) {
+  if(appInfo.return_code == LEDGER_ERRORS.OASIS.WRONG_APP_CODE){
+    errors.throwError('LedgerError', {
+      message: resp.error_message,
+      code: ERROR_CODES.LEDGER.WRONG_APP,
+      data: {
+        currentApp: appInfo.appName === LEDGER_ERRORS.OASIS.EMPTY_LEDGER_APP ? null : appInfo.appName,
+        rightApp: rightApp[0]
+      }
+    })
+  }else{
+    errors.throwError('LedgerError', {
+      message: resp.error_message,
+      code: ERROR_CODES.UNKNOWN_ERROR,
+    })
+  }
 }

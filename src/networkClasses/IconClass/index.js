@@ -3,7 +3,7 @@ import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import BigNumber from 'bignumber.js'
 import api from '../../api'
-import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
+import { WALLET_TYPES, DELEGATION_TYPES, CACHE_NAMES } from '../../constants'
 import errors from '../../errors'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import { fromPrivateKey } from './functions/fromPrivateKey'
@@ -14,7 +14,9 @@ import {
 } from './signers'
 import { IconApp } from './ledgerApp'
 import { debugConsole } from '../../helpers/debugConsole'
-import {getLedgerTransport} from "../../ledgerTransportProvider";
+import { getLedgerTransport } from "../../ledgerTransportProvider";
+import { ledgerErrorHandler } from "./ledgerApp"
+import storage from '../../storage'
 
 export class IconNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -33,16 +35,19 @@ export class IconNetwork extends BaseNetwork {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     if (this.type === WALLET_TYPES.LEDGER) {
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
       if (Array.isArray(transaction)) {
         // sign sequentially all transactions before send
         const signedTransactions = []
         for (const transactionItem of transaction) {
-          const signedTx = await signTxByLedger(transactionItem, derivationPath)
+          const signedTx = await signTxByLedger(transactionItem, derivationPath, rightApp)
           signedTransactions.push(signedTx)
         }
         return signedTransactions
       } else {
-        return await signTxByLedger(transaction, derivationPath)
+        return await signTxByLedger(transaction, derivationPath, rightApp)
       }
     }
 
@@ -55,10 +60,14 @@ export class IconNetwork extends BaseNetwork {
   }
 
   createMessageSignature(data, { privateKey, derivationPath }) {
+    //rigth app for ledger
+    const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
     return createMessageSignature(data, {
       privateKey,
       derivationPath,
       type: this.type,
+      rightApp
     })
   }
 
@@ -226,20 +235,29 @@ export class IconNetwork extends BaseNetwork {
 
   static async createWalletByLedger({ derivationPath }) {
     // add global icon ledger app to avoid ledger reconnect error
+    let transport = null
     if (!global.ledger_icon) {
-      const transport = await getLedgerTransport()
+      transport = await getLedgerTransport()
       global.ledger_icon = new IconApp(transport)
     }
-    console.log('test111',await global.ledger_icon);
-    // generate address and public key
-    const { publicKey, address } = await global.ledger_icon.getAddress(
-      derivationPath
-    )
+    
+    let res
+    try{
+      // generate address and public key
+      res = await global.ledger_icon.getAddress(
+        derivationPath
+      )
+    }catch(error){
+      ledgerErrorHandler({ error, rightApp: this.ledger})
+    }finally{
+      if(global.ledger_icon) global.ledger_icon = null
+      if(transport) await transport.close()
+    }
 
     return {
       net: this.net,
-      address: address.toString(),
-      publicKey,
+      address: res.address.toString(),
+      publicKey: res.publicKey,
       privateKey: null,
       derivationPath,
       type: WALLET_TYPES.LEDGER,

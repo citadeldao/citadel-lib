@@ -1,3 +1,10 @@
+## 1.36.7 (2023-01-30)
+
+
+### Bug Fixes
+
+* add coingecko methods for mobile cf05e2a
+
 ## 1.36.6 (2023-01-11)
 
 

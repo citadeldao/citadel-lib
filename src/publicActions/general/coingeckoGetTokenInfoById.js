@@ -10,7 +10,7 @@ import api from '../../api'
  * @example
  *
  * const response = await citadel.coingeckoGetTokenInfoById(
- *  { 
+ *  {    id: 'ethereum',
  *       localization:true, 
  *       tickers:true, 
  *       market_data:true, 

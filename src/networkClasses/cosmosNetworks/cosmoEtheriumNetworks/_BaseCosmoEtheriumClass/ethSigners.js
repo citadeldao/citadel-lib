@@ -1,4 +1,5 @@
 import {getLedgerTransport} from "../../../../ledgerTransportProvider";
+import { ledgerErrorHandler } from "../../../ethNetworks/_BaseEthClass/functions"
 
 const keccak256 = require('keccak256')
 
@@ -32,21 +33,34 @@ const messageHash = async (message) => {
 export const signTxByLedger = async (
   rawTransaction,
   derivationPath,
-  publicKey
+  publicKey,
+  rightApp
 ) => {
+  let transport = null
   if (!global.ledger_eth && !global.ledger_bsc) {
-    const transport = await getLedgerTransport()
+    transport = await getLedgerTransport()
     // dynamic import of large module (for fast init)
     const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
     global.ledger_eth = new EthApp(transport)
   }
-  const { v, r, s } = await global.ledger_eth.signEIP712HashedMessage(
-    derivationPath,
-    Buffer.from(await domainHash(rawTransaction)).toString('hex'),
-    Buffer.from(await messageHash(rawTransaction)).toString('hex')
-  )
+  
+  let resp
+  try{
+      resp = await global.ledger_eth.signEIP712HashedMessage(
+      derivationPath,
+      Buffer.from(await domainHash(rawTransaction)).toString('hex'),
+      Buffer.from(await messageHash(rawTransaction)).toString('hex')
+    )
+  }catch(error){
+    ledgerErrorHandler({ error, rightApp })
+  }finally{
+    if(global.ledger_eth) global.ledger_eth = null
+    if(global.ledger_bsc) global.ledger_bsc = null
+    if(transport) await transport.close()
+  }
+  
 
-  const combined = `${r}${s}${v.toString(16)}`
+  const combined = `${resp.r}${resp.s}${resp.v.toString(16)}`
   const signature = combined.startsWith('0x') ? combined.slice(2) : combined
 
   return {

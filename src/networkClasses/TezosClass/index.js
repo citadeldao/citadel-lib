@@ -2,7 +2,7 @@ import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
 import api from '../../api'
 import base58check from 'bs58check'
-import { WALLET_TYPES } from '../../constants'
+import { WALLET_TYPES, CACHE_NAMES } from '../../constants'
 import errors from '../../errors'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import {
@@ -14,12 +14,13 @@ import {
 import { TezosPrefix, walletFromPrivate } from './functions/tezosFunctions'
 import { TezosOneseed } from './functions/generate'
 import * as TezosUtil from './functions/utils'
-import { TezApp } from './ledgerApp'
+import { TezApp, ledgerErrorHandler } from './ledgerApp'
 import BigNumber from 'bignumber.js'
 import { getType } from '../../helpers/checkArguments'
 import { prepareTrezorConnection } from '../_functions/trezor'
 import { debugConsole } from '../../helpers/debugConsole'
-import {getLedgerTransport} from "../../ledgerTransportProvider";
+import { getLedgerTransport } from "../../ledgerTransportProvider";
+import storage from '../../storage'
 
 export class TezosNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -69,7 +70,10 @@ export class TezosNetwork extends BaseNetwork {
   async signTransaction(rawTransaction, { privateKey, derivationPath }) {
     const transaction = rawTransaction.transaction || rawTransaction
     if (this.type === WALLET_TYPES.LEDGER) {
-      return await signTxByLedger(transaction, derivationPath)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return await signTxByLedger(transaction, derivationPath, rightApp)
     }
     if (this.type === WALLET_TYPES.TREZOR) {
       return await signTxByTrezor(transaction, derivationPath)
@@ -79,10 +83,14 @@ export class TezosNetwork extends BaseNetwork {
   }
 
   createMessageSignature(data, { privateKey, derivationPath }) {
+    //rigth app for ledger
+    const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
     return createMessageSignature(data, {
       privateKey,
       derivationPath,
       type: this.type,
+      rightApp
     })
   }
 
@@ -195,18 +203,26 @@ export class TezosNetwork extends BaseNetwork {
   }
 
   static async createWalletByLedger({ derivationPath }) {
+    let transport
     if (!global.ledger_tez) {
-      const transport = await getLedgerTransport()
+      transport = await getLedgerTransport()
       global.ledger_tez = new TezApp(transport)
     }
-    const { publicKey, address } = await global.ledger_tez.getAddress(
-      derivationPath
-    )
 
+    let res
+    try{
+      res = await global.ledger_tez.getAddress( derivationPath )
+    }catch(error){
+      ledgerErrorHandler({ error, rightApp: this.ledger})
+    }finally{
+      if(global.ledger_tez) global.ledger_tez = null
+      if(transport) await transport.close()
+    }
+    
     return {
       net: this.net,
-      address: address.toString(),
-      publicKey: base58check.encode(publicKey),
+      address: res.address.toString(),
+      publicKey: base58check.encode(res.publicKey),
       privateKey: null,
       derivationPath,
       type: WALLET_TYPES.LEDGER,

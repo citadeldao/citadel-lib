@@ -1,14 +1,17 @@
 import PolkadotLedger from '@ledgerhq/hw-app-polkadot'
-import errors from '../../../errors'
-import {getLedgerTransport} from "../../../ledgerTransportProvider";
+// import errors from '../../../errors'
+import { getLedgerTransport } from "../../../ledgerTransportProvider";
+import { ledgerErrorHandler } from "./functions"
 
 export const signTxByLedger = async (
   rawTransaction,
   derivationPath,
-  address
+  address,
+  rightApp
 ) => {
+  let transport
   if (!global.ledger_polkadot) {
-    const transport = await getLedgerTransport()
+    transport = await getLedgerTransport()
     global.ledger_polkadot = new PolkadotLedger(transport)
   }
   // dynamic import of large module (for fast init)
@@ -27,17 +30,31 @@ export const signTxByLedger = async (
   const payloadU8a = payload.toU8a({ method: true })
   const signingPayloadU8a =
     payloadU8a.length > 256 ? registry.hash(payloadU8a) : payloadU8a
-  const response = await global.ledger_polkadot.sign(
-    derivationPath,
-    signingPayloadU8a
-  )
-
-  if (!response.signature) {
-    errors.throwError('LedgerError', {
-      message: response.error_message,
-      code: response.return_code,
-    })
+  
+  let response
+  try {
+      response = await global.ledger_polkadot.sign(
+      derivationPath,
+      signingPayloadU8a
+    )
+  } catch (error) {
+    // TODO: check correct error handling
+    // const error = new Error(err.message)
+    // error.code = err.statusCode
+    // throw error
+    ledgerErrorHandler({ error, rightApp })
+  }finally{
+    if(global.ledger_polkadot) global.ledger_polkadot = null
+    if(transport) await transport.close()
   }
+  
+
+  // if (!response.signature) {
+  //   errors.throwError('LedgerError', {
+  //     message: response.error_message,
+  //     code: response.return_code,
+  //   })
+  // }
   // dynamic import of large module (for fast init)
   const { u8aToHex } = await import('@polkadot/util')
 

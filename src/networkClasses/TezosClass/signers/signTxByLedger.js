@@ -1,11 +1,12 @@
-import { TezApp } from '../ledgerApp'
-import { debugConsole } from '../../../helpers/debugConsole'
-import {getLedgerTransport} from "../../../ledgerTransportProvider";
+import { TezApp, ledgerErrorHandler } from '../ledgerApp'
+// import { debugConsole } from '../../../helpers/debugConsole'
+import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
-export const signTxByLedger = async (rawTransaction, derivationPath) => {
+export const signTxByLedger = async (rawTransaction, derivationPath, rightApp) => {
   // add globa ledger app to avoid ledger reconnect error
+  let transport
   if (!global.ledger_tez) {
-    const transport = await getLedgerTransport()
+    transport = await getLedgerTransport()
     global.ledger_tez = new TezApp(transport)
   }
 
@@ -18,7 +19,10 @@ export const signTxByLedger = async (rawTransaction, derivationPath) => {
     )
 
     return { sopbytes: opbytes + signature }
-  } catch (err) {
-    debugConsole.error(err)
+  } catch(error){
+    ledgerErrorHandler({ error, rightApp})
+  }finally{
+    if(global.ledger_tez) global.ledger_tez = null
+    if(transport) await transport.close()
   }
 }

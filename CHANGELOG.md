@@ -1,3 +1,10 @@
+## 1.37.1 (2023-02-01)
+
+
+### Bug Fixes
+
+* add icon no app case code 87ee61e
+
 # 1.37.0 (2023-02-01)
 
 

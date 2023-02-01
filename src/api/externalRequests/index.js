@@ -3,6 +3,8 @@ import { getIostAccounts } from './getIostAccounts'
 import { sendCustomMessage } from './sendCustomMessage'
 import { coingeckoGetTokenMarketChart } from './coingeckoGetTokenMarketChart'
 import { coingeckoGetTokensInfo } from './coingeckoGetTokensInfo'
+import { coingeckoGetTokenInfoById } from './coingeckoGetTokenInfoById'
+import { coingeckoGetTokenMarketOhlc } from './coingeckoGetTokenMarketOhlc'
 
 
 
@@ -19,5 +21,7 @@ export const externalRequests = {
   getIostAccounts,
   sendCustomMessage,
   coingeckoGetTokenMarketChart,
-  coingeckoGetTokensInfo
+  coingeckoGetTokensInfo,
+  coingeckoGetTokenInfoById,
+  coingeckoGetTokenMarketOhlc
 }

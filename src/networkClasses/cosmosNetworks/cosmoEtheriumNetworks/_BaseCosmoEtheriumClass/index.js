@@ -7,7 +7,8 @@ import {
 import { BaseEthNetwork } from '../../../ethNetworks/_BaseEthClass'
 import { EthNetwork } from '../../../ethNetworks/EthClass'
 import { getCosmosAddressFromEthAddress } from './functions'
-import { WALLET_TYPES } from '../../../../constants'
+import { WALLET_TYPES, CACHE_NAMES } from '../../../../constants'
+import storage from '../../../../storage'
 
 export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   constructor(walletInfo) {
@@ -18,7 +19,10 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     const transaction = rawTransaction.transaction || rawTransaction
     // own ledger signature
     if (this.type === WALLET_TYPES.LEDGER) {
-      return signTxByLedger(transaction, derivationPath, this.publicKey)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return signTxByLedger(transaction, derivationPath, this.publicKey, rightApp)
     }
     // etherium privateKey signer (etherium class uses a different implementation)
     return signTxByPrivateKey(transaction, this.publicKey, privateKey)
@@ -27,10 +31,14 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
   async createMessageSignature(data, { privateKey, derivationPath }) {
     // parent's ledger signature
     if (this.type === WALLET_TYPES.LEDGER) {
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
       const signature = await signTxByLedger(
         data.typedMessage,
         derivationPath,
-        this.publicKey
+        this.publicKey,
+        rightApp
       )
       return signature.signature.slice(0, 2) === '0x'
         ? signature.signature

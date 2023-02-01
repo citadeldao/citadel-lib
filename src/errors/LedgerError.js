@@ -5,5 +5,6 @@ export class LedgerError extends LibraryError {
     super({ message: options.message })
     this.name = 'LedgerError'
     this.code = options.code
+    this.data = options?.data || null
   }
 }

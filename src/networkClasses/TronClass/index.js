@@ -1,9 +1,11 @@
 import { BaseNetwork } from '../_BaseNetworkClass'
 import Trx from '@ledgerhq/hw-app-trx'
 import { getPubKeyFromPriKey, hexStr2byteArray } from './signers/functions'
-import { WALLET_TYPES } from '../../constants'
+import { WALLET_TYPES, CACHE_NAMES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
-import {getLedgerTransport} from "../../ledgerTransportProvider";
+import { getLedgerTransport } from "../../ledgerTransportProvider";
+import { ledgerErrorHandler } from "./signers/functions"
+import storage from '../../storage'
 
 export class TronNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -21,7 +23,10 @@ export class TronNetwork extends BaseNetwork {
   async signTransaction(rawTransaction, { privateKey, derivationPath }) {
     const transaction = rawTransaction.transaction || rawTransaction
     if (this.type === WALLET_TYPES.LEDGER) {
-      return await signTxByLedger(transaction, derivationPath, this.publicKey)
+       //rigth app for ledger
+       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return await signTxByLedger(transaction, derivationPath, rightApp)
     }
     return signTxByPrivateKey(transaction, privateKey)
   }
@@ -89,15 +94,20 @@ export class TronNetwork extends BaseNetwork {
 
   static async createWalletByLedger({ derivationPath }) {
     const transport = await getLedgerTransport()
-
     const tronApp = new Trx(transport)
-    const { publicKey, address } = await tronApp.getAddress(derivationPath)
-
-    await transport.close()
+    
+    let res
+    try{
+      res = await tronApp.getAddress(derivationPath)
+    }catch(error){
+      ledgerErrorHandler({ error, rightApp: this.ledger})
+    }finally{
+      if(transport) await transport.close()
+    }
     return {
       net: this.net,
-      address,
-      publicKey,
+      address: res.address,
+      publicKey: res.publicKey,
       privateKey: null,
       derivationPath,
       type: WALLET_TYPES.LEDGER,

@@ -1,3 +1,6 @@
+import { LEDGER_ERRORS, ERROR_CODES } from '../../../constants'
+import errors from '../../../errors'
+
 export async function getPubKeyFromPriKey(priKeyBytes) {
   const { default: elliptic } = await import('elliptic')
   const ec = new elliptic.ec('secp256k1')
@@ -81,3 +84,20 @@ export function hexChar2byte(c) {
   if (typeof d === 'number') return d
   else throw new Error('The passed hex char is not a valid hex char')
 }
+
+export function ledgerErrorHandler({ error, rightApp }) {
+    if(LEDGER_ERRORS.TRON.WRONG_APP_CODES.includes(+error.statusCode)){
+      errors.throwError('LedgerError', {
+        message: error.error_message,
+        code: ERROR_CODES.LEDGER.WRONG_APP,
+        data: {
+          rightApp: rightApp[0]
+        }
+      })
+    }else{
+      errors.throwError('LedgerError', {
+        message: error.error_message,
+        code: ERROR_CODES.UNKNOWN_ERROR,
+      })
+    }
+  }

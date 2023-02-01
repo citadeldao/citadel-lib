@@ -5,13 +5,13 @@ import {
   WALLET_TYPES,
   PRIVATE_KEY_SIGNER_WALLET_TYPES,
 } from '../../../constants'
-import { TezApp } from '../ledgerApp'
+import { TezApp, ledgerErrorHandler } from '../ledgerApp'
 import { signTxByTrezor } from './signTxByTrezor'
-import {getLedgerTransport} from "../../../ledgerTransportProvider";
+import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
 export const createMessageSignature = async (
   data,
-  { privateKey, derivationPath, type }
+  { privateKey, derivationPath, type, rightApp }
 ) => {
   // privateKey signer
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
@@ -24,18 +24,25 @@ export const createMessageSignature = async (
 
   // ledger signer
   if (type === WALLET_TYPES.LEDGER) {
+    let transport 
     if (!global.ledger_tez) {
-      const transport = await getLedgerTransport()
+      transport = await getLedgerTransport()
       global.ledger_tez = new TezApp(transport)
     }
-
-    const { signature } = await global.ledger_tez.signOperation(
-      derivationPath,
-      `03${Buffer.from(JSON.stringify(data)).toString('hex')}`
-    )
-
-    // @ts-ignore
-    return signature
+    try{
+      const { signature } = await global.ledger_tez.signOperation(
+        derivationPath,
+        `03${Buffer.from(JSON.stringify(data)).toString('hex')}`
+      )
+  
+      // @ts-ignore
+      return signature
+    }catch(error){
+      ledgerErrorHandler({ error, rightApp})
+    }finally{
+      if(global.ledger_tez) global.ledger_tez = null
+      if(transport) await transport.close()
+    }
   }
   // trezor signer
   if (type === WALLET_TYPES.TREZOR) {

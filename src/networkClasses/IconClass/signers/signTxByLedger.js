@@ -1,20 +1,31 @@
 import { generateHashKey, toRawTransaction } from './functions'
-import { IconApp } from '../ledgerApp'
-import {getLedgerTransport} from "../../../ledgerTransportProvider";
+import { IconApp, ledgerErrorHandler } from '../ledgerApp'
+import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
-export const signTxByLedger = async (rawTransaction, derivationPath) => {
+export const signTxByLedger = async (rawTransaction, derivationPath, rightApp) => {
   // add global ledger app to avoid ledger reconnect error
+  let transport = null
   if (!global.ledger_icon) {
-    const transport = await getLedgerTransport()
+    transport = await getLedgerTransport()
     global.ledger_icon = new IconApp(transport)
   }
+  let res
+  let rawTx
+  try{
+    // generate address and public key
+    rawTx = await toRawTransaction(rawTransaction)
+    const phraseToSign = generateHashKey(rawTx)
+    res = await global.ledger_icon.signTransaction(
+      derivationPath,
+      phraseToSign
+    )
+  }catch(error){
+    ledgerErrorHandler({ error, rightApp })
+  }finally{
+    if(global.ledger_icon) global.ledger_icon = null
+    if(transport) await transport.close()
+  }
+  
 
-  const rawTx = await toRawTransaction(rawTransaction)
-  const phraseToSign = generateHashKey(rawTx)
-  const { signedRawTxBase64 } = await global.ledger_icon.signTransaction(
-    derivationPath,
-    phraseToSign
-  )
-
-  return { ...rawTx, signature: signedRawTxBase64 }
+  return { ...rawTx, signature: res.signedRawTxBase64 }
 }

@@ -2,11 +2,13 @@ import errors from '../../errors'
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { BaseNetwork } from '../_BaseNetworkClass'
-import { WALLET_TYPES } from '../../constants'
+import { WALLET_TYPES, CACHE_NAMES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger, signTxByTrezor } from './signers'
 import { prepareTrezorConnection } from '../_functions/trezor'
 import { bip32PublicToEthereumPublic } from '../_functions/crypto'
-import {getLedgerTransport} from "../../ledgerTransportProvider";
+import { getLedgerTransport } from "../../ledgerTransportProvider";
+import storage from '../../storage'
+import { ledgerErrorHandler } from "./signers/functions"
 
 export class BtcNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -26,7 +28,10 @@ export class BtcNetwork extends BaseNetwork {
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
-      return await signTxByLedger(transaction, derivationPath)
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+
+      return await signTxByLedger(transaction, derivationPath, rightApp)
     }
     // trezor signer
     if (this.type === WALLET_TYPES.TREZOR) {
@@ -140,18 +145,28 @@ export class BtcNetwork extends BaseNetwork {
     // dynamic import of large module (for fast init)
     const { default: BtcApp } = await import('@ledgerhq/hw-app-btc')
     // add global btc ledger app to avoid ledger reconnect error
+    let transport
     if (!global.ledger_btc) {
-      const transport = await getLedgerTransport()
+      transport = await getLedgerTransport()
       global.ledger_btc = new BtcApp(transport)
     }
-    // generate address and public key
-    const { publicKey, bitcoinAddress } =
-      await global.ledger_btc.getWalletPublicKey(derivationPath)
+    
+    let res
+    try{
+      // generate address and public key
+      res = await global.ledger_btc.getWalletPublicKey(derivationPath)
+    }catch(error){
+      ledgerErrorHandler({ error, rightApp: this.ledger})
+    }finally{
+      if(global.ledger_btc) global.ledger_btc = null
+      if(transport) await transport.close()
+    }
+    
 
     return {
       net: this.net,
-      address: bitcoinAddress,
-      publicKey,
+      address: res.bitcoinAddress,
+      publicKey: res.publicKey,
       privateKey: null,
       derivationPath,
       type: WALLET_TYPES.LEDGER,

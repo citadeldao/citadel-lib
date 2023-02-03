@@ -2,6 +2,12 @@ import { LEDGER_ERRORS, ERROR_CODES } from '../../../constants'
 import errors from '../../../errors'
 
 export function ledgerErrorHandler({ error, rightApp }) {
+    if(LEDGER_ERRORS.ETH.REJECT_ERROR_CODES.includes(+error.statusCode)){
+      errors.throwError('LedgerError', {
+        message: error.error_message,
+        code: ERROR_CODES.REJECT_CODE,
+      })
+    }
     if(LEDGER_ERRORS.ETH.WRONG_APP_CODES.includes(+error.statusCode)){
       errors.throwError('LedgerError', {
         message: error.error_message,

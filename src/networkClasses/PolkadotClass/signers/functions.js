@@ -5,7 +5,7 @@ export function ledgerErrorHandler({ error, rightApp }) {
     if(error.message.includes(LEDGER_ERRORS.POLKADOT.REJECT_ERROR_MESSAGE)){
       errors.throwError('LedgerError', {
         message: error.error_message,
-        code: ERROR_CODES.REJECT_CODE,
+        code: ERROR_CODES.LEDGER.REJECT_CODE,
       })
     }
     if(LEDGER_ERRORS.POLKADOT.WRONG_APP_CODES.includes(+error.statusCode)){

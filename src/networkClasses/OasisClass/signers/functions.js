@@ -54,7 +54,7 @@ export function ledgerErrorHandler({ appInfo, resp, rightApp }) {
   if(resp.return_code === LEDGER_ERRORS.OASIS.REJECT_ERROR_CODE){
     errors.throwError('LedgerError', {
       message: resp.error_message,
-      code: ERROR_CODES.REJECT_CODE,
+      code: ERROR_CODES.LEDGER.REJECT_CODE,
     })
   }
   if(appInfo.return_code == LEDGER_ERRORS.OASIS.WRONG_APP_CODE){

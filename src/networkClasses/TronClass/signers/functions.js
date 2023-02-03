@@ -89,7 +89,7 @@ export function ledgerErrorHandler({ error, rightApp }) {
     if(LEDGER_ERRORS.TRON.REJECT_ERROR_CODES.includes(+error.statusCode)){
       errors.throwError('LedgerError', {
         message: error.error_message,
-        code: ERROR_CODES.REJECT_CODE,
+        code: ERROR_CODES.LEDGER.REJECT_CODE,
       })
     }
     if(LEDGER_ERRORS.TRON.WRONG_APP_CODES.includes(+error.statusCode)){

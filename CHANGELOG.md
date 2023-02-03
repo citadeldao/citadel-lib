@@ -1,3 +1,10 @@
+## 1.37.2 (2023-02-03)
+
+
+### Bug Fixes
+
+* add reject case for ledger b4b23f8
+
 ## 1.37.1 (2023-02-01)
 
 

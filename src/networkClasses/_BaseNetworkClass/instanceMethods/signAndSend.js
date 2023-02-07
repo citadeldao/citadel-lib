@@ -3,7 +3,7 @@ import { getType } from '../../../helpers/checkArguments'
 
 export const signAndSend = async function (
   rawTransaction,
-  { privateKey, proxy, derivationPath }
+  { privateKey, proxy, derivationPath, useAlternativeSigner }
 ) {
   // if type of transaction - array, call signAndSendMulti
   if (getType(rawTransaction.transaction) === 'Array') {
@@ -11,6 +11,7 @@ export const signAndSend = async function (
       privateKey,
       proxy,
       derivationPath,
+      useAlternativeSigner
     })
   }
 
@@ -18,6 +19,7 @@ export const signAndSend = async function (
   const signedTransaction = await this.signTransaction(rawTransaction, {
     privateKey,
     derivationPath,
+    useAlternativeSigner,
   })
 
   // send signed transaction

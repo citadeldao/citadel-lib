@@ -10,6 +10,7 @@ import {
   createMessageSignatureByLedger,
   signJsonByPrivateKey,
 } from './signers'
+import { signTxByPrivateKey as altSignTxByPrivateKey } from './oldSigners'
 import { WALLET_TYPES, DELEGATION_TYPES, CACHE_NAMES } from '../../../constants'
 import errors from '../../../errors'
 import { getHdDerivationPath, getBech32FromPK } from '../../_functions/ledger'
@@ -50,7 +51,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, useAlternativeSigner }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
@@ -63,6 +64,9 @@ export class BaseCosmosNetwork extends BaseNetwork {
     // privateKey signer
     if (!transaction.bytes) {
       return await signJsonByPrivateKey(transaction, privateKey, this.publicKey)
+    }
+    if(useAlternativeSigner){
+      return altSignTxByPrivateKey(transaction, privateKey, this.publicKey)
     }
     return signTxByPrivateKey(transaction, privateKey, this.publicKey)
   }

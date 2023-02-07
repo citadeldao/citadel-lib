@@ -1,3 +1,10 @@
+## 1.37.6 (2023-02-07)
+
+
+### Bug Fixes
+
+* add signer fix for evmos and cosmos 2e45322
+
 ## 1.37.5 (2023-02-07)
 
 

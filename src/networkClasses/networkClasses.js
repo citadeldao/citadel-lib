@@ -50,6 +50,7 @@ import { EvmosethNetwork } from './ethNetworks/EvmosethClass'
 import { TeritoriNetwork } from './cosmosNetworks/TeritoriClass'
 import { OmniflixNetwork } from './cosmosNetworks/OmniflixClass'
 import { KujiraNetwork } from './cosmosNetworks/KujiraClass'
+import { CoreumNetwork } from './cosmosNetworks/CoreumClass'
 import { AvalancheNetwork } from './ethNetworks/AvalancheClass'
 import { QuicksilverNetwork } from './cosmosNetworks/QuicksilverClass'
 
@@ -108,5 +109,6 @@ export const networkClasses = {
   omniflix: OmniflixNetwork,
   kujira: KujiraNetwork,
   avalanche: AvalancheNetwork,
-  quicksilver: QuicksilverNetwork
+  quicksilver: QuicksilverNetwork,
+  coreum: CoreumNetwork
 }

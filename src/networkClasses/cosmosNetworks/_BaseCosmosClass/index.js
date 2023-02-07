@@ -62,11 +62,11 @@ export class BaseCosmosNetwork extends BaseNetwork {
       return await signTxByLedger(transaction, derivationPath, this.publicKey, null, rightApp)
     }
     // privateKey signer
-    if (!transaction.bytes) {
-      return await signJsonByPrivateKey(transaction, privateKey, this.publicKey)
-    }
     if(useAlternativeSigner){
       return altSignTxByPrivateKey(transaction, privateKey, this.publicKey)
+    }
+    if (!transaction.bytes) {
+      return await signJsonByPrivateKey(transaction, privateKey, this.publicKey)
     }
     return signTxByPrivateKey(transaction, privateKey, this.publicKey)
   }

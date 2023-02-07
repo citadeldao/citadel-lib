@@ -52,15 +52,17 @@ import walletInstances from '../../walletInstances'
 export const createMessageSignature = async (
   walletId,
   message,
-  { privateKey, derivationPath }
+  { privateKey, derivationPath, useAlternativeSigner }
 ) => {
   // checks
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
     ['message', message, ['String', 'Object'], true],
-    ['privateKey', privateKey, ['String'], true]
+    ['privateKey', privateKey, ['String'], true],
+    ['useAlternativeSigner', useAlternativeSigner, ['Boolean']]
   )
+  
   checkWalletId(walletId)
 
   // call walletInstance method
@@ -69,5 +71,6 @@ export const createMessageSignature = async (
     .createMessageSignature(message, {
       privateKey,
       derivationPath,
+      useAlternativeSigner
     })
 }

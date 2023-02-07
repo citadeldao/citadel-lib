@@ -18,9 +18,10 @@ export const signAndSend = async (walletId, rawTransaction, options = {}) => {
     ['options', options, ['Object']]
   )
 
-  const { privateKey, derivationPath, mnemonic, proxy } = options
+  const { privateKey, derivationPath, mnemonic, proxy, useAlternativeSigner } = options
 
   checkTypes(['proxy', proxy, ['Boolean']])
+  checkTypes(['useAlternativeSigner', useAlternativeSigner, ['Boolean']])
   checkWalletId(walletId)
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
   if (HARDWARE_SIGNER_WALLET_TYPES.includes(walletInstance.type)) {
@@ -39,5 +40,6 @@ export const signAndSend = async (walletId, rawTransaction, options = {}) => {
     derivationPath,
     mnemonic,
     proxy,
+    useAlternativeSigner
   })
 }

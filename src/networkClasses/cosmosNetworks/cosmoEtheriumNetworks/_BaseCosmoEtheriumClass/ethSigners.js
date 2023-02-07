@@ -37,6 +37,7 @@ export const signTxByLedger = async (
   rightApp
 ) => {
   let transport = null
+  const transaction = rawTransaction.eip712 || rawTransaction
   if (!global.ledger_eth && !global.ledger_bsc) {
     transport = await getLedgerTransport()
     // dynamic import of large module (for fast init)
@@ -48,8 +49,8 @@ export const signTxByLedger = async (
   try{
       resp = await global.ledger_eth.signEIP712HashedMessage(
       derivationPath,
-      Buffer.from(await domainHash(rawTransaction)).toString('hex'),
-      Buffer.from(await messageHash(rawTransaction)).toString('hex')
+      Buffer.from(await domainHash(transaction)).toString('hex'),
+      Buffer.from(await messageHash(transaction)).toString('hex')
     )
   }catch(error){
     ledgerErrorHandler({ error, rightApp })
@@ -64,7 +65,7 @@ export const signTxByLedger = async (
   const signature = combined.startsWith('0x') ? combined.slice(2) : combined
 
   return {
-    ...rawTransaction.message,
+    ...transaction.message,
     signature,
     publicKey,
     mode: 'ledger',

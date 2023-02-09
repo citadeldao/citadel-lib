@@ -1,3 +1,10 @@
+## 1.37.8 (2023-02-09)
+
+
+### Bug Fixes
+
+* fix ledger reject case for cosmos 81d8200
+
 ## 1.37.7 (2023-02-07)
 
 

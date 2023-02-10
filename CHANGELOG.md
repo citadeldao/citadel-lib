@@ -1,3 +1,10 @@
+## 1.37.9 (2023-02-10)
+
+
+### Bug Fixes
+
+* add coingeckoGetCategories for mobile... 56c6eb2
+
 ## 1.37.8 (2023-02-09)
 
 

@@ -10,7 +10,7 @@ import api from '../../api'
  * @example
  *
  * const response = await citadel.coingeckoGetTokensInfo(
- *  { currency:'usd', perPage:10, page:1 }
+ *  { currency:'usd', perPage:10, page:1, category: 'filter by coin category' }
  * )
  *
  * // =>

@@ -1,6 +1,7 @@
 import { executeContract } from './executeContract'
 import { SecretNetwork } from '../'
 import errors from '../../../../errors'
+import BigNumber from 'bignumber.js'
 
 export async function doTokenTransfer({
   address,
@@ -24,7 +25,7 @@ export async function doTokenTransfer({
     message: {
       transfer: {
         recipient: toAddress,
-        amount: `${+amount * 10 ** decimals}`,
+        amount: BigNumber(10).exponentiatedBy(decimals).multipliedBy(amount).toString(),
       },
     },
     gasLimit: {

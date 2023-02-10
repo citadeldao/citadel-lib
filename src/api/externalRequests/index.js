@@ -5,6 +5,8 @@ import { coingeckoGetTokenMarketChart } from './coingeckoGetTokenMarketChart'
 import { coingeckoGetTokensInfo } from './coingeckoGetTokensInfo'
 import { coingeckoGetTokenInfoById } from './coingeckoGetTokenInfoById'
 import { coingeckoGetTokenMarketOhlc } from './coingeckoGetTokenMarketOhlc'
+import { coingeckoGetCategories } from './coingeckoGetCategories'
+
 
 
 
@@ -23,5 +25,6 @@ export const externalRequests = {
   coingeckoGetTokenMarketChart,
   coingeckoGetTokensInfo,
   coingeckoGetTokenInfoById,
-  coingeckoGetTokenMarketOhlc
+  coingeckoGetTokenMarketOhlc,
+  coingeckoGetCategories
 }

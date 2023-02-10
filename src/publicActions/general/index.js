@@ -32,6 +32,8 @@ import { coingeckoGetTokenMarketChart } from './coingeckoGetTokenMarketChart'
 import { coingeckoGetTokensInfo } from './coingeckoGetTokensInfo'
 import { coingeckoGetTokenMarketOhlc } from './coingeckoGetTokenMarketOhlc'
 import { coingeckoGetTokenInfoById } from './coingeckoGetTokenInfoById'
+import { coingeckoGetCategories } from './coingeckoGetCategories'
+
 
 
 
@@ -70,5 +72,6 @@ export const general = {
   coingeckoGetTokenMarketChart,
   coingeckoGetTokensInfo,
   coingeckoGetTokenMarketOhlc,
-  coingeckoGetTokenInfoById
+  coingeckoGetTokenInfoById,
+  coingeckoGetCategories
 }

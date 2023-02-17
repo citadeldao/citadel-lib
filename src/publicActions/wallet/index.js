@@ -2,6 +2,7 @@ import { renameWalletTitleById } from './renameWalletTitleById'
 import { prepareTransfer } from './prepareTransfer'
 import { getBalanceById } from './getBalanceById'
 import { signTransaction } from './signTransaction'
+import { sendSignedTransaction } from './sendSignedTransaction'
 import { signAndSend } from './signAndSend'
 import { signAndSendMulti } from './signAndSendMulti'
 import { getTransactionsById } from './getTransactionsById'
@@ -101,5 +102,6 @@ export const wallet = {
   getRewardsById,
   getRedelegationUnlockDateById,
   getCrossNetFees,
-  queryContract
+  queryContract,
+  sendSignedTransaction
 }

@@ -17,12 +17,14 @@ export const prepareDelegation = ({
     url: `/blockchain/${net}/${from}/builder/delegation?version=${state.getState(
       'backendApiVersion'
     )}`,
-    method: 'post',
+    method: 'get',
     data: {
-      toAddress,
-      publicKey,
-      amount,
-      kt,
+      params: {
+        toAddress,
+        publicKey,
+        amount,
+        kt,
+      }
     },
   }
 }

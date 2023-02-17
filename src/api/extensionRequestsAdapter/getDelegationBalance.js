@@ -4,7 +4,7 @@ import api from '..'
 // modify the backend response (will move to the backend in the future)
 export const getDelegationBalance = async (options) => {
   // get original response
-  const { data } = await api.publicRequests.getDelegationBalance(options)
+  const { data } = await api.requests.getDelegationBalance(options)
 
   // calc balance
   if (options.net === 'bsc_xct') {

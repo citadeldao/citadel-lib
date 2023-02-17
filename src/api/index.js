@@ -23,7 +23,7 @@ const api = {
   // requests to non-citadel api
   externalRequests: null,
   // requests to the public api of the citadel
-  publicRequests: null,
+  // publicRequests: null,
   getAuthToken
 }
 
@@ -55,16 +55,30 @@ export const initApi = () => {
     ...formattedRequestsAdapter,
   }
 
+  // create public api
+  const publicBackendUrl = state.getState('publicBackendUrl')
+  const publicRequestsList = createApiRequests({
+    baseURL: publicBackendUrl,
+    withCredentials: true,
+    requests: publicRequests,
+    enableResponseHandler: true,
+  })
+
+  api.requests = {
+    ...api.requests,
+    ...publicRequestsList,
+  }
+
   // for the extension,
   if (state.getState('isExtension')) {
-    const publicBackendUrl = state.getState('publicBackendUrl')
-    // create public api
-    api.publicRequests = createApiRequests({
-      baseURL: publicBackendUrl,
-      withCredentials: true,
-      requests: publicRequests,
-      enableResponseHandler: true,
-    })
+    // const publicBackendUrl = state.getState('publicBackendUrl')
+    // // create public api
+    // api.publicRequests = createApiRequests({
+    //   baseURL: publicBackendUrl,
+    //   withCredentials: true,
+    //   requests: publicRequests,
+    //   enableResponseHandler: true,
+    // })
 
     // replace some requests with local mocks and requests without authorization
     api.requests = {
@@ -77,5 +91,5 @@ export const initApi = () => {
 export const resetApi = () => {
   api.requests = null
   api.externalRequests = null
-  api.publicRequests = null
+  // api.publicRequests = null
 }

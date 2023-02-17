@@ -11,11 +11,14 @@ export const prepareGasUnpledge = ({
     // backend domain is in the axios instance
     // url: `/transactions/${net}/${address}/prepare-unpledge?version=${state.getState('backendApiVersion')}`,
     url: `/blockchain/${net}/${address}/builder/unpledge?version=${state.getState('backendApiVersion')}`,
-    method: 'post',
+    method: 'get',
     data: {
-      publicKey,
-      toAddress,
-      amount,
+      params:{
+        publicKey,
+        toAddress,
+        amount,
+      }
+      
     },
   }
 }

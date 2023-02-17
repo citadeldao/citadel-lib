@@ -9,9 +9,11 @@ export const prepareTransfer = ({ net, from, ...options }) => {
     url: `/blockchain/${net}/${from}/builder/transfer?version=${state.getState(
       'backendApiVersion'
     )}`,
-    method: 'post',
+    method: 'get',
     data: {
-      ...options,
+      params:{
+        ...options,
+      }
     },
   }
 }

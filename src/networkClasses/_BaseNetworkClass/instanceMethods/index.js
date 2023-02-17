@@ -5,6 +5,7 @@ import { prepareTransfer } from './prepareTransfer'
 import { signAndSend } from './signAndSend'
 import { signAndSendMulti } from './signAndSendMulti'
 import { signTransaction } from './signTransaction'
+import { sendSignedTransaction } from './sendSignedTransaction'
 import { getTokens } from './getTokens'
 import { getTokenActions } from './getTokenActions'
 import { prepareTokenAction } from './prepareTokenAction'
@@ -96,5 +97,6 @@ export const instanceMethods = {
   buildCustomTransaction,
   getRewardsById,
   getRedelegationUnlockDateById,
-  getCrossNetFees
+  getCrossNetFees,
+  sendSignedTransaction
 }

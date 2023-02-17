@@ -8,9 +8,11 @@ export const prepareClaim = (data) => {
     //   data.address
     // }/prepare-claim-reward?version=${state.getState('backendApiVersion')}`,
     url:`/blockchain/${data.net}/${data.address}/builder/claim-reward?version=${state.getState('backendApiVersion')}`,
-    method: 'post',
+    method: 'get',
     data: {
-      isTyped: data?.isTyped,
+      params:{
+        isTyped: data?.isTyped,
+      }
     },
   }
 }

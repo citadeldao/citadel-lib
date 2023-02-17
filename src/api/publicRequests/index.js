@@ -1,11 +1,15 @@
-import { getAllTokenBalances } from './getAllTokenBalances'
-import { getDelegationBalance } from './getDelegationBalance'
-import { getStakeList } from './getStakeList'
-import { prepareClaim } from './prepareClaim'
-import { faucetSignUp } from './faucetSignUp'
-import { prepareTransfer } from './prepareTransfer'
-import { sendSignedTransaction } from './sendSignedTransaction'
-import { checkTransaction } from './checkTransaction'
+// import { getAllTokenBalances } from './getAllTokenBalances'
+// import { getDelegationBalance } from './getDelegationBalance'
+// import { getStakeList } from './getStakeList'
+// import { prepareClaim } from './prepareClaim'
+// import { faucetSignUp } from './faucetSignUp'
+// import { prepareTransfer } from './prepareTransfer'
+// import { sendSignedTransaction } from './sendSignedTransaction'
+// import { checkTransaction } from './checkTransaction'
+
+import { tokens } from './tokens'
+import { wallet } from './wallet'
+
 
 /**
  * PUBLIC REQUEST PARAMS
@@ -14,12 +18,16 @@ import { checkTransaction } from './checkTransaction'
  * Use 'publicBackendUrl'
  */
 export const publicRequests = {
-  getAllTokenBalances,
-  getDelegationBalance,
-  getStakeList,
-  prepareClaim,
-  faucetSignUp,
-  prepareTransfer,
-  sendSignedTransaction,
-  checkTransaction,
+  // getAllTokenBalances,
+  // getDelegationBalance,
+  // getStakeList,
+  // prepareClaim,
+  // faucetSignUp,
+  // prepareTransfer,
+  // sendSignedTransaction,
+  // checkTransaction,
+
+  ...wallet,
+  ...tokens,
+
 }

@@ -13,13 +13,15 @@ export const prepareRedelegation = ({
     // backend domain is in the axios instance
     //url: `transactions/${net}/${address}/prepare-redelegation?version=${state.getState('backendApiVersion')}`,
     url: `/blockchain/${net}/${address}/builder/redelegation?version=${state.getState('backendApiVersion')}`,
-    method: 'post',
+    method: 'get',
     data: {
-      validator_src_address: from,
-      validator_dst_address: to,
-      amount,
-      publicKey,
-      isTyped,
+      params: {
+        validator_src_address: from,
+        validator_dst_address: to,
+        amount,
+        publicKey,
+        isTyped,
+      }
     },
   }
 }

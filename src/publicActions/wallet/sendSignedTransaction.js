@@ -16,7 +16,7 @@ import {
     checkWalletId(walletId)
     const { signedTransaction, mem_tx_id = null, proxy = false } = options
     checkTypes(
-      ['signedTransaction', signedTransaction, ['String'], true],
+      ['signedTransaction', signedTransaction, ['Object'], true],
       ['proxy', proxy, ['Boolean']],
       ['mem_tx_id', mem_tx_id, ['String','Null']]
     )

@@ -1,3 +1,10 @@
+## 1.38.2 (2023-02-17)
+
+
+### Bug Fixes
+
+* add sendSignedTransaction argument fix 04675f4
+
 ## 1.38.1 (2023-02-17)
 
 

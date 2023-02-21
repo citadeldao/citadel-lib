@@ -47,6 +47,7 @@ export const LIB_EVENT_BLOCK_FLAGS = {
   [LIB_EVENT_NAMES.LEDGER_SIGNING_FINISHED]: 'blockLedgerSigningFinised',
   [LIB_EVENT_NAMES.LEDGER_SIGNING_STARTED]: 'blockLedgerSigningStarted',
   [LIB_EVENT_NAMES.STORAGE_CHANGED_EXTERNALLY]: 'blockStorageChangedExternally',
+  DELAY_WALLET_LIST_UPDATE_DETAIL: 'delayWalletListUpdateDetail'
 }
 
 export const CACHE_NAMES = {

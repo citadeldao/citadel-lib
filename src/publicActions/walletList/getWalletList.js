@@ -3,8 +3,10 @@ import walletsManager from '../../walletsManager'
 import errors from '../../errors'
 // import walletInstances from '../../walletInstances'
 import { checkInitialization, checkTypes } from '../../helpers/checkArguments'
-import { GET_WALLET_LIST_TYPES } from '../../constants'
+import { GET_WALLET_LIST_TYPES, LIB_EVENT_BLOCK_FLAGS } from '../../constants'
 // import storage from '../../storage'
+import state from '../../state'
+import { sleep } from '../../helpers/sleep'
 
 export const getWalletList = async (type = GET_WALLET_LIST_TYPES.CACHE) => {
   // checks
@@ -27,6 +29,12 @@ export const getWalletList = async (type = GET_WALLET_LIST_TYPES.CACHE) => {
   }
   // update walletList by detail request
   if (type === GET_WALLET_LIST_TYPES.DETAIL) {
+    let delayFlag = state.getState(LIB_EVENT_BLOCK_FLAGS.DELAY_WALLET_LIST_UPDATE_DETAIL)
+    console.log('test333', delayFlag);
+    while (delayFlag) {
+      await sleep(300)
+      delayFlag = state.getState(LIB_EVENT_BLOCK_FLAGS.DELAY_WALLET_LIST_UPDATE_DETAIL)
+    }
     // get detailed account wallets
     const { data: wallets } = await api.requests.getWalletsDetail()
     // update lib wallets

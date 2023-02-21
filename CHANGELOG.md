@@ -1,3 +1,10 @@
+## 1.38.3 (2023-02-21)
+
+
+### Bug Fixes
+
+* add fix for wallet list conflict ecd3b96
+
 ## 1.38.2 (2023-02-17)
 
 

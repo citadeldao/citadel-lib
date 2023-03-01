@@ -53,6 +53,7 @@ import { KujiraNetwork } from './cosmosNetworks/KujiraClass'
 import { CoreumNetwork } from './cosmosNetworks/CoreumClass'
 import { AvalancheNetwork } from './ethNetworks/AvalancheClass'
 import { QuicksilverNetwork } from './cosmosNetworks/QuicksilverClass'
+import { ProvenanceNetwork } from './cosmosNetworks/ProvenanceClass'
 
 
 export const networkClasses = {
@@ -110,5 +111,6 @@ export const networkClasses = {
   kujira: KujiraNetwork,
   avalanche: AvalancheNetwork,
   quicksilver: QuicksilverNetwork,
-  coreum: CoreumNetwork
+  coreum: CoreumNetwork,
+  provenance: ProvenanceNetwork
 }

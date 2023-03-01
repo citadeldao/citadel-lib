@@ -26,8 +26,15 @@ export const signTxByLedger = async (rawTransaction, derivationPath, net, rightA
       )
       if (v && r && s) {
         return { recoveryParam: v, r, s }
+      }else{
+        const error = new Error('invalid data')
+        error.statusCode = 28160
+        throw (error)
       }
     } catch (error) {
+      if(error.name.includes('EthAppPleaseEnableContractData')){
+        error.statusCode = 28160
+      }
       // TODO: check correct error handling
       // const error = new Error(err.message)
       // error.code = err.statusCode

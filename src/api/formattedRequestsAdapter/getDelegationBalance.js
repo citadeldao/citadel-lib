@@ -1,6 +1,7 @@
 import networkClasses from '../../networkClasses'
 import BigNumber from 'bignumber.js'
-import { requests } from '../requests'
+// import { requests } from '../requests'
+import { publicRequests } from '../requests'
 import { createApiRequests } from '../createApiRequests'
 import state from '../../state'
 
@@ -11,7 +12,8 @@ export const getDelegationBalance = async (options) => {
   const originalRequest = createApiRequests({
     baseURL: backendUrl,
     withCredentials: true,
-    singleRequest: requests.getDelegationBalance,
+    // singleRequest: requests.getDelegationBalance,
+    singleRequest: publicRequests.getDelegationBalance,
     enableResponseHandler: true,
   })
 

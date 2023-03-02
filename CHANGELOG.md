@@ -1,3 +1,10 @@
+## 1.38.7 (2023-03-02)
+
+
+### Bug Fixes
+
+* add fix for getDelegationBalanceInfo 499ce94
+
 ## 1.38.6 (2023-03-02)
 
 

@@ -49,12 +49,6 @@ export const initApi = () => {
     enableResponseHandler: false,
   })
 
-  // replace some requests with functions with changes that will go to the backend
-  api.requests = {
-    ...api.requests,
-    ...formattedRequestsAdapter,
-  }
-
   // create public api
   const publicBackendUrl = state.getState('publicBackendUrl')
   const publicRequestsList = createApiRequests({
@@ -64,10 +58,26 @@ export const initApi = () => {
     enableResponseHandler: true,
   })
 
+  // replace some requests with functions with changes that will go to the backend, and add requests to public routes
   api.requests = {
     ...api.requests,
     ...publicRequestsList,
+    ...formattedRequestsAdapter,
   }
+
+  // // create public api
+  // const publicBackendUrl = state.getState('publicBackendUrl')
+  // const publicRequestsList = createApiRequests({
+  //   baseURL: publicBackendUrl,
+  //   withCredentials: true,
+  //   requests: publicRequests,
+  //   enableResponseHandler: true,
+  // })
+
+  // api.requests = {
+  //   ...api.requests,
+  //   ...publicRequestsList,
+  // }
 
   // for the extension,
   if (state.getState('isExtension')) {

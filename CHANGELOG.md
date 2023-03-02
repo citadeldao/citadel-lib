@@ -1,3 +1,12 @@
+## 1.38.10 (2023-03-02)
+
+
+### Bug Fixes
+
+* bump secretjs lib to 1.4.7 328240e
+* bump secretjs lib version 270cf41
+* fix conflicts af6bccf
+
 ## 1.38.9 (2023-03-02)
 
 

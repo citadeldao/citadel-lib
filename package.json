@@ -59,7 +59,7 @@
     "qs": "^6.11.0",
     "querystring-es3": "^0.2.1",
     "secp256k1": "^4.0.2",
-    "secretjs": "1.4.0",
+    "secretjs": "1.4.7",
     "socket.io-client": "^4.5.1",
     "stream-browserify": "^3.0.0",
     "trezor-connect": "^8.2.6",

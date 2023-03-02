@@ -1,16 +1,72 @@
-## 1.37.11 (2023-03-02)
+## 1.38.9 (2023-03-02)
 
 
 ### Bug Fixes
 
-* bump secretjs lib to 1.4.7 328240e
+* fix request url 9c7d4f1
 
-## 1.37.10 (2023-03-01)
+## 1.38.8 (2023-03-02)
 
 
 ### Bug Fixes
 
-* bump secretjs lib version 270cf41
+* add path fix 6ae5f66
+
+## 1.38.7 (2023-03-02)
+
+
+### Bug Fixes
+
+* add fix for getDelegationBalanceInfo 499ce94
+
+## 1.38.6 (2023-03-02)
+
+
+### Bug Fixes
+
+* fix api bug 421fce1
+
+## 1.38.5 (2023-03-01)
+
+
+### Bug Fixes
+
+* add provenance network 8bdca2d
+
+## 1.38.4 (2023-03-01)
+
+
+### Bug Fixes
+
+* add ledger fixies 841411a
+
+## 1.38.3 (2023-02-21)
+
+
+### Bug Fixes
+
+* add fix for wallet list conflict ecd3b96
+
+## 1.38.2 (2023-02-17)
+
+
+### Bug Fixes
+
+* add sendSignedTransaction argument fix 04675f4
+
+## 1.38.1 (2023-02-17)
+
+
+### Bug Fixes
+
+* add sendSignedTransaction method 7d2e47d
+
+# 1.38.0 (2023-02-17)
+
+
+### Features
+
+* migrate to public routes f2185b3
 
 ## 1.37.9 (2023-02-10)
 

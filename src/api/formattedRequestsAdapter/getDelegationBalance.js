@@ -7,10 +7,11 @@ import state from '../../state'
 
 // modify the backend response (will move to the backend in the future)
 export const getDelegationBalance = async (options) => {
-  const backendUrl = state.getState('backendUrl')
+  // const backendUrl = state.getState('backendUrl')
+  const publicBackendUrl = state.getState('publicBackendUrl')
   // create original axios function
   const originalRequest = createApiRequests({
-    baseURL: backendUrl,
+    baseURL: publicBackendUrl,
     withCredentials: true,
     // singleRequest: requests.getDelegationBalance,
     singleRequest: publicRequests.getDelegationBalance,

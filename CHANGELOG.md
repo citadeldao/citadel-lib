@@ -1,3 +1,10 @@
+## 1.38.12 (2023-03-09)
+
+
+### Bug Fixes
+
+* fix faucetSignUp api url 0d1fadf
+
 ## 1.38.11 (2023-03-09)
 
 

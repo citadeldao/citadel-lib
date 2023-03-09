@@ -8,9 +8,11 @@ export const faucetSignUp = ({ net, name, publicKey }) => ({
   url: `/blockchain/${net}/faucet-sign-up?version=${state.getState(
     'backendApiVersion'
   )}`,
-  method: 'post',
+  method: 'get',
   data: {
-    name,
-    publicKey,
+    params: {
+      name,
+      publicKey,
+    },
   },
 })

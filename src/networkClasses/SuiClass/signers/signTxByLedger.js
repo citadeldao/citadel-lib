@@ -26,3 +26,9 @@ export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, 
     },
 };
 }
+
+
+// 436917
+// 44/474/0/0/0
+// oasis1qqm7wfqr2y227esu2wnl59t4wnplh04hcgz84230
+//node  oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe

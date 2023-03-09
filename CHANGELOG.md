@@ -1,3 +1,10 @@
+## 1.38.11 (2023-03-09)
+
+
+### Bug Fixes
+
+* faucetSignUp method ca7dcd6
+
 ## 1.38.10 (2023-03-02)
 
 

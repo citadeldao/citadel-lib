@@ -3,6 +3,7 @@ import networkClasses from '../../../networkClasses'
 
 export const getDerivationPathByIndex = function (type = 'seed', index = 0) {
   // get derivation path template
+  console.log(333,networkClasses.getNetworkClass(this.net).derivationPathTemplates);
   const derivationPathTemplate = networkClasses.getNetworkClass(this.net)
     .derivationPathTemplates[type]?.[0].key
 

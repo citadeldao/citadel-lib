@@ -54,6 +54,7 @@ import { CoreumNetwork } from './cosmosNetworks/CoreumClass'
 import { AvalancheNetwork } from './ethNetworks/AvalancheClass'
 import { QuicksilverNetwork } from './cosmosNetworks/QuicksilverClass'
 import { ProvenanceNetwork } from './cosmosNetworks/ProvenanceClass'
+import { SuiNetwork } from './SuiClass'
 
 
 export const networkClasses = {
@@ -112,5 +113,6 @@ export const networkClasses = {
   avalanche: AvalancheNetwork,
   quicksilver: QuicksilverNetwork,
   coreum: CoreumNetwork,
-  provenance: ProvenanceNetwork
+  provenance: ProvenanceNetwork,
+  sui: SuiNetwork
 }

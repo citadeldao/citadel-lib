@@ -12,7 +12,3 @@ export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
   let signedTx = await signature.signSigned(signer, context, rawTransaction)
   return signedTx
 }
-// 300144
-// FLF8IEyQFe/5RaaNeiHLziOxRsO3aOWc8mdYkJg0SLMKd9RCK4f0cCfIL8ZR2/IDC+o4wf75qK0rEsFfjatIzw==
-// oasis1qqctax55zq4s59fxem8cx86uac2skkevvg57q8dr
-//node  oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe

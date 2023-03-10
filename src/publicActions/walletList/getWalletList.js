@@ -30,7 +30,6 @@ export const getWalletList = async (type = GET_WALLET_LIST_TYPES.CACHE) => {
   // update walletList by detail request
   if (type === GET_WALLET_LIST_TYPES.DETAIL) {
     let delayFlag = state.getState(LIB_EVENT_BLOCK_FLAGS.DELAY_WALLET_LIST_UPDATE_DETAIL)
-    console.log('test333', delayFlag);
     while (delayFlag) {
       await sleep(300)
       delayFlag = state.getState(LIB_EVENT_BLOCK_FLAGS.DELAY_WALLET_LIST_UPDATE_DETAIL)

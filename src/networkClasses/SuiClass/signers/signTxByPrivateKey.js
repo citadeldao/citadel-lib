@@ -2,12 +2,11 @@
 
 export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
   // dynamic import of large module (for fast init)
-  console.log('test-tx',rawTransaction);
+  const txBytes = rawTransaction.bytes
   const { Ed25519Keypair } = await import('@mysten/sui.js');
   const { fromB64, toB64 } = await import('@mysten/bcs');
   const keypair = Ed25519Keypair.fromSecretKey(fromB64(Buffer.from(privateKey.slice(2),'hex').toString('base64')))
-  const signature = toB64(keypair.signData(fromB64(rawTransaction)));
-  console.log('test-signature',signature);
+  const signature = toB64(keypair.signData(fromB64(txBytes)));
   // const { default: nacl } = await import('tweetnacl')
   // const isValid = nacl.sign.detached.verify(
   //   fromB64(rawTransaction),
@@ -17,7 +16,7 @@ export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
   // console.log('test-valid',isValid);
   // let signedTx = await signature.signSigned(signer, context, rawTransaction)
   return {
-    tx: rawTransaction,
+    tx: txBytes,
     signature
   }
 

@@ -52,6 +52,7 @@ export class SuiNetwork extends BaseNetwork {
   }
 
   async signTransaction(rawTransaction, { privateKey/* , derivationPath  */}) {
+    const transaction = rawTransaction.transaction || rawTransaction
     // const transaction = await tranformTransaction(
     //   rawTransaction.transaction || rawTransaction
     // )
@@ -61,7 +62,7 @@ export class SuiNetwork extends BaseNetwork {
 
     //   return await signTxByLedger(transaction, derivationPath, this.publicKey, rightApp)
     // }
-    return signTxByPrivateKey(rawTransaction, privateKey)
+    return signTxByPrivateKey(transaction, privateKey)
   }
 
   // async createMessageSignature(data, { privateKey, derivationPath }) {
@@ -94,12 +95,6 @@ export class SuiNetwork extends BaseNetwork {
     const privateKey = `0x${Buffer.from(fromB64(keypair.export().privateKey).slice(0, 32)).toString('hex')}`
     const publicKey = Buffer.from(keypair.getPublicKey().toBytes()).toString('hex')
     
-    // const data = await staking.addressFromPublicKey(signer.publicKey)
-    // const address = staking.addressToBech32(data)
-
-    // https://bi.3ahtim54r.ru/api
-    // https://api-connectors-sui-public.3ahtim54r.ru
-
     return {
       net: this.net,
       address,

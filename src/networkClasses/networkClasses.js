@@ -27,7 +27,6 @@ import { KichainNetwork } from './cosmosNetworks/KichainClass'
 import { RegenNetwork } from './cosmosNetworks/RegenClass'
 import { StarnameNetwork } from './cosmosNetworks/StarnameClass'
 import { IrisNetwork } from './cosmosNetworks/IrisClass'
-import { CerberusNetwork } from './cosmosNetworks/CerberusClass'
 import { InjectiveNetwork } from './cosmosNetworks/cosmoEtheriumNetworks/InjectiveClass'
 import { GbridgeNetwork } from './cosmosNetworks/GbridgeClass'
 import { BitsongNetwork } from './cosmosNetworks/BitsongClass'
@@ -87,7 +86,6 @@ export const networkClasses = {
   regen: RegenNetwork,
   starname: StarnameNetwork,
   iris: IrisNetwork,
-  cerberus: CerberusNetwork,
   injective: InjectiveNetwork,
   gbridge: GbridgeNetwork,
   bitsong: BitsongNetwork,

@@ -10,7 +10,7 @@ Provides a standardized interface for working with wallets of various crypto net
 - Wallet list management
 - Actions with the wallet (receipt of balance, transfer, staking, etc.)
 - The module does not store private keys and dervation paths
-- Supported networks: "Akash", "Axelar", "Band", "Bitsong", "Binance Smart Chain", "Bitcoin", "Cerberus", "Cheqd", "Chihuahua", "Comdex", "Cosmos Hub", "Crescent Network", "e-Money", "Ethereum", "Evmos", "Fetch.ai", "GBridge", "ICON", "Injective", "IOST", "IRIS Network", "Juno", "Kava", "Ki Chain", "Konstellation", "Lum", "AssetMantle", "Osmosis", "Persistence", "Polkadot", "Regen", "Rizon", "Secret", "Sentinel", "Sifchain", "Stargaze", "Starname", "Tezos", "Umee" 
+- Supported networks: "Akash", "Axelar", "Band", "Bitsong", "Binance Smart Chain", "Bitcoin", "Cheqd", "Chihuahua", "Comdex", "Cosmos Hub", "Crescent Network", "e-Money", "Ethereum", "Evmos", "Fetch.ai", "GBridge", "ICON", "Injective", "IOST", "IRIS Network", "Juno", "Kava", "Ki Chain", "Konstellation", "Lum", "AssetMantle", "Osmosis", "Persistence", "Polkadot", "Regen", "Rizon", "Secret", "Sentinel", "Sifchain", "Stargaze", "Starname", "Tezos", "Umee" 
 
 ## Installation
 

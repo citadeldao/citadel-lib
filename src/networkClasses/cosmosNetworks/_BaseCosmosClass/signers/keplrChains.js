@@ -26,7 +26,6 @@ export const keplrChains = {
   regen: 'regen-1',
   iris: 'irishub-1',
   starname: 'iov-mainnet-ibc',
-  cerberus: 'cerberus-chain-1',
   konstellation: 'darchub',
   gbridge: 'gravity-bridge-3',
   mantle: 'mantle-1',

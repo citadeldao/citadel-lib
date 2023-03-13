@@ -1,3 +1,10 @@
+## 1.39.2 (2023-03-13)
+
+
+### Bug Fixes
+
+* remove cerberus network 003df5f
+
 ## 1.39.1 (2023-03-10)
 
 

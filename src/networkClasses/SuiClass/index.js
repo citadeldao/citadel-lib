@@ -114,8 +114,8 @@ export class SuiNetwork extends BaseNetwork {
   static async createWalletByPrivateKey({ privateKey }) {
     // dynamic import of large module (for fast init)
     const { Ed25519Keypair } = await import('@mysten/sui.js');
-    const { fromB64 } = await import('@mysten/bcs');
-    const keypair = Ed25519Keypair.fromSecretKey(fromB64(Buffer.from(privateKey.slice(2),'hex').toString('base64')))
+    const { fromHEX } = await import('@mysten/bcs');
+    const keypair = Ed25519Keypair.fromSecretKey(fromHEX(privateKey))
     const address = `0x${keypair.getPublicKey().toSuiAddress()}`
     const publicKey = Buffer.from(keypair.getPublicKey().toBytes()).toString('hex')
     return {

@@ -1301,11 +1301,11 @@ export const additionalConfig = [
             label: `Ed25519 -m/44'/784'/N'/0'/0'`,
             key: `m/44'/784'/N'/0'/0'`,
           },
-          {
-            id: 2,
-            label: `Secp256k1 -m/54'/784'/0'/0/N`,
-            key: `m/54'/784'/0'/0/N`,
-          },
+          // {
+          //   id: 2,
+          //   label: `Secp256k1 -m/54'/784'/0'/0/N`,
+          //   key: `m/54'/784'/0'/0/N`,
+          // },
         ],
         // ledger: [
         //   { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },

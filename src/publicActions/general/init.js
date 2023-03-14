@@ -7,10 +7,10 @@ import { debugConsole } from '../../helpers/debugConsole'
  * Loads a user's balance history
  *
  * @param options OBJECT (REQUIRED) - init options object
- * @param options.backendUrl STRING (REQUIRED) - REST-api URL, etc 'https://app.citadel.one/api'
+ * @param options.backendUrl STRING (REQUIRED) - REST-api URL
  * @param options.backendApiVersion STRING (OPTIONAL) - version of api, by default '1.0.6'
- * @param options.publicBackendUrl STRING (OPTIONAL) - public REST-api URL for extension, etc 'https://app.citadel.one/api'
- * @param options.socketURL STRING (OPTIONAL) - REST-api URL, etc 'https://api-websockets-user.apps.citadel.okd.3ahtim54r.ru/users'
+ * @param options.publicBackendUrl STRING (OPTIONAL) - public REST-api URL for extension
+ * @param options.socketURL STRING (OPTIONAL) - REST-api URL
  * @param options.debug BOOLEAN (OPTIONAL) - 'false' by default. if 'true', the arguments and return values of the called functions are printed to the console.
  * @param options.debugEvents STRING (OPTIONAL) - show event logs if 'true' and debug flag is 'true'
  * @param options.isExtension BOOLEAN (OPTIONAL) - 'false' by default. if 'true', wallets are read from localStorage, and extension methods work without authorization
@@ -24,7 +24,7 @@ import { debugConsole } from '../../helpers/debugConsole'
  * @example
  *
  * const response = await citadel.init({
- *   backendUrl: '//app.citadel.one/api'
+ *   backendUrl: 'example'
  * })
  *
  * // =>

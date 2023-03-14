@@ -2,6 +2,7 @@ import { generateMnemonic } from './generateMnemonic'
 import { getSupportedNetworkKeys } from './getSupportedNetworkKeys'
 import { init } from './init'
 import { reset } from './reset'
+import { getInfo } from './getInfo'
 import { getAllNetworksConfig } from './getAllNetworksConfig'
 import { getAllMarketcaps } from './getAllMarketcaps'
 import { getAllRates } from './getAllRates'
@@ -45,6 +46,7 @@ export const general = {
   getSupportedNetworkKeys,
   init,
   reset,
+  getInfo,
   getAllNetworksConfig,
   getAllMarketcaps,
   getAllRates,

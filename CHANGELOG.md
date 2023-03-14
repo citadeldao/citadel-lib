@@ -1,3 +1,10 @@
+## 1.39.4 (2023-03-14)
+
+
+### Bug Fixes
+
+* add getInfo method,ids argument to cgecko api 69707a3
+
 ## 1.39.3 (2023-03-13)
 
 

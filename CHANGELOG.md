@@ -1,3 +1,10 @@
+## 1.39.6 (2023-03-15)
+
+
+### Bug Fixes
+
+* fix marketcap socket bug 9c22d9f
+
 ## 1.39.5 (2023-03-15)
 
 

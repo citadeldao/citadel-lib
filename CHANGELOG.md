@@ -1,3 +1,10 @@
+## 1.39.5 (2023-03-15)
+
+
+### Bug Fixes
+
+* assign injective to dao 7d1c2a1
+
 ## 1.39.4 (2023-03-14)
 
 

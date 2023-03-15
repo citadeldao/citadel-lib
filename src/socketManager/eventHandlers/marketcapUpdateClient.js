@@ -10,8 +10,8 @@ export const marketcapUpdateClient = ({
   const marketcapsCache = storage.caches.getCache(CACHE_NAMES.MARKETCAPS)
 
   // update net caches
-  ratesCache[net] = rates
-  marketcapsCache[net] = marketCapInfo
+  if(ratesCache) ratesCache[net] = rates
+  if(marketcapsCache) marketcapsCache[net] = marketCapInfo
 
   // set updated caches back to storage
   storage.caches.setCache(CACHE_NAMES.RATES, ratesCache)

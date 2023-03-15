@@ -45,7 +45,7 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
         : `0x${signature.signature}`
     }
     // own privateKey signature
-    return createMessageSignature(data.originalCosmosMsg, privateKey)
+    return createMessageSignature(data.originalCosmosMsg || data, privateKey, privateKey)
   }
 
   static async createWalletByMnemonic(options) {

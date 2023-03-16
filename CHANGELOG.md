@@ -1,3 +1,10 @@
+## 1.39.7 (2023-03-16)
+
+
+### Bug Fixes
+
+* fix signMessage method, cosmos ledger signer 8f32ac7
+
 ## 1.39.6 (2023-03-15)
 
 

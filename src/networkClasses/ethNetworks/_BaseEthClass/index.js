@@ -51,10 +51,22 @@ export class BaseEthNetwork extends BaseNetwork {
 
       let result
       try {
+        if (Object.prototype.hasOwnProperty.call(message, "domainHash")) {
+          // v3-v4
+          result = await global[`ledger_${this.net}`].signEIP712HashedMessage(
+            derivationPath,
+            message.domainHash,
+            message.messageHash,
+          
+          )
+        } else {
+          // personal, v1
+          const formatedMessage = typeof message === 'string' ? message : Buffer.from(JSON.stringify(message)).toString('hex')
           result = await global[`ledger_${this.net}`].signPersonalMessage(
-          derivationPath,
-          Buffer.from(JSON.stringify(message)).toString('hex')
-        )
+              derivationPath,
+              formatedMessage
+          )
+        }
       } catch (error) {
         ledgerErrorHandler({ error, rightApp })
       }finally{

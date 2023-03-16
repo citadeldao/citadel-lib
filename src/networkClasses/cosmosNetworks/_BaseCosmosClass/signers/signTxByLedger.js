@@ -29,9 +29,9 @@ export const signTxByLedger = async (
 
   let signMessage = new Object()
   if (
-    rawTransaction.json.msgs[0].type === 'irishub/bank/Send' ||
-    rawTransaction.json.msgs[0].type === 'irishub/stake/BeginUnbonding' ||
-    rawTransaction.json.msgs[0].type === 'irishub/stake/BeginRedelegate'
+    rawTransaction?.json?.msgs?.[0]?.type === 'irishub/bank/Send' ||
+    rawTransaction?.json?.msgs?.[0]?.type === 'irishub/stake/BeginUnbonding' ||
+    rawTransaction?.json?.msgs?.[0]?.type === 'irishub/stake/BeginRedelegate'
   ) {
     signMessage = rawTransaction.jsonForSigningIrisTx
   } else {

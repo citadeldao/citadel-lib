@@ -1,3 +1,10 @@
+## 1.39.8 (2023-03-17)
+
+
+### Bug Fixes
+
+* add getTransactionByHash a9a3bf6
+
 ## 1.39.7 (2023-03-16)
 
 

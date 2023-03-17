@@ -1,5 +1,6 @@
 import { addWallet } from './addWallet'
 import { getWalletTransactions } from './getWalletTransactions'
+import { getTransactionByHash } from './getTransactionByHash'
 import { removeWallet } from './removeWallet'
 import { renameWalletTitle } from './renameWalletTitle'
 import { prepareDelegations } from './prepareDelegations'
@@ -38,6 +39,7 @@ export const wallet = {
   getCrossNetFees,
   getFees,
   getWalletTransactions,
+  getTransactionByHash,
   polkadotPrepareRedelegation,
   postTransactionNote,
   prepareDelegations,

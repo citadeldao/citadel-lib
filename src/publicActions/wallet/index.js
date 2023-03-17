@@ -6,6 +6,7 @@ import { sendSignedTransaction } from './sendSignedTransaction'
 import { signAndSend } from './signAndSend'
 import { signAndSendMulti } from './signAndSendMulti'
 import { getTransactionsById } from './getTransactionsById'
+import { getTransactionByHash } from './getTransactionByHash'
 import { getTokenActions } from './getTokenActions'
 import { getTokensById } from './getTokensById'
 import { prepareTokenAction } from './prepareTokenAction'
@@ -62,6 +63,7 @@ export const wallet = {
   signAndSend,
   signAndSendMulti,
   getTransactionsById,
+  getTransactionByHash,
   getTokenActions,
   getTokensById,
   prepareTokenAction,

@@ -1,5 +1,6 @@
 import { renameTitle } from './renameTitle'
 import { getTransactions } from './getTransactions'
+import { getTransactionByHash } from './getTransactionByHash'
 import { getDelegationBalance } from './getDelegationBalance'
 import { prepareTransfer } from './prepareTransfer'
 import { signAndSend } from './signAndSend'
@@ -53,6 +54,7 @@ import { getCrossNetFees } from './getCrossNetFees'
 export const instanceMethods = {
   renameTitle,
   getTransactions,
+  getTransactionByHash,
   getDelegationBalance,
   prepareTransfer,
   signAndSend,

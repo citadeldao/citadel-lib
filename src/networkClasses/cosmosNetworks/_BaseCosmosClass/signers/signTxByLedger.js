@@ -1,6 +1,7 @@
 import { getHdDerivationPath } from '../../../_functions/ledger'
 import { getLedgerTransport } from "../../../../ledgerTransportProvider";
 import { ledgerErrorHandler } from "./../functions"
+import { sortObject } from '../functions'
 
 export const signTxByLedger = async (
   rawTransaction,
@@ -15,7 +16,7 @@ export const signTxByLedger = async (
   const hdPath = getHdDerivationPath(derivationPath)
   const resp = await cosmosApp.sign(
     hdPath,
-    JSON.stringify(rawTransaction.json)
+    JSON.stringify(sortObject(rawTransaction.json))
   )
   if (!resp.signature) {
     const appInfo = await cosmosApp.appInfo()

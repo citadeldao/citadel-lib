@@ -225,7 +225,7 @@ export class BaseEthNetwork extends BaseNetwork {
 
   static async createWalletByTrezor({ derivationPath }) {
     // dynamic import of large module (for fast init)
-    const { defautl: TrezorConnect } = await import('trezor-connect')
+    const { default: TrezorConnect } = await import('trezor-connect')
     // prepare Trezor
     await prepareTrezorConnection()
     // generate address and public key

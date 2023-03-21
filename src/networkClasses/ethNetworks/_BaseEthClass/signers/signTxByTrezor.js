@@ -7,7 +7,7 @@ export const signTxByTrezor = async (rawTransaction, derivationPath) => {
   const signFunction = async () => {
     try {
       // dynamic import of large module (for fast init)
-      const { defautl: TrezorConnect } = await import('trezor-connect')
+      const { default: TrezorConnect } = await import('trezor-connect')
       const signed = await TrezorConnect.ethereumSignTransaction({
         path: derivationPath,
         // @ts-ignore

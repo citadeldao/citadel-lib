@@ -2,7 +2,7 @@ import { prepareTrezorConnection } from '../../_functions/trezor'
 
 export const signTxByTrezor = async (rawTransaction, derivationPath) => {
   // dynamic import of large module (for fast init)
-  const { defautl: TrezorConnect } = await import('trezor-connect')
+  const { default: TrezorConnect } = await import('trezor-connect')
   const { Psbt } = await import('bitcoinjs-lib')
 
   // prepare trezor

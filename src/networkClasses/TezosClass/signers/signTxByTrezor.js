@@ -6,7 +6,7 @@ export const signTxByTrezor = async (
   derivationPath
 ) => {
   // dynamic import of large module (for fast init)
-  const { defautl: TrezorConnect } = await import('trezor-connect')
+  const { default: TrezorConnect } = await import('trezor-connect')
   await prepareTrezorConnection()
   const reveal = opOb.contents.find((item) => item.kind === 'reveal')
   if (reveal) {

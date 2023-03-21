@@ -1,7 +1,7 @@
 // trezor helpers
 export const prepareTrezorConnection = async () => {
   // dynamic import of large module (for fast init)
-  const { defautl: TrezorConnect } = await import('trezor-connect')
+  const { default: TrezorConnect } = await import('trezor-connect')
   // check global trezor flag to avoid trezor reconnect error
   if (!global.isTrezorInit) {
     // connect trezor

@@ -241,7 +241,7 @@ export class TezosNetwork extends BaseNetwork {
 
   static async createWalletByTrezor({ derivationPath }) {
     // dynamic import of large module (for fast init)
-    const { defautl: TrezorConnect } = await import('trezor-connect')
+    const { default: TrezorConnect } = await import('trezor-connect')
     await prepareTrezorConnection()
     const publicData = await TrezorConnect.tezosGetPublicKey({
       path: derivationPath,

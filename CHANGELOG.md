@@ -1,3 +1,10 @@
+## 1.39.11 (2023-03-22)
+
+
+### Bug Fixes
+
+* add fix for tx granter in cosmos d41ba0c
+
 ## 1.39.10 (2023-03-21)
 
 

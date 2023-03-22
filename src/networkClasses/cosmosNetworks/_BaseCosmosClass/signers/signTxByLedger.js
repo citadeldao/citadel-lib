@@ -14,6 +14,12 @@ export const signTxByLedger = async (
   const transport = await getLedgerTransport()
   const cosmosApp = new CosmosApp(transport)
   const hdPath = getHdDerivationPath(derivationPath)
+  
+  // make stapshot of deafult tx
+  const txSnapshot = JSON.parse(JSON.stringify(rawTransaction))
+  // remove granter kay from tx
+  if(rawTransaction.json?.fee?.granter) delete rawTransaction.json.fee.granter;
+
   const resp = await cosmosApp.sign(
     hdPath,
     JSON.stringify(sortObject(rawTransaction.json))
@@ -43,7 +49,8 @@ export const signTxByLedger = async (
   // const signMessage = rawTransaction.json
   const signedTx = {
     ...signMessage,
-    fee: rawTransaction.json.fee,
+    // get default tx fee key
+    fee: txSnapshot.json.fee,
     signature: signatureParsed,
     publicKey,
     memo: rawTransaction.json.memo,

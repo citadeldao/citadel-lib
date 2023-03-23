@@ -7,11 +7,11 @@ export class CoreumNetwork extends BaseCosmosNetwork {
 
   // special explorer key
   getScannerLinkById() {
-    return `https://explorer.devnet-1.coreum.dev/accounts/${this.address}`
+    return `https://explorer.coreum.com/accounts/${this.address}`
   }
 
   // special explorer key
   getTransactionURLByHash(hash) {
-    return `https://explorer.devnet-1.coreum.dev/transactions/${hash}`
+    return `https://explorer.coreum.com/transactions/${hash}`
   }
 }

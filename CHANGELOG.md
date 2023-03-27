@@ -1,3 +1,10 @@
+## 1.39.14 (2023-03-27)
+
+
+### Bug Fixes
+
+* prepareDelegations api url fix 00cb8d1
+
 ## 1.39.13 (2023-03-24)
 
 

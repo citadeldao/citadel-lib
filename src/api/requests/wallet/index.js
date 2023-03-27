@@ -3,12 +3,12 @@ import { getWalletTransactions } from './getWalletTransactions'
 import { getTransactionByHash } from './getTransactionByHash'
 import { removeWallet } from './removeWallet'
 import { renameWalletTitle } from './renameWalletTitle'
-import { prepareDelegations } from './prepareDelegations'
 import { getFees } from './getFees'
 import { postTransactionNote } from './postTransactionNote'
 import { polkadotPrepareRedelegation } from './polkadotPrepareRedelegation'
 import { getCrossNetFees } from './getCrossNetFees'
 
+// import { prepareDelegations } from './prepareDelegations'
 // import { getDelegationBalance } from './getDelegationBalance'
 // import { prepareTransfer } from './prepareTransfer'
 // import { sendSignedTransaction } from './sendSignedTransaction'
@@ -42,10 +42,10 @@ export const wallet = {
   getTransactionByHash,
   polkadotPrepareRedelegation,
   postTransactionNote,
-  prepareDelegations,
   removeWallet,
   renameWalletTitle,
 
+  // prepareDelegations,
   // getDelegationBalance,
   // prepareTransfer,
   // sendSignedTransaction,

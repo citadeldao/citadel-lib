@@ -1,4 +1,5 @@
 import state from '../../../state'
+const qs = require('qs')
 // multi stake
 // function returns request parameters for the axios instance.
 export const prepareDelegations = ({
@@ -19,6 +20,10 @@ export const prepareDelegations = ({
         delegations,
         publicKey,
         isTyped,
+      },
+      // for passing array in request params
+      paramsSerializer: params => {
+        return qs.stringify(params)
       }
     },
   }

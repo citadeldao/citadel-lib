@@ -1,3 +1,10 @@
+## 1.39.15 (2023-03-27)
+
+
+### Bug Fixes
+
+* prepareDelegations method url 3c49728
+
 ## 1.39.14 (2023-03-27)
 
 

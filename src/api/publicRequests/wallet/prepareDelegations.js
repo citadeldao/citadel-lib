@@ -10,7 +10,7 @@ export const prepareDelegations = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `/blockchain/${net}/${from}/builder/delegation?version=${state.getState(
+    url: `/blockchain/${net}/${from}/builder/delegations?version=${state.getState(
       'backendApiVersion'
     )}`,
     method: 'get',

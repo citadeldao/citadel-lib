@@ -1,3 +1,10 @@
+## 1.39.16 (2023-03-27)
+
+
+### Bug Fixes
+
+* passing array to ger request fed05d1
+
 ## 1.39.15 (2023-03-27)
 
 

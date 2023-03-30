@@ -1,3 +1,10 @@
+## 1.39.20 (2023-03-30)
+
+
+### Bug Fixes
+
+* fix api version and btc ledger signer d3caaa2
+
 ## 1.39.19 (2023-03-30)
 
 

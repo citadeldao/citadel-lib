@@ -35,7 +35,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath, rightApp) =
     }
   
     // return signed transaction
-    return await global.ledger_btc.createPaymentTransactionNew(tx_data)
+    return await global.ledger_btc.createPaymentTransaction(tx_data)
   }catch(error){
     ledgerErrorHandler({ error, rightApp })
   }finally{

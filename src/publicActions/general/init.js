@@ -48,7 +48,7 @@ export const init = async (options = {}) => {
   checkTypes(['options', options, ['Object'], true])
   const {
     backendUrl,
-    backendApiVersion = '1.0.6',
+    backendApiVersion = '1.1.0',
     publicBackendUrl,
     socketURL,
     appURL,

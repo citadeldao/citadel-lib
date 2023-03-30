@@ -1,3 +1,10 @@
+## 1.39.19 (2023-03-30)
+
+
+### Bug Fixes
+
+* fix btc ledger sigener init 11c25f6
+
 ## 1.39.18 (2023-03-30)
 
 

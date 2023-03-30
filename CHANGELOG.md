@@ -1,3 +1,10 @@
+## 1.39.18 (2023-03-30)
+
+
+### Bug Fixes
+
+* add error code for new btc leder app 824400a
+
 ## 1.39.17 (2023-03-30)
 
 

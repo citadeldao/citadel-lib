@@ -148,7 +148,7 @@ export class BtcNetwork extends BaseNetwork {
     let transport
     if (!global.ledger_btc) {
       transport = await getLedgerTransport()
-      global.ledger_btc = new BtcApp(transport)
+      global.ledger_btc = new BtcApp({ transport, currency: "bitcoin" });//new BtcApp(transport)
     }
     
     let res

@@ -9,7 +9,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath, rightApp) =
   let transport
   if (!global.ledger_btc) {
     transport = await getLedgerTransport()
-    global.ledger_btc = new BtcApp(transport)
+    global.ledger_btc = new BtcApp({ transport, currency: "bitcoin" });
   }
   // dynamic import of large module (for fast init)
   const { Psbt } = await import('bitcoinjs-lib')

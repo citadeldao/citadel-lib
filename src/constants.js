@@ -153,7 +153,8 @@ export const LEDGER_ERRORS = {
     REJECT_ERROR_CODES: [27013]
   },
   COMMON: {
-    BUSY_TRANSPORT_MESSAGE: 'already open'
+    BUSY_TRANSPORT_MESSAGE: 'already open',
+    BUSY_TRANSPORT_MESSAGE1: 'ailed to open'
   }
 } 
 

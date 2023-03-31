@@ -20,12 +20,8 @@ export const getLedgerTransport = async () => {
 }
 
 function ledgerErrorHandler(error){
-  console.log('qaqtype', typeof error);
-  console.log('qaqtype', JSON.parse(JSON.stringify(error)));
-  console.log('qaq2', error);
-  console.log('qaq3', error.message);
-    if(error.includes(LEDGER_ERRORS.COMMON.BUSY_TRANSPORT_MESSAGE) ||
-    error.includes(LEDGER_ERRORS.COMMON.BUSY_TRANSPORT_MESSAGE1)){
+    if(error.message || error.includes(LEDGER_ERRORS.COMMON.BUSY_TRANSPORT_MESSAGE) ||
+    error.message || error.includes(LEDGER_ERRORS.COMMON.BUSY_TRANSPORT_MESSAGE1)){
         errors.throwError('LedgerError', {
           message: error.error_message || error,
           code: ERROR_CODES.LEDGER.BUSY_TRANSPORT,

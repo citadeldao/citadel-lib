@@ -14,11 +14,13 @@ export const getLedgerTransport = async () => {
         ? await WebHidTransport.create(10000)
         : await TransportWebUSB.create(10000)
     }catch(e){
+      console.log('qaq1',e);
         ledgerErrorHandler(e)
     }
 }
 
 function ledgerErrorHandler(error){
+  console.log('qaq2',error);
     if(error.includes(LEDGER_ERRORS.COMMON.BUSY_TRANSPORT_MESSAGE)){
         errors.throwError('LedgerError', {
           message: error.error_message || error,

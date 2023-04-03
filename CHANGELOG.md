@@ -1,3 +1,10 @@
+# 1.40.0 (2023-04-03)
+
+
+### Features
+
+* add coreum teplates,Archway network b114ea2
+
 ## 1.39.25 (2023-03-31)
 
 

@@ -1269,8 +1269,8 @@ export const additionalConfig = [
           },
           { 
             id: 1, 
-            label: `Ledger - 44/118/0/0/N`, 
-            key: `44/118/0/0/N` 
+            label: `Ledger - m/44'/118'/0'/0/N`, 
+            key: `m/44'/118'/0'/0/N` 
           },
         ],
         ledger: [

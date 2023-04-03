@@ -1267,6 +1267,11 @@ export const additionalConfig = [
             label: `Default -m/44'/990'/0'/0/N`,
             key: `m/44'/990'/0'/0/N`,
           },
+          { 
+            id: 1, 
+            label: `Ledger - 44/118/0/0/N`, 
+            key: `44/118/0/0/N` 
+          },
         ],
         ledger: [
           { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
@@ -1310,6 +1315,23 @@ export const additionalConfig = [
         // ledger: [
         //   { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
         // ],
+      },
+    },
+  },
+  {
+    net: 'archway',
+    config: {
+      derivationPathTemplates: {
+        seed: [
+          {
+            id: 1,
+            label: `Default -m/44'/118'/0'/0/N`,
+            key: `m/44'/118'/0'/0/N`,
+          },
+        ],
+        ledger: [
+          { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
+        ],
       },
     },
   },

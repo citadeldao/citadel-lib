@@ -1,3 +1,10 @@
+## 1.40.2 (2023-04-10)
+
+
+### Bug Fixes
+
+* fix sui address generation,add sui ledger lib 61cdabc
+
 ## 1.40.1 (2023-04-03)
 
 

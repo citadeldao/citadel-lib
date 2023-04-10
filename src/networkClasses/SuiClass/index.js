@@ -91,7 +91,7 @@ export class SuiNetwork extends BaseNetwork {
     const { Ed25519Keypair } = await import('@mysten/sui.js');
     const { fromB64 } = await import('@mysten/bcs');
     const keypair = Ed25519Keypair.deriveKeypair(mnemonic, derivationPath)
-    const address = `0x${keypair.getPublicKey().toSuiAddress()}`
+    const address = keypair.getPublicKey().toSuiAddress()
     const privateKey = `0x${Buffer.from(fromB64(keypair.export().privateKey).slice(0, 32)).toString('hex')}`
     const publicKey = Buffer.from(keypair.getPublicKey().toBytes()).toString('hex')
     
@@ -116,7 +116,7 @@ export class SuiNetwork extends BaseNetwork {
     const { Ed25519Keypair } = await import('@mysten/sui.js');
     const { fromHEX } = await import('@mysten/bcs');
     const keypair = Ed25519Keypair.fromSecretKey(fromHEX(privateKey))
-    const address = `0x${keypair.getPublicKey().toSuiAddress()}`
+    const address = keypair.getPublicKey().toSuiAddress()
     const publicKey = Buffer.from(keypair.getPublicKey().toBytes()).toString('hex')
     return {
       net: this.net,

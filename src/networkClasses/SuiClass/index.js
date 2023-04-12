@@ -1,10 +1,10 @@
-// import api from '../../api'
+import api from '../../api'
 import { BaseNetwork } from '../_BaseNetworkClass'
-import { WALLET_TYPES, /* DELEGATION_TYPES, */ /* CACHE_NAMES */ } from '../../constants'
+import { WALLET_TYPES, DELEGATION_TYPES, /* CACHE_NAMES */ } from '../../constants'
 // import OasisApp from '@oasisprotocol/ledger'
 // import { getHdDerivationPath } from '../_functions/ledger'
 import { signTxByPrivateKey, /* signTxByLedger */ } from './signers'
-// import { checkDelegationTypes } from '../../helpers/checkArguments'
+import { checkDelegationTypes } from '../../helpers/checkArguments'
 // import { tranformTransaction/* , ledgerErrorHandler */ } from './signers/functions'
 /* import { getLedgerTransport } from "../../ledgerTransportProvider"; */
 // import storage from '../../storage'
@@ -14,34 +14,36 @@ export class SuiNetwork extends BaseNetwork {
     super(walletInfo)
   }
 
-  // async prepareDelegation({
-  //   nodeAddresses,
-  //   amount,
-  //   type = DELEGATION_TYPES.STAKE,
-  // }) {
-  //   // check type
-  //   checkDelegationTypes(type)
+  async prepareDelegation({
+    nodeAddresses,
+    amount,
+    type = DELEGATION_TYPES.STAKE,
+  }) {
+    // check type
+    checkDelegationTypes(type)
 
-  //   // stake and unstake
-  //   // send difference of values
-  //   const { data } = await api.requests.prepareDelegations({
-  //     from: this.address,
-  //     net: this.net,
-  //     delegations: [
-  //       {
-  //         address: nodeAddresses[0],
-  //         value:
-  //           type === DELEGATION_TYPES.STAKE
-  //             ? amount
-  //             : // unstake
-  //               `-${amount}`,
-  //       },
-  //     ],
-  //     publicKey: this.publicKey,
-  //   })
+    // stake and unstake
+    // send difference of values
+    let delegations
+    if(type === DELEGATION_TYPES.STAKE){
+      delegations = [
+        {
+          address: nodeAddresses[0],
+          value: amount
+        },
+      ]
+    }else{
+      delegations = nodeAddresses.map(item => { return {stakedSuiId: item}})
+    }
+    const { data } = await api.requests.prepareDelegations({
+      from: this.address,
+      net: this.net,
+      delegations,
+      publicKey: this.publicKey,
+    })
 
-  //   return data
-  // }
+    return data
+  }
 
   getScannerLinkById() {
     return `https://explorer.sui.io/address/${this.address}`
@@ -94,7 +96,7 @@ export class SuiNetwork extends BaseNetwork {
     const address = keypair.getPublicKey().toSuiAddress()
     const privateKey = `0x${Buffer.from(fromB64(keypair.export().privateKey).slice(0, 32)).toString('hex')}`
     const publicKey = Buffer.from(keypair.getPublicKey().toBytes()).toString('hex')
-    
+
     return {
       net: this.net,
       address,
@@ -138,7 +140,7 @@ export class SuiNetwork extends BaseNetwork {
   //   const transport = await getLedgerTransport()
   //   const oasisApp = new OasisApp(transport)
   //   const hdPathArray = getHdDerivationPath(derivationPath)
-   
+
   //   const resp = await oasisApp.publicKey(hdPathArray)
   //   if (!resp?.pk) {
   //     const appInfo = await oasisApp.appInfo()

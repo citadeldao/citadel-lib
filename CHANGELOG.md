@@ -1,3 +1,10 @@
+## 1.40.4 (2023-04-17)
+
+
+### Bug Fixes
+
+* add token support for sui 3d93e11
+
 ## 1.40.3 (2023-04-12)
 
 

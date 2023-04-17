@@ -64,4 +64,13 @@ export const formatConfig = {
       transactions: 'transactions_default',
     },
   },
+  suiAsset: {
+    actions: {
+      transfer: 'transfer_default',
+    },
+    infos: {
+      balance: 'balance_default',
+      transactions: 'transactions_default',
+    },
+  },
 }

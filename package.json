@@ -11,6 +11,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@citadeldao/hw-app-hash": "^0.1.0",
     "@cosmjs/crypto": "^0.28.11",
     "@cosmjs/ledger-amino": "^0.28.11",
     "@cosmjs/proto-signing": "^0.28.11",

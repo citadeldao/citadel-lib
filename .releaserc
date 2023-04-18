@@ -22,7 +22,7 @@
     [
         "semantic-release-telegram",
         {
-            "chats": [ -779627620 ],
+            "chats": [ -1001916143721 ],
             "templates": {
               "success" : "A <b><i>{release_type}</i></b> version of <a href='{repository_url}'>{name}</a> has been released. Current version is <b>{version}</b>\nChangelog:\n{release_notes}"
             }

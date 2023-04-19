@@ -5,17 +5,17 @@ import { /*getHdDerivationPath,*/ getBech32FromPK} from '../_functions/ledger'
 import {CACHE_NAMES, WALLET_TYPES} from '../../constants'
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
-import storage from "@/citadelLib/src/storage";
+import storage from "../../storage";
 import {
   signJsonByPrivateKey,
   signTxByPrivateKey
-} from "@/citadelLib/src/networkClasses/cosmosNetworks/_BaseCosmosClass/signers";
+} from "./_BaseCosmosClass/signers";
 import {
   signTxByPrivateKey as altSignTxByPrivateKey
-} from "@/citadelLib/src/networkClasses/cosmosNetworks/_BaseCosmosClass/oldSigners";
+} from "./_BaseCosmosClass/oldSigners";
 import {
   ledgerErrorHandler
-} from "@/citadelLib/src/networkClasses/cosmosNetworks/_BaseCosmosClass/functions";
+} from "./_BaseCosmosClass/functions";
 
 export class ProvenanceNetwork extends BaseCosmosNetwork {
   constructor(walletInfo) {

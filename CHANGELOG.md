@@ -1,3 +1,11 @@
+## 1.40.6 (2023-04-19)
+
+
+### Bug Fixes
+
+* add provenance ledger 28a76c5
+* fix imports 8721ea7
+
 ## 1.40.5 (2023-04-18)
 
 

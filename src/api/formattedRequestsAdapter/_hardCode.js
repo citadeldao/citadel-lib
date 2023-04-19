@@ -1291,7 +1291,7 @@ export const additionalConfig = [
           },
         ],
         ledger: [
-          { id: 1, label: `Default - 44/118/0/0/N`, key: `44/118/0/0/N` },
+          { id: 1, label: `Default - 44'/505'/0'/0/N`, key: `44'/505'/0'/0/N` },
         ],
       },
     },

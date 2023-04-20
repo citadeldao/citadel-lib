@@ -28,38 +28,27 @@ export class ProvenanceNetwork extends BaseCosmosNetwork {
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
       //rigth app for ledger
-      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
-console.log('test001');
+      // const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
       const { default: ProvenanceApp } = await import('@citadeldao/hw-app-hash')
       const transport = await getLedgerTransport()
-      console.log('test002');
       const provenanceApp = new ProvenanceApp(transport)
-      // const hdPath = getHdDerivationPath(derivationPath)
-
-      console.log('test003');
+  
       // make stapshot of deafult tx
       const txSnapshot = JSON.parse(JSON.stringify(transaction))
       // remove granter kay from tx
       if(transaction.json?.fee?.granter) delete transaction.json.fee.granter;
 
-      console.log('test004');
       const resp = await provenanceApp.signTransaction(
           derivationPath,
           Buffer.from(transaction.bytes)
       )
-      console.log('test005');
-      if (!resp.signature) {
-        const appInfo = await provenanceApp.appInfo()
-        await transport.close()
-        ledgerErrorHandler({ appInfo, resp, rightApp })
-      }
-      console.log('test006', resp);
-      await transport.close()
-      // dynamic import for guge module
-      // const { default: secp256k1 } = await import('secp256k1')
-      // const parsedSignature = secp256k1.signatureImport(resp.signature)
 
-      console.log('test007');
+      // if (!resp.signature) {
+      //   const appInfo = await provenanceApp.appInfo()
+      //   await transport.close()
+      //   ledgerErrorHandler({ appInfo, resp, rightApp })
+      // }
+      await transport.close()
       let signMessage = new Object()
       if (
           transaction?.json?.msgs?.[0]?.type === 'irishub/bank/Send' ||
@@ -72,7 +61,7 @@ console.log('test001');
       }
 
       const signatureParsed = Buffer.from(resp.signature).toString('hex')
-      // const signMessage = rawTransaction.json
+     
       const signedTx = {
         ...signMessage,
         // get default tx fee key
@@ -80,7 +69,7 @@ console.log('test001');
         signature: signatureParsed,
         publicKey: this.publicKey,
         memo: transaction.json.memo,
-        mode: 'sync',
+        signType: 'direct',
       }
 
       return signedTx
@@ -100,26 +89,18 @@ console.log('test001');
     const transport = await getLedgerTransport()
     const { default: ProvenanceApp } = await import('@citadeldao/hw-app-hash')
     const provenanceApp = new ProvenanceApp(transport)
-    console.log('test111',derivationPath);
-    console.log('testapp',provenanceApp);
-    // const hdPathArray = getHdDerivationPath(derivationPath)
-    // await hash_token.getPublicKey("44'/505'/0'/0/0")
     const resp = await provenanceApp.getPublicKey(derivationPath)
-    console.log('test222',resp);
-    // if (!resp?.compressed_pk) {
+    // if (!resp?.address) {
     //   const appInfo = await cosmosApp.appInfo()
     //   await transport.close()
     //   ledgerErrorHandler({ appInfo, resp, rightApp: this.ledger})
     // }
-    // // TODO cahnge to cosmosApp.getBech32FromPK
+    // TODO cahnge to cosmosApp.getBech32FromPK
     const address = await getBech32FromPK(
       this.netPrefix,
       Buffer.from(resp.publicKey)
     )
-    console.log('test333', address);
-    console.log('test444', Buffer.from(resp.address).toString());
-
-    // await transport.close()
+    await transport.close()
 
     return {
       net: this.net,

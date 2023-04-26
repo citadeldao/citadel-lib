@@ -41,8 +41,17 @@ export const coingeckoGetCategories = async (options= {}) => {
     ['options', options, ['Object'], true],
   )
 
-  // get data from api
-  const data = await api.externalRequests.coingeckoGetCategories(options)
+  let data 
+  try{
+    // get data from free api
+    data = await api.externalRequests.coingeckoGetCategories(options)
+  }catch(e){
+    // get data from proxy api
+    const url = e.config.url
+    const route = url.substring(url.indexOf('/coins'));
+    const res = await api.proxyRequests.executeCoingecko(route)
+    data = res.data
+  }
 
   return data
 }

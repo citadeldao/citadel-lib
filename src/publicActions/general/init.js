@@ -9,7 +9,8 @@ import { debugConsole } from '../../helpers/debugConsole'
  * @param options OBJECT (REQUIRED) - init options object
  * @param options.backendUrl STRING (REQUIRED) - REST-api URL
  * @param options.backendApiVersion STRING (OPTIONAL) - version of api, by default '1.0.6'
- * @param options.publicBackendUrl STRING (OPTIONAL) - public REST-api URL for extension
+ * @param options.publicBackendUrl STRING (REQUIRED) - public REST-api URL
+ * @param options.proxyBackendUrl STRING (OPTIONAL) - REST-api URL for proxy requests
  * @param options.socketURL STRING (OPTIONAL) - REST-api URL
  * @param options.debug BOOLEAN (OPTIONAL) - 'false' by default. if 'true', the arguments and return values of the called functions are printed to the console.
  * @param options.debugEvents STRING (OPTIONAL) - show event logs if 'true' and debug flag is 'true'
@@ -50,6 +51,7 @@ export const init = async (options = {}) => {
     backendUrl,
     backendApiVersion = '1.1.0',
     publicBackendUrl,
+    proxyBackendUrl,
     socketURL,
     appURL,
     debug = false,
@@ -66,6 +68,7 @@ export const init = async (options = {}) => {
     ['backendUrl', backendUrl, ['String'], true],
     ['backendApiVersion', backendApiVersion, ['String']],
     ['publicBackendUrl', publicBackendUrl, ['String']],
+    ['proxyBackendUrl', proxyBackendUrl, ['String']],
     ['socketURL', socketURL, ['String']],
     ['debug', debug, ['Boolean']],
     ['debugEvents', debugEvents, ['Boolean']],
@@ -92,6 +95,7 @@ export const init = async (options = {}) => {
     backendUrl,
     backendApiVersion,
     publicBackendUrl,
+    proxyBackendUrl,
     socketURL,
     appURL,
     debug,

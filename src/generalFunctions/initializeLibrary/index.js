@@ -16,6 +16,7 @@ export const initializeLibrary = async ({
   backendUrl,
   backendApiVersion,
   publicBackendUrl,
+  proxyBackendUrl,
   socketURL,
   appURL,
   debug,
@@ -35,6 +36,10 @@ export const initializeLibrary = async ({
 
   // set public backend URL
   state.setState('publicBackendUrl', publicBackendUrl)
+
+  // set proxy backend URL
+  state.setState('proxyBackendUrl', proxyBackendUrl)
+  
 
   if (socketURL) {
     // set socket URL

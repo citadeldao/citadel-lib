@@ -30,6 +30,7 @@ const defaultState = {
   backendUrl: '',
   backendApiVersion: '',
   publicBackendUrl: null,
+  proxyBackendUrl: null,
   socketURL: null,
   appURL: null,
   isExtension: false,

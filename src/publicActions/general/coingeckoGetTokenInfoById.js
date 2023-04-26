@@ -39,8 +39,17 @@ export const coingeckoGetTokenInfoById = async (options) => {
      ['id', id, ['String'], true],
    )
  
-   // get data from api
-   const data  = await api.externalRequests.coingeckoGetTokenInfoById({...options, id})
+   let data 
+   try{
+      // get data from free api
+      data = await api.externalRequests.coingeckoGetTokenInfoById({...options, id})
+   }catch(e){
+      // get data from proxy api
+      const url = e.config.url
+      const route = url.substring(url.indexOf('/coins'));
+      const res = await api.proxyRequests.executeCoingecko(route)
+      data = res.data
+   }
 
   return data
 }

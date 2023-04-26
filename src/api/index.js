@@ -2,6 +2,7 @@ import { createApiRequests } from './createApiRequests'
 import { requests } from './requests'
 import { externalRequests } from './externalRequests'
 import { publicRequests } from './publicRequests'
+import { proxyRequests } from './proxyRequests'
 import { formattedRequestsAdapter } from './formattedRequestsAdapter'
 import { extensionRequestsAdapter } from './extensionRequestsAdapter'
 import { getAuthToken } from './getAuthToken'
@@ -22,6 +23,8 @@ const api = {
   requests: null,
   // requests to non-citadel api
   externalRequests: null,
+  //requests to proxy api
+  proxyRequests: null,
   // requests to the public api of the citadel
   // publicRequests: null,
   getAuthToken
@@ -55,6 +58,15 @@ export const initApi = () => {
     baseURL: publicBackendUrl,
     withCredentials: true,
     requests: publicRequests,
+    enableResponseHandler: true,
+  })
+
+  // create proxy api
+  const proxyBackendUrl = state.getState('proxyBackendUrl')
+  api.proxyRequests = createApiRequests({
+    baseURL: proxyBackendUrl,
+    withCredentials: true,
+    requests: proxyRequests,
     enableResponseHandler: true,
   })
 
@@ -101,5 +113,6 @@ export const initApi = () => {
 export const resetApi = () => {
   api.requests = null
   api.externalRequests = null
+  api.proxyRequests = null
   // api.publicRequests = null
 }

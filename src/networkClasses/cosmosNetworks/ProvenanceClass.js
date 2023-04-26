@@ -2,10 +2,10 @@ import { BaseCosmosNetwork } from './_BaseCosmosClass'
 import { getLedgerTransport } from "../../ledgerTransportProvider";
 // import { ledgerErrorHandler } from "./_BaseCosmosClass/functions"
 import { /*getHdDerivationPath,*/ getBech32FromPK} from '../_functions/ledger'
-import {CACHE_NAMES, WALLET_TYPES} from '../../constants'
+import {/* CACHE_NAMES, */ WALLET_TYPES} from '../../constants'
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
-import storage from "../../storage";
+/* import storage from "../../storage"; */
 import {
   signJsonByPrivateKey,
   signTxByPrivateKey
@@ -13,9 +13,7 @@ import {
 import {
   signTxByPrivateKey as altSignTxByPrivateKey
 } from "./_BaseCosmosClass/oldSigners";
-import {
-  ledgerErrorHandler
-} from "./_BaseCosmosClass/functions";
+// import { ledgerErrorHandler } from "./_BaseCosmosClass/functions";
 
 export class ProvenanceNetwork extends BaseCosmosNetwork {
   constructor(walletInfo) {

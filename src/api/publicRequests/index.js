@@ -29,5 +29,4 @@ export const publicRequests = {
 
   ...wallet,
   ...tokens,
-
 }

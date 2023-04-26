@@ -1,3 +1,10 @@
+## 1.40.8 (2023-04-26)
+
+
+### Bug Fixes
+
+* fix coingecko public api limit 60fdb6b
+
 ## 1.40.7 (2023-04-20)
 
 

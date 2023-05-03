@@ -1,3 +1,10 @@
+## 1.40.9 (2023-05-03)
+
+
+### Bug Fixes
+
+* bump version one last time 682baf9
+
 ## 1.40.8 (2023-05-03)
 
 

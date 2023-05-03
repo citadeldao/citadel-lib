@@ -12,6 +12,6 @@ export const calculateSubtokenBalanceUSD = (subtokensList) =>
         },
       }
     ) =>
-      BigNumber(total).plus(BigNumber(calculatedBalance).times(USD)).toNumber(),
+      BigNumber(total).plus(BigNumber(calculatedBalance).times(USD || 0)).toNumber(),
     0
   )

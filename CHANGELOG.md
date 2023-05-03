@@ -1,3 +1,11 @@
+## 1.40.8 (2023-05-03)
+
+
+### Bug Fixes
+
+* fix coingecko public api limit 60fdb6b
+* subtoken balance fix 52d2623
+
 ## 1.40.8 (2023-04-26)
 
 

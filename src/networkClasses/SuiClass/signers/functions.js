@@ -50,25 +50,26 @@ export const tranformTransaction = async (transaction) => {
   return tx
 }
 
-export function ledgerErrorHandler({ appInfo, resp, rightApp }) {
-  if(resp.return_code === LEDGER_ERRORS.OASIS.REJECT_ERROR_CODE){
+
+
+export function ledgerErrorHandler({ error, rightApp }) {
+  if(LEDGER_ERRORS.SUI.REJECT_ERROR_CODES.includes(+error.statusCode)){
     errors.throwError('LedgerError', {
-      message: resp.error_message,
+      message: error.error_message,
       code: ERROR_CODES.LEDGER.REJECT_CODE,
     })
   }
-  if(appInfo.return_code == LEDGER_ERRORS.OASIS.WRONG_APP_CODE){
+  if(LEDGER_ERRORS.SUI.WRONG_APP_CODES.includes(+error.statusCode)){
     errors.throwError('LedgerError', {
-      message: resp.error_message,
+      message: error.error_message,
       code: ERROR_CODES.LEDGER.WRONG_APP,
       data: {
-        currentApp: appInfo.appName === LEDGER_ERRORS.OASIS.EMPTY_LEDGER_APP ? null : appInfo.appName,
         rightApp: rightApp[0]
       }
     })
   }else{
     errors.throwError('LedgerError', {
-      message: resp.error_message,
+      message: error.error_message,
       code: ERROR_CODES.UNKNOWN_ERROR,
     })
   }

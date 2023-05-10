@@ -1,34 +1,37 @@
-import OasisApp from '@oasisprotocol/ledger'
-import { generateContext, u8FromBuf, bufFromU8, ledgerErrorHandler } from './functions'
-import { getHdDerivationPath } from '../../_functions/ledger'
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
-export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, rightApp) => {
+export const signTxByLedger = async (rawTransaction, derivationPath/* , publicKey, rightApp */) => {
   const transport = await getLedgerTransport()
-  const oasisApp = new OasisApp(transport)
-  const context = await generateContext()
-  const HDDerPath = getHdDerivationPath(derivationPath)
-  const resp = await oasisApp.sign( HDDerPath, context, bufFromU8(rawTransaction))
-  if (!resp.signature) {
-    if (!resp.signature) {
-      const appInfo = await oasisApp.appInfo()
-      await transport.close()
-      ledgerErrorHandler({ appInfo, resp, rightApp })
-    }
-  }
-  await transport.close()
+  const { default: SuiApp } = await import('@mysten/ledgerjs-hw-app-sui')
+  // const { 
+  //   Ed25519Keypair,
+  //   RawSigner,
+  //   messageWithIntent,
+  //   IntentScope,
+  //   toSerializedSignature
+  //   /*fromSerializedSignature*/
+  // } = await import('@mysten/sui.js');
+  // const { fromB64, fromHEX } = await import('@mysten/bcs');
+  const suiApp = new SuiApp(transport)
+  const res = await suiApp.signTransaction(derivationPath, rawTransaction);
+  console.log('test111',res);
+
+  // const keypair = Ed25519Keypair.fromSecretKey(fromHEX(privateKey));
+  const signData = rawTransaction.bytes;
+  // const signer = new RawSigner(keypair);
+  // const intentMessage = messageWithIntent(IntentScope.TransactionData, fromB64(signData));
+  // const serializedSignature = await signer.signData(intentMessage);
+
+  
+// const pubKey = await this.getPublicKey();
+// return toSerializedSignature({
+//     signature,
+//     signatureScheme: this.#signatureScheme,
+//     pubKey,
+// });
 
   return {
-    untrusted_raw_value: rawTransaction,
-    signature: {
-        public_key: u8FromBuf(Buffer.from(publicKey,  'hex')),
-        signature:  u8FromBuf(resp.signature),
-    },
-};
+    tx: signData,
+    signature: res.signature/* : serializedSignature */
+  }
 }
-
-
-// 436917
-// 44/474/0/0/0
-// oasis1qqm7wfqr2y227esu2wnl59t4wnplh04hcgz84230
-//node  oasis1qq3xrq0urs8qcffhvmhfhz4p0mu7ewc8rscnlwxe

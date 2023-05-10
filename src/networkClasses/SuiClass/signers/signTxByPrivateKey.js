@@ -4,7 +4,6 @@ export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
     RawSigner,
     messageWithIntent,
     IntentScope,
-    /*fromSerializedSignature*/
   } = await import('@mysten/sui.js');
   const { fromB64, fromHEX } = await import('@mysten/bcs');
 
@@ -13,15 +12,6 @@ export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
   const signer = new RawSigner(keypair);
   const intentMessage = messageWithIntent(IntentScope.TransactionData, fromB64(signData));
   const serializedSignature = await signer.signData(intentMessage);
-
-  // let { signature, pubKey } = fromSerializedSignature(serializedSignature);
-  // const { default: nacl } = await import('tweetnacl');
-  // const isValid = nacl.sign.detached.verify(
-  //     intentMessage,
-  //     signature,
-  //     pubKey.toBytes(),
-  // );
-  // console.log(isValid);
 
   return {
     tx: signData,

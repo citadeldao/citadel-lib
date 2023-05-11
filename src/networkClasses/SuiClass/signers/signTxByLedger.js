@@ -1,37 +1,37 @@
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
+import { ledgerErrorHandler } from './functions'
 
-export const signTxByLedger = async (rawTransaction, derivationPath/* , publicKey, rightApp */) => {
-  const transport = await getLedgerTransport()
+export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, rightApp) => {
   const { default: SuiApp } = await import('@mysten/ledgerjs-hw-app-sui')
-  // const { 
-  //   Ed25519Keypair,
-  //   RawSigner,
-  //   messageWithIntent,
-  //   IntentScope,
-  //   toSerializedSignature
-  //   /*fromSerializedSignature*/
-  // } = await import('@mysten/sui.js');
-  // const { fromB64, fromHEX } = await import('@mysten/bcs');
+  const { 
+    messageWithIntent,
+    IntentScope,
+    toSerializedSignature,
+    publicKeyFromSerialized
+  } = await import('@mysten/sui.js');
+  const { fromB64 } = await import('@mysten/bcs');
+
+  const transport = await getLedgerTransport()
   const suiApp = new SuiApp(transport)
-  const res = await suiApp.signTransaction(derivationPath, rawTransaction);
-  console.log('test111',res);
-
-  // const keypair = Ed25519Keypair.fromSecretKey(fromHEX(privateKey));
   const signData = rawTransaction.bytes;
-  // const signer = new RawSigner(keypair);
-  // const intentMessage = messageWithIntent(IntentScope.TransactionData, fromB64(signData));
-  // const serializedSignature = await signer.signData(intentMessage);
-
-  
-// const pubKey = await this.getPublicKey();
-// return toSerializedSignature({
-//     signature,
-//     signatureScheme: this.#signatureScheme,
-//     pubKey,
-// });
+  const intentMessage = messageWithIntent(IntentScope.TransactionData, fromB64(signData));
+  let res
+  try{
+    res = await suiApp.signTransaction(derivationPath, intentMessage);
+  }catch(error){
+    ledgerErrorHandler({ error, rightApp })
+  }finally{
+    if(transport) await transport.close()
+  }
+  const suiPubKey = publicKeyFromSerialized('ED25519',Buffer.from(publicKey, 'hex').toString('base64'))
+  const serializedSignature = toSerializedSignature({
+    signature: res.signature,
+    signatureScheme: 'ED25519',
+    pubKey: suiPubKey,
+});
 
   return {
     tx: signData,
-    signature: res.signature/* : serializedSignature */
+    signature: serializedSignature
   }
 }

@@ -1,7 +1,6 @@
 import api from '../../api'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import { WALLET_TYPES, DELEGATION_TYPES, CACHE_NAMES } from '../../constants'
-// import { getHdDerivationPath } from '../_functions/ledger'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import { ledgerErrorHandler } from './signers/functions'

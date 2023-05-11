@@ -1,7 +1,6 @@
 import api from '../../api'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import { WALLET_TYPES, DELEGATION_TYPES, CACHE_NAMES } from '../../constants'
-import OasisApp from '@oasisprotocol/ledger'
 import { getHdDerivationPath } from '../_functions/ledger'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
 import { checkDelegationTypes } from '../../helpers/checkArguments'
@@ -145,6 +144,7 @@ export class OasisNetwork extends BaseNetwork {
   }
 
   static async createWalletByLedger({ derivationPath }) {
+    const { default: OasisApp } = await import('@oasisprotocol/ledger')
     const transport = await getLedgerTransport()
     const oasisApp = new OasisApp(transport)
     const hdPathArray = getHdDerivationPath(derivationPath)

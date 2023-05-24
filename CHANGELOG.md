@@ -1,3 +1,10 @@
+## 1.40.15 (2023-05-24)
+
+
+### Bug Fixes
+
+* fix getTokenTransactios for snip25 cb40f12
+
 ## 1.40.14 (2023-05-24)
 
 

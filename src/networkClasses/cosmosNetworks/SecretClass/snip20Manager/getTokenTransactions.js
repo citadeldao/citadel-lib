@@ -18,6 +18,7 @@ export async function getTokenTransactions({
           key: viewingKey,
           page,
           page_size: pageSize,
+          should_filter_decoys: false,
         },
       },
       address,

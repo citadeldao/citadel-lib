@@ -11,6 +11,7 @@ import { manageSubscriptions } from './manageSubscriptions'
 import { refreshAuthToken } from './refreshAuthToken'
 import { searchExtension } from './searchExtension'
 import { getExtensionById } from './getExtensionById'
+import { getExtensionTokenAuth } from './getExtensionTokenAuth'
 
 export const common = {
   getInfo,
@@ -26,4 +27,5 @@ export const common = {
   refreshAuthToken,
   searchExtension,
   getExtensionById,
+  getExtensionTokenAuth
 }

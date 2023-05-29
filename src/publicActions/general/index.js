@@ -34,6 +34,7 @@ import { coingeckoGetTokensInfo } from './coingeckoGetTokensInfo'
 import { coingeckoGetTokenMarketOhlc } from './coingeckoGetTokenMarketOhlc'
 import { coingeckoGetTokenInfoById } from './coingeckoGetTokenInfoById'
 import { coingeckoGetCategories } from './coingeckoGetCategories'
+import { getExtensionTokenAuth } from './getExtensionTokenAuth'
 
 
 
@@ -75,5 +76,6 @@ export const general = {
   coingeckoGetTokensInfo,
   coingeckoGetTokenMarketOhlc,
   coingeckoGetTokenInfoById,
-  coingeckoGetCategories
+  coingeckoGetCategories,
+  getExtensionTokenAuth
 }

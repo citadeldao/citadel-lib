@@ -1,3 +1,10 @@
+# 1.41.0 (2023-05-29)
+
+
+### Features
+
+* add app auth token method c54dcc6
+
 ## 1.40.15 (2023-05-24)
 
 

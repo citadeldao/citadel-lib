@@ -1,3 +1,10 @@
+## 1.41.1 (2023-06-05)
+
+
+### Bug Fixes
+
+* format snip transaction list 38e4d8b
+
 # 1.41.0 (2023-05-29)
 
 

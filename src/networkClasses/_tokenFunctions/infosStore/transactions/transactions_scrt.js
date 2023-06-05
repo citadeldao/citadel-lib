@@ -87,34 +87,92 @@ export async function transactions_scrt({ token, page = 1, pageSize = 10 }) {
     ({ id }, index) =>
       rawTransactionsList.findIndex((tx) => tx.id === id) === index
   )
-
   // format list
   const formattedList = filteredList.map(
     ({ from, receiver, id, coins: { amount } }) => {
-      let direction
+      // let direction
+      let view
       let value = amount / 10 ** networkClass.tokens[token].decimals
 
       // add transaction types
 
       // income transfer
       if (from !== this.address) {
-        direction = 'income'
-        value = +value
+        view = [
+          {
+            type: "Receive",
+            icon: "https://citadel-tx-icons.s3.eu-west-3.amazonaws.com/Receive.svg",
+            components: [
+                {
+                  title: "From",
+                  type: "textWithURL",
+                  value: {
+                    text: from,
+                    url: `https://www.mintscan.io/secret/account/${from}`
+                  },
+                },
+                {
+                  title: "Amount",
+                  type: "amount",
+                  value: {
+                    text: value,
+                    symbol: this.code
+                  },
+                }
+            ]
+          }
+        ]
       }
 
       // self send
       if (from === this.address && from === receiver) {
-        direction = 'transfer'
-        value = +value
+        view = [
+          {
+            type: "Self Send",
+            icon: "https://citadel-tx-icons.s3.eu-west-3.amazonaws.com/Self-send.svg",
+            components: [
+              {
+                title: "Amount",
+                type: "amount",
+                value: {
+                    text: value,
+                    symbol: this.code
+                },
+              }
+            ]
+          }
+        ]
       }
 
       // outcome send
       if (from === this.address && from !== receiver) {
-        direction = 'outcome'
-        value = -value
+        view = [
+          {
+            type: "Send",
+            icon: "https://citadel-tx-icons.s3.eu-west-3.amazonaws.com/Send.svg",
+            components: [
+              {
+                title: "To",
+                type: "textWithURL",
+                value: {
+                  text: receiver,
+                  url: `https://www.mintscan.io/secret/account/${receiver}`
+                },
+              },
+              {
+                title: "Amount",
+                type: "amount",
+                value: {
+                    text: value,
+                    symbol: this.code
+                },
+              }
+            ]
+          }
+        ]
       }
 
-      return { from, to: receiver, id, type: 'transfer', direction, value }
+      return { view, id }
     }
   )
 

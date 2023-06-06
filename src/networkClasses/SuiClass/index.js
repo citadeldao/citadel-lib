@@ -79,22 +79,21 @@ export class SuiNetwork extends BaseNetwork {
     return await signTxByPrivateKey(transaction, privateKey)
   }
 
-  // async createMessageSignature(data, { privateKey, derivationPath }) {
-  //   const formatedTx = await tranformTransaction(data)
-  //   let signedTx
-  //   // ledger signer
-  //   if (this.type === WALLET_TYPES.LEDGER) {
-  //     //rigth app for ledger
-  //     const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+  async createMessageSignature(rawTransaction, { privateKey, derivationPath }) {
+    let data
 
-  //     signedTx = await signTxByLedger(formatedTx, derivationPath, this.publicKey, rightApp)
-  //   } else {
-  //     // privateKey signer
-  //     signedTx = await signTxByPrivateKey(formatedTx, privateKey)
-  //   }
+    // ledger signer
+    if (this.type === WALLET_TYPES.LEDGER) {
+      //rigth app for ledger
+      const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
+      data = await signTxByLedger(rawTransaction, derivationPath, this.publicKey, rightApp)
+    }else {
+      // privateKey signer
+      data = await signTxByPrivateKey(rawTransaction, privateKey)
+    }
 
-  //   return Buffer.from(signedTx.signature.signature).toString('hex')
-  // }
+    return data.signature
+  }
 
   static async createWalletByMnemonic({
     mnemonic,

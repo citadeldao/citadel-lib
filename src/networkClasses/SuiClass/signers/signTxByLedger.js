@@ -3,7 +3,7 @@ import { ledgerErrorHandler } from './functions'
 
 export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, rightApp) => {
   const { default: SuiApp } = await import('@mysten/ledgerjs-hw-app-sui')
-  const { 
+  const {
     messageWithIntent,
     IntentScope,
     toSerializedSignature,
@@ -13,7 +13,7 @@ export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, 
 
   const transport = await getLedgerTransport()
   const suiApp = new SuiApp(transport)
-  const signData = rawTransaction.bytes;
+  const signData = rawTransaction.bytes || rawTransaction;
   const intentMessage = messageWithIntent(IntentScope.TransactionData, fromB64(signData));
   let res
   try{

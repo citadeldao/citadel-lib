@@ -1,3 +1,10 @@
+## 1.41.5 (2023-06-07)
+
+
+### Bug Fixes
+
+* chenge getCurrencyHistoryByRange method res 9d1ee06
+
 ## 1.41.4 (2023-06-07)
 
 

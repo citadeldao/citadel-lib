@@ -10,7 +10,7 @@ import { isNativeToken } from '../../helpers/isNativeToken'
 /**
  * Getting the token rate for the period.
  *
- * @param netOrToken STRING (REQUIRED) - network or token key
+ * @param net STRING (REQUIRED) - network or token key
  * @param dateFrom STRING, NUMBER (REQUIRED) - beginning of period (ms)
  * @param dateTo STRING, NUMBER (OPTIONAL) - end of period (ms)
  * @returns Returns OBJECT with decoded password
@@ -18,9 +18,11 @@ import { isNativeToken } from '../../helpers/isNativeToken'
  * @example
  *
  * const response = citadel.getCurrencyHistoryByRange(
- *   'band',
- *   '1643753708000',
- *   '1644185708000'
+ *   {
+ *    net: 'band',
+ *    dateFrom: '1643753708000',
+ *    dateTo: '1644185708000'
+ *  }
  * )
  *
  * // =>
@@ -38,33 +40,32 @@ import { isNativeToken } from '../../helpers/isNativeToken'
  * }
  */
 
-export const getCurrencyHistoryByRange = async (
-  netOrToken,
-  dateFrom,
-  dateTo
-) => {
+export const getCurrencyHistoryByRange = async (options = {}) => {
   // checks
   checkInitialization()
+  checkTypes(['options', options, ['Object']])
+
+  const { dateFrom, dateTo, net } = options
   checkTypes(
-    ['netOrToken', netOrToken, ['String'], true],
+    ['net', net, ['String'], true],
     ['dateFrom', dateFrom, ['String', 'Number'], true],
     ['dateTo', dateTo, ['String', 'Number']]
   )
 
-  checkNetworkOrToken(netOrToken)
+  checkNetworkOrToken(net)
 
   // TODO: move if to static method
 
   // for native token call static network method
-  if (isNativeToken(netOrToken)) {
+  if (isNativeToken(net)) {
     return await networkClasses
-      .getNetworkClass(netOrToken)
+      .getNetworkClass(net)
       .getCurrencyHistoryByRange(dateFrom, dateTo)
   }
 
   // for subtoken call api
   const { data } = await api.requests.getCurrencyHistoryByRange({
-    net: netOrToken,
+    net,
     dateFrom,
     dateTo,
   })

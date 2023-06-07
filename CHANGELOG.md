@@ -1,3 +1,10 @@
+## 1.41.4 (2023-06-07)
+
+
+### Bug Fixes
+
+* change getCurrencyHistoryByRange method args 9726908
+
 ## 1.41.3 (2023-06-06)
 
 

@@ -48,7 +48,7 @@ export const getCurrencyHistoryByRange = async (options = {}) => {
   const { dateFrom, dateTo, net } = options
   checkTypes(
     ['net', net, ['String'], true],
-    ['dateFrom', dateFrom, ['String', 'Number'], true],
+    ['dateFrom', dateFrom, ['String', 'Number']],
     ['dateTo', dateTo, ['String', 'Number']]
   )
 
@@ -58,12 +58,9 @@ export const getCurrencyHistoryByRange = async (options = {}) => {
 
   // for native token call static network method
   if (isNativeToken(net)) {
-    const res = await networkClasses
+    return await networkClasses
       .getNetworkClass(net)
       .getCurrencyHistoryByRange(dateFrom, dateTo)
-    const formatedData = { list: res }
-
-    return formatedData
   }
 
   // for subtoken call api
@@ -72,7 +69,6 @@ export const getCurrencyHistoryByRange = async (options = {}) => {
     dateFrom,
     dateTo,
   })
-  const formatedData = { list: data }
-  
-  return formatedData
+
+  return data
 }

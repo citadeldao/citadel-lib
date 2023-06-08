@@ -1,3 +1,10 @@
+## 1.41.6 (2023-06-08)
+
+
+### Bug Fixes
+
+* fix getCurrencyHistoryByRange 531134f
+
 ## 1.41.5 (2023-06-07)
 
 

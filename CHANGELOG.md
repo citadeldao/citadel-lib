@@ -1,3 +1,10 @@
+## 1.41.7 (2023-06-13)
+
+
+### Bug Fixes
+
+* add fiat arg to price history api f9f4948
+
 ## 1.41.6 (2023-06-08)
 
 

@@ -13,6 +13,7 @@ import { isNativeToken } from '../../helpers/isNativeToken'
  * @param net STRING (REQUIRED) - network or token key
  * @param dateFrom STRING, NUMBER (REQUIRED) - beginning of period (ms)
  * @param dateTo STRING, NUMBER (OPTIONAL) - end of period (ms)
+ * @param dateTo STRING - grap data currency(usd/btc)
  * @returns Returns OBJECT with decoded password
  * When called outside, result wraps into an object of the form { result: 'success', data: returnedValue, error: null }
  * @example
@@ -21,7 +22,8 @@ import { isNativeToken } from '../../helpers/isNativeToken'
  *   {
  *    net: 'band',
  *    dateFrom: '1643753708000',
- *    dateTo: '1644185708000'
+ *    dateTo: '1644185708000',
+ *    fiat: 'usd'(default)/'btc'
  *  }
  * )
  *
@@ -45,11 +47,12 @@ export const getCurrencyHistoryByRange = async (options = {}) => {
   checkInitialization()
   checkTypes(['options', options, ['Object']])
 
-  const { dateFrom, dateTo, net } = options
+  const { dateFrom, dateTo, net, fiat } = options
   checkTypes(
     ['net', net, ['String'], true],
     ['dateFrom', dateFrom, ['String', 'Number']],
-    ['dateTo', dateTo, ['String', 'Number']]
+    ['dateTo', dateTo, ['String', 'Number']],
+    ['fiat', fiat, ['String']]
   )
 
   checkNetworkOrToken(net)
@@ -60,7 +63,7 @@ export const getCurrencyHistoryByRange = async (options = {}) => {
   if (isNativeToken(net)) {
     return await networkClasses
       .getNetworkClass(net)
-      .getCurrencyHistoryByRange(dateFrom, dateTo)
+      .getCurrencyHistoryByRange(dateFrom, dateTo, fiat)
   }
 
   // for subtoken call api
@@ -68,6 +71,7 @@ export const getCurrencyHistoryByRange = async (options = {}) => {
     net,
     dateFrom,
     dateTo,
+    fiat
   })
 
   return data

@@ -52,6 +52,7 @@ export const addExistingWallet = async ({
       WALLET_TYPES.TREZOR,
       WALLET_TYPES.KEPLR,
       WALLET_TYPES.METAMASK,
+      WALLET_TYPES.WALLET_CONNECT,
     ].includes(createdWallet.type)
   ) {
     if (existingWallet.type === WALLET_TYPES.PUBLIC_KEY) {

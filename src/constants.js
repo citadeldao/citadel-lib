@@ -81,6 +81,7 @@ export const WALLET_TYPES = {
   METAMASK: 'metamask',
   KEPLR: 'keplr',
   SEED_PHRASE: 'seedPhrase',
+  WALLET_CONNECT: 'walletConnect'
 }
 
 export const HARDWARE_SIGNER_WALLET_TYPES = [

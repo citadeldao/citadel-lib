@@ -37,7 +37,7 @@ export const updateSubtokensList = async function (
     // Object.entries(allTokenBalances || {})
       // filter unsupported tokens
       // .filter(([token]) => networkClass.tokens[token])
-      allTokenBalances.map(async (token, meta , balance, details, price = { USD: 0, BTC: 0 } ) => {
+      allTokenBalances.map(async ({token, meta , balance, details, methods = {bridge: []}, price = { USD: 0, BTC: 0 } }) => {
         // const addConfig = additionalConfig.find(item => item.net === this.net)?.config?.tokens?.[token] || {}
         // create subtkenList item from token config and token balance
         const subtokenListItem = {
@@ -47,6 +47,7 @@ export const updateSubtokensList = async function (
           standard: meta.standard,//networkClass.tokens[token].standard,
           decimals: meta.decimal,
           nativeNet: this.net,
+          methods,
           // ...addConfig,
           // by default - get balance from allTokenBalances array
           hasTransactionComment: meta.standard !== 'snip20',

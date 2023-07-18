@@ -1,4 +1,4 @@
-import state from '../../../state'
+// import state from '../../../state'
 
 // function returns request parameters for the axios instance.
 export const getAllTokenBalances = ({ net, address }) => {
@@ -9,7 +9,7 @@ export const getAllTokenBalances = ({ net, address }) => {
     method: 'get',
     data: {
       params: {
-        version: state.getState('backendApiVersion'),
+        version: '1.1.1',
       },
     },
   }

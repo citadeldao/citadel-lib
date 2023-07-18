@@ -2,7 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
@@ -40,7 +40,7 @@ export const getCrossNetworkRoutes = (walletId, token) => {
     ['token', token, ['String'], true]
   )
   checkWalletId(walletId)
-  checkNetworkOrToken(token)
+  // checkNetworkOrToken(token)
 
   // call walletInstance method
   return walletInstances

@@ -6,7 +6,9 @@ export const prepareTokenAction = async function (
   actionName,
   options = {}
 ) {
-  const tokenActions = getTokenFunctions(this.net, token, 'actions')
+  const standard = this.subtokensList.find(item => item.net === token)?.standard
+  const tokenActions = getTokenFunctions(this.net, token, 'actions', standard)
+  
 
   const actionFunction = tokenActions[actionName]
 

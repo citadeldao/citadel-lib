@@ -42,17 +42,17 @@ export const checkNetwork = (net) => {
 }
 
 // network or token key support check
-export const checkNetworkOrToken = (netOrToken, trowError = true) => {
-  const supportedKeys = [
-    ...state.getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS),
-    ...Object.keys(state.getState('supportedTokens')),
-  ]
-  if (!supportedKeys.includes(netOrToken)) {
-    const errorMessage = `'${netOrToken}' network/token key is not supported.`
-    trowError && errors.throwError('WrongArguments', { message: errorMessage })
-  }
-  return supportedKeys.includes(netOrToken)
-}
+// export const checkNetworkOrToken = (netOrToken, trowError = true) => {
+//   const supportedKeys = [
+//     ...state.getState(CACHE_NAMES.SUPPORTED_NETWORK_KEYS),
+//     ...Object.keys(state.getState('supportedTokens')),
+//   ]
+//   if (!supportedKeys.includes(netOrToken)) {
+//     const errorMessage = `'${netOrToken}' network/token key is not supported.`
+//     trowError && errors.throwError('WrongArguments', { message: errorMessage })
+//   }
+//   return supportedKeys.includes(netOrToken)
+// }
 
 // checking the existence of a wallet with this id
 export const checkWalletId = (walletId) => {
@@ -82,23 +82,24 @@ export const checkNetworkDaoSupport = (net) => {
 }
 
 // checking if the network has a token
-export const checkNetworkToken = (net, token) => {
-  if (
-    !Object.keys(networkClasses.getNetworkClass(net)?.tokens || {}).includes(
-      token
-    )
-  ) {
-    errors.throwError('WrongArguments', {
-      message: `Network "${net}" does not support the token with the key "${token}"`,
-    })
-  }
-}
+// export const checkNetworkToken = (net, token) => {
+//   if (
+//     !Object.keys(networkClasses.getNetworkClass(net)?.tokens || {}).includes(
+//       token
+//     )
+//   ) {
+//     errors.throwError('WrongArguments', {
+//       message: `Network "${net}" does not support the token with the key "${token}"`,
+//     })
+//   }
+// }
 
 // check token support by network
 export const checkTokensSupport = (net) => {
   if (
-    !networkClasses.getNetworkClass(net).tokens ||
-    !Object.keys(networkClasses.getNetworkClass(net).tokens).length
+    !networkClasses.getNetworkClass(net).totalTokens
+    // !networkClasses.getNetworkClass(net).tokens ||
+    // !Object.keys(networkClasses.getNetworkClass(net).tokens).length
   ) {
     errors.throwError('MethodNotSupported', {
       message: `Network "${net}" does not support tokens`,

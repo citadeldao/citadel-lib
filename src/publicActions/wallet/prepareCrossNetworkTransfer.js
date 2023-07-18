@@ -2,7 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
@@ -19,7 +19,7 @@ export const prepareCrossNetworkTransfer = async function (
     ['options', options, ['Object'], true]
   )
   checkWalletId(walletId)
-  checkNetworkOrToken(token)
+  // checkNetworkOrToken(token)
 
   const { toNetwork, toAddress, amount, fee, memo } = options
   checkTypes(
@@ -30,7 +30,7 @@ export const prepareCrossNetworkTransfer = async function (
     ['memo', memo, ['String']]
   )
 
-  checkNetworkOrToken(token)
+  // checkNetworkOrToken(token)
 
   // call wallet instance method
   return await walletInstances

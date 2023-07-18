@@ -1,7 +1,7 @@
 import networkClasses from '../../networkClasses'
 import {
   checkTypes,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
   checkInitialization,
 } from '../../helpers/checkArguments'
 
@@ -43,7 +43,7 @@ export const decodePrivateKeyByPassword = (
     ['password', password, ['String'], true]
   )
 
-  checkNetworkOrToken(netOrToken)
+  // checkNetworkOrToken(netOrToken)
 
   // get native net
   const nativeNet = networkClasses.getNativeNet(netOrToken)

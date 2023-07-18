@@ -1,7 +1,7 @@
 import networkClasses from '../../networkClasses'
 import {
   checkTypes,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
   checkInitialization,
 } from '../../helpers/checkArguments'
 import api from '../../api'
@@ -45,7 +45,7 @@ export const getNetworkMarketcap = async (netOrToken) => {
   // checks
   checkInitialization()
   checkTypes(['netOrToken ', netOrToken, ['String'], true])
-  checkNetworkOrToken(netOrToken)
+  // checkNetworkOrToken(netOrToken)
 
   // TODO: move if to static method
 

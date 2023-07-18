@@ -1,7 +1,7 @@
 import networkClasses from '../../networkClasses'
 import {
   checkTypes,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
   checkInitialization,
 } from '../../helpers/checkArguments'
 import api from '../../api'
@@ -55,7 +55,7 @@ export const getCurrencyHistoryByRange = async (options = {}) => {
     ['fiat', fiat, ['String']]
   )
 
-  checkNetworkOrToken(net)
+  // checkNetworkOrToken(net)
 
   // TODO: move if to static method
 

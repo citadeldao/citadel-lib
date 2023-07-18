@@ -2,7 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
@@ -58,7 +58,7 @@ export const getFees = (walletId, token) => {
     ['walletId', walletId, ['String', 'Number'], true],
     ['token', token, ['String']]
   )
-  token && checkNetworkOrToken(token)
+  // token && checkNetworkOrToken(token)
   checkWalletId(walletId)
 
   // call walletInstance method

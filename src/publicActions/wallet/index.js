@@ -8,7 +8,7 @@ import { signAndSendMulti } from './signAndSendMulti'
 import { getTransactionsById } from './getTransactionsById'
 import { getTransactionByHash } from './getTransactionByHash'
 import { getTokenActions } from './getTokenActions'
-import { getTokensById } from './getTokensById'
+// import { getTokensById } from './getTokensById'
 import { prepareTokenAction } from './prepareTokenAction'
 import { getTokenInfos } from './getTokenInfos'
 import { callTokenInfo } from './callTokenInfo'
@@ -65,7 +65,7 @@ export const wallet = {
   getTransactionsById,
   getTransactionByHash,
   getTokenActions,
-  getTokensById,
+  // getTokensById,
   prepareTokenAction,
   getTokenInfos,
   callTokenInfo,

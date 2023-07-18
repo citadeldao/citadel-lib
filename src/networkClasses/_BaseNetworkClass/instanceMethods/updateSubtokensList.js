@@ -3,7 +3,8 @@ import networkClasses from '../../'
 import api from '../../../api'
 import { retryRequestOnError } from '../../../helpers/retryRequestOnError'
 import { calculateSubtokenBalanceUSD } from '../../_functions/balances'
-import { debugConsole } from '../../../helpers/debugConsole'
+// import { debugConsole } from '../../../helpers/debugConsole'
+// import { additionalConfig } from './../../../api/formattedRequestsAdapter/_hardCode'
 
 // private method
 export const updateSubtokensList = async function (
@@ -12,7 +13,7 @@ export const updateSubtokensList = async function (
   const networkClass = networkClasses.getNetworkClass(this.net)
 
   // return empty object if net does not have tokens
-  if (!networkClass.tokens || !Object.keys(networkClass.tokens).length) {
+  if (!networkClass.totalTokens) {
     return {}
   }
 
@@ -33,47 +34,51 @@ export const updateSubtokensList = async function (
 
   // create subtokenList
   const subtokensList = await Promise.all(
-    Object.entries(allTokenBalances || {})
+    // Object.entries(allTokenBalances || {})
       // filter unsupported tokens
-      .filter(([token]) => networkClass.tokens[token])
-      .map(async ([token, { amount, price = { USD: 0, BTC: 0 } }]) => {
+      // .filter(([token]) => networkClass.tokens[token])
+      allTokenBalances.map(async (token, meta , balance, details, price = { USD: 0, BTC: 0 } ) => {
+        // const addConfig = additionalConfig.find(item => item.net === this.net)?.config?.tokens?.[token] || {}
         // create subtkenList item from token config and token balance
         const subtokenListItem = {
           net: token,
-          name: networkClass.tokens[token].name,
-          code: networkClass.tokens[token].code,
-          standard: networkClass.tokens[token].standard,
+          name: meta.name,//networkClass.tokens[token].name,
+          code: meta.code,//networkClass.tokens[token].code,
+          standard: meta.standard,//networkClass.tokens[token].standard,
+          decimals: meta.decimal,
+          nativeNet: this.net,
+          // ...addConfig,
           // by default - get balance from allTokenBalances array
           tokenBalance: {
-            mainBalance: amount,
-            calculatedBalance: amount,
+            mainBalance: details.available,
+            calculatedBalance: balance,
             price,
             adding: [],
             delegatedBalance: 0,
-            frozenBalance: 0,
+            frozenBalance: details.frozen,
             originatedAddresses: [],
-            stake: 0,
+            stake: details.stake,
             unstake: 0,
             linked: true,
             claimableRewards: 0,
           },
         }
 
-        // if token has stake, get detailed balance
-        if (this.getTokenActions(token).includes('stake')) {
-          // catch error to to keep looping anyway
-          try {
-            const detailedBalance = await this.callTokenInfo(token, 'balance', {
-              preventEvent: true,
-            })
-            subtokenListItem.tokenBalance = {
-              ...subtokenListItem.tokenBalance,
-              ...detailedBalance,
-            }
-          } catch (error) {
-            debugConsole.error(error)
-          }
-        }
+        // // if token has stake, get detailed balance
+        // if (this.getTokenActions(token).includes('stake')) {
+        //   // catch error to to keep looping anyway
+        //   try {
+        //     const detailedBalance = await this.callTokenInfo(token, 'balance', {
+        //       preventEvent: true,
+        //     })
+        //     subtokenListItem.tokenBalance = {
+        //       ...subtokenListItem.tokenBalance,
+        //       ...detailedBalance,
+        //     }
+        //   } catch (error) {
+        //     debugConsole.error(error)
+        //   }
+        // }
 
         return subtokenListItem
       })

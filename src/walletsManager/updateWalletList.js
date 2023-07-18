@@ -36,6 +36,7 @@ export const updateWalletList = async (
             ...item.meta,
             decimals: item.meta.decimal,
             nativeNet: net,
+            methods: item.methods || {bridge: []},
             // ...addConfig,
             hasTransactionComment: item.standard !== 'snip20',
             tokenBalance: {
@@ -55,6 +56,7 @@ export const updateWalletList = async (
           delete formatedItem.details
           delete formatedItem.meta
           delete formatedItem.decimal
+          delete formatedItem.balance
           return formatedItem
         })
       })

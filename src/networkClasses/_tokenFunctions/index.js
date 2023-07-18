@@ -1,7 +1,8 @@
-import networkClasses from '../'
+//import networkClasses from '../'
 import { formatConfig } from './formatConfig'
 import { actionsStore } from './actionsStore'
 import { infosStore } from './infosStore'
+import { additionalConfig } from './../../api/formattedRequestsAdapter/_hardCode'
 
 const stores = {
   infos: infosStore,
@@ -9,12 +10,13 @@ const stores = {
 }
 
 // functionGroup - 'action' or 'info'
-export const getTokenFunctions = (net, token, functionGroup) => {
-  const tokenConfig = networkClasses.getNetworkClass(net).tokens
-  const tokenFormat = tokenConfig[token].standard
+export const getTokenFunctions = (net, token, functionGroup, standard) => {
+  //const tokenConfig = networkClasses.getNetworkClass(net).tokens
+  const tokenFormat = standard/* tokenConfig[token].standard */
 
   // get token livel functions from formatted config
-  const tokenLevelFunctions = tokenConfig[token][functionGroup] || {}
+  // const tokenLevelFunctions = tokenConfig[token][functionGroup] || {}
+  const tokenLevelFunctions = additionalConfig.find(item => net === item.net)?.config?.tokens?.[token]?.[functionGroup] || {}
 
   // get format level functions from format config
   const formatLevelFunctions = formatConfig[tokenFormat]?.[functionGroup] || {}

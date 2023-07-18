@@ -1,7 +1,7 @@
 import networkClasses from '../../networkClasses'
 import {
   checkTypes,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
   checkInitialization,
 } from '../../helpers/checkArguments'
 import errors from '../../errors'
@@ -42,7 +42,7 @@ export const encodePrivateKeyByPassword = (
     ['netOrToken', privateKey, ['String'], true],
     ['password', password, ['String'], true]
   )
-  checkNetworkOrToken(netOrToken)
+  // checkNetworkOrToken(netOrToken)
 
   if (password === '') {
     errors.throwError('WrongArguments', { message: 'Empty password' })

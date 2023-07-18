@@ -6,6 +6,7 @@ import storage from '../storage'
 import networkClasses from '../networkClasses'
 import { CACHE_NAMES } from '../constants'
 import walletInstances from '../walletInstances'
+//import { additionalConfig } from './../api/formattedRequestsAdapter/_hardCode'
 
 // update wallet list by account wallets (used inside the library with 'info', 'wallets', 'walletsDetail' requests)
 export const updateWalletList = async (
@@ -19,7 +20,7 @@ export const updateWalletList = async (
     )
     // leave only important fields
     .map(
-      ({ id, net, address, balance, claimedRewards, notification, title }) => ({
+      ({ id, net, address, balance, claimedRewards, notification, title, tokens }) => ({
         id,
         net,
         address,
@@ -27,6 +28,35 @@ export const updateWalletList = async (
         claimedRewards,
         notification,
         title,
+        subtokensList: tokens.map(item => {
+          //const addConfig = additionalConfig.find(item => item.net === net)?.config?.tokens?.[item.token] || {}
+          const formatedItem = {
+            ...item,
+            net: item.token,
+            ...item.meta,
+            decimals: item.meta.decimal,
+            nativeNet: net,
+            // ...addConfig,
+            tokenBalance: {
+              mainBalance: item.details.available,
+              calculatedBalance: item.balance,
+              price: item.price,
+              adding: [],
+              delegatedBalance: 0,
+              frozenBalance: item.details.frozen,
+              originatedAddresses: [],
+              stake: item.details.stake,
+              unstake: 0,
+              linked: true,
+              claimableRewards: 0,
+              hasTransactionComment: true
+            },
+          }
+          delete formatedItem.details
+          delete formatedItem.meta
+          delete formatedItem.decimal
+          return formatedItem
+        })
       })
     )
 
@@ -57,6 +87,7 @@ export const updateWalletList = async (
           code: networkConfig.code,
           methods: networkConfig.methods,
           networkName: networkConfig.name,
+          subtokensList: accountWallet.subtokensList,
           ...(networkConfig.fee_key && { fee_key: networkConfig.fee_key }),
           ...(networkConfig.bridges && { bridges: networkConfig.bridges }),
         },
@@ -99,6 +130,18 @@ export const updateWalletList = async (
       }
     })
   )
+
+  //create supported tokens object
+  const walletsList = getWalletList()
+  const supportedTokens = {}
+
+  walletsList.forEach(({subtokensList, net}) => {
+    subtokensList.forEach(item => {
+      supportedTokens[item.net] = net
+    })
+  })
+  // set supported tokens to state
+  state.setState('supportedTokens', supportedTokens)
 
   // sync wallet instances
   await walletInstances.syncWalletInstancesWithStorage()

@@ -2,8 +2,8 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
-  checkNetworkToken,
+  // checkNetworkOrToken,
+  // checkNetworkToken,
   checkTokensSupport,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
@@ -15,11 +15,11 @@ export const getTokenActions = (walletId, token) => {
     ['walletId', walletId, ['String', 'Number'], true],
     ['token', token, ['String'], true]
   )
-  checkNetworkOrToken(token)
+  // checkNetworkOrToken(token)
   checkWalletId(walletId)
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
   checkTokensSupport(walletInstance.net)
-  checkNetworkToken(walletInstance.net, token)
+  // checkNetworkToken(walletInstance.net, token)
 
   // call walletInstance method
   const actionsArray = walletInstance.getTokenActions(token)

@@ -1,10 +1,10 @@
 import {
   checkTypes,
   checkInitialization,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
   checkWalletId,
   checkTokensSupport,
-  checkNetworkToken,
+  // checkNetworkToken,
 } from '../../helpers/checkArguments'
 import errors from '../../errors'
 import walletInstances from '../../walletInstances'
@@ -53,12 +53,12 @@ export const callTokenInfo = (walletId, token, infoName, options) => {
     ['infoName', infoName, ['String'], true],
     ['options', options, ['Object']]
   )
-  checkNetworkOrToken(token)
+  // checkNetworkOrToken(token)
   checkWalletId(walletId)
 
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
   checkTokensSupport(walletInstance.net)
-  checkNetworkToken(walletInstance.net, token)
+  // checkNetworkToken(walletInstance.net, token)
 
   if (!walletInstance.getTokenInfos(token).includes(infoName)) {
     errors.throwError('MethodNotSupported', {

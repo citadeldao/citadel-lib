@@ -1,6 +1,7 @@
 import state from '../../state'
 import { CACHE_NAMES } from '../../constants'
 import networkClasses from '../../networkClasses'
+// import walletsManager from './../../walletsManager'
 
 export const configureModulesByCaches = ({
   networksConfig,
@@ -22,15 +23,27 @@ export const configureModulesByCaches = ({
     daoSupportedNetworks.filter((net) => supportedNetworkKeys.includes(net))
   )
 
-  // create supported tokens object
-  const supportedTokens = {}
 
-  supportedNetworkKeys.map((net) => {
-    Object.keys(networksConfig[net].tokens || {}).map((token) => {
-      supportedTokens[token] = net
-    })
-  })
+  // //create supported tokens object
+  // const supportedTokens = {}
 
-  // set supported tokens to state
-  state.setState('supportedTokens', supportedTokens)
+  // supportedNetworkKeys.map((net) => {
+  //   Object.keys(networksConfig[net].tokens || {}).map((token) => {
+  //     supportedTokens[token] = net
+  //   })
+  // })
+  // // set supported tokens to state
+  // state.setState('supportedTokens', supportedTokens)
+
+  // //create supported tokens object
+  // const walletsList = walletsManager.getWalletList()
+  // const supportedTokens = {}
+
+  // walletsList.forEach(({subtokensList, net}) => {
+  //   subtokensList.forEach(item => {
+  //     supportedTokens[item.net] = net
+  //   })
+  // })
+  // // set supported tokens to state
+  // state.setState('supportedTokens', supportedTokens)
 }

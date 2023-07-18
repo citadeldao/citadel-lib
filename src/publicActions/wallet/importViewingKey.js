@@ -2,7 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
@@ -16,7 +16,7 @@ export const importViewingKey = async (walletId, token, viewingKey) => {
     ['token', token, ['String'], true],
     ['viewingKey', viewingKey, ['String'], true]
   )
-  checkNetworkOrToken(token)
+  // checkNetworkOrToken(token)
   checkWalletId(walletId)
 
   // call wallet instance method

@@ -2,7 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 
@@ -22,7 +22,7 @@ export const getTransactionsById = async (walletId, options = {}) => {
     ['token', token, ['Number', 'String']],
     ['kt', kt, ['String']]
   )
-  token && checkNetworkOrToken(token)
+  // token && checkNetworkOrToken(token)
 
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
 

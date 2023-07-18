@@ -5,7 +5,6 @@ export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
     messageWithIntent,
     IntentScope,
   } = await import('@mysten/sui.js');
-  console.log('test222',rawTransaction);
   const { fromB64, fromHEX } = await import('@mysten/bcs');
 
   const keypair = Ed25519Keypair.fromSecretKey(fromHEX(privateKey));

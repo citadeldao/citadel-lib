@@ -2,7 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
 } from '../../helpers/checkArguments'
 import walletInstances from '../../walletInstances'
 import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
@@ -44,7 +44,7 @@ export const getBalanceById = async (walletId, token) => {
     ['token', token, ['String']]
   )
   checkWalletId(walletId)
-  token && checkNetworkOrToken(token)
+  // token && checkNetworkOrToken(token)
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
 
   if (!token || token === walletInstance.net) {

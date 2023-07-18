@@ -2,7 +2,7 @@ import {
   checkTypes,
   checkInitialization,
   checkWalletId,
-  checkNetworkOrToken,
+  // checkNetworkOrToken,
 } from '../../helpers/checkArguments'
 import {
   HARDWARE_SIGNER_WALLET_TYPES,
@@ -37,9 +37,9 @@ export const setViewingKey = async (
     ['viewingKeyType', viewingKeyType, ['String']],
     // ['options', options, ['Object'], true]
   )
-  if(isTokenRequired){
-    checkNetworkOrToken(token)
-  }
+  // if(isTokenRequired){
+  //   checkNetworkOrToken(token)
+  // }
   
   checkWalletId(walletId)
 

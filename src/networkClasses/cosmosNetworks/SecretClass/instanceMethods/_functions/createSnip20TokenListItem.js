@@ -29,6 +29,7 @@ export const createSnip20TokenListItem = async (
     code: tokensConfig[token].code,
     standard: tokensConfig[token].standard,
     savedViewingKey: savedViewingKeys[token],
+    hasTransactionComment: false,
     tokenBalance: {
       mainBalance: amount,
       calculatedBalance: amount,

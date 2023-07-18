@@ -75,25 +75,25 @@ export const getNetworksConfig = async () => {
   // })
 
   // add hasTransactionComment true for all tokens except snip20
-  Object.entries(networksConfig).map(([net, { tokens }]) => {
-    //networksConfig[net].unstakeingPerioud = storage.caches.getCache(CACHE_NAMES.MARKETCAPS)[net]?.unbondingPeriod || 0
-    if (tokens && Object.keys(tokens).length) {
-      Object.entries(tokens).map(([token, { standard }]) => {
-        if (standard === 'snip20') {
-          networksConfig[net].tokens[token].hasTransactionComment = false
-        } else {
-          networksConfig[net].tokens[token].hasTransactionComment = true
-        }
-      })
-    }
-  })
+  // Object.entries(networksConfig).map(([net, { tokens }]) => {
+  //   //networksConfig[net].unstakeingPerioud = storage.caches.getCache(CACHE_NAMES.MARKETCAPS)[net]?.unbondingPeriod || 0
+  //   if (tokens && Object.keys(tokens).length) {
+  //     Object.entries(tokens).map(([token, { standard }]) => {
+  //       if (standard === 'snip20') {
+  //         networksConfig[net].tokens[token].hasTransactionComment = false
+  //       } else {
+  //         networksConfig[net].tokens[token].hasTransactionComment = true
+  //       }
+  //     })
+  //   }
+  // })
 
-  // TODO GRISH
-  Object.entries(networksConfig).map(([net, { tokens, /* derivationPathTemplates, unstakeingPerioud */}]) => {
-    // formatedConfig[net].unstakeingPerioud = unstakeingPerioud
-    formatedConfig[net].tokens = tokens
-    // formatedConfig[net].derivationPathTemplates = derivationPathTemplates
-  })
+  // // TODO GRISH
+  // Object.entries(networksConfig).map(([net, { tokens, /* derivationPathTemplates, unstakeingPerioud */}]) => {
+  //   // formatedConfig[net].unstakeingPerioud = unstakeingPerioud
+  //   formatedConfig[net].tokens = tokens
+  //   // formatedConfig[net].derivationPathTemplates = derivationPathTemplates
+  // })
 
   console.log('test111', networksConfig, formatedConfig);
 

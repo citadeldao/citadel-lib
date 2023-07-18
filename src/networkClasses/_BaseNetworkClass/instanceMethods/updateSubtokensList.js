@@ -49,6 +49,7 @@ export const updateSubtokensList = async function (
           nativeNet: this.net,
           // ...addConfig,
           // by default - get balance from allTokenBalances array
+          hasTransactionComment: meta.standard !== 'snip20',
           tokenBalance: {
             mainBalance: details.available,
             calculatedBalance: balance,

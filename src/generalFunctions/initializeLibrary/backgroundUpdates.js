@@ -1,7 +1,7 @@
 import api from '../../api'
 import state from '../../state'
 import walletsManager from '../../walletsManager'
-// import walletInstances from '../../walletInstances'
+import walletInstances from '../../walletInstances'
 import { dispatchLibEvent } from '../../generalFunctions/dispatchLibEvent'
 import { LIB_EVENT_NAMES } from '../../constants'
 import { configureModulesByCaches } from './configureModulesByCaches'
@@ -29,8 +29,8 @@ export const backgroundUpdates = async (initialCacheManager) => {
     // update walletList detail
     await walletsManager.updateWalletList(detailedAccountwallets)
 
-    // get updated walletList
-    // const walletList = walletsManager.getWalletList()
+    //get updated walletList
+    const walletList = walletsManager.getWalletList()
 
     // //update subtokensLists
     // await Promise.all(
@@ -42,16 +42,16 @@ export const backgroundUpdates = async (initialCacheManager) => {
     //   })
     // )
     //update subtokensLists for secret snip
-    // await Promise.all(
-    //   walletList.map(async (walletInfo) => {
-    //     if(walletInfo.net === 'secret'){
-    //       // update all subtokensList
-    //       await walletInstances
-    //       .getWalletInstanceById(walletInfo.id)
-    //       .updateSubtokensList()
-    //     }
-    //   })
-    // )
+    await Promise.all(
+      walletList.map(async (walletInfo) => {
+        if(walletInfo.net === 'secret'){
+          // update all subtokensList
+          await walletInstances
+          .getWalletInstanceById(walletInfo.id)
+          .updateSubtokensList()
+        }
+      })
+    )
   }
 
   // EVENT: inform the client that it is time to update wallet list

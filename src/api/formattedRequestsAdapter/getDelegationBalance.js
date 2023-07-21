@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js'
 import { publicRequests } from '../publicRequests'
 import { createApiRequests } from '../createApiRequests'
 import state from '../../state'
+import { OUR_TOKEN } from './../../constants'
 
 // modify the backend response (will move to the backend in the future)
 export const getDelegationBalance = async (options) => {
@@ -26,7 +27,7 @@ export const getDelegationBalance = async (options) => {
   delete data.rewards
 
   // calc balance
-  if (options.net === 'bsc_xct') {
+  if (options.net === OUR_TOKEN) {
     const { mainBalance = 0, stake = 0, frozenBalance = 0 } = data
     data.calculatedBalance = BigNumber(mainBalance)
       .plus(stake)

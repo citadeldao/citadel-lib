@@ -3,6 +3,7 @@ import networkClasses from '../../'
 import api from '../../../api'
 import { retryRequestOnError } from '../../../helpers/retryRequestOnError'
 import { calculateSubtokenBalanceUSD } from '../../_functions/balances'
+import { OUR_TOKEN } from './../../../constants'
 // import { debugConsole } from '../../../helpers/debugConsole'
 // import { additionalConfig } from './../../../api/formattedRequestsAdapter/_hardCode'
 
@@ -91,7 +92,7 @@ export const updateSubtokensList = async function (
     ...tokensToAddAfterUpdate,
     ...subtokensList.filter(
       ({ tokenBalance, net }) =>
-        tokenBalance.calculatedBalance !== 0 || net === 'bsc_xct'
+        tokenBalance.calculatedBalance !== 0 || net === OUR_TOKEN
     ),
   ]
 

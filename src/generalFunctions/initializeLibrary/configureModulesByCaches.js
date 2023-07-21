@@ -35,15 +35,23 @@ export const configureModulesByCaches = ({
   // // set supported tokens to state
   // state.setState('supportedTokens', supportedTokens)
 
-  // //create supported tokens object
-  // const walletsList = walletsManager.getWalletList()
-  // const supportedTokens = {}
+  //create supported tokens object
+  const walletsList = walletsManager.getWalletList()
+  const supportedTokens = {}
 
-  // walletsList.forEach(({subtokensList, net}) => {
-  //   subtokensList.forEach(item => {
-  //     supportedTokens[item.net] = net
-  //   })
-  // })
-  // // set supported tokens to state
-  // state.setState('supportedTokens', supportedTokens)
+  walletsList.forEach(({subtokensList, net}) => {
+    subtokensList.forEach(item => {
+      supportedTokens[item.net] = net
+    })
+  })
+
+  //set config for snip-20
+  supportedNetworkKeys.map((net) => {
+    Object.keys(networksConfig[net].tokens || {}).map((token) => {
+      supportedTokens[token] = net
+    })
+  })
+  
+  // set supported tokens to state
+  state.setState('supportedTokens', supportedTokens)
 }

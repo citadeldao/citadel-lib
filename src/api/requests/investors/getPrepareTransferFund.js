@@ -1,4 +1,5 @@
 import state from '../../../state'
+import { OUR_TOKEN } from './../../../constants'
 
 // function returns request parameters for the axios instance.
 export const getPrepareTransferFund = ({
@@ -8,7 +9,7 @@ export const getPrepareTransferFund = ({
   recipient,
 }) => ({
   // backend domain is in the axios instance
-  url: `/blockchain/bsc_xct/${address}/builder/transfer_fund`,
+  url: `/blockchain/${OUR_TOKEN}/${address}/builder/transfer_fund`,
   method: 'get',
   data: {
     params: {

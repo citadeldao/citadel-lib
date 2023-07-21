@@ -53,7 +53,7 @@ export const getNetworksConfig = async () => {
       ...item, 
       code: item.primaryToken.code, 
       decimals: item.primaryToken.decimals,
-      methods: {...item.frontConfiguration.data, bridge: item.bridge},
+      methods: {...item.methods,...item.frontConfiguration.data, bridge: item.bridge},
       netPrefix: item.connectorProps.netPrefix,
       validating: item.validatingRegExp,
       unstakeingPerioud: item.unbondingPeriod,

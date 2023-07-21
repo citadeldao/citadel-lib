@@ -135,7 +135,7 @@ export const updateWalletList = async (
 
   //create supported tokens object
   const walletsList = getWalletList()
-  const supportedTokens = {}
+  const supportedTokens = state.getState('supportedTokens')
 
   walletsList.forEach(({subtokensList, net}) => {
     subtokensList.forEach(item => {

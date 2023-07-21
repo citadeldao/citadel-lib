@@ -1,6 +1,6 @@
 // import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { BaseEthNetwork } from './_BaseEthClass'
-import { WALLET_TYPES, CACHE_NAMES } from '../../constants'
+import { WALLET_TYPES, CACHE_NAMES, OUR_TOKEN } from '../../constants'
 import walletsManager from '../../walletsManager'
 import state from '../../state'
 import api from '../../api'
@@ -19,7 +19,7 @@ export class BscNetwork extends BaseEthNetwork {
 
     // get assigned addresses
     let { wallets: assignedAddresses = [] } = await this.callTokenInfo(
-      'bsc_xct',
+      OUR_TOKEN,
       'assignedAddresses'
     )
 
@@ -68,7 +68,7 @@ export class BscNetwork extends BaseEthNetwork {
     const walletList = walletsManager.getWalletList()
     //get assigned addresses
     let { wallets: assignedAddresses = [] } = await this.callTokenInfo(
-      'bsc_xct',
+      OUR_TOKEN,
       'assignedAddresses'
     )
 

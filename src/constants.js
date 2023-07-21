@@ -173,3 +173,5 @@ export const ERROR_CODES = {
     BUSY_TRANSPORT: 202
   }
 }
+
+export const OUR_TOKEN = '0xe8670901e86818745b28c8b30b17986958fce8cc'

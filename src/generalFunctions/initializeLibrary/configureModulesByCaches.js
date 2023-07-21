@@ -1,7 +1,7 @@
 import state from '../../state'
 import { CACHE_NAMES } from '../../constants'
 import networkClasses from '../../networkClasses'
-// import walletsManager from './../../walletsManager'
+import walletsManager from './../../walletsManager'
 
 export const configureModulesByCaches = ({
   networksConfig,
@@ -51,7 +51,7 @@ export const configureModulesByCaches = ({
       supportedTokens[token] = net
     })
   })
-  
+
   // set supported tokens to state
   state.setState('supportedTokens', supportedTokens)
 }

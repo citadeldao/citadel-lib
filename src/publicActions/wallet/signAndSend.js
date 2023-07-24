@@ -18,7 +18,7 @@ export const signAndSend = async (walletId, rawTransaction, options = {}) => {
     ['options', options, ['Object']]
   )
 
-  const { privateKey, derivationPath, mnemonic, proxy, useAlternativeSigner } = options
+  const { privateKey, derivationPath, mnemonic, proxy, useAlternativeSigner, transportType = 'usb' } = options
 
   checkTypes(['proxy', proxy, ['Boolean']])
   checkTypes(['useAlternativeSigner', useAlternativeSigner, ['Boolean']])
@@ -40,6 +40,7 @@ export const signAndSend = async (walletId, rawTransaction, options = {}) => {
     derivationPath,
     mnemonic,
     proxy,
-    useAlternativeSigner
+    useAlternativeSigner,
+    transportType
   })
 }

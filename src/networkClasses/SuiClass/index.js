@@ -51,7 +51,7 @@ export class SuiNetwork extends BaseNetwork {
     return `https://explorer.sui.io/transaction/${hash}`
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
     const transaction = rawTransaction.transaction || rawTransaction
     // const transaction = await tranformTransaction(
     //   rawTransaction.transaction || rawTransaction
@@ -60,19 +60,19 @@ export class SuiNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, this.publicKey, rightApp)
+      return await signTxByLedger(transaction, derivationPath, this.publicKey, rightApp, transportType)
     }
     return await signTxByPrivateKey(transaction, privateKey)
   }
 
-  async createMessageSignature(rawTransaction, { privateKey, derivationPath }) {
+  async createMessageSignature(rawTransaction, { privateKey, derivationPath, transportType }) {
     let data
 
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
-      data = await signTxByLedger(rawTransaction, derivationPath, this.publicKey, rightApp)
+      data = await signTxByLedger(rawTransaction, derivationPath, this.publicKey, rightApp, transportType)
     }else {
       // privateKey signer
       data = await signTxByPrivateKey(rawTransaction, privateKey)
@@ -133,10 +133,10 @@ export class SuiNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     const { default: SuiApp } = await import('@mysten/ledgerjs-hw-app-sui')
     const { Ed25519PublicKey } = await import('@mysten/sui.js');
-    const transport = await getLedgerTransport()
+    const transport = await getLedgerTransport(transportType)
     const suiApp = new SuiApp(transport)
     let res
     let address

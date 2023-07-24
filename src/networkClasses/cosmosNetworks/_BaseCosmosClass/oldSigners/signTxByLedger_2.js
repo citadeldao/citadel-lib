@@ -6,11 +6,12 @@ export const signTxByLedger_2 = async (
   rawTransaction,
   derivationPath,
   publicKey,
-  modeType = 'sync'
+  modeType = 'sync',
+  transportType
 ) => {
   const { default: CosmosApp } = await import('ledger-cosmos-js')
   // TODO: check reconnect case
-  const transport = await getLedgerTransport()
+  const transport = await getLedgerTransport(transportType)
   const cosmosApp = new CosmosApp(transport)
   const hdPath = getHdDerivationPath(derivationPath)
   const response = await cosmosApp.sign(hdPath, rawTransaction.bytes)

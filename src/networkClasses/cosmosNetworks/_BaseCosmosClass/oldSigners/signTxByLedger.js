@@ -10,13 +10,14 @@ export const signTxByLedger = async (
   derivationPath,
   publicKey,
   modeType = 'sync',
-  rightApp
+  rightApp,
+  transportType
 ) => {
   // prepare ledger app
   // const ledgerApp = await getLedgerApp()
   // const response = await ledgerApp.cosmosApp.sign(hdPath, rawTransaction.bytes)
   const { default: CosmosApp } = await import('ledger-cosmos-js')
-  const transport = await getLedgerTransport()
+  const transport = await getLedgerTransport(transportType)
   const cosmosApp = new CosmosApp(transport)
   const hdPath = getHdDerivationPath(derivationPath)
   const resp = await cosmosApp.sign(hdPath, rawTransaction.bytes)

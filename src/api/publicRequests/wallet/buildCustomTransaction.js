@@ -6,7 +6,7 @@ export const buildCustomTransaction = ({ net, address, publicKey, data }) => {
   return {
     // backend domain is in the axios instance
     // url: `transactions/${net}/${address}/buildCustomTx`,
-    url: `/blockchain/${net}/${address}/builder/customTx`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/builder/customTx`,
     method: 'get',
     data: {
       params: {

@@ -5,7 +5,7 @@ export const faucetSignUp = ({ net, name, publicKey }) => ({
   // url: `/transactions/${net}/faucet-sign-up?version=${state.getState(
   //   'backendApiVersion'
   // )}`,
-  url: `/blockchain/${net}/builder/faucet-sign-up?version=${state.getState(
+  url: `/blockchain/${encodeURIComponent(net)}/builder/faucet-sign-up?version=${state.getState(
     'backendApiVersion'
   )}`,
   method: 'get',

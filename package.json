@@ -22,6 +22,7 @@
     "@ledgerhq/hw-app-trx": "^6.27.2",
     "@ledgerhq/hw-transport": "^6.27.6",
     "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
+    "@ledgerhq/hw-transport-web-ble": "^6.27.17",
     "@ledgerhq/hw-transport-webhid": "^6.20.0",
     "@lunie/cosmos-ledger": "^0.1.8",
     "@metamask/eth-sig-util": "^4.0.1",

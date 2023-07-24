@@ -18,7 +18,7 @@ export const signMessage = async (walletId, message, options) => {
     ['options', options, ['Object']]
   )
   checkWalletId(walletId)
-  const { privateKey, derivationPath } = options
+  const { privateKey, derivationPath, transportType = 'usb' } = options
   const walletInstance = walletInstances.getWalletInstanceById(walletId)
   if (HARDWARE_SIGNER_WALLET_TYPES.includes(walletInstance.type)) {
     checkTypes(['derivationPath', derivationPath, ['String'], true])
@@ -30,5 +30,5 @@ export const signMessage = async (walletId, message, options) => {
   // call wallet instance method
   return await walletInstances
     .getWalletInstanceById(walletId)
-    .signMessage(message, { privateKey, derivationPath })
+    .signMessage(message, { privateKey, derivationPath, transportType })
 }

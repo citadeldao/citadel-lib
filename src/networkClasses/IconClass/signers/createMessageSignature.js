@@ -8,7 +8,7 @@ import {getLedgerTransport} from "../../../ledgerTransportProvider";
 
 export async function createMessageSignature(
   message,
-  { privateKey, derivationPath, type, rightApp }
+  { privateKey, derivationPath, type, rightApp, transportType }
 ) {
   // privateKey signers
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
@@ -25,7 +25,7 @@ export async function createMessageSignature(
     // add global ledger app to avoid ledger reconnect error
     let transport = null
     if (!global.ledger_icon) {
-      transport = await getLedgerTransport()
+      transport = await getLedgerTransport(transportType)
       global.ledger_icon = new IconApp(transport)
     }
 

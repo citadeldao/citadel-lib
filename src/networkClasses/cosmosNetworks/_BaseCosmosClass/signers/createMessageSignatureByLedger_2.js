@@ -5,10 +5,11 @@ import {getLedgerTransport} from "../../../../ledgerTransportProvider";
 export const createMessageSignatureByLedger_2 = async (
   data,
   derivationPath,
-  stringifyData
+  stringifyData,
+  transportType
 ) => {
   const { default: CosmosApp } = await import('ledger-cosmos-js')
-  const transport = await getLedgerTransport()
+  const transport = await getLedgerTransport(transportType)
   const cosmosApp = new CosmosApp(transport)
   const response = await cosmosApp.sign(
     getHdDerivationPath(derivationPath),

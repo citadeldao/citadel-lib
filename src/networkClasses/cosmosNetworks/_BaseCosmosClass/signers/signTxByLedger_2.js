@@ -8,9 +8,10 @@ export const signTxByLedger_2 = async (
   rawTransaction,
   derivationPath,
   publicKey,
-  modeType = 'sync'
+  modeType = 'sync',
+  transportType
 ) => {
-  const ledgerApp = await getLedgerApp()
+  const ledgerApp = await getLedgerApp(transportType)
   const hdPath = getHdDerivationPath(derivationPath)
   const response = await ledgerApp.cosmosApp.sign(
     hdPath,

@@ -23,7 +23,7 @@ export class BtcNetwork extends BaseNetwork {
     return `https://blockchair.com/bitcoin/transaction/${hash}`
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType}) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
@@ -31,7 +31,7 @@ export class BtcNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, rightApp)
+      return await signTxByLedger(transaction, derivationPath, rightApp, transportType)
     }
     // trezor signer
     if (this.type === WALLET_TYPES.TREZOR) {
@@ -141,13 +141,13 @@ export class BtcNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     // dynamic import of large module (for fast init)
     const { default: BtcApp } = await import('@ledgerhq/hw-app-btc')
     // add global btc ledger app to avoid ledger reconnect error
     let transport
     if (!global.ledger_btc) {
-      transport = await getLedgerTransport()
+      transport = await getLedgerTransport(transportType)
       global.ledger_btc = new BtcApp({ transport, currency: "bitcoin" });//new BtcApp(transport)
     }
     

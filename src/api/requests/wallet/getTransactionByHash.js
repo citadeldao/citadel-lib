@@ -8,7 +8,7 @@ export const getTransactionByHash = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `/transactions/${net}/${address}/hash/${hash}`,
+    url: `/transactions/${encodeURIComponent(net)}/${address}/hash/${hash}`,
     method: 'get',
     data: {
       params: {

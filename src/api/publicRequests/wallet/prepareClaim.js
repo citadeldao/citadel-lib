@@ -7,7 +7,7 @@ export const prepareClaim = (data) => {
     // url: `/transactions/${data.net}/${
     //   data.address
     // }/prepare-claim-reward?version=${state.getState('backendApiVersion')}`,
-    url:`/blockchain/${data.net}/${data.address}/builder/claim-reward?version=${state.getState('backendApiVersion')}`,
+    url:`/blockchain/${encodeURIComponent(data.net)}/${data.address}/builder/claim-reward?version=${state.getState('backendApiVersion')}`,
     method: 'get',
     data: {
       params:{

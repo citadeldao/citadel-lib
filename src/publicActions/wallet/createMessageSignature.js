@@ -52,7 +52,7 @@ import walletInstances from '../../walletInstances'
 export const createMessageSignature = async (
   walletId,
   message,
-  { privateKey, derivationPath, useAlternativeSigner }
+  { privateKey, derivationPath, useAlternativeSigner, transportType = 'usb' }
 ) => {
   // checks
   checkInitialization()
@@ -71,6 +71,7 @@ export const createMessageSignature = async (
     .createMessageSignature(message, {
       privateKey,
       derivationPath,
-      useAlternativeSigner
+      useAlternativeSigner,
+      transportType
     })
 }

@@ -67,13 +67,13 @@ export class TezosNetwork extends BaseNetwork {
     })
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType}) {
     const transaction = rawTransaction.transaction || rawTransaction
     if (this.type === WALLET_TYPES.LEDGER) {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, rightApp)
+      return await signTxByLedger(transaction, derivationPath, rightApp, transportType)
     }
     if (this.type === WALLET_TYPES.TREZOR) {
       return await signTxByTrezor(transaction, derivationPath)
@@ -82,7 +82,7 @@ export class TezosNetwork extends BaseNetwork {
     return await signTxByPrivateKey(transaction, privateKey)
   }
 
-  createMessageSignature(data, { privateKey, derivationPath }) {
+  createMessageSignature(data, { privateKey, derivationPath, transportType }) {
     //rigth app for ledger
     const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
@@ -90,7 +90,8 @@ export class TezosNetwork extends BaseNetwork {
       privateKey,
       derivationPath,
       type: this.type,
-      rightApp
+      rightApp,
+      transportType
     })
   }
 
@@ -202,10 +203,10 @@ export class TezosNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     let transport
     if (!global.ledger_tez) {
-      transport = await getLedgerTransport()
+      transport = await getLedgerTransport(transportType)
       global.ledger_tez = new TezApp(transport)
     }
 

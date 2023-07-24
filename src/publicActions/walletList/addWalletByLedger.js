@@ -13,12 +13,13 @@ export const addWalletByLedger = async (options) => {
      // checks
     checkInitialization()
     checkTypes(['options', options, ['Object'], true])
-    const { net, derivationPath, title } = options
+    const { net, derivationPath, title, transportType = 'usb' } = options
     checkTypes(['title', title, ['String']])
 
     const createdWallet = await networkPublicActions.createWalletByLedger({
       net,
       derivationPath,
+      transportType
     })
     // save (formatted) derivationPath for return
     const createdDerivationPath = createdWallet.derivationPath

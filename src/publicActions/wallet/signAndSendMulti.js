@@ -22,7 +22,7 @@ export const signAndSendMulti = async (
     ['options', options, ['Object']]
   )
 
-  const { privateKey, derivationPath, proxy, useAlternativeSigner } = options
+  const { privateKey, derivationPath, proxy, useAlternativeSigner, transportType = 'usb' } = options
 
   checkTypes(['proxy', proxy, ['Boolean']])
   checkTypes(['useAlternativeSigner', useAlternativeSigner, ['Boolean']])
@@ -39,5 +39,5 @@ export const signAndSendMulti = async (
   // call wallet instance method
   return await walletInstances
     .getWalletInstanceById(walletId)
-    .signAndSendMulti(rawTransactions, { privateKey, derivationPath, proxy, useAlternativeSigner })
+    .signAndSendMulti(rawTransactions, { privateKey, derivationPath, proxy, useAlternativeSigner, transportType })
 }

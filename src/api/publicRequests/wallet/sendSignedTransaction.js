@@ -11,7 +11,7 @@ export const sendSignedTransaction = ({
   return {
     // backend domain is in the axios instance
     // url: `/transactions/${net}/${from}/send?version=${state.getState('backendApiVersion')}`,
-    url: `/blockchain/${net}/${from}/send?version=${state.getState('backendApiVersion')}`,
+    url: `/blockchain/${encodeURIComponent(net)}/${from}/send?version=${state.getState('backendApiVersion')}`,
     method: 'post',
     data: {
       signedTransaction,

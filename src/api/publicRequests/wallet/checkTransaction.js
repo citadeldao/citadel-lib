@@ -3,7 +3,7 @@ import state from '../../../state'
 export const checkTransaction = ({ net, hash }) => ({
   // backend domain is in the axios instance
   // url: `/transactions/${net}/check/${hash}`,
-  url: `/blockchain/${net}/check/${hash}`,
+  url: `/blockchain/${encodeURIComponent(net)}/check/${hash}`,
   method: 'get',
   data: {
     params: {

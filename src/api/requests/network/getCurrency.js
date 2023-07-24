@@ -4,7 +4,7 @@ import state from '../../../state'
 export const getCurrency = (data) => {
   return {
     // backend domain is in the axios instance
-    url: `/currency/${data.net}`,
+    url: `/currency/${encodeURIComponent(data.net)}`,
     method: 'get',
     data: {
       params: {

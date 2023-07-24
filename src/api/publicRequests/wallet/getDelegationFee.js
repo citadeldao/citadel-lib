@@ -14,7 +14,7 @@ export const getDelegationFee = ({
   return {
     // backend domain is in the axios instance
     // url: `transactions/${net}/${address}/fee-info/${transactionType}`,
-    url: `/blockchain/${net}/${address}/fee-info/${transactionType}`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/fee-info/${transactionType}`,
     method: 'get',
     data: {
       params: {

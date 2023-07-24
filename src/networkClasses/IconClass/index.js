@@ -31,7 +31,7 @@ export class IconNetwork extends BaseNetwork {
     return `https://tracker.icon.foundation/transaction/${hash}`
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     if (this.type === WALLET_TYPES.LEDGER) {
@@ -42,12 +42,12 @@ export class IconNetwork extends BaseNetwork {
         // sign sequentially all transactions before send
         const signedTransactions = []
         for (const transactionItem of transaction) {
-          const signedTx = await signTxByLedger(transactionItem, derivationPath, rightApp)
+          const signedTx = await signTxByLedger(transactionItem, derivationPath, rightApp, transportType)
           signedTransactions.push(signedTx)
         }
         return signedTransactions
       } else {
-        return await signTxByLedger(transaction, derivationPath, rightApp)
+        return await signTxByLedger(transaction, derivationPath, rightApp, transportType)
       }
     }
 
@@ -59,7 +59,7 @@ export class IconNetwork extends BaseNetwork {
     }
   }
 
-  createMessageSignature(data, { privateKey, derivationPath }) {
+  createMessageSignature(data, { privateKey, derivationPath, transportType }) {
     //rigth app for ledger
     const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
@@ -67,7 +67,8 @@ export class IconNetwork extends BaseNetwork {
       privateKey,
       derivationPath,
       type: this.type,
-      rightApp
+      rightApp,
+      transportType
     })
   }
 
@@ -233,11 +234,11 @@ export class IconNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     // add global icon ledger app to avoid ledger reconnect error
     let transport = null
     if (!global.ledger_icon) {
-      transport = await getLedgerTransport()
+      transport = await getLedgerTransport(transportType)
       global.ledger_icon = new IconApp(transport)
     }
     

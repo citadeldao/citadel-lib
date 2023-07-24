@@ -32,7 +32,7 @@ export const updateWalletList = async (
           //const addConfig = additionalConfig.find(item => item.net === net)?.config?.tokens?.[item.token] || {}
           const formatedItem = {
             ...item,
-            net: item.token,
+            net: `${net}_${item.token}`,
             ...item.meta,
             decimals: item.meta.decimal,
             nativeNet: net,

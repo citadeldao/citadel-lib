@@ -1,18 +1,26 @@
 import state from "./state";
+
 import WebHidTransport from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+import BluetoothTransport from "@ledgerhq/hw-transport-web-ble";
+
 import { LedgerFlutterTransport } from "./ledgerFlutterTransport";
 import errors from './errors'
 import { LEDGER_ERRORS, ERROR_CODES } from './constants'
 
-export const getLedgerTransport = async () => {
+export const getLedgerTransport = async (transportType = 'usb') => {
     if (state.getState('ledgerFlutterTransport')) {
         return new LedgerFlutterTransport();
     }
     try{
+      if(transportType === 'usb'){
         return await WebHidTransport.isSupported()
         ? await WebHidTransport.create(10000)
         : await TransportWebUSB.create(10000)
+      }
+      if(transportType === 'bt'){
+        return await BluetoothTransport.create();
+      }
     }catch(e){
         ledgerErrorHandler(e)
     }

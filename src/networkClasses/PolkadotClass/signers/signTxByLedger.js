@@ -7,11 +7,12 @@ export const signTxByLedger = async (
   rawTransaction,
   derivationPath,
   address,
-  rightApp
+  rightApp,
+  transportType
 ) => {
   let transport
   if (!global.ledger_polkadot) {
-    transport = await getLedgerTransport()
+    transport = await getLedgerTransport(transportType)
     global.ledger_polkadot = new PolkadotLedger(transport)
   }
   // dynamic import of large module (for fast init)

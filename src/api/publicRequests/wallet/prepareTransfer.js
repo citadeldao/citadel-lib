@@ -6,7 +6,7 @@ export const prepareTransfer = ({ net, from, ...options }) => {
     // url: `/transactions/${net}/${from}/prepare-transfer?version=${state.getState(
     //   'backendApiVersion'
     // )}`,
-    url: `/blockchain/${net}/${from}/builder/transfer?version=${state.getState(
+    url: `/blockchain/${encodeURIComponent(net)}/${from}/builder/transfer?version=${state.getState(
       'backendApiVersion'
     )}`,
     method: 'get',

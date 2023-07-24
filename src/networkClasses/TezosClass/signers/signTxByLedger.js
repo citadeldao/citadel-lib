@@ -2,11 +2,11 @@ import { TezApp, ledgerErrorHandler } from '../ledgerApp'
 // import { debugConsole } from '../../../helpers/debugConsole'
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
-export const signTxByLedger = async (rawTransaction, derivationPath, rightApp) => {
+export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, transportType) => {
   // add globa ledger app to avoid ledger reconnect error
   let transport
   if (!global.ledger_tez) {
-    transport = await getLedgerTransport()
+    transport = await getLedgerTransport(transportType)
     global.ledger_tez = new TezApp(transport)
   }
 

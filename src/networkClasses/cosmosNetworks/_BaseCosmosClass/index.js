@@ -51,7 +51,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath, useAlternativeSigner }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, useAlternativeSigner, transportType }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
@@ -59,7 +59,7 @@ export class BaseCosmosNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, this.publicKey, null, rightApp)
+      return await signTxByLedger(transaction, derivationPath, this.publicKey, null, rightApp, transportType)
     }
     // privateKey signer
     if(useAlternativeSigner){
@@ -71,13 +71,13 @@ export class BaseCosmosNetwork extends BaseNetwork {
     return signTxByPrivateKey(transaction, privateKey, this.publicKey)
   }
   
-  async createMessageSignature(data, { privateKey, derivationPath }) {
+  async createMessageSignature(data, { privateKey, derivationPath, transportType }) {
     // ledger signer
     if (this.type === WALLET_TYPES.LEDGER) {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await createMessageSignatureByLedger(data, derivationPath, rightApp)
+      return await createMessageSignatureByLedger(data, derivationPath, rightApp, transportType)
     }
     // privateKey signer
     return await createMessageSignatureByPrivateKey(data, privateKey)
@@ -242,9 +242,9 @@ export class BaseCosmosNetwork extends BaseNetwork {
     }
   }
 // old ledger creator
-  static async createWalletByLedger_2({ derivationPath }) {
+  static async createWalletByLedger_2({ derivationPath, transportType }) {
     // prepare ledger app
-    const ledgerApp = await getLedgerApp()
+    const ledgerApp = await getLedgerApp(transportType)
 
     const hdPath = getHdDerivationPath(derivationPath)
     const resp = await ledgerApp.cosmosApp?.getAddressAndPubKey(
@@ -281,9 +281,9 @@ export class BaseCosmosNetwork extends BaseNetwork {
   }
 transport
   
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     
-    const transport = await getLedgerTransport()
+    const transport = await getLedgerTransport(transportType)
     const { default: CosmosApp } = await import('ledger-cosmos-js')
     const cosmosApp = new CosmosApp(transport)
     

@@ -5,7 +5,7 @@ export const getRedelegationUnlockDate = ({ net, address }) => {
   return {
     // backend domain is in the axios instance
     // url: `/transactions/${net}/${address}/redelegation-unlock-date`,
-    url: `/blockchain/${net}/${address}/redelegation-unlock-date`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/redelegation-unlock-date`,
     method: 'get',
     data: {
       params: {

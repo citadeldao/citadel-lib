@@ -5,7 +5,7 @@ export const getWalletRewards = ({ net, address }) => {
   return {
     // backend domain is in the axios instance
     // url: `/transactions/rewards/${net}/${address}`,
-    url: `/blockchain/rewards/${net}/${address}`,
+    url: `/blockchain/rewards/${encodeURIComponent(net)}/${address}`,
     method: 'get',
     data: {
       params: {

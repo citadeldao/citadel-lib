@@ -4,7 +4,7 @@ export const getDelegationBalance = ({ address, net }) => {
   return {
     // backend domain is in the axios instance
     // url: `/transactions/${net}/${address}/delegation-balance-info`,
-    url: `/blockchain/${net}/${address}/balance`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/balance`,
     method: 'get',
     data: {
       params: {

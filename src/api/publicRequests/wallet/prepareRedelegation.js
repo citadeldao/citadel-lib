@@ -12,7 +12,7 @@ export const prepareRedelegation = ({
   return {
     // backend domain is in the axios instance
     //url: `transactions/${net}/${address}/prepare-redelegation?version=${state.getState('backendApiVersion')}`,
-    url: `/blockchain/${net}/${address}/builder/redelegation?version=${state.getState('backendApiVersion')}`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/builder/redelegation?version=${state.getState('backendApiVersion')}`,
     method: 'get',
     data: {
       params: {

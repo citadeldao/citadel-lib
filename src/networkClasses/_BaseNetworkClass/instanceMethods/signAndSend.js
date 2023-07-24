@@ -3,7 +3,7 @@ import { getType } from '../../../helpers/checkArguments'
 
 export const signAndSend = async function (
   rawTransaction,
-  { privateKey, proxy, derivationPath, useAlternativeSigner }
+  { privateKey, proxy, derivationPath, useAlternativeSigner, transportType = 'usb' }
 ) {
   // if type of transaction - array, call signAndSendMulti
   if (getType(rawTransaction.transaction) === 'Array') {
@@ -11,7 +11,8 @@ export const signAndSend = async function (
       privateKey,
       proxy,
       derivationPath,
-      useAlternativeSigner
+      useAlternativeSigner,
+      transportType
     })
   }
 
@@ -20,6 +21,7 @@ export const signAndSend = async function (
     privateKey,
     derivationPath,
     useAlternativeSigner,
+    transportType
   })
 
   // send signed transaction

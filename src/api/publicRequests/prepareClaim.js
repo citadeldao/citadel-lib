@@ -2,7 +2,7 @@
 export const prepareClaim = (data) => {
   return {
     // backend domain is in the axios instance
-    url: `/blockchain/${data.net}/${data.address}/builder/claim-reward`,
+    url: `/blockchain/${encodeURIComponent(data.net)}/${data.address}/builder/claim-reward`,
     method: 'get',
   }
 }

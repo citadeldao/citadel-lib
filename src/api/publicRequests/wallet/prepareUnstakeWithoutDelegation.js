@@ -4,7 +4,7 @@ export const prepareUnstakeWithoutDelegation = ({ net, address, amount }) => {
   return {
     // backend domain is in the axios instance
     // url: `/transactions/${net}/${address}/free-staked?version=${state.getState('backendApiVersion')}`,
-    url: `/blockchain/${net}/${address}/free-staked?version=${state.getState('backendApiVersion')}`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/free-staked?version=${state.getState('backendApiVersion')}`,
     method: 'get',
     data: {
       params: {

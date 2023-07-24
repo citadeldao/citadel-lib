@@ -2,7 +2,7 @@
 export const getAllTokenBalances = ({ net, address }) => {
   return {
     // backend domain is in the axios instance
-    url: `/blockchain/${net}/${address}/tokens`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/tokens`,
     method: 'get',
   }
 }

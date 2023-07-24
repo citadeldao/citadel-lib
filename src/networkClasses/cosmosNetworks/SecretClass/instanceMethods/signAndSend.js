@@ -2,7 +2,7 @@ import { signAndSend as baseSignAndSend } from '../../../_BaseNetworkClass/insta
 
 export async function signAndSend(
   rawTransaction,
-  { privateKey, proxy, derivationPath }
+  { privateKey, proxy, derivationPath, transportType = 'usb' }
 ) {
   // if instructions have been received to send a transaction from the client
   if (rawTransaction.executeOnClient) {
@@ -14,6 +14,7 @@ export async function signAndSend(
       ...methodArguments,
       privateKey,
       derivationPath,
+      transportType
     })
   }
 
@@ -22,5 +23,6 @@ export async function signAndSend(
     privateKey,
     proxy,
     derivationPath,
+    transportType
   })
 }

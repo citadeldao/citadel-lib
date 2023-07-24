@@ -12,7 +12,7 @@ export class EmoneyNetwork extends BaseCosmosNetwork {
   }
 
   // old signers (not protobuf)
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
@@ -20,7 +20,7 @@ export class EmoneyNetwork extends BaseCosmosNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, this.publicKey, null, rightApp)
+      return await signTxByLedger(transaction, derivationPath, this.publicKey, null, rightApp, transportType)
     }
     // privateKey signer
     return await signTxByPrivateKey(transaction, privateKey)

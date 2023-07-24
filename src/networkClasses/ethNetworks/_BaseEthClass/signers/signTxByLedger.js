@@ -7,14 +7,14 @@ hw-app-eth: signTransaction(path, rawTxHex, resolution): please provide the 'res
  + import ledgerService from '@ledgerhq/hw-app-eth/lib/services/ledger';
  + const resolution = await ledgerService.resolveTransaction(rawTxHex);
 */
-export const signTxByLedger = async (rawTransaction, derivationPath, net, rightApp) => {
+export const signTxByLedger = async (rawTransaction, derivationPath, net, rightApp, transportType) => {
   // dynamic import of large module (for fast init)
   const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
 
   // add global ledger app to avoid ledger reconnect error
   let transport = null
   if (!global[`ledger_${net}`]) {
-    transport = await getLedgerTransport()
+    transport = await getLedgerTransport(transportType)
     global[`ledger_${net}`] = new EthApp(transport)
   }
 

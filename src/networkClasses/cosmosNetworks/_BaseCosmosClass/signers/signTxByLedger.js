@@ -8,10 +8,11 @@ export const signTxByLedger = async (
   derivationPath,
   publicKey,
   modeType = 'sync',
-  rightApp
+  rightApp,
+  transportType
 ) => {
   const { default: CosmosApp } = await import('ledger-cosmos-js')
-  const transport = await getLedgerTransport()
+  const transport = await getLedgerTransport(transportType)
   const cosmosApp = new CosmosApp(transport)
   const hdPath = getHdDerivationPath(derivationPath)
   

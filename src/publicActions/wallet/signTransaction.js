@@ -22,7 +22,7 @@ export const signTransaction = async (
     ['options', options, ['Object']]
   )
 
-  const { privateKey, derivationPath, proxy, useAlternativeSigner } = options
+  const { privateKey, derivationPath, proxy, useAlternativeSigner, transportType = 'usb' } = options
   checkTypes(['proxy', proxy, ['Boolean']])
   checkTypes(['useAlternativeSigner', useAlternativeSigner, ['Boolean']])
   checkWalletId(walletId)
@@ -37,5 +37,5 @@ export const signTransaction = async (
   // call wallet instance method
   return await walletInstances
     .getWalletInstanceById(walletId)
-    .signTransaction(rawTransaction, { privateKey, derivationPath, proxy, useAlternativeSigner })
+    .signTransaction(rawTransaction, { privateKey, derivationPath, proxy, useAlternativeSigner, transportType })
 }

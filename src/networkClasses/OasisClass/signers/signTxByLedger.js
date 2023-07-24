@@ -2,8 +2,8 @@ import { generateContext, u8FromBuf, bufFromU8, ledgerErrorHandler } from './fun
 import { getHdDerivationPath } from '../../_functions/ledger'
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
-export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, rightApp) => {
-  const transport = await getLedgerTransport()
+export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, rightApp, transportType) => {
+  const transport = await getLedgerTransport(transportType)
   const { default: OasisApp } = await import('@oasisprotocol/ledger')
   const oasisApp = new OasisApp(transport)
   const context = await generateContext()

@@ -11,7 +11,7 @@ import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
 export const createMessageSignature = async (
   data,
-  { privateKey, derivationPath, type, rightApp }
+  { privateKey, derivationPath, type, rightApp, transportType }
 ) => {
   // privateKey signer
   if (PRIVATE_KEY_SIGNER_WALLET_TYPES.includes(type)) {
@@ -26,7 +26,7 @@ export const createMessageSignature = async (
   if (type === WALLET_TYPES.LEDGER) {
     let transport 
     if (!global.ledger_tez) {
-      transport = await getLedgerTransport()
+      transport = await getLedgerTransport(transportType)
       global.ledger_tez = new TezApp(transport)
     }
     try{

@@ -50,7 +50,7 @@ export class OasisNetwork extends BaseNetwork {
     return `https://www.oasisscan.com/transactions/${hash}`
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
     const transaction = await tranformTransaction(
       rawTransaction.transaction || rawTransaction
     )
@@ -58,12 +58,12 @@ export class OasisNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, this.publicKey, rightApp)
+      return await signTxByLedger(transaction, derivationPath, this.publicKey, rightApp, transportType)
     }
     return signTxByPrivateKey(transaction, privateKey)
   }
 
-  async createMessageSignature(data, { privateKey, derivationPath }) {
+  async createMessageSignature(data, { privateKey, derivationPath, transportType }) {
     const formatedTx = await tranformTransaction(data)
     let signedTx
     // ledger signer
@@ -71,7 +71,7 @@ export class OasisNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      signedTx = await signTxByLedger(formatedTx, derivationPath, this.publicKey, rightApp)
+      signedTx = await signTxByLedger(formatedTx, derivationPath, this.publicKey, rightApp, transportType)
     } else {
       // privateKey signer
       signedTx = await signTxByPrivateKey(formatedTx, privateKey)
@@ -143,9 +143,9 @@ export class OasisNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     const { default: OasisApp } = await import('@oasisprotocol/ledger')
-    const transport = await getLedgerTransport()
+    const transport = await getLedgerTransport(transportType)
     const oasisApp = new OasisApp(transport)
     const hdPathArray = getHdDerivationPath(derivationPath)
    

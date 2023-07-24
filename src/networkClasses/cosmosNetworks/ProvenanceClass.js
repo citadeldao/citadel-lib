@@ -20,7 +20,7 @@ export class ProvenanceNetwork extends BaseCosmosNetwork {
     super(walletInfo)
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath, useAlternativeSigner }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, useAlternativeSigner, transportType }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
@@ -28,7 +28,7 @@ export class ProvenanceNetwork extends BaseCosmosNetwork {
       //rigth app for ledger
       // const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
       const { default: ProvenanceApp } = await import('@citadeldao/hw-app-hash')
-      const transport = await getLedgerTransport()
+      const transport = await getLedgerTransport(transportType)
       const provenanceApp = new ProvenanceApp(transport)
   
       // make stapshot of deafult tx
@@ -82,9 +82,9 @@ export class ProvenanceNetwork extends BaseCosmosNetwork {
     return signTxByPrivateKey(transaction, privateKey, this.publicKey)
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     
-    const transport = await getLedgerTransport()
+    const transport = await getLedgerTransport(transportType)
     const { default: ProvenanceApp } = await import('@citadeldao/hw-app-hash')
     const provenanceApp = new ProvenanceApp(transport)
     const resp = await provenanceApp.getPublicKey(derivationPath)

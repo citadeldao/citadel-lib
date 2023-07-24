@@ -9,7 +9,7 @@ export const sendSignedTransaction = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `/blockchain/${net}/${from}/send`,
+    url: `/blockchain/${encodeURIComponent(net)}/${from}/send`,
     method: 'post',
     data: {
       signedTransaction,

@@ -2,7 +2,7 @@ import api from '../../../api'
 
 export const signAndSendMulti = async function (
   rawTransactions,
-  { privateKey, proxy, derivationPath, useAlternativeSigner }
+  { privateKey, proxy, derivationPath, useAlternativeSigner, transportType = 'usb' }
 ) {
   const hashes = []
   // sign and send sequentially each transaction
@@ -11,7 +11,8 @@ export const signAndSendMulti = async function (
     const signedTransaction = await this.signTransaction(rawTransaction, {
       privateKey,
       derivationPath,
-      useAlternativeSigner
+      useAlternativeSigner,
+      transportType
     })
 
     // send signed transaction

@@ -42,7 +42,7 @@ export const updateSubtokensList = async function (
         // const addConfig = additionalConfig.find(item => item.net === this.net)?.config?.tokens?.[token] || {}
         // create subtkenList item from token config and token balance
         const subtokenListItem = {
-          net: token,
+          net: `${this.net}_${token}`,
           name: meta.name,//networkClass.tokens[token].name,
           code: meta.code,//networkClass.tokens[token].code,
           standard: meta.standard,//networkClass.tokens[token].standard,

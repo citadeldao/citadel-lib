@@ -2,11 +2,11 @@ import { generateHashKey, toRawTransaction } from './functions'
 import { IconApp, ledgerErrorHandler } from '../ledgerApp'
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
 
-export const signTxByLedger = async (rawTransaction, derivationPath, rightApp) => {
+export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, transportType) => {
   // add global ledger app to avoid ledger reconnect error
   let transport = null
   if (!global.ledger_icon) {
-    transport = await getLedgerTransport()
+    transport = await getLedgerTransport(transportType)
     global.ledger_icon = new IconApp(transport)
   }
   let res

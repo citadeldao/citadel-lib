@@ -495,7 +495,7 @@ export const additionalConfig = [
       //   secret: 'secret_bsc',
       // },
       tokens: {
-        /* bsc_xct */'0xe8670901e86818745b28c8b30b17986958fce8cc': {
+        /* bsc_xct */'bsc_0xe8670901e86818745b28c8b30b17986958fce8cc': {
           actions: {
             stake: 'stake_xct',
             unstake: 'unstake_xct',

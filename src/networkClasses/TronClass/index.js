@@ -20,13 +20,13 @@ export class TronNetwork extends BaseNetwork {
     return `https://tronscan.org/#/transaction/${hash}`
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
     const transaction = rawTransaction.transaction || rawTransaction
     if (this.type === WALLET_TYPES.LEDGER) {
        //rigth app for ledger
        const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, rightApp)
+      return await signTxByLedger(transaction, derivationPath, rightApp, transportType)
     }
     return signTxByPrivateKey(transaction, privateKey)
   }
@@ -92,8 +92,8 @@ export class TronNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
-    const transport = await getLedgerTransport()
+  static async createWalletByLedger({ derivationPath, transportType }) {
+    const transport = await getLedgerTransport(transportType)
     const tronApp = new Trx(transport)
     
     let res

@@ -38,7 +38,7 @@ export class PolkadotNetwork extends BaseNetwork {
 
   async signTransaction(
     rawTransaction,
-    { privateKey, mnemonic, derivationPath }
+    { privateKey, mnemonic, derivationPath, transportType }
   ) {
     // dynamic import of large module (for fast init)
     const { cryptoWaitReady } = await import('@polkadot/util-crypto')
@@ -52,7 +52,7 @@ export class PolkadotNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, this.address, rightApp)
+      return await signTxByLedger(transaction, derivationPath, this.address, rightApp, transportType)
     }
     // mnemonic / privateKey signer (mnemonic can be used as private key fot sign)
     return signTxByPrivateKeyOrMnemonic(
@@ -130,12 +130,13 @@ export class PolkadotNetwork extends BaseNetwork {
     return data
   }
 
-  async signAndSend(rawTransaction, { privateKey, mnemonic, derivationPath }) {
+  async signAndSend(rawTransaction, { privateKey, mnemonic, derivationPath, transportType }) {
     // sign transaction
     const signedTransaction = await this.signTransaction(rawTransaction, {
       privateKey,
       mnemonic,
       derivationPath,
+      transportType
     })
     // send transaction by special api
     const { data } = await api.requests.polkadotSignAndSend({
@@ -229,7 +230,7 @@ export class PolkadotNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     // dynamic import of large module (for fast init)
     const { cryptoWaitReady } = await import('@polkadot/util-crypto')
     // init polkadot
@@ -237,7 +238,7 @@ export class PolkadotNetwork extends BaseNetwork {
     // add global ledger app to avoid ledger reconnect error
     let transport
     if (!global.ledger_polkadot) {
-      transport = await getLedgerTransport()
+      transport = await getLedgerTransport(transportType)
       global.ledger_polkadot = new PolkadotLedger(transport)
     }
     // generate address and public key

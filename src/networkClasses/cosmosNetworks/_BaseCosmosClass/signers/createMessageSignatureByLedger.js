@@ -5,12 +5,12 @@ import { ledgerErrorHandler } from "./../functions"
 import { getLedgerTransport } from "../../../../ledgerTransportProvider";
 
 
-export const createMessageSignatureByLedger = async (data, derivationPath, rightApp) => {
+export const createMessageSignatureByLedger = async (data, derivationPath, rightApp, transportType) => {
   // const ledgerApp = await getLedgerApp()
   //const resp = await ledgerApp.cosmosApp.sign(hdPath, JSON.stringify(data))
 
   const { default: CosmosApp } = await import('ledger-cosmos-js')
-  const transport = await getLedgerTransport()
+  const transport = await getLedgerTransport(transportType)
   const cosmosApp = new CosmosApp(transport)
   const hdPath = getHdDerivationPath(derivationPath)
   const resp = await cosmosApp.sign(hdPath, JSON.stringify(data))

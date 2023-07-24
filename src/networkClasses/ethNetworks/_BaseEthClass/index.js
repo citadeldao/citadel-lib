@@ -16,7 +16,7 @@ export class BaseEthNetwork extends BaseNetwork {
     super(walletInfo)
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath }) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     // alternative ledger signer
@@ -24,7 +24,7 @@ export class BaseEthNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, this.net, rightApp)
+      return await signTxByLedger(transaction, derivationPath, this.net, rightApp, transportType)
     }
     // trezor signer
     if (this.type === WALLET_TYPES.TREZOR) {
@@ -34,7 +34,7 @@ export class BaseEthNetwork extends BaseNetwork {
     return signTxByPrivateKey(transaction, privateKey)
   }
 
-  async signMessage(message, { privateKey, derivationPath }) {
+  async signMessage(message, { privateKey, derivationPath, transportType }) {
     // dynamic import of large module (for fast init)
     const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
 
@@ -45,7 +45,7 @@ export class BaseEthNetwork extends BaseNetwork {
       // add global ledger app to avoid ledger reconnect error
       let transport = null
       if (!global[`ledger_${this.net}`]) {
-        transport = await getLedgerTransport()
+        transport = await getLedgerTransport(transportType)
         global[`ledger_${this.net}`] = new EthApp(transport)
       }
 
@@ -272,13 +272,13 @@ export class BaseEthNetwork extends BaseNetwork {
     }
   }
 
-  static async createWalletByLedger({ derivationPath }) {
+  static async createWalletByLedger({ derivationPath, transportType }) {
     // dynamic import of large module (for fast init)
     const { default: EthApp } = await import('@ledgerhq/hw-app-eth')
     // add global ledger app to avoid ledger reconnect error
     let transport = null
     if (!global.ledger_eth && !global.ledger_bsc) {
-      transport = await getLedgerTransport()
+      transport = await getLedgerTransport(transportType)
       global.ledger_eth = new EthApp(transport)
     }
     // generate address and public key

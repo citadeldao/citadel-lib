@@ -1,14 +1,14 @@
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
 import { ledgerErrorHandler } from "./functions"
 
-export const signTxByLedger = async (rawTransaction, derivationPath, rightApp) => {
+export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, transportType) => {
   // dynamic import of large module (for fast init)
   const { default: BtcApp } = await import('@ledgerhq/hw-app-btc')
   // add global btc ledger app to avoid ledger reconnect error
 
   let transport
   if (!global.ledger_btc) {
-    transport = await getLedgerTransport()
+    transport = await getLedgerTransport(transportType)
     global.ledger_btc = new BtcApp({ transport, currency: "bitcoin" });
   }
   // dynamic import of large module (for fast init)

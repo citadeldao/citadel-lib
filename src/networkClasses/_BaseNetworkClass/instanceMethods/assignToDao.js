@@ -2,7 +2,7 @@ import api from '../../../api'
 
 export const assignToDao = async function (
   holderAddress,
-  { privateKey, derivationPath }
+  { privateKey, derivationPath, transportType = 'usb' }
 ) {
   // prepares message
   const {
@@ -17,6 +17,7 @@ export const assignToDao = async function (
   const messageSignature = await this.createMessageSignature(message, {
     privateKey,
     derivationPath,
+    transportType
   })
 
   // send mesage

@@ -8,7 +8,7 @@ export const getWalletTransactions = ({
 }) => {
   return {
     // backend domain is in the axios instance
-    url: `/transactions/${net}/${address}`,
+    url: `/transactions/${encodeURIComponent(net)}/${address}`,
     method: 'get',
     data: {
       params: {

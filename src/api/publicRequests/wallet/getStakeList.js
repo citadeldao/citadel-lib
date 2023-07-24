@@ -5,7 +5,7 @@ export const getStakeList = ({ net, address }) => {
   return {
     // backend domain is in the axios instance
     // url: `/transactions/${net}/${address}/stake-list`,
-    url: `/blockchain/${net}/${address}/stake-list`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/stake-list`,
     method: 'get',
     data: {
       params: {

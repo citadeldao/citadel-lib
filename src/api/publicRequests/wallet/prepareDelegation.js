@@ -14,7 +14,7 @@ export const prepareDelegation = ({
     // url: `/transactions/${net}/${from}/prepare-delegation?version=${state.getState(
     //   'backendApiVersion'
     // )}`,
-    url: `/blockchain/${net}/${from}/builder/delegation?version=${state.getState(
+    url: `/blockchain/${encodeURIComponent(net)}/${from}/builder/delegation?version=${state.getState(
       'backendApiVersion'
     )}`,
     method: 'get',

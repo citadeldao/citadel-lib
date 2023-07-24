@@ -25,6 +25,7 @@ import {
  * {
  *  result: 'success',
  *  data: {
+ *    transportType: 'usb'
  *    address: '1Ma6vMCyK4v3EdoVV8NPC8s3bCA36RzoPH',
  *    publicKey: '02bf2f99f1dd15cb9f5d6d8fcf525424e9f5b714852d4c54ff886a1d82ded8e685',
  *    derivationPath: "m/44'/0'/0'/0/1",
@@ -53,6 +54,7 @@ export const createWalletByLedger = async (options) => {
   const {
     net,
     derivationPath = networkClass.getDerivationPathByIndex('ledger'),
+    transportType = 'usb'
   } = options
 
   checkTypes(
@@ -65,5 +67,6 @@ export const createWalletByLedger = async (options) => {
   // call static network method
   return await networkClass.createWalletByLedger({
     derivationPath,
+    transportType
   })
 }

@@ -1,3 +1,10 @@
+## 1.42.6 (2023-07-24)
+
+
+### Bug Fixes
+
+* add bt support for ledger, add url encode a19628a
+
 ## 1.42.5 (2023-07-21)
 
 

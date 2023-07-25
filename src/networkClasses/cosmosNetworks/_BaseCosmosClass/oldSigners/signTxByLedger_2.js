@@ -21,7 +21,9 @@ export const signTxByLedger_2 = async (
     error.code = response.return_code
     throw error
   }
-  await transport.close()
+  if(transportType === 'usb'){
+    await transport.close()
+  }
   // dynamic import for guge module
   const { default: secp256k1 } = await import('secp256k1')
   const parsedSignature = secp256k1.signatureImport(response.signature)

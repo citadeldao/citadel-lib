@@ -13,6 +13,9 @@ export const updateWalletList = async (
   accountWallets,
   updateSubtokensList = true
 ) => {
+  // get network config for update network info in wallets
+  const networksConfig = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)
+
   const supportedAccountWallets = accountWallets
     // filter unsupported network
     .filter((wallet) =>
@@ -28,7 +31,7 @@ export const updateWalletList = async (
         claimedRewards,
         notification,
         title,
-        subtokensList: tokens.map(item => {
+        ...(networksConfig[net].totalTokens && { subtokensList: tokens.map(item => {
           //const addConfig = additionalConfig.find(item => item.net === net)?.config?.tokens?.[item.token] || {}
           const formatedItem = {
             ...item,
@@ -58,12 +61,12 @@ export const updateWalletList = async (
           delete formatedItem.decimal
           delete formatedItem.balance
           return formatedItem
-        })
+        }) })
       })
     )
-
-  // get network config for update network info in wallets
-  const networksConfig = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)
+    
+  storage.caches.setCache(CACHE_NAMES.NETWORKS_CONFIG, networksConfig)
+  
   // get storage wallets
   const walletList = getWalletList()
 
@@ -138,9 +141,11 @@ export const updateWalletList = async (
   const supportedTokens = state.getState('supportedTokens')
 
   walletsList.forEach(({subtokensList, net}) => {
-    subtokensList.forEach(item => {
-      supportedTokens[item.net] = net
-    })
+    if(subtokensList){
+      subtokensList.forEach(item => {
+        supportedTokens[item.net] = net
+      })
+    }
   })
   // set supported tokens to state
   state.setState('supportedTokens', supportedTokens)

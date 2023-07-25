@@ -102,7 +102,9 @@ export class TronNetwork extends BaseNetwork {
     }catch(error){
       ledgerErrorHandler({ error, rightApp: this.ledger})
     }finally{
-      if(transport) await transport.close()
+      if(transportType === 'usb'){
+        if(transport) await transport.close()
+      }
     }
     return {
       net: this.net,

@@ -15,7 +15,9 @@ export const createMessageSignatureByLedger_2 = async (
     getHdDerivationPath(derivationPath),
     stringifyData ? JSON.stringify(data) : Buffer.from(JSON.stringify(data))
   )
-  await transport.close()
+  if(transportType === 'usb'){
+    await transport.close()
+  }
   // dynamic import for guge module
   const { default: secp256k1 } = await import('secp256k1')
   const parsedSignature = secp256k1.signatureImport(response.signature)

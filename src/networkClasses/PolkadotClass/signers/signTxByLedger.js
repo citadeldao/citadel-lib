@@ -45,8 +45,10 @@ export const signTxByLedger = async (
     // throw error
     ledgerErrorHandler({ error, rightApp })
   }finally{
-    if(global.ledger_polkadot) global.ledger_polkadot = null
-    if(transport) await transport.close()
+    if(transportType === 'usb'){
+      if(global.ledger_polkadot) global.ledger_polkadot = null
+      if(transport) await transport.close()
+    }
   }
   
 

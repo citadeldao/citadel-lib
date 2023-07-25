@@ -40,13 +40,9 @@ export class ProvenanceNetwork extends BaseCosmosNetwork {
           derivationPath,
           Buffer.from(transaction.bytes)
       )
-
-      // if (!resp.signature) {
-      //   const appInfo = await provenanceApp.appInfo()
-      //   await transport.close()
-      //   ledgerErrorHandler({ appInfo, resp, rightApp })
-      // }
-      await transport.close()
+      if(transportType === 'usb'){
+        await transport.close()
+      }
       let signMessage = new Object()
       if (
           transaction?.json?.msgs?.[0]?.type === 'irishub/bank/Send' ||
@@ -88,17 +84,14 @@ export class ProvenanceNetwork extends BaseCosmosNetwork {
     const { default: ProvenanceApp } = await import('@citadeldao/hw-app-hash')
     const provenanceApp = new ProvenanceApp(transport)
     const resp = await provenanceApp.getPublicKey(derivationPath)
-    // if (!resp?.address) {
-    //   const appInfo = await cosmosApp.appInfo()
-    //   await transport.close()
-    //   ledgerErrorHandler({ appInfo, resp, rightApp: this.ledger})
-    // }
-    // TODO cahnge to cosmosApp.getBech32FromPK
+    
     const address = await getBech32FromPK(
       this.netPrefix,
       Buffer.from(resp.publicKey)
     )
-    await transport.close()
+    if(transportType === 'usb'){
+      await transport.close()
+    }
 
     return {
       net: this.net,

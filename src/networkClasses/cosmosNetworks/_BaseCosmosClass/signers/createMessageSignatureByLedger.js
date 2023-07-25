@@ -22,10 +22,14 @@ export const createMessageSignatureByLedger = async (data, derivationPath, right
   // }
   if (!resp.signature) {
     const appInfo = await cosmosApp.appInfo()
-    await transport.close()
+    if(transportType === 'usb'){
+      await transport.close()
+    }
     ledgerErrorHandler({ appInfo, resp, rightApp })
   }
-  await transport.close()
+  if(transportType === 'usb'){
+    await transport.close()
+  }
   // dynamic import for guge module
   const { default: secp256k1 } = await import('secp256k1')
   const parsedSignature = secp256k1.signatureImport(resp.signature)

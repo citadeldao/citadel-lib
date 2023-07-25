@@ -38,8 +38,10 @@ export async function createMessageSignature(
     }catch(error){
       ledgerErrorHandler({ error, rightApp })
     }finally{
-      if(global.ledger_icon) global.ledger_icon = null
-      if(transport) await transport.close()
+      if(transportType === 'usb'){
+        if(global.ledger_icon) global.ledger_icon = null
+        if(transport) await transport.close()
+      }
     }
     const formatted = Buffer.from(res.signedRawTxBase64, 'base64').slice(0, 64)
 

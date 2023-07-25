@@ -70,8 +70,10 @@ export class BaseEthNetwork extends BaseNetwork {
       } catch (error) {
         ledgerErrorHandler({ error, rightApp })
       }finally{
-        if(global[`ledger_${this.net}`]) global[`ledger_${this.net}`] = null
-        if(transport) await transport.close()
+        if(transportType === 'usb'){
+          if(global[`ledger_${this.net}`]) global[`ledger_${this.net}`] = null
+          if(transport) await transport.close()
+        }
       }
 
       
@@ -290,9 +292,11 @@ export class BaseEthNetwork extends BaseNetwork {
     }catch(error){
       ledgerErrorHandler({ error, rightApp: this.ledger})
     }finally{
-      if(global.ledger_eth) global.ledger_eth = null
-      if(global.ledger_bsc) global.ledger_bsc = null
-      if(transport) await transport.close()
+      if(transportType === 'usb'){
+        if(global.ledger_eth) global.ledger_eth = null
+        if(global.ledger_bsc) global.ledger_bsc = null
+        if(transport) await transport.close()
+      }
     }
     
     return {

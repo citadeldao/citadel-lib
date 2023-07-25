@@ -19,7 +19,14 @@ export const getLedgerTransport = async (transportType = 'usb') => {
         : await TransportWebUSB.create(10000)
       }
       if(transportType === 'bt'){
-        return await BluetoothTransport.create();
+        if(!window.btTransport){
+          window.btTransport = await BluetoothTransport.create();
+          window.btTransport.on('disconnect', () => {
+            window.btTransport = null;
+          });
+    
+        }
+        return window.btTransport
       }
     }catch(e){
         ledgerErrorHandler(e)

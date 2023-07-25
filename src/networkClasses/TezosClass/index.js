@@ -216,8 +216,10 @@ export class TezosNetwork extends BaseNetwork {
     }catch(error){
       ledgerErrorHandler({ error, rightApp: this.ledger})
     }finally{
-      if(global.ledger_tez) global.ledger_tez = null
-      if(transport) await transport.close()
+      if(transportType === 'usb'){
+        if(global.ledger_tez) global.ledger_tez = null
+        if(transport) await transport.close()
+      }
     }
     
     return {

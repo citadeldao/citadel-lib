@@ -22,18 +22,17 @@ export const signTxByLedger = async (
   const hdPath = getHdDerivationPath(derivationPath)
   const resp = await cosmosApp.sign(hdPath, rawTransaction.bytes)
 
-  // if (!response.signature) {
-  //   errors.throwError('LedgerError', {
-  //     message: response.error_message,
-  //     code: response.return_code,
-  //   })
-  // }
   if (!resp.signature) {
     const appInfo = await cosmosApp.appInfo()
-    await transport.close()
+    if(transportType === 'usb'){
+      await transport.close()
+    }
     ledgerErrorHandler({ appInfo, resp, rightApp })
   }
-  await transport.close()
+  if(transportType === 'usb'){
+    await transport.close()
+  }
+
   // dynamic import for huge module
   const { default: secp256k1} = await import('secp256k1')
   const parsedSignature = secp256k1.signatureImport(resp.signature)

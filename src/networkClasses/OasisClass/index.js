@@ -152,7 +152,9 @@ export class OasisNetwork extends BaseNetwork {
     const resp = await oasisApp.publicKey(hdPathArray)
     if (!resp?.pk) {
       const appInfo = await oasisApp.appInfo()
-      await transport.close()
+      if(transportType === 'usb'){
+        await transport.close()
+      }
       ledgerErrorHandler({ appInfo, resp, rightApp: this.ledger})
     }
     // dynamic import of large module (for fast init)
@@ -160,7 +162,9 @@ export class OasisNetwork extends BaseNetwork {
     const data = await staking.addressFromPublicKey(resp.pk)
     const address = staking.addressToBech32(data)
     const publicKey = Buffer.from(resp.pk).toString('hex')
-    await transport.close()
+    if(transportType === 'usb'){
+      await transport.close()
+    }
     return {
       net: this.net,
       address,

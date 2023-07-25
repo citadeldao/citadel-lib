@@ -40,9 +40,11 @@ export const configureModulesByCaches = ({
   const supportedTokens = {}
 
   walletsList.forEach(({subtokensList, net}) => {
-    subtokensList.forEach(item => {
-      supportedTokens[item.net] = net
-    })
+    if(subtokensList){
+      subtokensList.forEach(item => {
+        supportedTokens[item.net] = net
+      })
+    }
   })
 
   //set config for snip-20

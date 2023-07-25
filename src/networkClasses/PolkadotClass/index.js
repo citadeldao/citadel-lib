@@ -248,8 +248,10 @@ export class PolkadotNetwork extends BaseNetwork {
     }catch(error){
       ledgerErrorHandler({ error, rightApp: this.ledger})
     }finally{
-      if(global.ledger_polkadot) global.ledger_polkadot = null
-      if(transport) await transport.close()
+      if(transportType === 'usb'){
+        if(global.ledger_polkadot) global.ledger_polkadot = null
+        if(transport) await transport.close()
+      }
     }
 
     return {

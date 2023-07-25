@@ -21,7 +21,9 @@ export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, 
   }catch(error){
     ledgerErrorHandler({ error, rightApp })
   }finally{
-    if(transport) await transport.close()
+    if(transportType === 'usb'){
+      if(transport) await transport.close()
+    }
   }
   const suiPubKey = publicKeyFromSerialized('ED25519',Buffer.from(publicKey, 'hex').toString('base64'))
   const serializedSignature = toSerializedSignature({

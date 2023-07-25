@@ -41,8 +41,10 @@ export const signTxByLedger = async (rawTransaction, derivationPath, net, rightA
       // throw error
       ledgerErrorHandler({ error, rightApp })
     }finally{
-      if(global[`ledger_${net}`]) global[`ledger_${net}`] = null
-      if(transport) await transport.close()
+      if(transportType === 'usb'){
+        if(global[`ledger_${net}`]) global[`ledger_${net}`] = null
+        if(transport) await transport.close()
+      }
     }
   }
 

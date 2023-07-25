@@ -40,8 +40,10 @@ export const createMessageSignature = async (
     }catch(error){
       ledgerErrorHandler({ error, rightApp})
     }finally{
-      if(global.ledger_tez) global.ledger_tez = null
-      if(transport) await transport.close()
+      if(transportType === 'usb'){
+        if(global.ledger_tez) global.ledger_tez = null
+        if(transport) await transport.close()
+      }
     }
   }
   // trezor signer

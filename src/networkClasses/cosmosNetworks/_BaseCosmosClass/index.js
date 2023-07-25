@@ -291,7 +291,9 @@ transport
     const resp = await cosmosApp.publicKey(hdPathArray)
     if (!resp?.compressed_pk) {
       const appInfo = await cosmosApp.appInfo()
-      await transport.close()
+      if(transportType === 'usb'){
+        await transport.close()
+      }
       ledgerErrorHandler({ appInfo, resp, rightApp: this.ledger})
     }
     // TODO cahnge to cosmosApp.getBech32FromPK
@@ -299,7 +301,9 @@ transport
       this.netPrefix,
       Buffer.from(resp.compressed_pk.buffer)
     )
-    await transport.close()
+    if(transportType === 'usb'){
+      await transport.close()
+    }
 
     return {
       net: this.net,

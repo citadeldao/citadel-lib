@@ -12,11 +12,15 @@ export const signTxByLedger = async (rawTransaction, derivationPath, publicKey, 
   if (!resp.signature) {
     if (!resp.signature) {
       const appInfo = await oasisApp.appInfo()
-      await transport.close()
+      if(transportType === 'usb'){
+        await transport.close()
+      }
       ledgerErrorHandler({ appInfo, resp, rightApp })
     }
   }
-  await transport.close()
+  if(transportType === 'usb'){
+    await transport.close()
+  }
 
   return {
     untrusted_raw_value: rawTransaction,

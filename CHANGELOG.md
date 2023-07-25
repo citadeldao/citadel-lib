@@ -1,3 +1,10 @@
+## 1.42.7 (2023-07-25)
+
+
+### Bug Fixes
+
+* bt ledger, subtokens config 97a1ea3
+
 ## 1.42.6 (2023-07-24)
 
 

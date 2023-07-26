@@ -1,3 +1,10 @@
+## 1.42.9 (2023-07-26)
+
+
+### Bug Fixes
+
+* add transport type for setvk 3179585
+
 ## 1.42.8 (2023-07-26)
 
 

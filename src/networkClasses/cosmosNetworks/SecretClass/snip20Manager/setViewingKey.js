@@ -166,6 +166,7 @@ export async function setViewingKey(
         },
         privateKey,
         derivationPath,
+        transportType,
         type,
         publicKey,
       })

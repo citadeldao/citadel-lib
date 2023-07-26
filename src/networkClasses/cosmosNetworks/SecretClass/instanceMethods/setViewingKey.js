@@ -8,7 +8,7 @@ import { keplrChains } from '../../_BaseCosmosClass/signers/keplrChains'
 export async function setViewingKey(
   token,
   viewingKeyType,
-  { privateKey, derivationPath, viewingKey, fee = 0.003, contractAddress } = {}
+  { privateKey, derivationPath, transportType = 'usb', viewingKey, fee = 0.003, contractAddress } = {}
 ) {
   // dynamic import module with huge npm package
   const { default: snip20Manager } = await import('../snip20Manager')
@@ -47,6 +47,7 @@ export async function setViewingKey(
         privateKey,
         privateKeyHash: this.privateKeyHash,
         derivationPath,
+        transportType,
         viewingKey,
         fee,
       })
@@ -78,6 +79,7 @@ export async function setViewingKey(
       privateKey,
       privateKeyHash: this.privateKeyHash,
       derivationPath,
+      transportType,
       viewingKey,
       fee,
     })

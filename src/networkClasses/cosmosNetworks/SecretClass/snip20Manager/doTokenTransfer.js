@@ -10,6 +10,7 @@ export async function doTokenTransfer({
   publicKey,
   privateKey,
   derivationPath,
+  transportType,
   type,
   toAddress,
   amount,
@@ -34,6 +35,7 @@ export async function doTokenTransfer({
     },
     privateKey,
     derivationPath,
+    transportType,
     type,
     publicKey,
   })

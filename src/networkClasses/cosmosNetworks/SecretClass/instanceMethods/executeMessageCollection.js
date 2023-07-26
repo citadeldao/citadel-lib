@@ -13,7 +13,7 @@ export async function executeMessageCollection(
       }]
     */
   messages,
-  { privateKey, derivationPath }
+  { privateKey, derivationPath, transportType }
 ) {
   const GAS_PRICE = 0.0125
   // estimate gas
@@ -25,6 +25,7 @@ export async function executeMessageCollection(
       messages,
       privateKey,
       derivationPath,
+      transportType,
       type: this.type,
       publicKey: this.publicKey,
       simulate: true,
@@ -50,6 +51,7 @@ export async function executeMessageCollection(
     },
     privateKey,
     derivationPath,
+    transportType,
     type: this.type,
     publicKey: this.publicKey,
     simulate: false,

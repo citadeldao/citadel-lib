@@ -53,7 +53,7 @@ export const updateWalletList = async (
               stake: item.details.stake,
               unstake: 0,
               linked: true,
-              claimableRewards: 0,
+              claimableRewards: item.details.rewards || 0
             },
           }
           delete formatedItem.details

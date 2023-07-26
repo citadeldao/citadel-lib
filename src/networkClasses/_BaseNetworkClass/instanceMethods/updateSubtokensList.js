@@ -63,7 +63,7 @@ export const updateSubtokensList = async function (
             stake: details.stake,
             unstake: 0,
             linked: true,
-            claimableRewards: 0,
+            claimableRewards: details.rewards || 0
           },
         }
 

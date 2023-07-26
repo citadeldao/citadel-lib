@@ -10,16 +10,19 @@ export const addressBalanceUpdatedСlient = async ({
   net,
   balance,
   tokenReloadRequired,
+  denom = null
 }) => {
+  const formatedNet = denom ? `${net.split('_')[0]}_${denom}` : net
   // check that the wallet exists
   const wallet = walletsManager.getWalletInfoByAddress(
-    networkClasses.getNativeNet(net),
+    networkClasses.getNativeNet(formatedNet),
     address
   )
+  
   if (!wallet) {
     return
   }
-
+  
   // update balance from socket data for native net
   if (isNativeToken(net)) {
     // format balance object (rename rewards)

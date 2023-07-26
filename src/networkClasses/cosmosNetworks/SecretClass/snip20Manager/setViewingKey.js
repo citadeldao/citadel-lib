@@ -17,6 +17,7 @@ export async function setViewingKey(
     privateKey,
     privateKeyHash,
     derivationPath,
+    transportType,
     viewingKey,
     fee,
   } = {}
@@ -85,6 +86,7 @@ export async function setViewingKey(
         },
         privateKey,
         derivationPath,
+        transportType,
         type,
         publicKey,
       })
@@ -123,6 +125,7 @@ export async function setViewingKey(
         },
         privateKey,
         derivationPath,
+        transportType,
         type,
         publicKey,
       })

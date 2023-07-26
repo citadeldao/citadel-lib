@@ -48,7 +48,7 @@ export const convertScrtToSecretScrt = async (walletId, options) => {
 
   checkWalletId(walletId)
 
-  const { amount, fee, privateKey, derivationPath } = options
+  const { amount, fee, privateKey, derivationPath, transportType = 'usb' } = options
 
   checkTypes(
     ['amount', amount, ['Number', 'String'], true],
@@ -67,5 +67,5 @@ export const convertScrtToSecretScrt = async (walletId, options) => {
   // call walletInstance method
   return await walletInstances
     .getWalletInstanceById(walletId)
-    .convertScrtToSecretScrt({ amount, fee, privateKey, derivationPath })
+    .convertScrtToSecretScrt({ amount, fee, privateKey, derivationPath, transportType })
 }

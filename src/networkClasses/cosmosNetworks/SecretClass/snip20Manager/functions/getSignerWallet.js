@@ -3,7 +3,8 @@ import {
   WALLET_TYPES,
   LIB_EVENT_NAMES,
 } from '../../../../../constants'
-import { getLedgerApp } from '../../../_BaseCosmosClass/signers/getLedgerApp'
+//import { getLedgerApp } from '../../../_BaseCosmosClass/signers/getLedgerApp'
+import { getLedgerTransport } from "../../../../../ledgerTransportProvider";
 import { serializeSignDoc } from './serializeSignDoc'
 import { getHdDerivationPath } from '../../../../_functions/ledger'
 import errors from '../../../../../errors'
@@ -12,6 +13,7 @@ import { dispatchLibEvent } from '../../../../../generalFunctions/dispatchLibEve
 export async function getSignerWallet({
   privateKey,
   derivationPath,
+  transportType,
   type,
   publicKey,
   address,
@@ -63,8 +65,12 @@ export async function getSignerWallet({
         const formattedMessage = new TextDecoder('utf-8', {
           fatal: true,
         }).decode(message)
-        const ledgerApp = await getLedgerApp()
-        const res = await ledgerApp.cosmosApp.sign(
+
+        const { default: CosmosApp } = await import('ledger-cosmos-js')
+        const transport = await getLedgerTransport(transportType)
+        const ledgerApp = new CosmosApp(transport)
+        // const ledgerApp = await getLedgerApp()
+        const res = await ledgerApp.sign(
           getHdDerivationPath(derivationPath),
           formattedMessage
         )

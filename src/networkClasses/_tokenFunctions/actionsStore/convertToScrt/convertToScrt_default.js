@@ -5,6 +5,7 @@ export async function convertToScrt_default({
   token,
   privateKey,
   derivationPath,
+  transportType,
   amount,
   fee,
 }) {
@@ -32,6 +33,7 @@ export async function convertToScrt_default({
         decimals: networkClass.tokens[token].decimals,
         privateKey,
         derivationPath,
+        transportType,
         amount,
         fee,
       },

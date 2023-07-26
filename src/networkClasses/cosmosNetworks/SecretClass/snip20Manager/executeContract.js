@@ -8,6 +8,7 @@ export const executeContract = async ({
   gasLimit,
   privateKey,
   derivationPath,
+  transportType,
   type,
   publicKey,
   simulate = false,
@@ -18,6 +19,7 @@ export const executeContract = async ({
     address,
     privateKey,
     derivationPath,
+    transportType,
     type,
     publicKey,
   })

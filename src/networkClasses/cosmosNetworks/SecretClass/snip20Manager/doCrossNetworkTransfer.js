@@ -11,6 +11,7 @@ export async function doCrossNetworkTransfer({
   decimals,
   privateKey,
   derivationPath,
+  transportType,
   toAddress,
   // for secret_eth - 0.1 minimum
   amount,
@@ -37,6 +38,7 @@ export async function doCrossNetworkTransfer({
     },
     privateKey,
     derivationPath,
+    transportType,
     type,
     publicKey,
   })

@@ -16,6 +16,7 @@ export const broadcast = async ({
   gasLimit,
   privateKey,
   derivationPath,
+  transportType,
   type,
   publicKey,
   simulate = false,
@@ -25,6 +26,7 @@ export const broadcast = async ({
     address,
     privateKey,
     derivationPath,
+    transportType,
     type,
     publicKey,
   })

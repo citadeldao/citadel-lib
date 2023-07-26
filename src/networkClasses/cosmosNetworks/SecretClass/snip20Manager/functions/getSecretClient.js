@@ -11,6 +11,7 @@ export const getSecretClient = async ({
   address,
   privateKey,
   derivationPath,
+  transportType,
   type,
   publicKey,
   readOnly = false,
@@ -53,6 +54,7 @@ export const getSecretClient = async ({
   const signerWallet = await getSignerWallet({
     privateKey,
     derivationPath,
+    transportType,
     type,
     publicKey,
     address,

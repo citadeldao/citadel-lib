@@ -5,6 +5,7 @@ import snip20Manager from '../snip20Manager'
 export async function executeContract({
   privateKey,
   derivationPath,
+  transportType,
   contract,
   gas,
   msg,
@@ -21,6 +22,7 @@ export async function executeContract({
         message: msg,
         privateKey,
         derivationPath,
+        transportType,
         type: this.type,
         publicKey: this.publicKey,
         simulate: true,
@@ -50,6 +52,7 @@ export async function executeContract({
     privateKey,
     sentFunds,
     derivationPath,
+    transportType,
     type: this.type,
     publicKey: this.publicKey,
   })

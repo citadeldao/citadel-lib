@@ -1,6 +1,7 @@
 export async function convertScrtToSecretScrt({
   privateKey,
   derivationPath,
+  transportType,
   amount,
   fee,
 }) {
@@ -12,6 +13,7 @@ export async function convertScrtToSecretScrt({
     type: this.type,
     privateKey,
     derivationPath,
+    transportType,
     amount,
     fee,
   })

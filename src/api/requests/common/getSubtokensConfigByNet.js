@@ -1,5 +1,5 @@
 import state from '../../../state'
-//TODO GRISH
+
 // function returns request parameters for the axios instance.
 export const getSubtokensConfigByNet = ({net}) => {
   return {

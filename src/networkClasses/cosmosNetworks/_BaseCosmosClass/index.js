@@ -279,7 +279,6 @@ export class BaseCosmosNetwork extends BaseNetwork {
       }),
     }
   }
-transport
   
   static async createWalletByLedger({ derivationPath, transportType }) {
     

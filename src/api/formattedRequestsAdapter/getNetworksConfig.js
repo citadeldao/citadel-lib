@@ -1,10 +1,7 @@
-// import { additionalConfig } from './_hardCode'
-// import { merge } from '../../helpers/merge'
 import { requests } from '../requests'
 import { createApiRequests } from '../createApiRequests'
 import state from '../../state'
-// import storage from '../../storage'
-// import { CACHE_NAMES } from '../../constants'
+
 
 // modify the backend response (will move to the backend in the future)
 export const getNetworksConfig = async () => {
@@ -17,6 +14,9 @@ export const getNetworksConfig = async () => {
     enableResponseHandler: true,
   })
 
+  // get original response
+  const networksConfig = await originalRequest()
+
   //for snip20
   const getSubtokensConfigForSecret = createApiRequests({
     baseURL: backendUrl,
@@ -25,21 +25,7 @@ export const getNetworksConfig = async () => {
     enableResponseHandler: true,
   })
 
-  //TODO GRISH
-  //newConfig
-  const newRequest = createApiRequests({
-    baseURL: backendUrl,
-    withCredentials: true,
-    singleRequest: requests.getNewNetworksConfig,
-    enableResponseHandler: true,
-  })
-
-  // get original response
-  const networksConfig = await originalRequest()
-
-  //TODO GRISH
-  // get new response
-  const newNetworksConfig = await newRequest()
+  //format snip-20 config
   const { tokens } = await getSubtokensConfigForSecret({net: 'secret'})
   const formatedTokensConfig = {}
   tokens.forEach(item => {
@@ -47,8 +33,10 @@ export const getNetworksConfig = async () => {
       formatedTokensConfig[item.net] = {...item, hasTransactionComment: false}
     }
   })
+
+  //format main config
   const formatedConfig = {}
-  newNetworksConfig.forEach(item => {
+  networksConfig.forEach(item => {
     formatedConfig[item.net] = {
       ...item, 
       code: item.primaryToken.code, 
@@ -69,33 +57,6 @@ export const getNetworksConfig = async () => {
     delete formatedConfig[item.net].unbondingPeriod
   });
 
-  // add hardcode configs
-  // additionalConfig.map(({ net, config }) => {
-  //   merge(networksConfig[net], config)
-  // })
-
-  // add hasTransactionComment true for all tokens except snip20
-  // Object.entries(networksConfig).map(([net, { tokens }]) => {
-  //   //networksConfig[net].unstakeingPerioud = storage.caches.getCache(CACHE_NAMES.MARKETCAPS)[net]?.unbondingPeriod || 0
-  //   if (tokens && Object.keys(tokens).length) {
-  //     Object.entries(tokens).map(([token, { standard }]) => {
-  //       if (standard === 'snip20') {
-  //         networksConfig[net].tokens[token].hasTransactionComment = false
-  //       } else {
-  //         networksConfig[net].tokens[token].hasTransactionComment = true
-  //       }
-  //     })
-  //   }
-  // })
-
-  // // TODO GRISH
-  // Object.entries(networksConfig).map(([net, { tokens, /* derivationPathTemplates, unstakeingPerioud */}]) => {
-  //   // formatedConfig[net].unstakeingPerioud = unstakeingPerioud
-  //   formatedConfig[net].tokens = tokens
-  //   // formatedConfig[net].derivationPathTemplates = derivationPathTemplates
-  // })
-
-  console.log('test111', networksConfig, formatedConfig);
-
-  return formatedConfig //networksConfig
+  
+  return formatedConfig
 }

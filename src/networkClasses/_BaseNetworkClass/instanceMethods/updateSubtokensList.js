@@ -4,8 +4,6 @@ import api from '../../../api'
 import { retryRequestOnError } from '../../../helpers/retryRequestOnError'
 import { calculateSubtokenBalanceUSD } from '../../_functions/balances'
 import { OUR_TOKEN } from './../../../constants'
-// import { debugConsole } from '../../../helpers/debugConsole'
-// import { additionalConfig } from './../../../api/formattedRequestsAdapter/_hardCode'
 
 // private method
 export const updateSubtokensList = async function (
@@ -35,21 +33,16 @@ export const updateSubtokensList = async function (
 
   // create subtokenList
   const subtokensList = await Promise.all(
-    // Object.entries(allTokenBalances || {})
-      // filter unsupported tokens
-      // .filter(([token]) => networkClass.tokens[token])
       allTokenBalances.map(async ({token, meta , balance, details, methods = {bridge: []}, price = { USD: 0, BTC: 0 } }) => {
-        // const addConfig = additionalConfig.find(item => item.net === this.net)?.config?.tokens?.[token] || {}
         // create subtkenList item from token config and token balance
         const subtokenListItem = {
           net: `${this.net}_${token}`,
-          name: meta.name,//networkClass.tokens[token].name,
-          code: meta.code,//networkClass.tokens[token].code,
-          standard: meta.standard,//networkClass.tokens[token].standard,
+          name: meta.name,
+          code: meta.code,
+          standard: meta.standard,
           decimals: meta.decimal,
           nativeNet: this.net,
           methods,
-          // ...addConfig,
           // by default - get balance from allTokenBalances array
           hasTransactionComment: meta.standard !== 'snip20',
           tokenBalance: {
@@ -66,23 +59,6 @@ export const updateSubtokensList = async function (
             claimableRewards: details.rewards || 0
           },
         }
-
-        // // if token has stake, get detailed balance
-        // if (this.getTokenActions(token).includes('stake')) {
-        //   // catch error to to keep looping anyway
-        //   try {
-        //     const detailedBalance = await this.callTokenInfo(token, 'balance', {
-        //       preventEvent: true,
-        //     })
-        //     subtokenListItem.tokenBalance = {
-        //       ...subtokenListItem.tokenBalance,
-        //       ...detailedBalance,
-        //     }
-        //   } catch (error) {
-        //     debugConsole.error(error)
-        //   }
-        // }
-
         return subtokenListItem
       })
   )

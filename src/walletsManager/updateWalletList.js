@@ -6,7 +6,6 @@ import storage from '../storage'
 import networkClasses from '../networkClasses'
 import { CACHE_NAMES } from '../constants'
 import walletInstances from '../walletInstances'
-//import { additionalConfig } from './../api/formattedRequestsAdapter/_hardCode'
 
 // update wallet list by account wallets (used inside the library with 'info', 'wallets', 'walletsDetail' requests)
 export const updateWalletList = async (
@@ -32,7 +31,6 @@ export const updateWalletList = async (
         notification,
         title,
         ...(networksConfig[net].totalTokens && { subtokensList: tokens.map(item => {
-          //const addConfig = additionalConfig.find(item => item.net === net)?.config?.tokens?.[item.token] || {}
           const formatedItem = {
             ...item,
             net: `${net}_${item.token}`,
@@ -40,7 +38,6 @@ export const updateWalletList = async (
             decimals: item.meta.decimal,
             nativeNet: net,
             methods: item.methods || {bridge: []},
-            // ...addConfig,
             hasTransactionComment: item.standard !== 'snip20',
             tokenBalance: {
               mainBalance: item.details.available,

@@ -4,7 +4,7 @@ import state from '../../../state'
 export const getNetworksConfig = () => {
   return {
     // backend domain is in the axios instance
-    url: `/networks.json`,
+    url: `/configs/networks`,
     method: 'get',
     data: {
       params: {

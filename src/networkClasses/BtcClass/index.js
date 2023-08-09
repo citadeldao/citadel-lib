@@ -82,12 +82,24 @@ export class BtcNetwork extends BaseNetwork {
     const seed = await mnemonicToSeed(mnemonic, passphrase)
     const hdMaster = bip32.fromSeed(seed, networks.bitcoin)
     const keyPair = hdMaster.derivePath(derivationPath)
+    const keyPairForSegwitNative = hdMaster.derivePath(`m/0/${derivationPath.split('/').reverse()[0]}`)
     const { address } = payments.p2pkh({ pubkey: keyPair.publicKey })
+    
+    // SEGWIT
+    const { address: segwitAddress } = payments.p2sh({ 
+      redeem: payments.p2wpkh({ pubkey: keyPairForSegwitNative.publicKey }) 
+    });
+
+    // NATIVE
+    const { address: nativeAddress } = payments.p2wpkh({ pubkey: keyPairForSegwitNative.publicKey });
+
     const publicKey = keyPair.publicKey.toString('hex')
     const privateKey = keyPair.toWIF()
     return {
       net: this.net,
       address,
+      segwitAddress,
+      nativeAddress,
       publicKey,
       derivationPath,
       privateKey,
@@ -114,11 +126,22 @@ export class BtcNetwork extends BaseNetwork {
       // generate address and public key
       const keyPair = ECPair.fromWIF(privateKey)
       const { address } = payments.p2pkh({ pubkey: keyPair.publicKey })
+
+      // SEGWIT
+      const { address: segwitAddress } = payments.p2sh({ 
+        redeem: payments.p2wpkh({ pubkey: keyPair.publicKey }) 
+      });
+
+      // NATIVE
+      const { address: nativeAddress } = payments.p2wpkh({ pubkey: keyPair.publicKey });
+
       const publicKeyHex = keyPair.publicKey.toString('hex')
 
       return {
         net: this.net,
         address,
+        segwitAddress,
+        nativeAddress,
         publicKey: publicKeyHex,
         privateKey: keyPair.toWIF(),
         derivationPath: null,

@@ -1,3 +1,12 @@
+## 1.43.2 (2023-09-12)
+
+
+### Bug Fixes
+
+* edit derivation for seg/nat 21de587
+* generate btc segwit/native addresses f6a940d
+* prepare transfer optional btcTypeAddress 49b120a
+
 ## 1.43.1 (2023-08-02)
 
 

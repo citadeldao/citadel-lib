@@ -16,6 +16,8 @@ export const addCreatedWallet = async (wallet) => {
       address,
       nativeAddress,
       segwitAddress,
+      publicKeySegwit,
+      publicKeyNative,
       title,
       publicKey,
       type,
@@ -42,6 +44,8 @@ export const addCreatedWallet = async (wallet) => {
       ['derivationPath', derivationPath, ['String', 'Null']],
       ['nativeAddress', address, ['String'], true],
       ['segwitAddress', address, ['String'], true],
+      ['publicKeySegwit', address, ['String'], true],
+      ['publicKeyNative', address, ['String'], true],
     )
 
     const createdWallet = {
@@ -50,6 +54,8 @@ export const addCreatedWallet = async (wallet) => {
       address,
       nativeAddress,
       segwitAddress,
+      publicKeySegwit,
+      publicKeyNative,
       title,
       publicKey,
       type,

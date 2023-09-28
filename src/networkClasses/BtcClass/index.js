@@ -174,10 +174,15 @@ export class BtcNetwork extends BaseNetwork {
       global.ledger_btc = new BtcApp({ transport, currency: "bitcoin" });//new BtcApp(transport)
     }
     
-    let res
+    let res;
+    let segwitRes;
+    let nativeRes;
+
     try{
       // generate address and public key
       res = await global.ledger_btc.getWalletPublicKey(derivationPath)
+      segwitRes = await global.ledger_btc.getWalletPublicKey(derivationPath.replace('44', '49'), { format: "p2sh" });
+      nativeRes = await global.ledger_btc.getWalletPublicKey(derivationPath.replace('44', '84'), { format: "bech32" });
     }catch(error){
       ledgerErrorHandler({ error, rightApp: this.ledger})
     }finally{
@@ -192,6 +197,10 @@ export class BtcNetwork extends BaseNetwork {
       net: this.net,
       address: res.bitcoinAddress,
       publicKey: res.publicKey,
+      segwitAddress: segwitRes.bitcoinAddress,
+      nativeAddress: nativeRes.bitcoinAddress,
+      publicKeySegwit: segwitRes.publicKey,
+      publicKeyNative: nativeRes.publicKey,
       privateKey: null,
       derivationPath,
       type: WALLET_TYPES.LEDGER,

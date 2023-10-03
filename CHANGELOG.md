@@ -1,3 +1,12 @@
+## 1.43.3 (2023-10-03)
+
+
+### Bug Fixes
+
+* btcAddress param, sign ledger btc 1c7f917
+* btcAddress param, sign ledger btc 890bc7e
+* generate pubkeys for ledger segwit/native 5eade1c
+
 ## 1.43.2 (2023-09-12)
 
 

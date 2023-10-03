@@ -48,8 +48,6 @@ export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, t
       // to prevent error "... inclides()" in @ledgerhq/hw-app-btc version 6.23
       additionals,
     }
-
-    console.log('tx_data', tx_data);
   
     // return signed transaction
     return await global.ledger_btc.createPaymentTransaction(tx_data)

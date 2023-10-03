@@ -23,7 +23,7 @@ export class BtcNetwork extends BaseNetwork {
     return `https://blockchair.com/bitcoin/transaction/${hash}`
   }
 
-  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType}) {
+  async signTransaction(rawTransaction, { privateKey, derivationPath, transportType, btcAddress }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction
     // ledger signer
@@ -31,7 +31,7 @@ export class BtcNetwork extends BaseNetwork {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
 
-      return await signTxByLedger(transaction, derivationPath, rightApp, transportType)
+      return await signTxByLedger(transaction, derivationPath, rightApp, transportType, btcAddress)
     }
     // trezor signer
     if (this.type === WALLET_TYPES.TREZOR) {

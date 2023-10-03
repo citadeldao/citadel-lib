@@ -41,6 +41,7 @@ export const signAndSend = async (walletId, rawTransaction, options = {}) => {
     mnemonic,
     proxy,
     useAlternativeSigner,
-    transportType
+    transportType,
+    btcAddress,
   })
 }

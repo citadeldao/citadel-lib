@@ -1,3 +1,10 @@
+## 1.43.4 (2023-10-12)
+
+
+### Bug Fixes
+
+* delegation balance check key 933c5d1
+
 ## 1.43.3 (2023-10-03)
 
 

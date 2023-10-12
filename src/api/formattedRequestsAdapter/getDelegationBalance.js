@@ -35,8 +35,7 @@ export const getDelegationBalance = async (options) => {
       .toNumber()
   } else {
     data.calculatedBalance = networkClasses
-      .getNetworkClass(networkClasses.getNativeNet(options.net))
-      .calculateBalance(data)
+      .getNetworkClass(networkClasses.getNativeNet(options.net))?.calculateBalance(data)
   }
 
   return { data }

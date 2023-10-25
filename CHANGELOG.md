@@ -1,3 +1,10 @@
+## 1.43.5 (2023-10-25)
+
+
+### Bug Fixes
+
+* fee key for generate route cf9a832
+
 ## 1.43.4 (2023-10-12)
 
 

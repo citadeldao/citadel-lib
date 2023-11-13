@@ -54,6 +54,7 @@ import { AvalancheNetwork } from './ethNetworks/AvalancheClass'
 import { QuicksilverNetwork } from './cosmosNetworks/QuicksilverClass'
 import { ProvenanceNetwork } from './cosmosNetworks/ProvenanceClass'
 import { ArchwayNetwork } from './cosmosNetworks/ArchwayClass'
+import { QuasarNetwork } from './cosmosNetworks/QuasarClass'
 import { NolusNetwork } from './cosmosNetworks/NolusClass'
 import { SuiNetwork } from './SuiClass'
 
@@ -116,5 +117,6 @@ export const networkClasses = {
   provenance: ProvenanceNetwork,
   sui: SuiNetwork,
   archway: ArchwayNetwork,
+  quasar: QuasarNetwork,
   nolus: NolusNetwork
 }

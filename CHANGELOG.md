@@ -1,3 +1,12 @@
+## 1.43.7 (2023-11-21)
+
+
+### Bug Fixes
+
+* trezor update version c483900
+* trezor update version e323397
+* trezor update version dfe1c4f
+
 ## 1.43.6 (2023-11-13)
 
 

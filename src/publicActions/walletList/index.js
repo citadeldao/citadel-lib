@@ -17,9 +17,11 @@ import { deleteCustomWalletList } from './deleteCustomWalletList'
 import { editCustomWalletList } from './editCustomWalletList'
 import { addCreatedWallet } from './addCreatedWallet'
 import { removeWalletCollectionById } from './removeWalletCollectionById'
+import { getAllTokensByNet } from './getAllTokensByNet'
 
 // Methods for managing the list of wallets. Typically, wrappers over a module WALLETS MANAGER
 export const walletList = {
+  getAllTokensByNet,
   addWalletByPrivateKey,
   addWalletByMnemonic,
   addWalletByLedger,

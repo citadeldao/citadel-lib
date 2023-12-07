@@ -1,3 +1,10 @@
+## 1.43.9 (2023-12-07)
+
+
+### Bug Fixes
+
+* return primaryToken field 35a849c
+
 ## 1.43.8 (2023-12-07)
 
 

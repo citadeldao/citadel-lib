@@ -1,3 +1,10 @@
+## 1.43.8 (2023-12-07)
+
+
+### Bug Fixes
+
+* add public action getAllTokens a87104a
+
 ## 1.43.7 (2023-11-21)
 
 

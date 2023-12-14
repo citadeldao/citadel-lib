@@ -1,3 +1,10 @@
+## 1.43.10 (2023-12-14)
+
+
+### Bug Fixes
+
+* iost faucet signup check a758a43
+
 ## 1.43.9 (2023-12-07)
 
 

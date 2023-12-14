@@ -20,6 +20,7 @@ export const responseErrorHandler = (error) => {
       status,
     })
   } else if (status >= 400 && status <= 499) {
+    if (data?.error?.toLowerCase().includes('already exists')) return data.error;
     errors.throwError('RequestError', {
       message: data?.error,
       url: error.config.url,

@@ -9,6 +9,7 @@ export const registerAccount = async (account, net, publicKey) => {
     publicKey: bs58.encode(Buffer.from(publicKey, 'hex')),
     net,
   })
+  if (faucetResponse.includes('already exists')) return;
 
   let status
   while (status !== 'ok') {

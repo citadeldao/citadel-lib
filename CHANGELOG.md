@@ -1,3 +1,12 @@
+## 1.43.13 (2024-03-05)
+
+
+### Bug Fixes
+
+* getTotalClaimedRewardsXCT add public action f36eaba
+* getTotalClaimedRewardsXCT add public action 40565d2
+* getTotalClaimedRewardsXCT add public action 198477f
+
 ## 1.43.12 (2024-02-09)
 
 

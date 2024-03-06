@@ -9,8 +9,8 @@ export async function prepareCrossNetworkTransfer(
   const networkClass = networkClasses.getNetworkClass(this.net)
 
   // For SNIP-20
-  if (token !== this.net && networkClass.tokens[token].standard === 'snip20') {
-    const contractAddress = networkClass.tokens[token].address
+  if (token !== this.net && networkClass.tokens[token]?.standard === 'snip20') {
+    const contractAddress = networkClass.tokens[token]?.address
     // check min amount for secret_eth
     contractAddress === 'secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw' &&
       amount < 0.1 &&

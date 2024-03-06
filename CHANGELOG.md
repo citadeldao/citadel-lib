@@ -1,3 +1,11 @@
+## 1.43.16 (2024-03-06)
+
+
+### Bug Fixes
+
+* add public getXctRewards, fix cosmos ledger app connect 61fa742
+* async aa0a5ae
+
 ## 1.43.15 (2024-03-06)
 
 

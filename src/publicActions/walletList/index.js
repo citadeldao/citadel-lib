@@ -19,6 +19,7 @@ import { addCreatedWallet } from './addCreatedWallet'
 import { removeWalletCollectionById } from './removeWalletCollectionById'
 import { getAllTokensByNet } from './getAllTokensByNet'
 import { getTotalClaimedRewardsXCT } from './getTotalClaimedRewardsXCT'
+import { getXctRewards } from './getXctRewards'
 
 // Methods for managing the list of wallets. Typically, wrappers over a module WALLETS MANAGER
 export const walletList = {
@@ -43,4 +44,5 @@ export const walletList = {
   addCreatedWallet,
   removeWalletCollectionById,
   getTotalClaimedRewardsXCT,
+  getXctRewards,
 }

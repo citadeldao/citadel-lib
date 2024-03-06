@@ -37,12 +37,12 @@ export const signTxByLedger = async (
   if (!resp.signature) {
     const appInfo = await global.cosmosApp.appInfo()
     if(transportType === 'usb'){
-      await global.transport.close()
+      // await global.transport.close()
     }
     ledgerErrorHandler({ appInfo, resp, rightApp })
   }
   if(transportType === 'usb'){
-    await global.transport.close()
+    // await global.transport.close()
   }
   // dynamic import for guge module
   const { default: secp256k1 } = await import('secp256k1')

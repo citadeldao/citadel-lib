@@ -67,10 +67,19 @@ export async function getSignerWallet({
         }).decode(message)
 
         const { default: CosmosApp } = await import('ledger-cosmos-js')
-        const transport = await getLedgerTransport(transportType)
-        const ledgerApp = new CosmosApp(transport)
+        
+        if (!global.transport) {
+          const transport = await getLedgerTransport(transportType);
+          global.transport = transport;
+        }
+      
+        if (!global.ledgerApp) {
+          const ledgerApp = new CosmosApp(global.transport)
+          global.ledgerApp = ledgerApp;
+        }
+
         // const ledgerApp = await getLedgerApp()
-        const res = await ledgerApp.sign(
+        const res = await global.ledgerApp.sign(
           getHdDerivationPath(derivationPath),
           formattedMessage
         )

@@ -1,3 +1,10 @@
+## 1.43.17 (2024-03-13)
+
+
+### Bug Fixes
+
+* return connectorProps from config network 13034d0
+
 ## 1.43.16 (2024-03-06)
 
 

@@ -51,7 +51,7 @@ export const getNetworksConfig = async () => {
     delete formatedConfig[item.net].validatingRegExp
     delete formatedConfig[item.net].bridge
     // delete formatedConfig[item.net].connectorProps
-    delete formatedConfig[item.net].frontConfiguration
+    // delete formatedConfig[item.net].frontConfiguration
     delete formatedConfig[item.net].data
     // delete formatedConfig[item.net].primaryToken
     delete formatedConfig[item.net].unbondingPeriod

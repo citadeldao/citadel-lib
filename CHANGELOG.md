@@ -1,3 +1,10 @@
+## 1.43.18 (2024-03-14)
+
+
+### Bug Fixes
+
+* return frontConfiguration from config network 3025921
+
 ## 1.43.17 (2024-03-13)
 
 

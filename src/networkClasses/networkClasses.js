@@ -58,6 +58,7 @@ import { CelestiaNetwork } from './cosmosNetworks/CelestiaClass'
 import { QuasarNetwork } from './cosmosNetworks/QuasarClass'
 import { NolusNetwork } from './cosmosNetworks/NolusClass'
 import { SuiNetwork } from './SuiClass'
+import { DydxNetwork } from './cosmosNetworks/DydxClass'
 
 
 export const networkClasses = {
@@ -120,5 +121,6 @@ export const networkClasses = {
   archway: ArchwayNetwork,
   celestia: CelestiaNetwork,
   quasar: QuasarNetwork,
-  nolus: NolusNetwork
+  nolus: NolusNetwork,
+  dydx: DydxNetwork,
 }

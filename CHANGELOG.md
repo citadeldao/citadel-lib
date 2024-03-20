@@ -1,3 +1,10 @@
+## 1.43.20 (2024-03-20)
+
+
+### Bug Fixes
+
+* add public getEvmApprove getEvmAllowance 3fc3ae5
+
 ## 1.43.19 (2024-03-18)
 
 

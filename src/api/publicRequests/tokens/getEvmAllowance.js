@@ -1,7 +1,7 @@
-export const getEvmAllowance = ({ tokenAddress, spenderAddress }) => {
+export const getEvmAllowance = ({ net, address, tokenAddress, spenderAddress }) => {
   return {
     // backend domain is in the axios instance
-    url: `/blockchain/${encodeURIComponent(data.net)}/${data.address}/erc20Allowance`,
+    url: `/blockchain/${encodeURIComponent(net)}/${address}/erc20Allowance`,
     method: 'get',
     data: {
       params: {

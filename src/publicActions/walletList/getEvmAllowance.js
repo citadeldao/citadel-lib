@@ -1,7 +1,9 @@
 import api from '../../api'
 
-export const getEvmAllowance = async ({ tokenAddress, spenderAddress }) => {
+export const getEvmAllowance = async ({ address, net, tokenAddress, spenderAddress }) => {
   const { data } = await api.requests.getEvmAllowance({
+    address,
+    net,
     tokenAddress,
     spenderAddress,
   })

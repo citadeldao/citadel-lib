@@ -60,6 +60,7 @@ import { NolusNetwork } from './cosmosNetworks/NolusClass'
 import { SuiNetwork } from './SuiClass'
 import { DydxNetwork } from './cosmosNetworks/DydxClass'
 import { NibiruNetwork } from './cosmosNetworks/NibiruClass'
+import { SagaNetwork } from './cosmosNetworks/SagaClass'
 
 
 export const networkClasses = {
@@ -124,5 +125,6 @@ export const networkClasses = {
   quasar: QuasarNetwork,
   nolus: NolusNetwork,
   dydx: DydxNetwork,
-  nibiru: NibiruNetwork
+  nibiru: NibiruNetwork,
+  saga: SagaNetwork,
 }

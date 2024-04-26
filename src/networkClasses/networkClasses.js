@@ -61,6 +61,8 @@ import { SuiNetwork } from './SuiClass'
 import { DydxNetwork } from './cosmosNetworks/DydxClass'
 import { NibiruNetwork } from './cosmosNetworks/NibiruClass'
 import { SagaNetwork } from './cosmosNetworks/SagaClass'
+import { SeiNetwork } from './cosmosNetworks/SeiClass'
+
 
 
 export const networkClasses = {
@@ -127,4 +129,5 @@ export const networkClasses = {
   dydx: DydxNetwork,
   nibiru: NibiruNetwork,
   saga: SagaNetwork,
+  sei: SeiNetwork,
 }

@@ -11,10 +11,12 @@ export const removeAssignToDaoMessage = ({
     )}`,
     method: 'delete',
     data: {
-      sign: {
-        id: messageId,
-        signature: messageSignature,
-      },
+      data: {
+        sign: {
+          id: messageId,
+          signature: messageSignature,
+        },
+      }
     },
   }
 }

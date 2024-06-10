@@ -14,6 +14,7 @@ import { getTokenInfos } from './getTokenInfos'
 import { callTokenInfo } from './callTokenInfo'
 import { createMessageSignature } from './createMessageSignature'
 import { assignToDao } from './assignToDao'
+import { removeToDao } from './removeToDao'
 import { setViewingKey } from './setViewingKey'
 import { getSavedViewingKeys } from './getSavedViewingKeys'
 import { importViewingKey } from './importViewingKey'
@@ -71,6 +72,7 @@ export const wallet = {
   callTokenInfo,
   createMessageSignature,
   assignToDao,
+  removeToDao,
   setViewingKey,
   getSavedViewingKeys,
   importViewingKey,

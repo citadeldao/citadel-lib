@@ -14,6 +14,7 @@ import { getTokenInfos } from './getTokenInfos'
 import { callTokenInfo } from './callTokenInfo'
 import { createMessageSignature } from './createMessageSignature'
 import { assignToDao } from './assignToDao'
+import { removeToDao } from './removeToDao'
 import { setViewingKey } from './setViewingKey'
 import { importViewingKey } from './importViewingKey'
 import { getSavedViewingKeys } from './getSavedViewingKeys'
@@ -67,6 +68,7 @@ export const instanceMethods = {
   callTokenInfo,
   createMessageSignature,
   assignToDao,
+  removeToDao,
   setViewingKey,
   importViewingKey,
   getSavedViewingKeys,

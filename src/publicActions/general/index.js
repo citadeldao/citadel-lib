@@ -22,6 +22,7 @@ import { getSubscriptions } from './getSubscriptions'
 import { manageSubscriptions } from './manageSubscriptions'
 // Relevant until the Kepler signature is integrated into the library. After using the 'Assign To Dao' method
 import { sendAssignToDaoMessage } from './sendAssignToDaoMessage'
+import { removeAssignToDaoMessage } from './removeAssignToDaoMessage'
 import { prettyNumber } from './prettyNumber'
 import { decodeMnemonicByPassword } from './decodeMnemonicByPassword'
 import { encodeMnemonicByPassword } from './encodeMnemonicByPassword'
@@ -63,6 +64,7 @@ export const general = {
   getPrepareTransferFund,
   getPrivateSale,
   sendAssignToDaoMessage,
+  removeAssignToDaoMessage,
   addEventListener,
   getSubscriptions,
   manageSubscriptions,

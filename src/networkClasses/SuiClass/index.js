@@ -44,11 +44,11 @@ export class SuiNetwork extends BaseNetwork {
   }
 
   getScannerLinkById() {
-    return `https://explorer.sui.io/address/${this.address}`
+    return `https://suiscan.xyz/mainnet/account/${this.address}`
   }
 
   getTransactionURLByHash(hash) {
-    return `https://explorer.sui.io/transaction/${hash}`
+    return `https://suiscan.xyz/mainnet/tx/${hash}`
   }
 
   async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {

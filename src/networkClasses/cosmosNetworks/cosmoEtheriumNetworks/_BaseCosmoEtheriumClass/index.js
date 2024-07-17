@@ -33,7 +33,6 @@ export class BaseCosmoEtheriumNetwork extends BaseCosmosNetwork {
     if (this.type === WALLET_TYPES.LEDGER) {
       //rigth app for ledger
       const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger
-      console.log('createMessageSignature', data);
 
       const signature = await signTxByLedger(
         data.typedMessage,

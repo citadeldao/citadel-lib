@@ -39,6 +39,7 @@ export const signTxByLedger = async (
 ) => {
   let transport = null
   const transaction = rawTransaction?.eip712 || rawTransaction
+  console.log('TX', transaction);
   if (!global.ledger_eth && !global.ledger_bsc) {
     transport = await getLedgerTransport()
     // dynamic import of large module (for fast init)

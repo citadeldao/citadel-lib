@@ -1,3 +1,11 @@
+## 1.43.35 (2024-07-25)
+
+
+### Bug Fixes
+
+* up polkadot/api lib 1af4f28
+* update package lock cf27549
+
 ## 1.43.34 (2024-07-17)
 
 

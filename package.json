@@ -30,7 +30,7 @@
     "@mysten/sui.js": "^0.31.0",
     "@oasisprotocol/client": "0.1.0-alpha8",
     "@oasisprotocol/ledger": "^0.2.3",
-    "@polkadot/api": "9.2.3",
+    "@polkadot/api": "12.2.1",
     "@polkadot/util": "10.1.6",
     "@terra-money/ledger-terra-js": "^1.2.2",
     "@terra-money/terra.js": "^3.0.11",

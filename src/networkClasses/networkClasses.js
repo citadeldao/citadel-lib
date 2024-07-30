@@ -38,6 +38,7 @@ import { AxelarNetwork } from './cosmosNetworks/AxelarClass'
 import { PolkadotNetwork } from './PolkadotClass'
 import { OraiNetwork } from './cosmosNetworks/OraiClass'
 import { PolygonNetwork } from './ethNetworks/PolygonClass'
+import { BerachainNetwork } from './ethNetworks/BerachainClass'
 import { OasisNetwork } from './OasisClass'
 import { ArbitrumNetwork } from './ethNetworks/ArbitrumClass'
 import { OptimismNetwork } from './ethNetworks/OptimismClass'
@@ -130,4 +131,5 @@ export const networkClasses = {
   saga: SagaNetwork,
   sei: SeiNetwork,
   lava: LavaNetwork,
+  berachain: BerachainNetwork,
 }

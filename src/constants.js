@@ -80,6 +80,7 @@ export const WALLET_TYPES = {
   PUBLIC_KEY: 'publicKey',
   METAMASK: 'metamask',
   KEPLR: 'keplr',
+  LEAP: 'leap',
   SEED_PHRASE: 'seedPhrase',
   WALLET_CONNECT: 'walletConnect'
 }

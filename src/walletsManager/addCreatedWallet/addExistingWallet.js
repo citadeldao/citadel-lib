@@ -51,6 +51,7 @@ export const addExistingWallet = async ({
       WALLET_TYPES.LEDGER,
       WALLET_TYPES.TREZOR,
       WALLET_TYPES.KEPLR,
+      WALLET_TYPES.LEAP,
       WALLET_TYPES.METAMASK,
       WALLET_TYPES.WALLET_CONNECT,
     ].includes(createdWallet.type)

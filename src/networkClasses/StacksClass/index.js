@@ -1,3 +1,4 @@
+import { BaseNetwork } from '../_BaseNetworkClass'
 import { getStxAddress, generateWallet, Wallet, deriveAccount, getRootNode, DerivationType } from '@stacks/wallet-sdk';
 import {
     TransactionVersion,

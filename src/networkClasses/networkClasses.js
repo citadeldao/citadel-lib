@@ -64,6 +64,7 @@ import { NibiruNetwork } from './cosmosNetworks/NibiruClass'
 import { SagaNetwork } from './cosmosNetworks/SagaClass'
 import { SeiNetwork } from './cosmosNetworks/SeiClass'
 import { LavaNetwork } from './cosmosNetworks/LavaClass'
+import { StacksNetwork } from './StacksClass'
 
 export const networkClasses = {
   tez: TezosNetwork,
@@ -132,4 +133,5 @@ export const networkClasses = {
   sei: SeiNetwork,
   lava: LavaNetwork,
   berachain: BerachainNetwork,
+  stacks: StacksNetwork,
 }

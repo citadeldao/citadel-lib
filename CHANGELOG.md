@@ -1,3 +1,10 @@
+## 1.43.41 (2024-08-27)
+
+
+### Bug Fixes
+
+* stacks derivation index d7dca28
+
 ## 1.43.40 (2024-08-26)
 
 

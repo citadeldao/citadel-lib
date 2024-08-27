@@ -59,8 +59,9 @@ export class StacksNetwork extends BaseNetwork {
       secretKey: mnemonic,
       password: '',
     });
-  
-    const account = generateAccount(wallet, 0);
+    
+    const derivation = +derivationPath.split('/').reverse()[0];
+    const account = generateAccount(wallet, derivation);
     const address = getStxAddress({ account, transactionVersion: TransactionVersion.Mainnet });
     const privateKey = account.stxPrivateKey;
     const publicKey = publicKeyToString(pubKeyfromPrivKey(account.stxPrivateKey));

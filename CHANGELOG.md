@@ -1,3 +1,10 @@
+## 1.43.43 (2024-09-06)
+
+
+### Bug Fixes
+
+* edit scanner for e-money 4d9c15d
+
 ## 1.43.42 (2024-09-06)
 
 

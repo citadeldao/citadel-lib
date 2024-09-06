@@ -11,6 +11,14 @@ export class EmoneyNetwork extends BaseCosmosNetwork {
     super(walletInfo)
   }
 
+  getScannerLinkById() {
+    return `https://ping.pub/e-money/account/${this.address}`
+  }
+
+  getTransactionURLByHash(hash) {
+    return `https://ping.pub/e-money/tx/${hash}`
+  }
+
   // old signers (not protobuf)
   async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
     // get transaction object

@@ -1,3 +1,10 @@
+## 1.43.42 (2024-09-06)
+
+
+### Bug Fixes
+
+* quicksilver edit scanner df96389
+
 ## 1.43.41 (2024-08-27)
 
 

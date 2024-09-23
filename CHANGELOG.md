@@ -1,3 +1,11 @@
+## 1.43.44 (2024-09-23)
+
+
+### Bug Fixes
+
+* dublicate import 3b78cf9
+* stacks delegate claim 5dbbdaa
+
 ## 1.43.43 (2024-09-06)
 
 

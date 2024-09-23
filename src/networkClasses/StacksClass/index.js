@@ -13,7 +13,6 @@ import { checkDelegationTypes } from '../../helpers/checkArguments'
 import BigNumber from 'bignumber.js'
 import api from '../../api'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
-import { BaseNetwork } from '../_BaseNetworkClass'
 
 const generateAccount = (wallet, index) => {
   return deriveAccount({

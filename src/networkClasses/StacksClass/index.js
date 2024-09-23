@@ -35,7 +35,7 @@ export class StacksNetwork extends BaseNetwork {
   }
 
   async signTransaction(rawTransaction, { privateKey, derivationPath, transportType }) {
-    const transaction = rawTransaction.transaction || rawTransaction || rawTransaction?.txs[0]?.tx;
+    const transaction = rawTransaction.transaction || rawTransaction?.txs[0]?.tx || rawTransaction;
     // if (this.type === WALLET_TYPES.LEDGER) {
     //    //rigth app for ledger
     //    const rightApp = storage.caches.getCache(CACHE_NAMES.NETWORKS_CONFIG)[this.net].ledger

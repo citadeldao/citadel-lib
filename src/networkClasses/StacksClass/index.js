@@ -10,7 +10,6 @@ import {
 } from '@stacks/transactions';
 
 import { checkDelegationTypes } from '../../helpers/checkArguments'
-import BigNumber from 'bignumber.js'
 import api from '../../api'
 import { WALLET_TYPES, DELEGATION_TYPES } from '../../constants'
 
@@ -90,30 +89,14 @@ export class StacksNetwork extends BaseNetwork {
     amount,
     type = DELEGATION_TYPES.STAKE,
     redelegateNodeAddresses,
-    isWithoutDelegation,
+    isTyped = false,
   }) {
+    // check type
     checkDelegationTypes(type)
     const nodeAddress = nodeAddresses[0]
     const redelegateNodeAddress = redelegateNodeAddresses?.[0]
 
-    if (isWithoutDelegation) {
-      if (type === DELEGATION_TYPES.STAKE) {
-        const { data } = await api.requests.prepareStakeWithoutDelegation({
-          address: this.address,
-          net: this.net,
-          amount,
-        })
-        return data
-      }
-      if (type === DELEGATION_TYPES.UNSTAKE) {
-        const { data } = await api.requests.prepareUnstakeWithoutDelegation({
-          address: this.address,
-          net: this.net,
-          amount,
-        })
-        return data
-      }
-    }
+    // redelegation
     if (type === DELEGATION_TYPES.REDELEGATE) {
       const { data } = await api.requests.prepareRedelegation({
         address: this.address,
@@ -121,58 +104,39 @@ export class StacksNetwork extends BaseNetwork {
         from: nodeAddress,
         to: redelegateNodeAddress,
         amount,
+        publicKey: this.publicKey,
+        isTyped,
       })
       return data
     }
 
-    // stake and unstake: calc absolute node amounts
-    // get current stakeList
-    const stakeList = await this.getStakeList()
-    // format it
-    const preparedStakeList = stakeList.map(({ current: address, value }) => ({
-      address,
-      value,
-    }))
-    // find nodeAddress among staked nodes
-    const alreadyStakedNode = preparedStakeList.find(
-      ({ address }) => nodeAddress === address
-    )
-
-    if (!alreadyStakedNode) {
-      // if nodeAddress not staked before, push it to prepared stakeList with amount (for stake) or 0 for unstake (?)
-      preparedStakeList.push({
-        address: nodeAddress,
-        value:
-          type === DELEGATION_TYPES.STAKE
-            ? amount
-            : // ustake
-              0,
-      })
-    } else {
-      //  if nodeAddress already staked, sum it value with amount
-      alreadyStakedNode.value =
-        type === DELEGATION_TYPES.STAKE
-          ? // plus for stake
-            BigNumber(alreadyStakedNode.value).plus(amount).toNumber()
-          : // minus for stake
-            BigNumber(alreadyStakedNode.value).minus(amount).toNumber()
-    }
-
-    // send preparedStakeList with values
+    // stake and unstake
+    // send difference of values
     const { data } = await api.requests.prepareDelegations({
       from: this.address,
       net: this.net,
-      delegations: preparedStakeList,
+      delegations: [
+        {
+          address: nodeAddress,
+          value:
+            type === DELEGATION_TYPES.STAKE
+              ? amount
+              : // unstake
+                `-${amount}`,
+        },
+      ],
       publicKey: this.publicKey,
+      isTyped,
     })
 
     return data
   }
 
-  async prepareClaim() {
+  async prepareClaim(isTyped = false) {
     const { data } = await api.requests.prepareClaim({
       net: this.net,
       address: this.address,
+      isTyped,
     })
 
     return data

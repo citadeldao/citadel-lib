@@ -1,3 +1,10 @@
+## 1.43.48 (2024-09-24)
+
+
+### Bug Fixes
+
+* update polkadot version d58d568
+
 ## 1.43.47 (2024-09-23)
 
 

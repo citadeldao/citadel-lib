@@ -1,3 +1,11 @@
+## 1.43.49 (2024-09-24)
+
+
+### Bug Fixes
+
+* update dot ledger e8b8634
+* update dot ledger 6cbe368
+
 ## 1.43.48 (2024-09-24)
 
 

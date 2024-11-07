@@ -1,17 +1,10 @@
+const solanaWeb3 = require("@solana/web3.js");
+
 export const signTxByPrivateKey = async (rawTransaction, privateKey) => {
-    // dynamic import of large module (for fast init)
-    const { ECPair, Psbt } = await import('bitcoinjs-lib')
-  
-    const keyPair = ECPair.fromWIF(privateKey)
-    const psbt = Psbt.fromBase64(rawTransaction)
-  
-    psbt.signAllInputs(keyPair)
-    psbt.validateSignaturesOfAllInputs()
-    psbt.finalizeAllInputs()
-  
-    const tx = psbt.extractTransaction()
-    const txHex = tx.toHex()
-  
-    return txHex
-  }
+  const restoredTx = solanaWeb3.VersionedTransaction.deserialize(rawTransaction.serialize());
+  restoredTx.sign([privateKey]);
+  const signedTx = Buffer.from(restoredTx.serialize()).toString('hex') ;
+
+  return signedTx;
+}
   

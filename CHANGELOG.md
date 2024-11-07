@@ -1,3 +1,11 @@
+## 1.43.51 (2024-11-07)
+
+
+### Bug Fixes
+
+* sign sol tx private key 1287839
+* solana decode keys for export bf69d29
+
 ## 1.43.50 (2024-11-07)
 
 

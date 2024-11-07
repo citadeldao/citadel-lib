@@ -189,10 +189,7 @@ export class SolanaNetwork extends BaseNetwork {
   }
 
   static async decodePrivateKeyByPassword(encodedPrivateKey, password) {
-    return Buffer.from(
-      await super.decodePrivateKeyByPassword(encodedPrivateKey, password),
-      'hex'
-    ).toString()
+    return await super.decodePrivateKeyByPassword(encodedPrivateKey, password);
   }
 
   static async encodePrivateKeyByPassword(privateKey, password) {

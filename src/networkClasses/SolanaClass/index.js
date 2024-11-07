@@ -3,7 +3,8 @@ import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { BaseNetwork } from '../_BaseNetworkClass'
 import { WALLET_TYPES, CACHE_NAMES } from '../../constants'
-import { signTxByPrivateKey, signTxByLedger, signTxByTrezor } from './signers'
+// import { signTxByPrivateKey, signTxByLedger, signTxByTrezor } from './signers'
+import { signTxByPrivateKey } from './signers'
 import { getLedgerTransport } from "../../ledgerTransportProvider";
 import storage from '../../storage'
 import { ledgerErrorHandler } from "./signers/functions"

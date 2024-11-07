@@ -2,6 +2,7 @@ import { TezosNetwork } from './TezosClass'
 import { IostNetwork } from './IostClass'
 import { IconNetwork } from './IconClass'
 import { BtcNetwork } from './BtcClass'
+import { SolanaNetwork } from './SolanaClass'
 import { EthNetwork } from './ethNetworks/EthClass'
 import { BscNetwork } from './ethNetworks/BscClass'
 import { AkashNetwork } from './cosmosNetworks/AkashClass'
@@ -71,6 +72,7 @@ export const networkClasses = {
   iost: IostNetwork,
   icon: IconNetwork,
   btc: BtcNetwork,
+  solana: SolanaNetwork,
   eth: EthNetwork,
   bsc: BscNetwork,
   akash: AkashNetwork,

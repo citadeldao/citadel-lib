@@ -1,3 +1,11 @@
+## 1.43.50 (2024-11-07)
+
+
+### Bug Fixes
+
+* add solana network 484eeb2
+* add test signers ddd5495
+
 ## 1.43.49 (2024-09-24)
 
 

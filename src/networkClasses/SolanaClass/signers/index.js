@@ -1,0 +1,2 @@
+export { signTxByPrivateKey } from './signTxByPrivateKey'
+

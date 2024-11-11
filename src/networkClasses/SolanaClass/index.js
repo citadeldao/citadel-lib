@@ -13,6 +13,7 @@ const bip39 = require('bip39');
 const ed25519 = require('ed25519-hd-key');
 const CryptoJS = require("crypto-js");
 const solanaWeb3 = require("@solana/web3.js");
+const bs58 = require('bs58');
 
 export class SolanaNetwork extends BaseNetwork {
   constructor(walletInfo) {
@@ -151,12 +152,12 @@ export class SolanaNetwork extends BaseNetwork {
     }
     
     let res;
+    let addressAndPubKey;
 
-    console.log(derivationPath);
     try{
       // generate address and public key
       res = await global.ledger_solana.getAddress(derivationPath)
-      console.log('solana res', res);
+      addressAndPubKey = bs58.encode(res.address);
     }catch(error){
       ledgerErrorHandler({ error, rightApp: this.ledger})
     }finally{
@@ -168,8 +169,8 @@ export class SolanaNetwork extends BaseNetwork {
     
     return {
       net: this.net,
-      address: res.address,
-      // publicKey: res.publicKey,
+      address: addressAndPubKey,
+      publicKey: addressAndPubKey,
       
       privateKey: null,
       derivationPath,

@@ -1,5 +1,6 @@
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
 import { ledgerErrorHandler } from "./functions"
+const solanaWeb3 = require("@solana/web3.js");
 
 export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, transportType) => {
   const { default: SolanaApp } = await import('@ledgerhq/hw-app-solana');
@@ -11,9 +12,12 @@ export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, t
   }
   console.log('before sign info', derivationPath, rawTransaction);
   const tx = Buffer.from(rawTransaction.txs[0].tx, 'hex');
+  const restoredTx = solanaWeb3.VersionedTransaction.deserialize(tx);
+  console.log('tx for sign 1', tx);
+  console.log('tx for sign 2', restoredTx);
 
   try {
-    const signed = await global.ledger_solana.signTransaction(derivationPath, tx);
+    const signed = await global.ledger_solana.signTransaction(derivationPath, restoredTx);
     console.log('after sign', signed);
     return Buffer.from(signed.signature).toString('hex');
   }catch(error){

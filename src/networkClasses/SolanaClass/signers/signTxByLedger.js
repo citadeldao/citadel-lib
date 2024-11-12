@@ -9,9 +9,13 @@ export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, t
     transport = await getLedgerTransport(transportType)
     global.ledger_solana = new SolanaApp(transport);
   }
+  console.log('before sign info', derivationPath, rawTransaction);
+  const tx = Buffer.from(rawTransaction.txs[0].tx, 'hex');
+
   try {
-    const signed = await global.ledger_solana.signTransaction(derivationPath, rawTransaction);
-    return signed.signature;
+    const signed = await global.ledger_solana.signTransaction(derivationPath, tx);
+    console.log('after sign', signed);
+    return Buffer.from(signed.signature).toString('hex');
   }catch(error){
     console.log(error);
     ledgerErrorHandler({ error, rightApp })

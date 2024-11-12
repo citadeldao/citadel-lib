@@ -1,3 +1,10 @@
+## 1.43.59 (2024-11-12)
+
+
+### Bug Fixes
+
+* fix sign ledger solana b8f60ee
+
 ## 1.43.58 (2024-11-12)
 
 

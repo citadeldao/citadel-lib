@@ -1,3 +1,10 @@
+## 1.43.58 (2024-11-12)
+
+
+### Bug Fixes
+
+* serialized ledger solana tx e38ac56
+
 ## 1.43.57 (2024-11-12)
 
 

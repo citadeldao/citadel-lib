@@ -13,11 +13,12 @@ export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, t
   console.log('before sign info', derivationPath, rawTransaction);
   const tx = Buffer.from(rawTransaction.txs[0].tx, 'hex');
   const restoredTx = solanaWeb3.VersionedTransaction.deserialize(tx);
+  const message = restoredTx.message.serialize();
   console.log('tx for sign 1', tx);
-  console.log('tx for sign 2', restoredTx);
+  console.log('tx for sign 2', message);
 
   try {
-    const signed = await global.ledger_solana.signTransaction(derivationPath, restoredTx);
+    const signed = await global.ledger_solana.signTransaction(derivationPath, message);
     console.log('after sign', signed);
     return Buffer.from(signed.signature).toString('hex');
   }catch(error){

@@ -1,3 +1,11 @@
+## 1.43.60 (2024-11-13)
+
+
+### Bug Fixes
+
+* add signatures for sol ledger 678893a
+* add signatures for sol ledger 5e260a9
+
 ## 1.43.59 (2024-11-12)
 
 

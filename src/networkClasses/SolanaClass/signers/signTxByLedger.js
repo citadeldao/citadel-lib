@@ -1,7 +1,7 @@
 import { getLedgerTransport } from "../../../ledgerTransportProvider";
 import { ledgerErrorHandler } from "./functions"
 const solanaWeb3 = require("@solana/web3.js");
-const bs58 = required('bs58');
+const bs58 = require('bs58');
 
 export const signTxByLedger = async (rawTransaction, derivationPath, rightApp, transportType) => {
   const { default: SolanaApp } = await import('@ledgerhq/hw-app-solana');

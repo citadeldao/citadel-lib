@@ -8,6 +8,7 @@ import { getLedgerTransport } from "../../ledgerTransportProvider";
 import storage from '../../storage'
 import { ledgerErrorHandler } from "./signers/functions"
 import api from '../../api'
+import { checkDelegationTypes } from '../../helpers/checkArguments'
 
 const bip39 = require('bip39');
 const ed25519 = require('ed25519-hd-key');

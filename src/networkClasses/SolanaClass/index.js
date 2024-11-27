@@ -2,11 +2,12 @@ import errors from '../../errors'
 import state from '../../state'
 import { hashMnemonic } from '../../helpers/hashMnemonic'
 import { BaseNetwork } from '../_BaseNetworkClass'
-import { WALLET_TYPES, CACHE_NAMES } from '../../constants'
+import { WALLET_TYPES, CACHE_NAMES, DELEGATION_TYPES } from '../../constants'
 import { signTxByPrivateKey, signTxByLedger } from './signers'
 import { getLedgerTransport } from "../../ledgerTransportProvider";
 import storage from '../../storage'
 import { ledgerErrorHandler } from "./signers/functions"
+import api from '../../api'
 
 const bip39 = require('bip39');
 const ed25519 = require('ed25519-hd-key');
@@ -46,28 +47,62 @@ export class SolanaNetwork extends BaseNetwork {
     return await signTxByPrivateKey(transaction, privateKey)
   }
 
-  // btc not support stake
-  getStakeList() {
-    errors.throwError('MethodNotSupported', {
-      method: 'getStakeList',
+  async prepareDelegation({
+    nodeAddresses,
+    amount,
+    type = DELEGATION_TYPES.STAKE,
+    redelegateNodeAddresses,
+    isTyped = false,
+  }) {
+    // check type
+    checkDelegationTypes(type)
+    const nodeAddress = nodeAddresses[0]
+    const redelegateNodeAddress = redelegateNodeAddresses?.[0]
+
+    // redelegation
+    if (type === DELEGATION_TYPES.REDELEGATE) {
+      const { data } = await api.requests.prepareRedelegation({
+        address: this.address,
+        net: this.net,
+        from: nodeAddress,
+        to: redelegateNodeAddress,
+        amount,
+        publicKey: this.publicKey,
+        isTyped,
+      })
+      return data
+    }
+
+    // stake and unstake
+    // send difference of values
+    const { data } = await api.requests.prepareDelegations({
+      from: this.address,
       net: this.net,
+      delegations: [
+        {
+          address: nodeAddress,
+          value:
+            type === DELEGATION_TYPES.STAKE
+              ? amount
+              : // unstake
+                `-${amount}`,
+        },
+      ],
+      publicKey: this.publicKey,
+      isTyped,
     })
+
+    return data
   }
 
-  // btc not support stake
-  getDelegationFee() {
-    errors.throwError('MethodNotSupported', {
-      method: 'getDelegationFee',
+  async prepareClaim(isTyped = false) {
+    const { data } = await api.requests.prepareClaim({
       net: this.net,
+      address: this.address,
+      isTyped,
     })
-  }
 
-  // btc not support stake
-  static getStakeNodes() {
-    errors.throwError('MethodNotSupported', {
-      method: 'getStakeNodes',
-      net: this.net,
-    })
+    return data
   }
 
   static calculateBalance({ mainBalance = 0 } = {}) {

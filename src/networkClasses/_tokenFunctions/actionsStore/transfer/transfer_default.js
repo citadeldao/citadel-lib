@@ -7,6 +7,7 @@ export async function transfer_default({
   toAddress,
   fee,
   memo,
+  gasPrice,
 }) {
   // check arguments
   checkTypes(
@@ -23,6 +24,7 @@ export async function transfer_default({
     fee,
     memo,
     publicKey: this.publicKey,
+    gasPrice,
   })
 
   // return raw transaction

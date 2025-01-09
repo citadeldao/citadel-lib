@@ -20,6 +20,14 @@ export class ProvenanceNetwork extends BaseCosmosNetwork {
     super(walletInfo)
   }
 
+  getScannerLinkById() {
+    return `https://ping.pub/provenance/account/${this.address}`
+  }
+
+  getTransactionURLByHash(hash) {
+    return `https://ping.pub/provenance/tx/${hash}`
+  }
+
   async signTransaction(rawTransaction, { privateKey, derivationPath, useAlternativeSigner, transportType }) {
     // get transaction object
     const transaction = rawTransaction.transaction || rawTransaction

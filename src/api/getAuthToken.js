@@ -30,7 +30,8 @@ export const getAuthToken = async () => {
   const acccessTokenExpirationDate = jwt_decode(accessToken)?.exp * 1000
 
   // validate date
-  if (acccessTokenExpirationDate > Date.now()) {
+  const timestampNow = Date.now();
+  if (acccessTokenExpirationDate > timestampNow) {
     // return currentToken
     return accessToken
   } else {
@@ -53,6 +54,8 @@ export const getAuthToken = async () => {
     // set new tokens
     state.setState('accessToken', data.access_token)
     state.setState('refreshToken', data.refresh_token)
+    console.log('JWT INFO ACCESS TOKEN', data.access_token);
+    console.log('JWT INFO TIMESTAMP NOT', timestampNow);
 
     // send new keys to client
     dispatchLibEvent(LIB_EVENT_NAMES.TOKEN_REFRESHED, data)

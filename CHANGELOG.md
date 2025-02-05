@@ -1,3 +1,10 @@
+## 1.43.68 (2025-02-05)
+
+
+### Bug Fixes
+
+* update link mantle, evmos 6fb99e6
+
 ## 1.43.67 (2025-01-31)
 
 

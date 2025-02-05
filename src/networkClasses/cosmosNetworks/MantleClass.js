@@ -5,13 +5,11 @@ export class MantleNetwork extends BaseCosmosNetwork {
     super(walletInfo)
   }
 
-  // special explorer key
   getScannerLinkById() {
-    return super.getScannerLinkById('asset-mantle')
+    return `https://atomscan.com/assetmantle/accounts/${this.address}`
   }
 
-  // special explorer key
   getTransactionURLByHash(hash) {
-    return super.getTransactionURLByHash(hash, 'asset-mantle')
+    return `https://atomscan.com/assetmantle/transactions/${hash}`
   }
 }

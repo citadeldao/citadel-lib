@@ -1,3 +1,10 @@
+## 1.43.69 (2025-02-07)
+
+
+### Bug Fixes
+
+* update scanner juno, teritori 642bfdc
+
 ## 1.43.68 (2025-02-05)
 
 

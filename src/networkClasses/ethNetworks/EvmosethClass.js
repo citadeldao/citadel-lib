@@ -6,11 +6,11 @@ export class EvmosethNetwork extends BaseEthNetwork {
   }
 
   getScannerLinkById() {
-    return `https://escan.live/address/${this.address}`
+    return `https://evmos.openscan.ai/address/${this.address}`
   }
 
   getTransactionURLByHash(hash) {
-    return `https://escan.live/tx/${hash}`
+    return `https://evmos.openscan.ai/tx/${hash}`
   }
 
 }

@@ -12,11 +12,11 @@ export class EmoneyNetwork extends BaseCosmosNetwork {
   }
 
   getScannerLinkById() {
-    return `https://ping.pub/e-money/account/${this.address}`
+    return `https://atomscan.com/emoney/accounts/${this.address}`
   }
 
   getTransactionURLByHash(hash) {
-    return `https://ping.pub/e-money/tx/${hash}`
+    return `https://atomscan.com/emoney/transactions/${hash}`
   }
 
   // // old signers (not protobuf)

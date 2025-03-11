@@ -1,3 +1,10 @@
+## 1.43.73 (2025-03-11)
+
+
+### Bug Fixes
+
+* stakeAccount param stake c3f6602
+
 ## 1.43.72 (2025-02-12)
 
 

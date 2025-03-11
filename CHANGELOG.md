@@ -1,3 +1,10 @@
+## 1.43.75 (2025-03-11)
+
+
+### Bug Fixes
+
+* add to solana stakeaccount prepareDelegation a22de0d
+
 ## 1.43.74 (2025-03-11)
 
 

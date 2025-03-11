@@ -55,5 +55,6 @@ export const prepareDelegation = async (walletId, options) => {
       rewardsRestake,
       additionalFee,
       isWithoutDelegation,
+      stakeAccount,
     })
 }

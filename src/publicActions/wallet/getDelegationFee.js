@@ -52,7 +52,8 @@ export const getDelegationFee = (walletId, options) => {
     sourceNodeAddress,
     kt,
     isWithoutDelegation,
-    newAddingFormat
+    newAddingFormat,
+    stakeAccount,
   } = options
 
   checkTypes(
@@ -61,6 +62,7 @@ export const getDelegationFee = (walletId, options) => {
     ['nodeAddress', nodeAddress, ['String', 'Null']],
     ['sourceNodeAddress', sourceNodeAddress, ['String']],
     ['kt', kt, ['String']],
+    ['stakeAccount', stakeAccount, ['String', 'Null']],
     //only for icon
     ['isWithoutDelegation', isWithoutDelegation, ['Boolean']],
     //for networks that have resorces
@@ -73,6 +75,7 @@ export const getDelegationFee = (walletId, options) => {
     nodeAddress,
     sourceNodeAddress,
     kt,
+    stakeAccount,
     isWithoutDelegation,
     newAddingFormat
   })

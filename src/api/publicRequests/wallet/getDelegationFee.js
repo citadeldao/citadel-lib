@@ -9,6 +9,7 @@ export const getDelegationFee = ({
   sourceNodeAddress,
   kt,
   isWithoutDelegation,
+  stakeAccount,
   newAddingFormat
 }) => {
   return {
@@ -23,6 +24,7 @@ export const getDelegationFee = ({
         validatorSrcAddr: sourceNodeAddress,
         kt,
         isWithoutDelegation,
+        stakeAccount,
         version: state.getState('backendApiVersion'),
         newAddingFormat
       },

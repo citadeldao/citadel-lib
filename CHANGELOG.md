@@ -1,3 +1,10 @@
+## 1.43.76 (2025-03-12)
+
+
+### Bug Fixes
+
+* stakeAccount param prepareDelegation 21553d7
+
 ## 1.43.75 (2025-03-11)
 
 

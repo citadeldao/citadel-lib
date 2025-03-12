@@ -7,6 +7,7 @@ export const prepareDelegations = ({
   from,
   delegations,
   publicKey,
+  stakeAccount,
   isTyped,
 }) => {
   return {
@@ -19,6 +20,7 @@ export const prepareDelegations = ({
       params: {
         delegations,
         publicKey,
+        stakeAccount,
         isTyped,
       },
       // for passing array in request params

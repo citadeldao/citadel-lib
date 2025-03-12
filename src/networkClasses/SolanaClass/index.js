@@ -84,9 +84,9 @@ export class SolanaNetwork extends BaseNetwork {
         {
           address: nodeAddress,
           value: amount,
-          stakeAccount,
         },
       ],
+      stakeAccount,
       publicKey: this.publicKey,
       isTyped,
     })

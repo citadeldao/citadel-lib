@@ -4,7 +4,7 @@ import qs from 'qs'
 // function returns request parameters for the axios instance.
 export const buildLiquidStaking = ({ address, publicKey, contractAddress, amount, action }) => {
   return {
-    url: `/blockchain/stacks/${address}/buildLiquidStacking`,
+    url: `/blockchain/stacks/${address}/buildLiquidStacking?amount=${amount}&action=${action}`,
     method: 'get',
     data: {
       params: {

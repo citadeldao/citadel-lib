@@ -10,8 +10,6 @@ export const buildLiquidStaking = ({ address, publicKey, contractAddress, amount
       params: {
         contractAddress,
         publicKey,
-				amount,
-				action,
         version: state.getState('backendApiVersion'),
       },
       paramsSerializer: (params) => {

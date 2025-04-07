@@ -19,6 +19,7 @@ import { polkadotSignAndSend } from './polkadotSignAndSend'
 import { prepareStakeWithoutDelegation } from './prepareStakeWithoutDelegation'
 import { prepareUnstakeWithoutDelegation } from './prepareUnstakeWithoutDelegation'
 import { buildCustomTransaction } from './buildCustomTransaction'
+import { buildLiquidStaking } from './buildLiquidStaking'
 import { getWalletRewards } from './getWalletRewards'
 import { getRedelegationUnlockDate } from './getRedelegationUnlockDate'
 import { prepareDelegations } from './prepareDelegations'
@@ -47,6 +48,7 @@ export const wallet = {
   prepareStakeWithoutDelegation,
   prepareUnstakeWithoutDelegation,
   buildCustomTransaction,
+  buildLiquidStaking,
   getWalletRewards,
   getRedelegationUnlockDate,
 }

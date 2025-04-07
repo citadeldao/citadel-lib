@@ -56,7 +56,7 @@ export const buildLiquidStaking = async (walletId, data) => {
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
-    ['data', data, ['Array'], true]
+    ['data', data, ['Object'], true]
   )
   checkWalletId(walletId)
 

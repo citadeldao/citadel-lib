@@ -1,3 +1,10 @@
+## 1.43.83 (2025-04-07)
+
+
+### Bug Fixes
+
+* fix params liquid staking a794b7e
+
 ## 1.43.82 (2025-04-07)
 
 

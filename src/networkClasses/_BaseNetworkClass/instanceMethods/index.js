@@ -51,8 +51,6 @@ import { getRewardsById } from './getRewardsById'
 import { getRedelegationUnlockDateById } from './getRedelegationUnlockDateById'
 import { getCrossNetFees } from './getCrossNetFees'
 
-
-
 export const instanceMethods = {
   renameTitle,
   getTransactions,

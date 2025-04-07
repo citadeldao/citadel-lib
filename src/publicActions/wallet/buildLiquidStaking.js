@@ -56,7 +56,6 @@ export const buildLiquidStaking = async (walletId, data) => {
   checkInitialization()
   checkTypes(
     ['walletId', walletId, ['String', 'Number'], true],
-    ['data', data, ['Object'], true]
   )
   checkWalletId(walletId)
   console.log('staking data', data);
@@ -64,5 +63,5 @@ export const buildLiquidStaking = async (walletId, data) => {
   // call wallet instance method
   return await walletInstances
     .getWalletInstanceById(walletId)
-    .buildLiquidStaking(data[0])
+    .buildLiquidStaking(data)
 }

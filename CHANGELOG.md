@@ -1,3 +1,10 @@
+## 1.43.79 (2025-04-07)
+
+
+### Bug Fixes
+
+* add liquid stacks staking api fad2695
+
 ## 1.43.78 (2025-03-12)
 
 

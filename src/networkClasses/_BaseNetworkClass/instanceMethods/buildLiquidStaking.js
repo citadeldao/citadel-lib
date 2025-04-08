@@ -6,6 +6,7 @@ export const buildLiquidStaking = async function (data) {
     net: this.net,
     address: this.address,
     publicKey: this.publicKey,
+    contractAddress: data.contractAddress,
     amount: data.amount,
     action: data.action,
   })

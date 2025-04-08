@@ -1,3 +1,10 @@
+## 1.43.85 (2025-04-08)
+
+
+### Bug Fixes
+
+* add contractAddress to staking da76c95
+
 ## 1.43.84 (2025-04-07)
 
 

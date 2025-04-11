@@ -20,6 +20,7 @@ import { prepareStakeWithoutDelegation } from './prepareStakeWithoutDelegation'
 import { prepareUnstakeWithoutDelegation } from './prepareUnstakeWithoutDelegation'
 import { buildCustomTransaction } from './buildCustomTransaction'
 import { buildLiquidStaking } from './buildLiquidStaking'
+import { stacksStaking } from './stacksStaking'
 import { getWalletRewards } from './getWalletRewards'
 import { getRedelegationUnlockDate } from './getRedelegationUnlockDate'
 import { prepareDelegations } from './prepareDelegations'
@@ -49,6 +50,7 @@ export const wallet = {
   prepareUnstakeWithoutDelegation,
   buildCustomTransaction,
   buildLiquidStaking,
+  stacksStaking,
   getWalletRewards,
   getRedelegationUnlockDate,
 }

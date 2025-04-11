@@ -9,6 +9,7 @@ export const buildLiquidStaking = async function (data) {
     contractAddress: data.contractAddress,
     amount: data.amount,
     action: data.action,
+    nftId: data.nftId || null,
   })
 
   return responseData

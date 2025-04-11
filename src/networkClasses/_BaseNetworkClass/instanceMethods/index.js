@@ -47,6 +47,7 @@ import { loadKeplrSnip20Balances } from './loadKeplrSnip20Balances'
 import { executeMessageCollection } from './executeMessageCollection'
 import { buildCustomTransaction } from './buildCustomTransaction'
 import { buildLiquidStaking } from './buildLiquidStaking'
+import { stacksStaking } from './stacksStaking'
 import { getRewardsById } from './getRewardsById'
 import { getRedelegationUnlockDateById } from './getRedelegationUnlockDateById'
 import { getCrossNetFees } from './getCrossNetFees'
@@ -99,6 +100,7 @@ export const instanceMethods = {
   executeMessageCollection,
   buildCustomTransaction,
   buildLiquidStaking,
+  stacksStaking,
   getRewardsById,
   getRedelegationUnlockDateById,
   getCrossNetFees,

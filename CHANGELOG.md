@@ -1,3 +1,10 @@
+## 1.43.87 (2025-04-11)
+
+
+### Bug Fixes
+
+* stacks staking info query f1e3a35
+
 ## 1.43.86 (2025-04-08)
 
 

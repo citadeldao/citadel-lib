@@ -1,3 +1,10 @@
+## 1.43.88 (2025-04-11)
+
+
+### Bug Fixes
+
+* optional nftid stacks param 186e162
+
 ## 1.43.87 (2025-04-11)
 
 

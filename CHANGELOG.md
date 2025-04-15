@@ -1,3 +1,10 @@
+## 1.43.92 (2025-04-15)
+
+
+### Bug Fixes
+
+* stacks tokens to config standard f8d547c
+
 ## 1.43.91 (2025-04-15)
 
 

@@ -3,9 +3,12 @@ import qs from 'qs'
 
 // function returns request parameters for the axios instance.
 export const buildLiquidStaking = ({ address, publicKey, contractAddress, amount, action, nftId }) => {
-  let url = `/blockchain/stacks/${address}/buildLiquidStacking?amount=${amount}&action=${action}&contractAddress=${contractAddress}`;
+  let url = `/blockchain/stacks/${address}/buildLiquidStacking?action=${action}&contractAddress=${contractAddress}`;
+  if (amount) {
+    url += `&amount=${amount}`
+  }
   if (nftId) {
-    url = `/blockchain/stacks/${address}/buildLiquidStacking?amount=${amount}&action=${action}&nftId=${nftId}&contractAddress=${contractAddress}`;
+    url += `&nftId=${nftId}`
   }
   return {
     url,

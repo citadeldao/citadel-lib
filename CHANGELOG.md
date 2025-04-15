@@ -1,3 +1,10 @@
+## 1.43.90 (2025-04-15)
+
+
+### Bug Fixes
+
+* amount, nftid optional param b8493fc
+
 ## 1.43.89 (2025-04-11)
 
 

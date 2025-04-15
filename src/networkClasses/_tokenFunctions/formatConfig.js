@@ -81,5 +81,14 @@ export const formatConfig = {
       balance: 'balance_default',
       transactions: 'transactions_default',
     },
+    ft: {
+      actions: {
+        transfer: 'transfer_default',
+      },
+      infos: {
+        balance: 'balance_default',
+        transactions: 'transactions_default',
+      },
+    }
   }
 }

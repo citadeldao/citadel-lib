@@ -1,3 +1,10 @@
+## 1.43.91 (2025-04-15)
+
+
+### Bug Fixes
+
+* add stacks token standard cdf116e
+
 ## 1.43.90 (2025-04-15)
 
 

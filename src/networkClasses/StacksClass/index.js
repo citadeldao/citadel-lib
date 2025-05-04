@@ -8,6 +8,7 @@ import {
     TransactionSigner,
     createStacksPrivateKey,
 } from '@stacks/transactions';
+import { hashP2WPKH } from '@stacks/encryption';
 
 import { checkDelegationTypes } from '../../helpers/checkArguments'
 import api from '../../api'
@@ -67,10 +68,12 @@ export class StacksNetwork extends BaseNetwork {
     const address = getStxAddress({ account, transactionVersion: TransactionVersion.Mainnet });
     const privateKey = account.stxPrivateKey;
     const publicKey = publicKeyToString(pubKeyfromPrivKey(account.stxPrivateKey));
+    const btcAddress = hashP2WPKH(publicKey);
 
     return {
       net: this.net,
       address,
+      btcAddress,
       publicKey,
       derivationPath,
       privateKey,

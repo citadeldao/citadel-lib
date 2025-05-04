@@ -1,3 +1,10 @@
+## 1.43.94 (2025-05-04)
+
+
+### Bug Fixes
+
+* btc address publicKeyToBtcAddress 7773aac
+
 ## 1.43.93 (2025-05-04)
 
 

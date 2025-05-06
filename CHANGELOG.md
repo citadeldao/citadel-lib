@@ -1,3 +1,10 @@
+## 1.43.96 (2025-05-06)
+
+
+### Bug Fixes
+
+* btc account prepareDelegations 8111c32
+
 ## 1.43.95 (2025-05-06)
 
 

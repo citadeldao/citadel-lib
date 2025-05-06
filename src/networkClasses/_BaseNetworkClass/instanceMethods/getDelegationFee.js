@@ -8,12 +8,14 @@ export const getDelegationFee = async function ({
   kt,
   isWithoutDelegation,
   stakeAccount,
+  btcAccount,
   newAddingFormat = false
 }) {
   const data = await api.requests.getDelegationFee({
     net: this.net,
     address: this.address,
     stakeAccount,
+    btcAccount,
     transactionType,
     nodeAddress,
     sourceNodeAddress,

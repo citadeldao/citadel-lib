@@ -25,6 +25,7 @@ export const prepareDelegation = async (walletId, options) => {
     additionalFee,
     isWithoutDelegation,
     stakeAccount,
+    btcAccount,
   } = options
   checkTypes(
     // nodeAddress - Array for polkadot
@@ -39,6 +40,7 @@ export const prepareDelegation = async (walletId, options) => {
     ['additionalFee', additionalFee, ['String', 'Number']],
     ['isWithoutDelegation', isWithoutDelegation, ['Boolean']],
     ['stakeAccount', stakeAccount, ['String', null]],
+    ['btcAccount', btcAccount, ['String', null]],
   )
 
   // call wallet instance method
@@ -56,5 +58,6 @@ export const prepareDelegation = async (walletId, options) => {
       additionalFee,
       isWithoutDelegation,
       stakeAccount,
+      btcAccount,
     })
 }

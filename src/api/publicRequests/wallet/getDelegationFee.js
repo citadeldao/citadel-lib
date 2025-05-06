@@ -10,6 +10,7 @@ export const getDelegationFee = ({
   kt,
   isWithoutDelegation,
   stakeAccount,
+  btcAccount,
   newAddingFormat
 }) => {
   return {
@@ -25,6 +26,7 @@ export const getDelegationFee = ({
         kt,
         isWithoutDelegation,
         stakeAccount,
+        btcAccount,
         version: state.getState('backendApiVersion'),
         newAddingFormat
       },

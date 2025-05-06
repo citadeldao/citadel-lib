@@ -55,6 +55,7 @@ export class SolanaNetwork extends BaseNetwork {
     redelegateNodeAddresses,
     isTyped = false,
     stakeAccount,
+    btcAccount,
   }) {
     // check type
     checkDelegationTypes(type)
@@ -87,6 +88,7 @@ export class SolanaNetwork extends BaseNetwork {
         },
       ],
       stakeAccount,
+      btcAccount,
       publicKey: this.publicKey,
       isTyped,
     })

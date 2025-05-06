@@ -92,6 +92,7 @@ export class StacksNetwork extends BaseNetwork {
     amount,
     type = DELEGATION_TYPES.STAKE,
     redelegateNodeAddresses,
+    btcAccount,
     isTyped = false,
   }) {
     // check type
@@ -118,6 +119,7 @@ export class StacksNetwork extends BaseNetwork {
     const { data } = await api.requests.prepareDelegations({
       from: this.address,
       net: this.net,
+      btcAccount,
       delegations: [
         {
           address: nodeAddress,

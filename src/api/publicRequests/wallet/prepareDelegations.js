@@ -8,6 +8,7 @@ export const prepareDelegations = ({
   delegations,
   publicKey,
   stakeAccount,
+  btcAccount,
   isTyped,
 }) => {
   return {
@@ -21,6 +22,7 @@ export const prepareDelegations = ({
         delegations,
         publicKey,
         stakeAccount,
+        btcAccount,
         isTyped,
       },
       // for passing array in request params

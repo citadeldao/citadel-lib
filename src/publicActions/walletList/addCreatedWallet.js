@@ -14,6 +14,7 @@ export const addCreatedWallet = async (wallet) => {
     const {
       net,
       address,
+      btcAddress,
       nativeAddress,
       segwitAddress,
       publicKeySegwit,
@@ -36,6 +37,7 @@ export const addCreatedWallet = async (wallet) => {
     checkTypes(
       ['net', net, ['String'], true],
       ['address', address, ['String'], true],
+      ['btcAddress', btcAddress, ['String', 'Null']],
       ['title', title, ['String']],
       ['type', type, ['String'], true],
       ['publicKey', publicKey, ['String', 'Null']],
@@ -52,6 +54,7 @@ export const addCreatedWallet = async (wallet) => {
       // no private properties for save (remove privateKey and derivationPath)!
       net,
       address,
+      btcAddress,
       nativeAddress,
       segwitAddress,
       publicKeySegwit,

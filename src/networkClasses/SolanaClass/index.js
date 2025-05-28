@@ -84,7 +84,7 @@ export class SolanaNetwork extends BaseNetwork {
       delegations: [
         {
           address: nodeAddress,
-          value: type === DELEGATION_TYPES.STAKE ? amount : `-${amount}`,
+          value: amount,
         },
       ],
       stakeAccount,

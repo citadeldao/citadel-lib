@@ -45,11 +45,13 @@ import { NibiruNetwork } from './cosmosNetworks/NibiruClass'
 import { SeiNetwork } from './cosmosNetworks/SeiClass'
 import { LavaNetwork } from './cosmosNetworks/LavaClass'
 import { StacksNetwork } from './StacksClass'
+import { GbridgeNetwork } from './cosmosNetworks/GbridgeClass'
 
 export const networkClasses = {
   tez: TezosNetwork,
   iost: IostNetwork,
   btc: BtcNetwork,
+  gbridge: GbridgeNetwork,
   solana: SolanaNetwork,
   eth: EthNetwork,
   bsc: BscNetwork,

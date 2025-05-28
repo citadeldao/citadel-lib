@@ -10,7 +10,6 @@ import { CosmosNetwork } from './cosmosNetworks/CosmosClass'
 import { KavaNetwork } from './cosmosNetworks/KavaClass'
 import { SecretNetwork } from './cosmosNetworks/SecretClass'
 import { OsmosisNetwork } from './cosmosNetworks/OsmosisClass'
-import { ComdexNetwork } from './cosmosNetworks/ComdexClass'
 import { PersistenceNetwork } from './cosmosNetworks/PersistenceClass'
 import { ChihuahuaNetwork } from './cosmosNetworks/ChihuahuaClass'
 import { CheqdNetwork } from './cosmosNetworks/CheqdClass'
@@ -19,11 +18,8 @@ import { StargazeNetwork } from './cosmosNetworks/StargazeClass'
 import { EmoneyNetwork } from './cosmosNetworks/EmoneyClass'
 import { KichainNetwork } from './cosmosNetworks/KichainClass'
 import { InjectiveNetwork } from './cosmosNetworks/cosmoEtheriumNetworks/InjectiveClass'
-import { BitsongNetwork } from './cosmosNetworks/BitsongClass'
 import { MantleNetwork } from './cosmosNetworks/MantleClass'
-import { KonstellationNetwork } from './cosmosNetworks/KonstellationClass'
 import { EvmosNetwork } from './cosmosNetworks/cosmoEtheriumNetworks/EvmosClass'
-import { CrescentNetwork } from './cosmosNetworks/CrescentClass'
 import { AxelarNetwork } from './cosmosNetworks/AxelarClass'
 import { PolkadotNetwork } from './PolkadotClass'
 import { OraiNetwork } from './cosmosNetworks/OraiClass'
@@ -41,7 +37,6 @@ import { KujiraNetwork } from './cosmosNetworks/KujiraClass'
 import { CoreumNetwork } from './cosmosNetworks/CoreumClass'
 import { AvalancheNetwork } from './ethNetworks/AvalancheClass'
 import { ProvenanceNetwork } from './cosmosNetworks/ProvenanceClass'
-import { ArchwayNetwork } from './cosmosNetworks/ArchwayClass'
 import { CelestiaNetwork } from './cosmosNetworks/CelestiaClass'
 import { NolusNetwork } from './cosmosNetworks/NolusClass'
 import { SuiNetwork } from './SuiClass'
@@ -54,7 +49,6 @@ import { StacksNetwork } from './StacksClass'
 export const networkClasses = {
   tez: TezosNetwork,
   iost: IostNetwork,
-  icon: IconNetwork,
   btc: BtcNetwork,
   solana: SolanaNetwork,
   eth: EthNetwork,
@@ -65,7 +59,6 @@ export const networkClasses = {
   kava: KavaNetwork,
   secret: SecretNetwork,
   osmosis: OsmosisNetwork,
-  comdex: ComdexNetwork,
   persistence: PersistenceNetwork,
   chihuahua: ChihuahuaNetwork,
   cheqd: CheqdNetwork,
@@ -74,11 +67,8 @@ export const networkClasses = {
   emoney: EmoneyNetwork,
   kichain: KichainNetwork,
   injective: InjectiveNetwork,
-  bitsong: BitsongNetwork,
   mantle: MantleNetwork,
-  konstellation: KonstellationNetwork,
   evmos: EvmosNetwork,
-  crescent: CrescentNetwork,
   axelar: AxelarNetwork,
   polkadot: PolkadotNetwork,
   orai: OraiNetwork,
@@ -96,7 +86,6 @@ export const networkClasses = {
   coreum: CoreumNetwork,
   provenance: ProvenanceNetwork,
   sui: SuiNetwork,
-  archway: ArchwayNetwork,
   celestia: CelestiaNetwork,
   nolus: NolusNetwork,
   dydx: DydxNetwork,

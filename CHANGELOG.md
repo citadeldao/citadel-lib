@@ -1,3 +1,10 @@
+## 1.43.99 (2025-05-28)
+
+
+### Bug Fixes
+
+* solana abs amount, gBridge 8766b2c
+
 ## 1.43.98 (2025-05-28)
 
 

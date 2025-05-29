@@ -11,7 +11,6 @@ export const getAuthToken = async () => {
   // get saved tokens
   const accessToken = state.getState('accessToken')
   const refreshToken = state.getState('refreshToken')
-  console.log('JWT INFO ACCESS TOKEN', accessToken, Date.now());
 
   // return if no accessToken
   if (!accessToken) {
@@ -54,9 +53,7 @@ export const getAuthToken = async () => {
 
     // set new tokens
     state.setState('accessToken', data.access_token)
-    state.setState('refreshToken', data.refresh_token)    
-    console.log('JWT INFO acccessTokenExpirationDate', acccessTokenExpirationDate);
-    console.log('JWT INFO timestampNow', timestampNow);
+    state.setState('refreshToken', data.refresh_token)
 
     // send new keys to client
     dispatchLibEvent(LIB_EVENT_NAMES.TOKEN_REFRESHED, data)
